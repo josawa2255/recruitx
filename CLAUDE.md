@@ -45,6 +45,7 @@
 | WP・クラウド・外部サービスID・触禁領域 | [docs/operations/INFRA.md](docs/operations/INFRA.md) |
 | やること・拡張計画 | [docs/planning/ROADMAP.md](docs/planning/ROADMAP.md) |
 | 学び・引き継ぎ知識 | [docs/planning/KNOWLEDGE.md](docs/planning/KNOWLEDGE.md) |
+| ルール化候補（自動収集の下書き） | [docs/planning/RULE-CANDIDATES.md](docs/planning/RULE-CANDIDATES.md) |
 | バグと再発防止 | [BUGS.md](BUGS.md) |
 | **md運用ルール・スキル使用・自動修整の判断** | [docs/DOC-RULES.md](docs/DOC-RULES.md) ⭐ |
 | **Claude公式の最新推奨の追従状況** | [docs/operations/BEST-PRACTICE-WATCH.md](docs/operations/BEST-PRACTICE-WATCH.md) ⭐ |
