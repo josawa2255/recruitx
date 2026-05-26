@@ -34,3 +34,13 @@
 ## 5. 開発中の学び
 
 <!-- 新しい知見・トラブル解決をここに追記。系統が増えたら見出しで分け、肥大したら knowledge/ へ枝分かれ -->
+
+### クロスOS表記ズレの正体と対策（2026-05-24 調査）
+
+BizManga制作で「Mac/Win/iPhone/Androidで表記がずれる」問題が判明。徹底調査の結論を [../specs/DEVICE-RULES.md](../specs/DEVICE-RULES.md) §16 にルール化。要点:
+
+- **原因は3層**：① 未読込時のOS別フォント置換（Mac=ヒラギノ/Win=游ゴシック・メイリオ/Android=Noto・**主因**）② 縦メトリクスの読み元がOSで違う（macOS=`hhea` / Win・Android=`OS/2 Win`）③ ラスタライズ差（ClearType vs グレースケール）。**③はCSSで統一不可**。
+- **対策の本丸は「Webフォントを自前ホスト(WOFF2)で固定 + 和文サブセット」**。これで①がほぼ消える。比率(%)配置は装飾要素には有効だが、**文字を含む要素では逆効果**（フォント差で即はみ出す）→ 文字は `clamp()`、構造は Flex/Grid。
+- メトリクス上書き（`size-adjust` 等）は**主に欧文向け**で和文は効果限定的・Safariは `size-adjust` のみ対応。CLS対策としては有効。
+- **DevToolsのレスポンシブ表示では検出不可**（自分のOS上で描画するため）。Win ClearType / 本物のSafari は実機 or 実機クラウド（BrowserStack/LambdaTest）でしか確認できない → §2に追記。
+- 出典: web.dev(font best practices / css size-adjust)、Every Layout、Defensive CSS、Playwright docs、MDN、ICS MEDIA 他。

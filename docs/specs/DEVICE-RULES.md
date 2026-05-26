@@ -4,13 +4,14 @@
 
 ## TL;DR
 
-「PCではキレイなのにスマホで崩れる」を恒久的に防ぐ16ルール。**コミット前に 320/768/1024/1440/1920px の5幅で目視**し、§16のチェックリストを通す。
+「PCではキレイなのにスマホで崩れる」「Mac↔Win↔スマホで文字がずれる」を恒久的に防ぐ17ルール。**コミット前に 320/768/1024/1440/1920px の5幅 + 実機OS（§16）で確認**し、§17のチェックリストを通す。
 
 ## 1. 画像HTML属性は実ファイル寸法と一致必須
 `<img width height>` は実寸法と同じアスペクト比で書く（誤った比は画像が歪む＝ロゴ潰れの主因）。不安なら CSS `aspect-ratio: 実W / 実H` を併用。実寸確認: `python3 -c "from PIL import Image; print(Image.open('path').size)"`。
 
 ## 2. 最低5デバイス幅で確認
 コミット前に **320 / 768 / 1024 / 1440 / 1920px** で表示崩れ・動的UI開閉を目視。
+**幅だけ変えてもOSのフォント差（→§16）は出ない**。Mac / Win / iOS / Android の実機 or 実機クラウド（BrowserStack / LambdaTest）をリリース前に最低1回通す。DevToolsのレスポンシブ表示は自分のOS上で描画するため、Win ClearTypeや本物のSafariの文字描画は再現できない（検出不可）。
 
 ## 3. ブレークポイント統一
 ```css
@@ -77,7 +78,36 @@ h1,h2,h3,h4,[id]:not(html,body){ scroll-margin-top: calc(72px + 16px); }
 
 全 `<img>` に `src/alt/width/height/loading/decoding` を明示。WebPデフォルト（80KB超は AVIF をフォールバック付き）、kebab-case 命名 + `images/{用途}/`。
 
-## 16. コミット前チェックリスト
+## 16. クロスOSフォント統一・日本語組版（表記ズレ防止）
+
+「Mac/Win/iPhone/Androidで文字幅・改行・行高がずれる」恒久対策。**原因は独立した3層**で、混同すると対策がチグハグになる。
+
+| 層 | 原因 | 対処 |
+|---|---|---|
+| ① フォント置換 | 未指定/未読込時、OSが別フォントへ（Mac=ヒラギノ / Win=游ゴシック・メイリオ / Android=Noto）。字幅・改行・行高が全部変わる | **下記でほぼ消せる（主因）** |
+| ② メトリクス読取差 | 同一フォントでも縦メトリクスの読み元がOSで違う（macOS=`hhea` / Win・Android=`OS/2 Win`）→ 行高・縦位置ズレ | フォールバックのメトリクス上書きで緩和 |
+| ③ ラスタライズ差 | Win=ClearType（サブピクセル）/ Mac=グレースケール / Linux=FreeType。太さ・シャープさが変わる | **CSSで統一不可** → §2の実機確認で担保 |
+
+### フォントを固定（主因①をほぼ消す・最優先）
+- **Webフォントを1〜2書体に固定し自前ホスト（WOFF2のみ）**。OS標準フォントへフォールバックさせない。書体・値は [DESIGN.md](DESIGN.md)。
+- **和文は必ずサブセット**（フル字形は1万字超・数MB）。`glyphhanger` / `pyftsubset`（fonttools）で使用文字に絞るか `unicode-range` 分割（90%超削減可）。
+- 読込最適化:
+  - ヒーローの本番フォントは `<link rel="preload" as="font" type="font/woff2" crossorigin>`（`crossorigin` 必須・無いと2重DL）
+  - `@font-face { font-display: swap; }`（CLSを厳格にゼロにするなら `optional`）
+  - フォールバックに `size-adjust` 等のメトリクス上書きで入替時のガタつき（CLS）を消す。**※和文は字面が揃うため効果は限定的・Safariは `size-adjust` のみ対応 → 和文の本丸は「固定すること」そのもの**。
+
+### 描画・日本語組版
+```css
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; /* macOSのみ有効・Winは変わらない */
+       -webkit-text-size-adjust: 100%; text-size-adjust: 100%; } /* iOSの勝手な文字拡大を止める */
+.rx-jp-body { word-break: keep-all; line-break: strict; overflow-wrap: anywhere; line-height: 1.8; } /* 半角空白なし日本語の改行 */
+.rx-stat-num { font-variant-numeric: tabular-nums; } /* 大きな数字(9割/360万円)の桁ブレ防止・要フォントtnum対応 */
+```
+- 見出しは `word-break: auto-phrase`（文節改行・要 `lang="ja"`）＋ `text-wrap: balance` を `@supports` でロケール限定（素の `balance` は和文で不自然に割れる）。
+- `line-height` は unitless（和文1.7〜1.9 / 見出し1.2〜1.4）。`<html lang="ja">` を明示。
+- `100vh` は使わず `svh` / `dvh`（モバイルでアドレスバーに切られるのを防ぐ）。`env(safe-area-inset-*)` は `<meta viewport ... viewport-fit=cover>` 必須。
+
+## 17. コミット前チェックリスト
 - [ ] 画像 width/height が実比と一致 + loading/decoding 指定
 - [ ] 320/768/1024/1440/1920px で崩れなし
 - [ ] ハンバーガー押せる・ドロップダウン開ける・CTAタップできる
@@ -91,3 +121,7 @@ h1,h2,h3,h4,[id]:not(html,body){ scroll-margin-top: calc(72px + 16px); }
 - [ ] アンカー先に scroll-margin-top
 - [ ] （多言語なら）ENで破綻しない
 - [ ] LCP画像のみ eager+high、他は lazy
+- [ ] Webフォントを自前ホストで固定（OS標準任せにしない）+ 和文サブセット済み
+- [ ] 主要フォントに preload(crossorigin) + font-display 指定、CLS < 0.1
+- [ ] 大きな数字に tabular-nums / 日本語に word-break・line-break・overflow-wrap
+- [ ] Mac / Win / iOS / Android の実機（or 実機クラウド）で文字幅・改行を確認（§2・§16）

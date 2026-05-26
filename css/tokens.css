@@ -1,0 +1,111 @@
+/* =========================================================================
+   tokens.css — リクルートX デザイントークン
+   出典: docs/specs/DESIGN.md（色・フォント・タイポscale）
+        docs/specs/DEVICE-RULES.md §11（z-index 階層）/ §16（描画・和文組版）
+   ここは値の正本ではない。変更時は必ず DESIGN.md / DEVICE-RULES.md を先に更新する。
+   ========================================================================= */
+
+:root {
+  /* --- カラー（DESIGN.md カラーパレット） --- */
+  --rx-accent:        #ec2d87;            /* 主アクセント（ピンク/マゼンタ） */
+  --rx-accent-rgb:    236, 45, 135;
+  --rx-accent-hover:  #d61f76;
+  --rx-grad:          linear-gradient(95deg, #a32bbf 0%, #e6268d 55%, #ff3d87 100%);
+  --rx-accent-2:      #2f80ed;            /* 副アクセント（ブルー・信頼の差し色） */
+  --rx-accent-3:      #38bdf8;            /* 補助（スカイ/シアン・少量） */
+
+  --rx-bg:            #ffffff;
+  --rx-bg-light:      #f6f7fb;            /* section 交互の薄背景 */
+  --rx-text:          #1a2742;
+  --rx-text-muted:    #5c6b85;
+  --rx-border:        #e7eaf1;
+  --rx-card-bg:       #ffffff;
+  --rx-shadow:        0 4px 24px rgba(28, 40, 74, .08);
+
+  /* --- 角丸 --- */
+  --rx-radius:        16px;               /* 標準カード */
+  --rx-radius-lg:     24px;               /* 大カード/モーダル */
+  --rx-radius-pill:   999px;              /* ボタン pill */
+
+  /* --- タイポスケール（clamp は rem+vw 混在 / 最大は最小の2.5倍以内・§5） --- */
+  --rx-fs-hero:  clamp(2rem,      1.3rem  + 3vw,   3.5rem);   /* h1   32→56 */
+  --rx-fs-h2:    clamp(1.5rem,    1.15rem + 1.6vw, 2.25rem);  /* h2   24→36 */
+  --rx-fs-h3:    clamp(1.25rem,   1.1rem  + 0.7vw, 1.5rem);   /* h3   20→24 */
+  --rx-fs-lead:  clamp(1.0625rem, 1rem    + 0.3vw, 1.25rem);  /* lead 17→20 */
+  --rx-fs-body:  1rem;                                        /* 16px 固定可 */
+  --rx-fs-small: 0.875rem;                                    /* 14px */
+
+  /* --- フォント（DEVICE-RULES §16: 自前ホスト WOFF2 で固定が原則。
+         WOFF2 配置までは下記スタック＋システムフォールバックで暫定運用） --- */
+  --rx-font-body: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+                  'Yu Gothic', Meiryo, sans-serif;
+  --rx-font-head: 'Zen Kaku Gothic New', 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+
+  /* --- z-index 階層（DEVICE-RULES §11・生数字禁止） --- */
+  --z-base:      0;
+  --z-elevated:  10;
+  --z-sticky:    100;
+  --z-header:    1000;
+  --z-fab:       1500;
+  --z-dropdown:  2000;
+  --z-modal:     9000;
+  --z-toast:     9500;
+  --z-hamburger: 10000;
+  --z-tooltip:   10500;
+}
+
+/* =========================================================================
+   フォント自前ホスト枠（WOFF2 サブセット配置後に有効化する）
+   - 配置先: /fonts/*.woff2（和文サブセット / glyphhanger・pyftsubset）
+   - ヒーロー本文書体は <link rel="preload" as="font" crossorigin> も併用（§16）
+   - font-display: swap（厳格に CLS=0 を狙う場合は optional）
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url('/fonts/noto-sans-jp-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Sans JP';
+  src: url('/fonts/noto-sans-jp-700.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Zen Kaku Gothic New';
+  src: url('/fonts/zen-kaku-gothic-new-700.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Zen Kaku Gothic New';
+  src: url('/fonts/zen-kaku-gothic-new-900.woff2') format('woff2');
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+   ========================================================================= */
+
+/* =========================================================================
+   全OS共通の描画・和文組版（DEVICE-RULES §16）
+   ========================================================================= */
+html {
+  -webkit-font-smoothing: antialiased;   /* macOS のみ作用 */
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;        /* iOS の不意な文字ズーム防止 */
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+/* 和文本文の改行・折り返し */
+.rx-jp-body {
+  word-break: keep-all;
+  line-break: strict;
+  overflow-wrap: anywhere;
+  line-height: 1.8;                      /* unitless / 和文 1.7〜1.9 */
+}
+
+/* 数字（割合・金額）の桁ゆれ防止 */
+.rx-stat-num {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

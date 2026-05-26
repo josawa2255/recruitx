@@ -21,7 +21,7 @@
 ### 公開準備
 - [ ] GA4・Clarity 新規発行 → [../operations/INFRA.md](../operations/INFRA.md)
 - [ ] HubSpotフォーム
-- [ ] 5幅デバイス確認（[../specs/DEVICE-RULES.md](../specs/DEVICE-RULES.md) §16）
+- [ ] 5幅デバイス + 実機OS（Mac/Win/iOS/Android）確認（[../specs/DEVICE-RULES.md](../specs/DEVICE-RULES.md) §16・§17）
 - [ ] 既存ページから内部リンク5〜10本 → [../content/SEO.md](../content/SEO.md)
 - [ ] GitHub Pages + CNAME 設定・GSC登録
 

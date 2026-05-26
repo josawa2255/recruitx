@@ -1,0 +1,500 @@
+/* =========================================================================
+   style.css — リクルートX トップLP（ファーストビュー）
+   依存: /css/tokens.css（先に読み込む）
+   レイアウト/ヒーロー/サービスカード/スマホモックアップ合成 + レスポンシブ
+   ブレークポイント（DEVICE-RULES §3）: SP ≤768 / TAB 769–1024 / PC ≥1025
+   ========================================================================= */
+
+/* ---------------------------------------------------------------- reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--rx-font-body);
+  font-size: var(--rx-fs-body);
+  color: var(--rx-text);
+  background: var(--rx-bg);
+  line-height: 1.8;
+  -webkit-tap-highlight-color: transparent;
+}
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+ul { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p { margin: 0; }
+
+/* スクロール起点（DEVICE-RULES §13・スティッキーヘッダー導入時の余白） */
+h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
+@media (max-width: 768px) {
+  h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(60px + 16px); }
+}
+
+/* ---------------------------------------------------- container（DESIGN.md §コンテナ幅） */
+.rx-container {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+}
+@media (min-width: 1440px) { .rx-container { max-width: 1340px; } }
+@media (min-width: 1920px) { .rx-container { max-width: 1560px; } }
+
+/* ---------------------------------------------------------------- button（DESIGN.md） */
+.rx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6em;
+  border: 0;
+  border-radius: var(--rx-radius-pill);
+  padding: clamp(.85rem, .7rem + .6vw, 1.05rem) clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  min-height: 48px;                       /* タップ44px超（§12） */
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: var(--rx-fs-body);
+  line-height: 1.3;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.rx-btn:hover     { transform: translateY(-2px); }
+.rx-btn:active    { transform: translateY(0); }
+.rx-btn__lead     { flex-shrink: 0; width: 1.25em; height: 1.25em; }
+.rx-btn__chevron  { flex-shrink: 0; width: .85em; height: .85em; opacity: .9; }
+
+.rx-btn--primary {
+  background: var(--rx-grad);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(var(--rx-accent-rgb), .35);
+}
+.rx-btn--primary:hover { box-shadow: 0 14px 30px rgba(var(--rx-accent-rgb), .45); }
+
+.rx-btn--ghost {
+  background: #fff;
+  color: var(--rx-text);
+  border: 1px solid var(--rx-border);
+  box-shadow: var(--rx-shadow);
+}
+
+/* =========================================================================
+   HERO
+   ========================================================================= */
+.rx-hero {
+  position: relative;
+  overflow: hidden;                       /* 装飾線のはみ出し防止 */
+  padding: clamp(32px, 6vw, 96px) 0 clamp(48px, 8vw, 120px);
+  background:
+    radial-gradient(120% 90% at 85% 0%, rgba(var(--rx-accent-rgb), .06), transparent 60%),
+    var(--rx-bg);
+}
+
+.rx-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;             /* SP/TAB: 1カラム縦積み（添付1→添付2） */
+  gap: clamp(32px, 6vw, 56px);
+  align-items: center;
+}
+/* PC: 2カラム（左コピー / 右ビジュアル = 添付3） */
+@media (min-width: 1025px) {
+  .rx-hero__inner {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(32px, 4vw, 72px);
+  }
+}
+
+/* ---------------------------------------------------------- hero copy（添付1） */
+.rx-hero__copy { min-width: 0; }
+
+.rx-hero__eyebrow {
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: var(--rx-fs-body);
+  color: var(--rx-text-muted);
+  margin-bottom: clamp(12px, 2vw, 20px);
+  letter-spacing: .02em;
+}
+.rx-hero__eyebrow .rx-c-pink   { color: var(--rx-accent); }
+.rx-hero__eyebrow .rx-c-purple { color: #a32bbf; }
+.rx-hero__eyebrow .rx-c-blue   { color: var(--rx-accent-2); }
+
+.rx-hero__title {
+  font-family: var(--rx-font-head);
+  font-weight: 900;
+  font-size: clamp(1.375rem, .9rem + 2.6vw, 2.75rem); /* 「求人広告に頼らない採用へ。」が1行に収まるよう縮小（320px〜PC） */
+  line-height: 1.28;
+  letter-spacing: .01em;
+  word-break: keep-all;                   /* 日本語は句読点でのみ折り返す・語の途中で割らない（§16） */
+}
+.rx-hero__title-main { color: var(--rx-text); display: block; white-space: nowrap; } /* 主見出しは常に1行 */
+.rx-hero__title-lead { display: block; margin-top: .15em; }
+
+/* 多色見出し（DESIGN.md: SNS=ピンク / 知って=ブルー / 好きになって=ピンク / 応募される=濃紺） */
+.rx-hero__title-lead .rx-w-sns   { color: var(--rx-accent); }
+.rx-hero__title-lead .rx-w-know  { color: var(--rx-accent-2); }
+.rx-hero__title-lead .rx-w-like  { color: var(--rx-accent); }
+.rx-hero__title-lead .rx-w-apply { color: var(--rx-text); }
+
+.rx-hero__lead {
+  margin-top: clamp(16px, 2.5vw, 24px);
+  max-width: 38em;                         /* 長文可読性（§9） */
+  font-size: var(--rx-fs-lead);
+  color: var(--rx-text-muted);
+  line-height: 1.85;
+  word-break: keep-all;                    /* 日本語は文節で折り返す（途中で割らない・§16） */
+  overflow-wrap: anywhere;                 /* 収まらない時の保険（横はみ出し防止・§8） */
+}
+
+/* 指定の改行は、1行目が収まるPC幅でだけ有効化。狭い画面は自然折り返し */
+.rx-br-pc { display: none; }
+@media (min-width: 1025px) {
+  .rx-br-pc { display: inline; }
+}
+
+.rx-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 1.5vw, 16px);
+  margin-top: clamp(24px, 3.5vw, 36px);
+}
+.rx-hero__cta .rx-btn { flex: 0 1 auto; }
+@media (max-width: 420px) {
+  .rx-hero__cta .rx-btn { flex: 1 1 100%; } /* 極小幅は縦積みフル幅 */
+}
+
+/* ------------------------------------------------- feature cards（3サービス） */
+.rx-feature-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.5vw, 16px);
+  margin-top: clamp(28px, 4vw, 44px);
+}
+.rx-feature-card {
+  min-width: 0;
+  padding: clamp(12px, 1.8vw, 18px);
+  background: var(--rx-bg-light);
+  border: 1px solid var(--rx-border);
+  border-radius: var(--rx-radius);
+}
+.rx-feature-card__head {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  margin-bottom: .5em;
+}
+.rx-feature-card__icon {
+  flex-shrink: 0;
+  width: clamp(20px, 2.4vw, 26px);
+  height: clamp(20px, 2.4vw, 26px);
+}
+.rx-feature-card__title {
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: clamp(.9rem, .82rem + .35vw, 1.0625rem);
+  line-height: 1.3;
+}
+.rx-feature-card__desc {
+  font-size: var(--rx-fs-small);
+  color: var(--rx-text-muted);
+  line-height: 1.65;
+}
+/* アイコンの色分け */
+.rx-feature-card--sns   .rx-feature-card__icon { color: var(--rx-accent); }
+.rx-feature-card--cont  .rx-feature-card__icon { color: var(--rx-accent-2); }
+.rx-feature-card--meta  .rx-feature-card__icon { color: #f59e0b; }
+
+/* 極小幅では3列維持が窮屈 → 1列に */
+@media (max-width: 420px) {
+  .rx-feature-cards { grid-template-columns: 1fr; }
+}
+
+/* =========================================================================
+   スマホモックアップ合成（添付2 / 添付3右側）
+   グループ親に aspect-ratio をロックし、内部は cqw 基準で配置 → 単位でスケール（§10）
+   ========================================================================= */
+.rx-hero__visual { min-width: 0; }
+
+.rx-mock {
+  position: relative;
+  container-type: inline-size;            /* cqw を有効化 */
+  width: min(100%, 560px);
+  margin: 0 auto;
+  aspect-ratio: 1 / 1.04;                 /* グループの高さを固定 */
+}
+
+/* ---- 装飾コネクター線（PC のみ・装飾） ---- */
+.rx-mock__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-base);
+  pointer-events: none;
+}
+
+/* ---- 中央スマホ（CSS立体化：金属ベゼル＋チルト＋ガラス映り込み） ---- */
+.rx-mock__phone {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  width: 40cqw;
+  /* チタン調の金属フレーム */
+  background: linear-gradient(145deg, #3a3f4d 0%, #15181f 30%, #0c0e14 55%, #20242e 80%, #4a4f5e 100%);
+  border-radius: 13cqw / 6cqw;
+  padding: 1.4cqw;
+  /* 立体チルト（--ry/--rx は JS のポインタ視差で上書き。未設定時は静的な傾き） */
+  transform: translateX(-50%) perspective(1100px)
+             rotateY(var(--ry, -7deg)) rotateX(var(--rx, 2deg));
+  transform-origin: 50% 50%;
+  transition: transform .25s ease;
+  /* 多層シャドウ＋フレーム縁のハイライト */
+  box-shadow:
+    0 2cqw 3cqw rgba(28, 40, 74, .10),
+    0 10cqw 18cqw rgba(28, 40, 74, .24),
+    inset 0 0 0 .3cqw rgba(255, 255, 255, .12);
+  z-index: var(--z-elevated);
+}
+/* 側面ボタン（音量＝左 / 電源＝右） */
+.rx-mock__phone::before,
+.rx-mock__phone::after {
+  content: "";
+  position: absolute;
+  width: .9cqw;
+  border-radius: 999px;
+}
+.rx-mock__phone::before { left: -.5cqw;  top: 24%; height: 11cqw; background: linear-gradient(90deg, #0c0e14, #3a3f4d); }
+.rx-mock__phone::after  { right: -.5cqw; top: 30%; height: 8cqw;  background: linear-gradient(270deg, #0c0e14, #3a3f4d); }
+
+.rx-mock__screen {
+  background: #fff;
+  border-radius: 10.5cqw / 5cqw;
+  overflow: hidden;
+  aspect-ratio: 1 / 2.02;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dynamic Island 風ノッチ */
+.rx-mock__island {
+  position: absolute;
+  top: 3.4cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12cqw;
+  height: 3cqw;
+  border-radius: 999px;
+  background: #05060a;
+  z-index: 2;
+}
+
+/* ガラスの映り込み（斜めの光） */
+.rx-mock__glare {
+  position: absolute;
+  inset: 1.4cqw;                          /* 画面領域（フレーム内側）に重ねる */
+  border-radius: 10.5cqw / 5cqw;
+  background: linear-gradient(135deg,
+              rgba(255, 255, 255, .30) 0%,
+              rgba(255, 255, 255, .06) 18%,
+              rgba(255, 255, 255, 0)  40%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 3;
+}
+.rx-mock__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.4cqw 2.6cqw 1.6cqw;
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: 3cqw;
+}
+.rx-mock__topbar svg { width: 3.4cqw; height: 3.4cqw; color: var(--rx-text); }
+
+.rx-mock__feed {
+  flex: 1;
+  overflow: hidden;
+  padding: 0 2.2cqw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8cqw;
+}
+.rx-feed-item {
+  display: grid;
+  grid-template-columns: 1fr 9cqw;
+  gap: 1.6cqw;
+  align-items: center;
+  padding: 1.6cqw;
+  border-radius: 2.4cqw;
+  background: var(--rx-bg-light);
+}
+.rx-feed-item__body { min-width: 0; }
+.rx-feed-item__title {
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: 2.7cqw;
+  line-height: 1.3;
+}
+.rx-feed-item__sub {
+  font-size: 2.1cqw;
+  color: var(--rx-text-muted);
+  margin-top: .4cqw;
+}
+.rx-feed-item__meta {
+  display: flex;
+  gap: 2.4cqw;
+  margin-top: 1cqw;
+  font-size: 2.1cqw;
+  color: var(--rx-text-muted);
+}
+.rx-feed-item__meta span { display: inline-flex; align-items: center; gap: .6cqw; }
+.rx-feed-item__meta svg { width: 2.6cqw; height: 2.6cqw; }
+.rx-feed-item__meta .rx-i-like { color: var(--rx-accent-2); }
+.rx-feed-item__thumb {
+  width: 9cqw;
+  height: 9cqw;
+  border-radius: 1.8cqw;
+  object-fit: cover;
+  background: #e9edf5;
+}
+
+.rx-mock__nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2.2cqw 0;
+  border-top: .3cqw solid var(--rx-border);
+}
+.rx-mock__nav svg { width: 3.6cqw; height: 3.6cqw; color: var(--rx-text-muted); }
+.rx-mock__nav svg.is-active { color: var(--rx-text); }
+
+/* ---- 浮遊カード共通 ---- */
+.rx-mock__card {
+  position: absolute;
+  margin: 0;
+  background: var(--rx-card-bg);
+  border: 1px solid var(--rx-border);
+  border-radius: 3cqw;
+  box-shadow: 0 3cqw 9cqw rgba(28, 40, 74, .12);
+  padding: 2.6cqw;
+  z-index: var(--z-elevated);
+}
+.rx-mock__card-label {
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: 2.7cqw;
+  line-height: 1.3;
+}
+.rx-mock__card-row {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqw;
+}
+.rx-mock__card-text { font-size: 2.2cqw; color: var(--rx-text-muted); line-height: 1.5; }
+
+/* 候補者プロフィール（左上） */
+.rx-mock__card--profile { top: 12%; left: 0; width: 30cqw; }
+.rx-mock__card--profile .rx-mock__card-row { margin-top: 1.6cqw; }
+.rx-mock__card--profile img {
+  width: 8cqw; height: 8cqw; border-radius: 50%; object-fit: cover; background: #e9edf5;
+}
+.rx-mock__card--profile .rx-mock__name { font-weight: 700; font-size: 2.5cqw; color: var(--rx-text); }
+.rx-mock__card--profile ul { margin: 1.6cqw 0; display: grid; gap: .8cqw; }
+.rx-mock__card--profile li { font-size: 2.1cqw; color: var(--rx-text-muted); padding-left: 2.4cqw; position: relative; }
+.rx-mock__card--profile li::before {
+  content: ""; position: absolute; left: 0; top: .7em;
+  width: 1.2cqw; height: 1.2cqw; border-radius: 50%; background: var(--rx-accent);
+}
+.rx-mock__empathy {
+  display: flex; align-items: center; gap: 1.2cqw;
+  border-top: .3cqw solid var(--rx-border); padding-top: 1.6cqw;
+  font-size: 2.2cqw;
+}
+.rx-mock__empathy svg { width: 3cqw; height: 3cqw; color: var(--rx-accent); }
+.rx-mock__empathy b { color: var(--rx-accent); font-size: 3cqw; }
+
+/* Meta広告ターゲティング（右上） */
+.rx-mock__card--targeting { top: 7%; right: 0; width: 31cqw; }
+.rx-mock__card--targeting .rx-mock__card-label { text-align: center; }
+.rx-mock__ring {
+  width: 14cqw; height: 14cqw; margin: 2cqw auto;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, var(--rx-accent-2), var(--rx-accent), #a32bbf 75%, var(--rx-border) 75%);
+  display: grid; place-items: center;
+}
+.rx-mock__ring::after {
+  content: ""; width: 9cqw; height: 9cqw; border-radius: 50%; background: #fff;
+  display: grid; place-items: center;
+}
+.rx-mock__card--targeting dl { display: grid; grid-template-columns: auto 1fr; gap: 1cqw 1.4cqw; margin: 0; font-size: 2.1cqw; }
+.rx-mock__card--targeting dt { color: var(--rx-text-muted); }
+.rx-mock__card--targeting dd { margin: 0; color: var(--rx-text); font-weight: 500; }
+
+/* フォロー・LINE（左下） */
+.rx-mock__card--line { top: 55%; left: 0; width: 30cqw; }
+.rx-mock__card--line .rx-mock__line-head { display: flex; align-items: center; gap: 1.2cqw; }
+.rx-mock__card--line .rx-i-line { width: 4cqw; height: 4cqw; color: #06c755; flex-shrink: 0; }
+.rx-mock__card--line ul { display: grid; gap: 1cqw; margin: 1.6cqw 0; }
+.rx-mock__card--line li { font-size: 2.1cqw; color: var(--rx-text-muted); }
+.rx-mock__avatars { display: flex; align-items: center; }
+.rx-mock__avatars img {
+  width: 4cqw; height: 4cqw; border-radius: 50%; object-fit: cover;
+  border: .4cqw solid #fff; margin-left: -1.2cqw; background: #e9edf5;
+}
+.rx-mock__avatars img:first-child { margin-left: 0; }
+.rx-mock__avatars span { font-size: 2cqw; color: var(--rx-text-muted); margin-left: 1.4cqw; }
+
+/* 応募してみる（右・中下） */
+.rx-mock__card--apply { top: 50%; right: 0; width: 29cqw; text-align: center; }
+.rx-mock__card--apply .rx-mock__send {
+  width: 6cqw; height: 6cqw; margin: 0 auto 1.4cqw; border-radius: 50%;
+  background: var(--rx-grad); display: grid; place-items: center;
+}
+.rx-mock__card--apply .rx-mock__send svg { width: 3cqw; height: 3cqw; color: #fff; }
+.rx-mock__card--apply .rx-mock__card-text { margin: 1cqw 0 1.8cqw; }
+.rx-mock__pill {
+  display: inline-flex; align-items: center; gap: .8cqw;
+  background: var(--rx-grad); color: #fff;
+  font-family: var(--rx-font-head); font-weight: 700; font-size: 2.3cqw;
+  padding: 1.4cqw 2.6cqw; border-radius: var(--rx-radius-pill);
+}
+.rx-mock__pill svg { width: 2.4cqw; height: 2.4cqw; }
+
+/* オフィス3D図（右下） */
+.rx-mock__card--office { bottom: 0; right: 2%; width: 32cqw; padding: 0; overflow: hidden; }
+.rx-mock__card--office img { width: 100%; height: 22cqw; object-fit: cover; background: #e9edf5; }
+
+/* =========================================================================
+   レスポンシブ調整
+   ========================================================================= */
+/* PC: ビジュアルをやや拡大（添付3） */
+@media (min-width: 1025px) {
+  .rx-mock { width: min(100%, 620px); }
+}
+
+/* SP（≤768）: 合成はそのまま縮小。装飾線は省略。
+   ※ 中央スマホ 40cqw ＋ 左右カード 30cqw は横幅でちょうどタイル状に収まり、
+     横方向の重なりが出ないため、PC と同じ配置のまま縮小して使う（§10）。 */
+@media (max-width: 768px) {
+  .rx-mock { width: min(100%, 460px); aspect-ratio: 1 / 1.06; }
+  .rx-mock__lines { display: none; }
+}
+
+/* 極小（≤480）: クラスタが密集しすぎないよう、右下のオフィス図のみ省略して整理。
+   ターゲティングカードが縦に伸びるので応募カードを下げて重なりを回避。 */
+@media (max-width: 480px) {
+  .rx-mock { aspect-ratio: 1 / 1.08; }
+  .rx-mock__card--office { display: none; }
+  .rx-mock__card--apply { top: 62%; }
+}
+
+/* =========================================================================
+   入場アニメ（JS が .is-in を付与 / prefers-reduced-motion で無効）
+   ========================================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  .rx-anim {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .rx-anim.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
