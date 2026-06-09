@@ -1,2 +1,5 @@
 .DS_Store
 node_modules/
+
+# 非公開の運用情報（HubSpot/GA4/Clarity/広告ID/触禁領域 等の実値）
+docs/operations/INFRA-PRIVATE.md

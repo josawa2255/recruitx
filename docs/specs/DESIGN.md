@@ -1,90 +1,137 @@
 # DESIGN — リクルートX デザイントークン
 
-> 本サービス独自のデザイン値（**新規設計・ここを埋める**）。表示崩れ防止の普遍ルールは [DEVICE-RULES.md](DEVICE-RULES.md)。
+> 本サービス独自のデザイン値。表示崩れ防止の普遍ルールは [DEVICE-RULES.md](DEVICE-RULES.md)。
 
 ## TL;DR
 
-リクルートXは**デザイン新規**。トーンは**白基調 × Instagram/TikTok風の鮮やかなグラデーション**（提案書スライドの暗色ネイビー×ゴールドとは意図的に分ける。LPは明るく社会的・共感寄り）。**フォント確定**（見出し Zen Kaku Gothic New / 本文 Noto Sans JP）、**色確定**。クラスは `.rx-` / CSS変数は `--rx-*` を使う。
-（参考: Contents X はCyber Green系の硬質ミニマル、BizMangaはオレンジ系の漫画トーン。**流用せず**トーンの参考まで。）
+リクルートXのデザイン方針は **Apple/Stripe風の「洗練されたSNS」**。
+
+- **白基調 × 明朝＋ゴシック2書体**（編集者的・「モーメントを“品”で語る」）
+- **大きな余白 × 大きい見出し**（量より密度）
+- **ピンク〜マゼンタのグラデは“点”でだけ使う**（CTA・1語の色変え・細い帯のみ）
+- 副アクセントの青は廃止し、**色は黒系＋ピンク1色軸**
+
+つまり Instagram/TikTok の派手さは捨てず、**使用面積を激減**させて品とBtoB信頼感を両立させる。クラスは `.rx-` / CSS変数は `--rx-*`。
 
 ## カラーパレット
 
-ブランドの署名は**ピンク→マゼンタ→紫のグラデーション**（Instagram/TikTok風）。ブルーを信頼の差し色に。
+ブランドの署名は **ピンク〜マゼンタ〜紫のグラデ**。テキスト・背景は **Apple/Stripe基準のニュートラル**で、グラデを“1点豪華”に効かせる構造。
 
 | 用途 | 変数 | 値 |
 |------|------|-----|
-| 主アクセント（ピンク/マゼンタ） | `--rx-accent` | `#ec2d87` |
+| 主アクセント（ピンク） | `--rx-accent` | `#ec2d87` |
 | アクセントRGB | `--rx-accent-rgb` | `236, 45, 135` |
 | アクセントhover | `--rx-accent-hover` | `#d61f76` |
-| **ブランドグラデ**（署名色・CTA/帯） | `--rx-grad` | `linear-gradient(95deg, #a32bbf 0%, #e6268d 55%, #ff3d87 100%)` |
-| 副アクセント（ブルー） | `--rx-accent-2` | `#2f80ed` |
-| 補助（スカイ/シアン・少量） | `--rx-accent-3` | `#38bdf8` |
-| 背景白 | `--rx-bg` | `#ffffff` |
-| 背景薄（section交互） | `--rx-bg-light` | `#f6f7fb` |
-| テキスト主 | `--rx-text` | `#1a2742` |
-| テキスト副 | `--rx-text-muted` | `#5c6b85` |
-| ボーダー | `--rx-border` | `#e7eaf1` |
+| **ブランドグラデ**（CTA・極小アクセントのみ） | `--rx-grad` | `linear-gradient(95deg, #a32bbf 0%, #e6268d 55%, #ff3d87 100%)` |
+| テキスト主 | `--rx-text` | `#0a0a0c` |
+| テキスト副 | `--rx-text-muted` | `#6e7280` |
+| 背景 | `--rx-bg` | `#ffffff` |
+| 背景薄（節の差し色） | `--rx-bg-light` | `#fafafa` |
+| ボーダー | `--rx-border` | `#e7e7eb` |
 | カード背景 | `--rx-card-bg` | `#ffffff` |
-| カード影 | `--rx-shadow` | `0 4px 24px rgba(28, 40, 74, .08)` |
-| 角丸（標準カード） | `--rx-radius` | `16px` |
-| 角丸（大カード/モーダル） | `--rx-radius-lg` | `24px` |
-| 角丸（ボタン・pill） | `--rx-radius-pill` | `999px` |
+| カード影（極弱） | `--rx-shadow` | `0 1px 2px rgba(15,23,42,.04), 0 8px 28px rgba(15,23,42,.06)` |
+| 角丸（カード） | `--rx-radius` | `20px` |
+| 角丸（小要素・セカンダリーボタン） | `--rx-radius-sm` | `12px` |
+| 角丸（大カード・モーダル） | `--rx-radius-lg` | `28px` |
+| 角丸（pill・主CTA） | `--rx-radius-pill` | `999px` |
 
-- **ヒーロー見出しは単語ごとに色替え**：ピンク「SNS」→ブルー「知って」→ピンク「好きになって」→濃紺「応募される」。
-- グラデは紫(左)→ピンク(右)の3段。テキストには原則使わず、CTA・帯・アイコン面に使用（可読性確保）。
+旧 `--rx-accent-2`（ブルー）と `--rx-accent-3`（スカイ）は**廃止**（色軸を1本化）。
+
+## グラデ使用ルール（最重要）
+
+「派手 → 洗練」の決定打。**面積を絞り、1点豪華**で使う。
+
+| 用途 | 許可 |
+|---|---|
+| Primary CTAボタン背景 | OK（pill形・主CTA1〜2個まで） |
+| アイブロウ等の **1語だけ** 色変え（例: 「**SNS**」） | OK |
+| セクション仕切りの**細い水平帯**（高さ 2〜4px）・小アイコンの単色塗り | OK |
+| **セクション全体の背景塗り** | NG |
+| 見出し本体（h1/h2）への適用 | NG |
+| 大面積の装飾（ヒーロー背景・帯） | NG |
+| 本文テキスト | NG |
 
 ## フォント
 
-**全OS同一描画のため自前ホスト(WOFF2)で固定 + 和文サブセット**（崩れ対策は [DEVICE-RULES.md](DEVICE-RULES.md) §16）。両書体とも Google Fonts 提供・無料。
+参照: [Moments of HAYAMA](https://sumai.es-conjapan.co.jp/hayama24/moments/) の **筑紫明朝＋筑紫ゴシック＋Helvetica Now Display**（編集者的スタック）を、Google Fontsの**無料近似**で実装する。
+
+| 役割 | 書体（採用） | ウェイト | letter-spacing | line-height | 元想定（参照） |
+|------|------|---------|---|---|---|
+| 見出し（h1〜h3）・リード | **Shippori Mincho** | 500 / 600 | `.02em` | 1.3 | 筑紫明朝の代替（最も近い） |
+| 本文・ナビ・補足 | **Zen Kaku Gothic Antique** | 400 / 500 / 700 | 0 | 1.85 | 筑紫ゴシックの代替（上品な丸み） |
+| 英字・数字 | **Inter** | 500 / 700 | `-.01em` | 1.4 | Helvetica Now Display の代替 |
 
 ```css
-/* 本文 */
-font-family: 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
-/* 見出し */
-font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+/* 見出し（明朝でモーメントを） */
+font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+/* 本文（ゴシックで読み心地） */
+font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+/* 英字・数字（クリスプ） */
+font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 ```
 
-| 用途 | 書体 | ウェイト | 備考 |
-|------|------|---------|------|
-| 見出し | Zen Kaku Gothic New | 700 / 900 | コントラストを出す。`palt` + 微 letter-spacing 可 |
-| 本文 | Noto Sans JP | 400（強調 500/700） | `line-height` 1.7〜1.9・unitless |
-
-- **読み込むウェイトは必要分だけ**（和文は1ウェイトでも重い。Zen=700/900、Noto=400/700 程度に絞る）。
-- 数字を見せる箇所（割合・金額）は `font-variant-numeric: tabular-nums`（[DEVICE-RULES.md](DEVICE-RULES.md) §16）。
+- 旧 `Zen Kaku Gothic New` `Noto Sans JP` は**廃止**。
+- 本番は自前ホスト(WOFF2)＋和文サブセット（[DEVICE-RULES.md](DEVICE-RULES.md) §16）。**明朝は字形が多いのでサブセット必須**（フル字形は数MB）。
+- 読込ウェイトを絞る — Shippori=500/600、Zen Kaku Gothic Antique=400/500/700、Inter=500/700。
 
 ## タイポスケール / ボタン / コンテナ幅
 
-**clamp は rem+vw 混在**（純vw禁止＝ズームで拡大されずWCAG 1.4.4違反）。**最大は最小の2.5倍以内**（[DEVICE-RULES.md](DEVICE-RULES.md) §5）。
+**大きな見出し × 大きな余白**（Apple/Stripe基準）。clamp は rem+vw 混在、最大は最小の2.5倍以内（[DEVICE-RULES.md](DEVICE-RULES.md) §5）。
 
 | 用途 | 変数 | 値（≒px 320→1440幅） |
 |------|------|------|
-| ヒーロー見出し h1 | `--rx-fs-hero` | `clamp(2rem, 1.3rem + 3vw, 3.5rem)`（32→56） |
-| 見出し h2 | `--rx-fs-h2` | `clamp(1.5rem, 1.15rem + 1.6vw, 2.25rem)`（24→36） |
+| ヒーロー h1 | `--rx-fs-hero` | `clamp(2.25rem, 1.4rem + 3.4vw, 4.5rem)`（36→72） |
+| 見出し h2 | `--rx-fs-h2` | `clamp(1.875rem, 1.4rem + 1.8vw, 3rem)`（30→48） |
 | 見出し h3 | `--rx-fs-h3` | `clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem)`（20→24） |
-| リード文 | `--rx-fs-lead` | `clamp(1.0625rem, 1rem + 0.3vw, 1.25rem)`（17→20） |
-| 本文 | `--rx-fs-body` | `1rem`（16px固定可・§5） |
+| リード文 | `--rx-fs-lead` | `clamp(1.125rem, 1rem + 0.4vw, 1.375rem)`（18→22） |
+| 本文 | `--rx-fs-body` | `1.0625rem`（17px・Apple基準） |
 | 補足/キャプション | `--rx-fs-small` | `0.875rem`（14px） |
+| アイブロウ | `--rx-fs-eyebrow` | `0.875rem`・`letter-spacing: .12em`・全英大文字 |
 
 **ボタン**
 ```css
-.rx-btn { border-radius: var(--rx-radius-pill); padding: clamp(.85rem, .7rem + .6vw, 1.05rem) clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-          min-height: 48px; font-weight: 700; }              /* タップ44px超(§12) */
-.rx-btn--primary { background: var(--rx-grad); color: #fff; } /* グラデCTA「無料で相談する」 */
-.rx-btn--ghost   { background: #fff; color: var(--rx-text); border: 1px solid var(--rx-border); } /* 「資料をDL」 */
+.rx-btn { min-height: 48px; font-weight: 700; }                                  /* タップ44px超(§12) */
+.rx-btn--primary {                                                                 /* グラデCTA「無料で相談」 */
+  background: var(--rx-grad); color: #fff; border-radius: var(--rx-radius-pill);
+  padding: clamp(.95rem, .8rem + .4vw, 1.1rem) clamp(1.6rem, 1.3rem + 1vw, 2.25rem);
+}
+.rx-btn--ghost {                                                                   /* 「資料DL」 */
+  background: #fff; color: var(--rx-text); border: 1px solid var(--rx-border);
+  border-radius: var(--rx-radius-sm);
+  padding: clamp(.85rem, .7rem + .4vw, 1rem) clamp(1.4rem, 1.1rem + 1vw, 2rem);
+}
 ```
 
 **コンテナ幅**（[DEVICE-RULES.md](DEVICE-RULES.md) §9 準拠）
 ```css
-.rx-container { width: min(100%, 1200px); margin: 0 auto; padding: 0 clamp(16px, 3vw, 32px); }
+.rx-container { width: min(100%, 1200px); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
 @media (min-width:1440px){ .rx-container{ max-width:1340px; } }
 @media (min-width:1920px){ .rx-container{ max-width:1560px; } }
-section { padding: clamp(48px, 8vw, 160px) 0; }
+section { padding: clamp(80px, 12vw, 200px) 0; }   /* 旧 48→160 から拡大 */
 /* 長文本文ブロックのみ可読性のため max-width 720〜820px */
 ```
 
 ## クラス命名規則
 
 - プレフィックス `.rx-`（例 `.rx-header` `.rx-hero` `.rx-btn` `.rx-container`）
+- BEM風: ブロック `.rx-block` / 要素 `__elem` / 修飾 `--mod`
 - z-index は生数字を使わず階層変数（[DEVICE-RULES.md](DEVICE-RULES.md) §11）
 
-> 確定したら値をここに記入し、`TBD` を消す。
+## 旧トークンからの主な変更点（diff サマリ）
+
+| 区分 | 旧 | 新 |
+|---|---|---|
+| テキスト主色 | `#1a2742` | `#0a0a0c` |
+| テキスト副 | `#5c6b85` | `#6e7280` |
+| 背景薄 | `#f6f7fb` | `#fafafa` |
+| ボーダー | `#e7eaf1` | `#e7e7eb` |
+| 副アクセント青/スカイ | あり | **廃止** |
+| 見出しフォント | Zen Kaku Gothic New 900 | **Shippori Mincho 500/600**（明朝・編集者的） |
+| 本文フォント | Noto Sans JP 400 | **Zen Kaku Gothic Antique 400** |
+| 英字・数字 | — | **Inter 500/700**（新規） |
+| h1 サイズ | 32→56 | **36→72** |
+| 本文サイズ | 16 | **17** |
+| カード角丸 | 16 | **20** |
+| シャドウ | `0 4px 24px rgba(...,.08)` | **極弱2段** |
+| セクションpadding | 48→160 | **80→200** |
+| グラデ使用範囲 | 比較的自由 | **CTA・1語色変え・細い帯だけ** |

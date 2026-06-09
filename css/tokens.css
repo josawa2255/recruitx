@@ -62,22 +62,22 @@
 
 @font-face {
   font-family: 'Noto Sans JP';
-  src: url('/fonts/noto-sans-jp-400.woff2') format('woff2');
+  src: url('../fonts/noto-sans-jp-400.woff2') format('woff2');
   font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Noto Sans JP';
-  src: url('/fonts/noto-sans-jp-700.woff2') format('woff2');
+  src: url('../fonts/noto-sans-jp-700.woff2') format('woff2');
   font-weight: 700; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Zen Kaku Gothic New';
-  src: url('/fonts/zen-kaku-gothic-new-700.woff2') format('woff2');
+  src: url('../fonts/zen-kaku-gothic-new-700.woff2') format('woff2');
   font-weight: 700; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Zen Kaku Gothic New';
-  src: url('/fonts/zen-kaku-gothic-new-900.woff2') format('woff2');
+  src: url('../fonts/zen-kaku-gothic-new-900.woff2') format('woff2');
   font-weight: 900; font-style: normal; font-display: swap;
 }
    ========================================================================= */

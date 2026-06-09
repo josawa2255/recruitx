@@ -21,6 +21,7 @@
 | タスク進捗・拡張計画 | [planning/ROADMAP.md](planning/ROADMAP.md) |
 | 新しい学び・トラブル解決・引き継ぎ知識 | [planning/KNOWLEDGE.md](planning/KNOWLEDGE.md) |
 | ルール化候補（逆フックが自動収集） | [planning/RULE-CANDIDATES.md](planning/RULE-CANDIDATES.md) |
+| HubSpot連携の実装仕様 | [operations/HUBSPOT-CTA-HANDOFF.md](operations/HUBSPOT-CTA-HANDOFF.md) |
 | 直したバグ | [/BUGS.md](../BUGS.md) |
 | 規約・ブランドボイス・ルーティング自体 | [/CLAUDE.md](../CLAUDE.md) |
 

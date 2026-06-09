@@ -5,253 +5,194 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>リクルートX｜求人広告に頼らない、SNS時代の採用</title>
   <meta name="description" content="リクルートXは、SNS運用・コンテンツ制作・Meta広告運用を通じて、共感から応募へつなげる採用の仕組みをつくります。求人広告に頼らない採用へ。">
-  <link rel="stylesheet" href="/css/tokens.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700&family=Inter:wght@500;700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="rx-jp-body">
 
-  <!-- ===================== HERO（ファーストビュー） ===================== -->
+  <!-- ===================== ヘッダーナビゲーション ===================== -->
+  <header class="rx-nav" id="nav">
+    <div class="rx-nav__inner">
+      <a class="rx-nav__brand" href="#hero" aria-label="リクルートX トップへ">
+        <span class="rx-nav__brand-name">Recruit&nbsp;X</span>
+      </a>
+      <nav class="rx-nav__menu" id="navMenu" aria-label="メインナビゲーション">
+        <a class="rx-nav__link" href="#service">サービス</a>
+        <a class="rx-nav__link" href="#case">事例</a>
+        <a class="rx-nav__link" href="#company">会社情報</a>
+        <a class="rx-nav__link" href="#news">お知らせ</a>
+      </nav>
+      <a class="rx-nav__cta" href="contact.html">
+        <span>お問い合わせ</span>
+        <svg class="rx-nav__cta-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10h10M10 5l5 5-5 5"/></svg>
+      </a>
+      <button class="rx-nav__hamburger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== HERO（ファーストビュー・sticky pin + scrub） ===================== -->
   <section class="rx-hero" id="hero">
-    <div class="rx-container">
-      <div class="rx-hero__inner">
+    <div class="rx-hero__sticky">
+      <!-- キービジュアル -->
+      <img class="rx-hero__bg" src="images/hero/hero-key.webp"
+           alt="スマートフォンから流れる、ブランドカラーの光のリボン"
+           width="1672" height="941"
+           loading="eager" fetchpriority="high" decoding="async">
 
-        <!-- 左コピー（PC左 / SP最上部 = 添付1） -->
-        <div class="rx-hero__copy">
-          <p class="rx-hero__eyebrow rx-anim">
-            <span class="rx-c-pink">SNS</span> × コンテンツ × <span class="rx-c-purple">広告</span>
-          </p>
-
+      <div class="rx-hero__copy">
+        <p class="rx-hero__eyebrow rx-anim">
+          <span class="rx-c-pink">SNS</span> × コンテンツ × <span class="rx-c-purple">広告</span>
+        </p>
+        <div class="rx-hero__title-stack">
           <h1 class="rx-hero__title rx-anim">
-            <span class="rx-hero__title-main">求人広告に頼らない採用へ。</span>
-            <span class="rx-hero__title-lead">
-              <span class="rx-w-sns">SNS</span>で、<span class="rx-w-know">知って、</span><span class="rx-w-like">好きになって、</span><span class="rx-w-apply">応募される。</span>
-            </span>
+            <span class="rx-w-sns">SNS</span>で、<span class="rx-w-know">知って</span><br>
+            <span class="rx-w-like">好きになって</span><br>
+            <span class="rx-w-apply">応募される</span>
           </h1>
-
-          <p class="rx-hero__lead rx-anim">
-            SNS運用・コンテンツ制作・Meta広告運用を通じて、<br class="rx-br-pc">
-            共感から応募へつなげる採用の仕組みをつくります。
-          </p>
-
-          <div class="rx-hero__cta rx-anim">
-            <a class="rx-btn rx-btn--primary" href="#contact">
-              <!-- 吹き出し（相談） -->
-              <svg class="rx-btn__lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/>
-              </svg>
-              無料で相談する
-              <svg class="rx-btn__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-            </a>
-            <a class="rx-btn rx-btn--ghost" href="#download">
-              <!-- ダウンロード -->
-              <svg class="rx-btn__lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>
-              </svg>
-              資料をダウンロード
-              <svg class="rx-btn__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-            </a>
-          </div>
-
-          <ul class="rx-feature-cards rx-anim">
-            <li class="rx-feature-card rx-feature-card--sns">
-              <div class="rx-feature-card__head">
-                <svg class="rx-feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-                <h3 class="rx-feature-card__title">SNS運用代行</h3>
-              </div>
-              <p class="rx-feature-card__desc">戦略設計から運用まで一気通貫でサポート</p>
-            </li>
-            <li class="rx-feature-card rx-feature-card--cont">
-              <div class="rx-feature-card__head">
-                <svg class="rx-feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
-                </svg>
-                <h3 class="rx-feature-card__title">コンテンツ制作</h3>
-              </div>
-              <p class="rx-feature-card__desc">共感を生む企画・撮影・デザインまで対応</p>
-            </li>
-            <li class="rx-feature-card rx-feature-card--meta">
-              <div class="rx-feature-card__head">
-                <svg class="rx-feature-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-                </svg>
-                <h3 class="rx-feature-card__title">Meta広告運用</h3>
-              </div>
-              <p class="rx-feature-card__desc">精度の高いターゲティングで応募につなげる</p>
-            </li>
-          </ul>
+          <p class="rx-hero__title-swap" aria-hidden="true"><span class="rx-hero__title-swap-line">求人広告に頼らない採用へ。</span><span class="rx-hero__title-swap-line">　SNS運用・コンテンツ制作・</span><span class="rx-hero__title-swap-line">　　Meta広告運用を通じて、</span><span class="rx-hero__title-swap-line">　　　届けたい人に、</span><span class="rx-hero__title-swap-line">　　　　ちゃんと届く採用へ</span></p>
         </div>
-
-        <!-- 右ビジュアル（PC右 / SP下部 = 添付2） -->
-        <div class="rx-hero__visual rx-anim">
-          <div class="rx-mock">
-
-            <!-- 装飾コネクター線（PCのみ・装飾） -->
-            <svg class="rx-mock__lines" viewBox="0 0 100 104" preserveAspectRatio="none" aria-hidden="true">
-              <g fill="none" stroke="rgba(163,43,191,.25)" stroke-width=".4" stroke-dasharray="1.5 1.5">
-                <path d="M28 22 C 40 26, 44 30, 50 34"/>
-                <path d="M72 18 C 64 26, 60 30, 56 36"/>
-                <path d="M28 62 C 40 58, 44 56, 50 52"/>
-                <path d="M70 56 C 62 54, 58 52, 54 50"/>
-              </g>
-            </svg>
-
-            <!-- 中央スマホ -->
-            <div class="rx-mock__phone">
-              <span class="rx-mock__island" aria-hidden="true"></span>
-              <div class="rx-mock__screen">
-                <div class="rx-mock__topbar">
-                  <span>フィード</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-                </div>
-
-                <div class="rx-mock__feed">
-                  <!-- 1 社員インタビュー -->
-                  <div class="rx-feed-item">
-                    <div class="rx-feed-item__body">
-                      <p class="rx-feed-item__title">社員インタビュー</p>
-                      <p class="rx-feed-item__sub">入社の決め手は“人の良さ”でした</p>
-                      <p class="rx-feed-item__meta">
-                        <span><svg class="rx-i-like" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>128</span>
-                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>12</span>
-                      </p>
-                    </div>
-                    <img class="rx-feed-item__thumb" src="/images/placeholders/photo.svg" alt="社員インタビューの写真（準備中）" width="120" height="120" loading="eager" decoding="async">
-                  </div>
-                  <!-- 2 オフィスツアー -->
-                  <div class="rx-feed-item">
-                    <div class="rx-feed-item__body">
-                      <p class="rx-feed-item__title">オフィスツアー</p>
-                      <p class="rx-feed-item__sub">Our Office</p>
-                      <p class="rx-feed-item__meta">
-                        <span><svg class="rx-i-like" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>96</span>
-                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>8</span>
-                      </p>
-                    </div>
-                    <img class="rx-feed-item__thumb" src="/images/placeholders/photo.svg" alt="オフィスツアーの写真（準備中）" width="120" height="120" loading="eager" decoding="async">
-                  </div>
-                  <!-- 3 1日の仕事密着 -->
-                  <div class="rx-feed-item">
-                    <div class="rx-feed-item__body">
-                      <p class="rx-feed-item__title">1日の仕事密着</p>
-                      <p class="rx-feed-item__sub">Day in the Life</p>
-                      <p class="rx-feed-item__meta">
-                        <span><svg class="rx-i-like" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>104</span>
-                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>10</span>
-                      </p>
-                    </div>
-                    <img class="rx-feed-item__thumb" src="/images/placeholders/photo.svg" alt="1日の仕事密着の写真（準備中）" width="120" height="120" loading="eager" decoding="async">
-                  </div>
-                  <!-- 4 よくある質問 -->
-                  <div class="rx-feed-item">
-                    <div class="rx-feed-item__body">
-                      <p class="rx-feed-item__title">よくある質問</p>
-                      <p class="rx-feed-item__sub">FAQ</p>
-                      <p class="rx-feed-item__meta">
-                        <span><svg class="rx-i-like" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>72</span>
-                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>6</span>
-                      </p>
-                    </div>
-                    <img class="rx-feed-item__thumb" src="/images/placeholders/photo.svg" alt="よくある質問のサムネイル（準備中）" width="120" height="120" loading="lazy" decoding="async">
-                  </div>
-                  <!-- 5 縦読み漫画 -->
-                  <div class="rx-feed-item">
-                    <div class="rx-feed-item__body">
-                      <p class="rx-feed-item__title">マンガでわかる！私たちの職場</p>
-                      <p class="rx-feed-item__meta">
-                        <span><svg class="rx-i-like" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>88</span>
-                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>7</span>
-                      </p>
-                    </div>
-                    <img class="rx-feed-item__thumb" src="/images/placeholders/photo.svg" alt="縦読み漫画のサムネイル（準備中）" width="120" height="120" loading="lazy" decoding="async">
-                  </div>
-                </div>
-
-                <nav class="rx-mock__nav" aria-hidden="true">
-                  <svg class="is-active" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="3"/><line x1="12" y1="9" x2="12" y2="15"/><line x1="9" y1="12" x2="15" y2="12"/></svg>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
-                </nav>
-              </div>
-              <span class="rx-mock__glare" aria-hidden="true"></span>
-            </div>
-
-            <!-- 候補者プロフィール（左上） -->
-            <figure class="rx-mock__card rx-mock__card--profile">
-              <p class="rx-mock__card-label">候補者プロフィール</p>
-              <div class="rx-mock__card-row">
-                <img src="/images/placeholders/avatar.svg" alt="候補者の写真（準備中）" width="96" height="96" loading="lazy" decoding="async">
-                <span class="rx-mock__name">田中 美咲（28）</span>
-              </div>
-              <ul>
-                <li>営業職 4年</li>
-                <li>転職を検討中</li>
-                <li>人や組織の成長に関心</li>
-              </ul>
-              <p class="rx-mock__empathy">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>
-                共感度 <b class="rx-stat-num">92%</b>
-              </p>
-            </figure>
-
-            <!-- Meta広告ターゲティング（右上） -->
-            <figure class="rx-mock__card rx-mock__card--targeting">
-              <p class="rx-mock__card-label">Meta広告ターゲティング</p>
-              <div class="rx-mock__ring"></div>
-              <dl>
-                <dt>年齢</dt><dd class="rx-stat-num">25-35歳</dd>
-                <dt>エリア</dt><dd>関東圏</dd>
-                <dt>興味関心</dt><dd>キャリアアップ・成長環境</dd>
-                <dt>行動</dt><dd>転職サイト閲覧者</dd>
-              </dl>
-            </figure>
-
-            <!-- フォロー・LINE（左下） -->
-            <figure class="rx-mock__card rx-mock__card--line">
-              <div class="rx-mock__line-head">
-                <svg class="rx-i-line" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.5 1.5 4.8 3.9 6.2-.2.7-.7 2.5-.8 2.9 0 .2.1.4.4.3.3-.1 2.6-1.7 3.6-2.4.9.1 1.9.2 2.9.2 5.5 0 10-3.6 10-8S17.5 3 12 3z"/></svg>
-                <p class="rx-mock__card-label">フォロー・LINEでつながる</p>
-              </div>
-              <ul>
-                <li>最新の募集情報をお届け</li>
-                <li>社員のリアルを発信中</li>
-                <li>気軽に相談できます！</li>
-              </ul>
-              <div class="rx-mock__avatars">
-                <img src="/images/placeholders/avatar.svg" alt="" width="96" height="96" loading="lazy" decoding="async" aria-hidden="true">
-                <img src="/images/placeholders/avatar.svg" alt="" width="96" height="96" loading="lazy" decoding="async" aria-hidden="true">
-                <img src="/images/placeholders/avatar.svg" alt="" width="96" height="96" loading="lazy" decoding="async" aria-hidden="true">
-                <span>他<span class="rx-stat-num">128</span>人が登録中</span>
-              </div>
-            </figure>
-
-            <!-- 応募してみる（右・中下） -->
-            <figure class="rx-mock__card rx-mock__card--apply">
-              <span class="rx-mock__send">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-              </span>
-              <p class="rx-mock__card-label">応募してみる</p>
-              <p class="rx-mock__card-text">カジュアル面談も受付中！</p>
-              <span class="rx-mock__pill">今すぐ応募する
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-              </span>
-            </figure>
-
-            <!-- オフィス3D図（右下） -->
-            <figure class="rx-mock__card rx-mock__card--office">
-              <img src="/images/placeholders/office-3d.svg" alt="オフィスの3Dイメージ（準備中）" width="320" height="220" loading="lazy" decoding="async">
-            </figure>
-
-          </div>
-        </div>
-
       </div>
     </div>
   </section>
 
-  <script src="/js/main.js" defer></script>
+  <!-- ===================== ABOUT（リクルートXとは） ===================== -->
+  <section class="rx-about" id="about" aria-labelledby="aboutHeading">
+    <div class="rx-about__inner">
+      <figure class="rx-about__media rx-anim">
+        <img src="images/about/about-pov.webp"
+             alt="スマートフォンを肩越しに眺める人物（SNSで企業情報に出会う瞬間）"
+             width="1122" height="1402"
+             loading="lazy" decoding="async">
+      </figure>
+      <div class="rx-about__copy rx-anim">
+        <p class="rx-about__eyebrow">ABOUT</p>
+        <h2 class="rx-about__heading" id="aboutHeading">リクルートXとは</h2>
+        <p class="rx-about__lead"><strong class="rx-about__keyword">SNS運用</strong>・<strong class="rx-about__keyword">コンテンツ制作</strong>・<strong class="rx-about__keyword">Meta広告運用</strong>を通じて、共感から応募へつなげる採用の仕組みをつくります。</p>
+        <p class="rx-about__lead rx-about__lead--secondary">SNS運用で「知ってもらい」、コンテンツ制作で「好きになってもらい」、Meta広告運用で「届けるべき人に届ける」。3つを一気通貫で設計することで、求人広告に頼らない採用が回り始めます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROBLEM「こんなお悩みありませんか？」===================== -->
+  <section class="rx-problem" id="problem" aria-labelledby="problemHeading">
+    <div class="rx-problem__inner">
+      <p class="rx-problem__eyebrow">WORRIES</p>
+      <h2 class="rx-problem__heading" id="problemHeading">こんなお悩み、ありませんか？</h2>
+
+      <ul class="rx-problem__cards">
+        <li class="rx-problem__card rx-anim">
+          <svg class="rx-problem__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 3v18h18"/>
+            <path d="M7 14l4-4 4 4 5-5"/>
+            <path d="M16 5h4v4"/>
+          </svg>
+          <h3 class="rx-problem__card-title">求人広告に頼ると、<br>コストばかりが膨らむ</h3>
+          <p class="rx-problem__card-desc">採用単価は年々上昇。広告予算を増やしても、応募はそれに比例しません。</p>
+        </li>
+        <li class="rx-problem__card rx-anim">
+          <svg class="rx-problem__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="8" cy="9" r="3"/>
+            <path d="M3 21v-1a5 5 0 0 1 5-5 5 5 0 0 1 5 5v1"/>
+            <line x1="16" y1="8" x2="22" y2="14"/>
+            <line x1="22" y1="8" x2="16" y2="14"/>
+          </svg>
+          <h3 class="rx-problem__card-title">応募は集まっても、<br>欲しい人材に出会えない</h3>
+          <p class="rx-problem__card-desc">数は届く。けれど価値観の合う人にはなかなか届かず、早期離職が止まらない。</p>
+        </li>
+        <li class="rx-problem__card rx-anim">
+          <svg class="rx-problem__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="6" y="2" width="12" height="20" rx="2"/>
+            <circle cx="12" cy="14" r="3"/>
+            <path d="M12 12v2l1.5 1"/>
+          </svg>
+          <h3 class="rx-problem__card-title">SNSや動画で発信したいが、<br>時間も人もない</h3>
+          <p class="rx-problem__card-desc">「やった方がいいのは分かっている」。でも採用担当の余力で続けるのは難しい。</p>
+        </li>
+      </ul>
+
+      <p class="rx-problem__bridge">そんなお悩み、<strong>リクルートX</strong>が解決します。</p>
+      <span class="rx-problem__arrow" aria-hidden="true">↓</span>
+    </div>
+  </section>
+
+  <!-- ===================== SERVICE「3ステップで採用を変える」===================== -->
+  <section class="rx-service" id="service" aria-labelledby="serviceHeading">
+    <div class="rx-service__inner">
+      <p class="rx-service__eyebrow">SERVICE</p>
+      <h2 class="rx-service__heading" id="serviceHeading">3つのステップで、<br class="rx-br-sp">採用を変える</h2>
+      <p class="rx-service__lead">コンテンツの力を起点に、SNSで継続的に発信し、Meta広告で届けたい人に届ける。<br class="rx-br-pc">一気通貫の流れだから、求人広告に頼らない採用が回り始めます。</p>
+
+      <ol class="rx-service__steps">
+        <li class="rx-service__step rx-anim" data-step="01">
+          <figure class="rx-service__media">
+            <img src="images/service/service-step-01-content.webp"
+                 alt="プロのカメラマンが社員インタビューを撮影する制作現場"
+                 width="1448" height="1086"
+                 loading="lazy" decoding="async">
+          </figure>
+          <div class="rx-service__copy">
+            <span class="rx-service__num" aria-hidden="true">01</span>
+            <p class="rx-service__label">STEP 01 ─ CONTENT</p>
+            <h3 class="rx-service__title">コンテンツ制作</h3>
+            <p class="rx-service__desc">「人」「文化」「想い」が伝わる映像・記事・写真を企画から制作まで。求人票では届かなかった会社の魅力を、共感を生む形に変換します。</p>
+            <ul class="rx-service__list">
+              <li>社員インタビュー動画・記事</li>
+              <li>オフィスツアー / 1日の仕事密着</li>
+              <li>採用ブランドの可視化</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="rx-service__step rx-anim rx-service__step--reverse" data-step="02">
+          <figure class="rx-service__media">
+            <img src="images/service/service-step-02-sns.webp"
+                 alt="制作したコンテンツをSNSで継続発信する運用設計"
+                 width="1448" height="1086"
+                 loading="lazy" decoding="async">
+          </figure>
+          <div class="rx-service__copy">
+            <span class="rx-service__num" aria-hidden="true">02</span>
+            <p class="rx-service__label">STEP 02 ─ SNS</p>
+            <h3 class="rx-service__title">SNS運用代行</h3>
+            <p class="rx-service__desc">制作したコンテンツを、SNSで継続的に発信。投稿スケジュール設計から運用、エンゲージメント分析までを一気通貫で担当します。</p>
+            <ul class="rx-service__list">
+              <li>投稿スケジュール設計・運用代行</li>
+              <li>コメント・DM対応</li>
+              <li>効果測定・改善PDCA</li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="rx-service__step rx-anim" data-step="03">
+          <figure class="rx-service__media">
+            <img src="images/service/service-step-03-meta.webp"
+                 alt="届けたい人のスマホにMeta広告でピンポイントに届ける"
+                 width="1448" height="1086"
+                 loading="lazy" decoding="async">
+          </figure>
+          <div class="rx-service__copy">
+            <span class="rx-service__num" aria-hidden="true">03</span>
+            <p class="rx-service__label">STEP 03 ─ META AD</p>
+            <h3 class="rx-service__title">Meta広告運用</h3>
+            <p class="rx-service__desc">発信したコンテンツを、Meta広告で届けたい人にピンポイントで届ける。職種・興味関心・行動データから精度の高いターゲティングを実装します。</p>
+            <ul class="rx-service__list">
+              <li>ターゲティング設計（職種・興味・行動）</li>
+              <li>クリエイティブ最適化・A/Bテスト</li>
+              <li>配信レポート・入札最適化</li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+
+      <p class="rx-service__bridge">3つが連動して、<strong>求人広告に頼らない採用</strong>が回り始めます。</p>
+    </div>
+  </section>
+
+  <script src="js/main.js" defer></script>
 </body>
 </html>

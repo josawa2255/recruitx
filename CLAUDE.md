@@ -4,7 +4,7 @@
 
 ## TL;DR（最優先で守る3点）
 
-1. **絶対パス必須**・**HTML/CSS/JS分離**・**commit & push は Claude が実施**
+1. **同階層相対パス**（`href="css/..."`・`file://`で開ける）・**HTML/CSS/JS分離**・**commit & push は Claude が実施**
 2. **絵文字禁止 / 「Webtoon」表記回避（→「縦スクロール漫画」「縦読み」）/ AI混在比率を書かない**
 3. 機能・動作・URL・共通コンポーネントを変えたら **同一コミット内で該当mdを更新**（後回し禁止）
 
@@ -20,7 +20,7 @@
 
 ## エンジニアリング規約（Contents X 系共通・厳守）
 
-- **リンクは絶対パス必須**: `href`/`src` は必ず `/` 始まり（相対パスはサブディレクトリで404の主因）
+- **リンクのパス**: 単一ページLP（リポルート配置）のため**同階層相対**で書く（例 `href="css/style.css"`）。これで `file://` ダブルクリックでもローカルサーバーでも GitHub Pages でも解決する。**ページが増えてサブディレクトリ化したら絶対パス（`/` 始まり）に切り替える**
 - **HTML/CSS/JS分離**: インラインCSS/JS禁止、最初から外部ファイルに分ける
 - **commit & push は Claude 側で実施**
 - バグを直したら [BUGS.md](BUGS.md) に1行追記
@@ -46,6 +46,7 @@
 | やること・拡張計画 | [docs/planning/ROADMAP.md](docs/planning/ROADMAP.md) |
 | 学び・引き継ぎ知識 | [docs/planning/KNOWLEDGE.md](docs/planning/KNOWLEDGE.md) |
 | ルール化候補（自動収集の下書き） | [docs/planning/RULE-CANDIDATES.md](docs/planning/RULE-CANDIDATES.md) |
+| お問い合わせのHubSpot連携仕様 | [docs/operations/HUBSPOT-CTA-HANDOFF.md](docs/operations/HUBSPOT-CTA-HANDOFF.md) |
 | バグと再発防止 | [BUGS.md](BUGS.md) |
 | **md運用ルール・スキル使用・自動修整の判断** | [docs/DOC-RULES.md](docs/DOC-RULES.md) ⭐ |
 | **Claude公式の最新推奨の追従状況** | [docs/operations/BEST-PRACTICE-WATCH.md](docs/operations/BEST-PRACTICE-WATCH.md) ⭐ |
