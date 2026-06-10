@@ -120,6 +120,9 @@
   var START_BASE = 0.18;
   var STAGGER    = 0.08;
   var REVEAL     = 0.18;
+  // 文字アニメは進行度0〜0.6（=150svh）で完結。残り0.6〜1.0（=100svh）は
+  // 背景固定のままAboutが下から覆うカーテンリビール区間（CSS側で実装）
+  var TEXT_PHASE = 0.6;
 
   var ticking = false;
   var scrollable = 1;
@@ -138,6 +141,8 @@
     ticking = false;
     var p = -hero.getBoundingClientRect().top / scrollable;
     if (p < 0) p = 0; else if (p > 1) p = 1;
+    p = p / TEXT_PHASE;              // 文字アニメ用の進行度に変換（0.6で1.0に到達）
+    if (p > 1) p = 1;
 
     // h1: 進行度 0〜0.5 でフェードアウト
     var titleOp = 1 - p * 2;
