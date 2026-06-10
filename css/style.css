@@ -727,7 +727,6 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
 @media (prefers-reduced-motion: reduce) {
   .rx-nav__cta-text, .rx-nav__cta-alt { transition: none; }
 }
-.rx-nav__cta-arrow { width: 1.05em; height: 1.05em; }
 
 /* ハンバーガー（SPのみ） */
 .rx-nav__hamburger {
