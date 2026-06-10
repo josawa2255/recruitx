@@ -1161,13 +1161,10 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
 }
 
 /* =====================================================================
-   ヒーロー文字スワップ: スクロールで h1 ⇄ 階段リード が入れ替わる
+   ヒーロー文字スワップ: h1 ⇄ 階段リード（JSのscrubが毎フレーム直接制御）
    ===================================================================== */
 .rx-hero__title-stack {
   position: relative;
-}
-.rx-hero__title-stack .rx-hero__title {
-  transition: opacity .55s ease, transform .55s ease;
 }
 .rx-hero__title-swap {
   position: absolute;
@@ -1181,37 +1178,18 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   color: #0a0a0c;
   white-space: pre-line;
   opacity: 0;
-  transform: translateY(14px);
   pointer-events: none;
-  transition: opacity .55s ease, transform .55s ease;
-}
-
-/* スクロール後の入れ替え状態 */
-.is-hero-scrolled .rx-hero__title-stack .rx-hero__title {
-  opacity: 0;
-  transform: translateY(-14px);
-}
-.is-hero-scrolled .rx-hero__title-stack .rx-hero__title-swap {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-}
-
-/* アクセシビリティ: モーション抑制時はトランジションを切る */
-@media (prefers-reduced-motion: reduce) {
-  .rx-hero__title,
-  .rx-hero__title-swap { transition: none; }
 }
 
 /* =====================================================================
    HERO: sticky pin + scrub
-   - 外枠 .rx-hero は背を高くしてスクロール距離を確保（150svh）
+   - 外枠 .rx-hero は背を高くしてスクロール距離を確保（250svh）
    - 中身 .rx-hero__sticky は 100svh で sticky → 画面に貼り付く
    - JS が scroll progress 0→1 を計算し、テキストをcrossfade
    ===================================================================== */
 .rx-hero {
   position: relative;
-  height: 150svh;                    /* sticky 100vh + 余分50vh = scrub距離 */
+  height: 250svh;                    /* sticky 100svh + 余分150svh = scrub距離 */
   overflow: visible;
 }
 .rx-hero__sticky {
@@ -1243,10 +1221,6 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   .rx-hero__bg { position: static; height: auto; object-fit: contain; }
   .rx-hero__title-swap { display: none; }
 }
-
-/* HERO高さを3倍のscrub距離に: 150svh → 250svh（extra scroll: 50vh → 150vh）
-   文章が変わり始めるのは「30vh スクロール後」になる（旧10vhから3倍） */
-.rx-hero { height: 250svh; }
 
 /* 階段リード: 全角空白(　)を維持＋最終行が折り返さないよう枠を拡張
    - white-space: pre → 改行も空白もすべて保持・自動折り返ししない
@@ -1471,4 +1445,24 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   padding: 0 .15em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+}
+
+/* =====================================================================
+   フォームのセキュリティ補助
+   - honeypot: botだけが埋める不可視フィールド（display:noneは回避されやすいためoffscreen）
+   - エラー表示: JSが textContent で文言を入れる
+   ===================================================================== */
+.rx-form__hp {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.rx-form__error {
+  margin: 0 0 16px;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .9375rem;
+  line-height: 1.7;
+  color: #d3265c;
 }
