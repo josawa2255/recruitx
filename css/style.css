@@ -1048,56 +1048,64 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
 }
 
 /* カード */
-.rx-problem__cards {
+/* 「現場の声」引用スタイル: カード枠なし・大きな明朝の引用符＋セリフ＋出典 */
+.rx-problem__voices {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(16px, 2vw, 24px);
-  max-width: 1080px;
-  margin: 0 auto clamp(40px, 6vw, 56px);
+  gap: clamp(40px, 5vw, 32px);
+  max-width: 1120px;
+  margin: 0 auto clamp(48px, 7vw, 72px);
   text-align: left;
 }
 @media (min-width: 769px) {
-  .rx-problem__cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .rx-problem__voices { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(32px, 4vw, 64px); }
 }
-.rx-problem__card {
+.rx-problem__voice { min-width: 0; }
+.rx-problem__quote {
   position: relative;
-  background: #fff;
-  border: 1px solid #e7e7eb;
-  border-left: 3px solid #ec2d87;             /* ブランドピンクの細い縦線 */
-  border-radius: 20px;
-  padding: clamp(24px, 3vw, 32px);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
-  transition: transform .25s ease, box-shadow .25s ease;
+  margin: 0 0 clamp(18px, 2.4vw, 26px);
+  padding-top: clamp(40px, 5vw, 56px);       /* 引用符ぶんの空間 */
 }
-.rx-problem__card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, .08);
-}
-.rx-problem__icon {
-  width: 36px;
-  height: 36px;
+.rx-problem__quote::before {
+  content: "\201C";                            /* “ 大きな明朝の引用符 */
+  position: absolute;
+  top: 0;
+  left: -.06em;
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  font-weight: 600;
+  font-size: clamp(3.5rem, 2.6rem + 3vw, 5.5rem);
+  line-height: 1;
   color: #ec2d87;
-  margin-bottom: clamp(16px, 2vw, 20px);
+  opacity: .9;
 }
-.rx-problem__card-title {
-  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.0625rem, 1rem + .35vw, 1.25rem);
-  line-height: 1.6;
+.rx-problem__quote p {
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  font-weight: 500;
+  font-size: clamp(1.1875rem, 1.05rem + .5vw, 1.375rem);
+  line-height: 2;
+  letter-spacing: .03em;
   color: #0a0a0c;
-  margin: 0 0 12px;
-  letter-spacing: .02em;
-  word-break: keep-all;
-}
-.rx-problem__card-desc {
-  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.85;
-  color: #6e7280;
   margin: 0;
   word-break: keep-all;
   overflow-wrap: anywhere;
+}
+.rx-problem__attr {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 400;
+  font-size: .875rem;
+  letter-spacing: .06em;
+  color: #6e7280;
+  margin: 0;
+}
+.rx-problem__attr::before {
+  content: "";
+  flex-shrink: 0;
+  width: 28px;
+  height: 1px;
+  background: #ec2d87;
 }
 
 /* カード下のブリッジ文（Service へつなぐ） */
