@@ -1492,3 +1492,68 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   line-height: 1.7;
   color: #d3265c;
 }
+
+/* =====================================================================
+   SERVICE PLUS: 求人広告 運用代行（3ステップを補完するオプション帯）
+   PC = 左に大きな「PLUS」/ 右に本文。SP = 縦積み
+   ===================================================================== */
+.rx-service__plus {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(20px, 3vw, 48px);
+  align-items: start;
+  max-width: 1040px;
+  margin: clamp(56px, 8vw, 96px) auto 0;
+  padding: clamp(28px, 4vw, 56px);
+  background: #fafafa;
+  border: 1px solid #e7e7eb;
+  border-radius: 24px;
+  text-align: left;
+}
+@media (min-width: 769px) {
+  .rx-service__plus { grid-template-columns: auto minmax(0, 1fr); }
+}
+.rx-service__plus-label {
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: .04em;
+  color: #ec2d87;
+  opacity: .85;
+  margin: 0;
+}
+.rx-service__plus-eyebrow {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 500;
+  font-size: .9375rem;
+  letter-spacing: .08em;
+  color: #6e7280;
+  margin: 0 0 10px;
+}
+.rx-service__plus-title {
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  font-weight: 500;
+  font-size: clamp(1.375rem, 1.15rem + 1vw, 1.875rem);
+  line-height: 1.4;
+  letter-spacing: .02em;
+  color: #0a0a0c;
+  margin: 0 0 clamp(14px, 1.8vw, 20px);
+}
+.rx-service__plus-desc {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, .95rem + .25vw, 1.0625rem);
+  line-height: 1.9;
+  color: #0a0a0c;
+  margin: 0 0 clamp(18px, 2.2vw, 24px);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.rx-service__plus-desc strong {
+  background: linear-gradient(transparent 62%, rgba(236, 45, 135, .22) 38%);
+  font-weight: 600;
+  padding: 0 .15em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
