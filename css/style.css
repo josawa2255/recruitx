@@ -537,7 +537,7 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
 
 .rx-hero__copy {
   position: absolute;
-  top: clamp(80px, 10vw, 140px);     /* 上部ナビゲーター(72〜80px想定)用の余白を確保 */
+  top: clamp(80px, 12svh, 140px);    /* ナビ余白＋画面の高さに比例（縦横比追従） */
   left: clamp(16px, 5vw, 64px);
   z-index: 2;
   max-width: min(70%, 480px);
@@ -605,10 +605,19 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   text-shadow: none;
 }
 
-/* ヒーロー見出しサイズ調整: 一回り大きく（旧24→40px / 新30→52px） */
+/* ヒーロー見出しサイズ: 画面の縦横比に追従（vw=横 + svh=縦 のミックス）
+   heroは100svhのsticky枠なので、画像(object-fit: cover)と同じく
+   横長の低い画面では小さく・縦に余裕がある画面では大きくなる */
 .rx-hero__copy .rx-hero__title {
-  font-size: clamp(1.875rem, 1.3rem + 2.4vw, 3.25rem);
+  font-size: clamp(1.625rem, 1.2vw + 3.2svh + .4rem, 3.25rem);
   line-height: 1.55;
+}
+.rx-hero__copy .rx-hero__eyebrow {
+  font-size: clamp(.875rem, .4vw + 1.2svh + .3rem, 1.1875rem);
+}
+/* SP: 縦長端末でsvh成分が効きすぎないよう見出しの上限だけ抑える */
+@media (max-width: 768px) {
+  .rx-hero__copy .rx-hero__title { font-size: clamp(1.625rem, 1.2vw + 3.2svh + .4rem, 2.125rem); }
 }
 
 /* =====================================================================
@@ -1234,7 +1243,7 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   width: max-content;
   max-width: calc(100vw - 40px);
   white-space: pre;
-  font-size: clamp(1rem, .85rem + 1.1vw, 1.75rem);  /* 16→28px */
+  font-size: clamp(1rem, .6vw + 1.7svh + .35rem, 1.75rem);  /* 16→28px・縦横比に追従 */
   line-height: 1.95;
 }
 @media (max-width: 480px) {

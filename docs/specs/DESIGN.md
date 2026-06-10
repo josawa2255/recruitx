@@ -78,6 +78,8 @@ font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 
 **大きな見出し × 大きな余白**（Apple/Stripe基準）。clamp は rem+vw 混在、最大は最小の2.5倍以内（[DEVICE-RULES.md](DEVICE-RULES.md) §5）。
 
+**ヒーロー内テキストの例外（縦横比追従）**: heroは100svhのsticky枠のため、内部の文字サイズと配置は `vw + svh` のミックスでスケールさせる（画像の `object-fit: cover` と同じ感覚で、横長の低い画面では小さく・縦に余裕がある画面では大きく）。実装値: h1 `clamp(1.625rem, 1.2vw + 3.2svh + .4rem, 3.25rem)`（SPは上限2.125rem）/ 階段リード `clamp(1rem, .6vw + 1.7svh + .35rem, 1.75rem)` / copy配置 `top: clamp(80px, 12svh, 140px)`。通常フローのセクション見出しは従来どおり vw のみで良い。
+
 | 用途 | 変数 | 値（≒px 320→1440幅） |
 |------|------|------|
 | ヒーロー h1 | `--rx-fs-hero` | `clamp(2.25rem, 1.4rem + 3.4vw, 4.5rem)`（36→72） |
