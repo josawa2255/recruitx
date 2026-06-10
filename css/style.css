@@ -638,8 +638,8 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   border-bottom-color: var(--rx-border, #e7e7eb);
 }
 .rx-nav__inner {
-  max-width: 1280px;
-  margin: 0 auto;
+  /* 全幅: ロゴは常に画面左端・メニューは右端（ワイド画面で中央に寄らない） */
+  width: 100%;
   padding: clamp(12px, 1.4vw, 18px) clamp(16px, 4vw, 40px);
   display: flex;
   align-items: center;
