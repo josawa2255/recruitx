@@ -685,10 +685,11 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
 .rx-nav__link:hover::after,
 .rx-nav__link:focus-visible::after { transform: scaleX(1); }
 
+/* お問い合わせCTA: contentsx.jp と同じテキストロールアップ
+   hover/focusで「お問い合わせ→」が上へ抜け、「Contact→」が下からロールイン
+   二層は grid 重ね置き（同セル）+ overflow: hidden でクリップ */
 .rx-nav__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: .5em;
+  display: inline-grid;
   font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
   font-weight: 600;
   font-size: .9375rem;
@@ -700,13 +701,31 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   letter-spacing: .04em;
   text-decoration: none;
   min-height: 40px;
-  transition: background-color .2s ease, transform .15s ease, box-shadow .2s ease;
+  overflow: hidden;
+  transition: background-color .3s ease, transform .25s ease, box-shadow .3s ease;
   flex-shrink: 0;
 }
 .rx-nav__cta:hover {
   background: #fbd3e1;
   transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(236, 38, 141, .14);
+}
+.rx-nav__cta-text,
+.rx-nav__cta-alt {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+}
+.rx-nav__cta-alt  { transform: translateY(180%); }   /* paddingぶんも含め完全に隠す */
+.rx-nav__cta:hover .rx-nav__cta-text,
+.rx-nav__cta:focus-visible .rx-nav__cta-text { transform: translateY(-180%); }
+.rx-nav__cta:hover .rx-nav__cta-alt,
+.rx-nav__cta:focus-visible .rx-nav__cta-alt  { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .rx-nav__cta-text, .rx-nav__cta-alt { transition: none; }
 }
 .rx-nav__cta-arrow { width: 1.05em; height: 1.05em; }
 
