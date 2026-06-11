@@ -18,6 +18,17 @@
 | ドメイン | `recruitx.contentsx.jp`（GitHub Pages + CNAME / DNS お名前.com） |
 | クラスプレフィックス | `.rx-` / CSS変数 `--rx-*` / localStorage `rx-lang` |
 
+## WordPress連携（cms.contentsx.jp・⭐スキル必須）
+
+リクルートXのコンテンツをWPで管理する作業（CPT追加・メニュー・CORS・API）は、**ユーザーレベルスキル `wp-service-onboard` を必ず発動**して進める（「WPに引き込んで」「CPT追加」等で自動発動）。
+
+| 項目 | 値 |
+|------|-----|
+| WPプラグインのマスター | `/Users/hirasawa4323/Documents/書類 -重要/contentX/web/ContentX_HP/ContentX/wordpress/contentsx-cms/contentsx-cms.php`（**このリポジトリにPHPは無い・置かない**） |
+| アクセス権 | `.claude/settings.json` の `additionalDirectories` で ContentX_HP に付与済み。`ContentX/bizmanga/`（301リダイレクト群）は deny で編集禁止 |
+| 編集前の必読 | ContentX_HP側の `CLAUDE.md`・`BUGS.md` Pre-flight・`docs/operations/WP-SERVICE-ONBOARDING.md`（スキルの §0b 別ワークスペース実行プロトコルに従う） |
+| 本番反映 | お名前.comファイルマネージャーで手動アップロード（コード修正＝本番反映ではない） |
+
 ## エンジニアリング規約（Contents X 系共通・厳守）
 
 - **リンクのパス**: 単一ページLP（リポルート配置）のため**同階層相対**で書く（例 `href="css/style.css"`）。これで `file://` ダブルクリックでもローカルサーバーでも GitHub Pages でも解決する。**ページが増えてサブディレクトリ化したら絶対パス（`/` 始まり）に切り替える**

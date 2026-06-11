@@ -23,6 +23,13 @@
       "Bash(gh pr checks*)",
       "Bash(gh repo view*)",
       "Bash(python3 -m http.server*)"
+    ],
+    "deny": [
+      "Edit(/Users/hirasawa4323/Documents/書類 -重要/contentX/web/ContentX_HP/ContentX/bizmanga/**)",
+      "Write(/Users/hirasawa4323/Documents/書類 -重要/contentX/web/ContentX_HP/ContentX/bizmanga/**)"
+    ],
+    "additionalDirectories": [
+      "/Users/hirasawa4323/Documents/書類 -重要/contentX/web/ContentX_HP"
     ]
   },
   "hooks": {
