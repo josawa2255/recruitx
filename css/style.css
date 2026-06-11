@@ -685,6 +685,18 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
 .rx-nav__link:hover::after,
 .rx-nav__link:focus-visible::after { transform: scaleX(1); }
 
+/* 現在ページ: ピンクで「現在地」を示す（全ページ共通のナビ仕様） */
+.rx-nav__link[aria-current="page"] { color: var(--rx-accent, #ec2d87); }
+
+/* 準備中の項目（料金プラン・お役立ち情報・コラム）: href無しのプレースホルダー。
+   薄く表示し、下線アニメ・ポインタを無効化して「まだ遷移しない」ことを示す */
+.rx-nav__link[aria-disabled="true"] { opacity: .5; cursor: default; }
+.rx-nav__link[aria-disabled="true"]::after { content: none; }
+@media (max-width: 768px) {
+  /* SP全画面メニューでも準備中項目は薄く */
+  .rx-nav__menu .rx-nav__link[aria-disabled="true"] { opacity: .45; }
+}
+
 /* お問い合わせCTA: contentsx.jp と同じテキストロールアップ
    hover/focusで「お問い合わせ→」が上へ抜け、「Contact→」が下からロールイン
    二層は grid 重ね置き（同セル）+ overflow: hidden でクリップ */
