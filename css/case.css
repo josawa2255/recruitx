@@ -1,480 +1,347 @@
 /* =========================================================================
    case.css — リクルートX 導入事例ページ（case.html 専用）
    依存: css/tokens.css → css/style.css の後に読み込む
-   トーン: トップLPと同じエディトリアル調
-   （Inter の英字 eyebrow / Shippori Mincho 見出し / Zen Kaku Gothic Antique 本文 / ピンク #ec2d87）
+   デザイン: 「デザイン候補/事例.png」のモックを忠実に再現し、
+   　　　　　青のアクセントをブランドのピンク #ec2d87 / 黒系 #0a0a0c に置換
    ブレークポイント（DEVICE-RULES §3）: SP ≤768 / TAB 769–1024 / PC ≥1025
    ========================================================================= */
 
-/* SPだけ改行する br（このページ専用。PC では非表示） */
-.rx-br-sp { display: inline; }
-@media (min-width: 769px) { .rx-br-sp { display: none; } }
+/* =====================================================================
+   ナビ上書き（.rx-casepage スコープ・他ページの見た目は変えない）
+   モック: 太字ゴシックのロゴ / キャレット付きメニュー / 黒のピル型CTA
+   ===================================================================== */
+.rx-casepage .rx-nav__brand {
+  font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: 1.3125rem;
+  letter-spacing: .01em;
+  color: #0a0a0c;
+}
+.rx-casepage .rx-nav__link {
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.rx-casepage .rx-nav__link svg {
+  width: 10px;
+  height: 10px;
+  opacity: .55;
+  flex-shrink: 0;
+}
+.rx-casepage .rx-nav__link[aria-current="page"] { font-weight: 700; }
+.rx-casepage .rx-nav__cta {
+  background: #0a0a0c;
+  color: #fff;
+  border: 1px solid #0a0a0c;
+  border-radius: 999px;
+  padding: .7em 1.6em;
+}
+.rx-casepage .rx-nav__cta:hover {
+  background: #26262b;
+  box-shadow: 0 6px 18px rgba(10, 10, 12, .22);
+}
 
 /* =====================================================================
-   ページヘッダー
+   ページヘッダー: 左テキスト / 右写真（左へ白フェード）
    ===================================================================== */
-.rx-casehero {
-  background: #fff;
-  padding: clamp(120px, 16vw, 220px) 0 clamp(56px, 8vw, 104px);
+.rx-chero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, #ffffff 0%, #fdf2f8 55%, #fbeaf3 100%);
+  padding: calc(64px + clamp(40px, 7vw, 80px)) 0 clamp(44px, 7vw, 84px);
 }
-.rx-casehero__inner {
+.rx-chero__photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(56%, 820px);
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* 左端・下端を背景に溶かす（モックの白フェード） */
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,.92) 45%, transparent 98%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,.92) 45%, transparent 98%);
+}
+.rx-chero::after {
+  /* 写真の下端を背景色へなじませる薄いグラデ */
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(56%, 820px);
+  height: 38%;
+  background: linear-gradient(to top, rgba(251, 234, 243, .85), transparent);
+  pointer-events: none;
+}
+.rx-chero__inner {
+  position: relative;
+  z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 40px);
-  text-align: center;
 }
-.rx-casehero__eyebrow {
+.rx-chero__eyebrow {
   font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: .875rem;
+  font-weight: 700;
+  font-size: .8125rem;
   letter-spacing: .14em;
-  color: #6e7280;
   text-transform: uppercase;
-  margin: 0 0 clamp(12px, 1.8vw, 20px);
+  color: #ec2d87;
+  margin: 0 0 clamp(10px, 1.5vw, 16px);
 }
-.rx-casehero__heading {
-  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
-  font-weight: 500;
-  font-size: clamp(1.875rem, 1.4rem + 1.8vw, 3rem);
-  line-height: 1.4;
+.rx-chero__heading {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.125rem, 1.5rem + 2.8vw, 3.5rem);
+  line-height: 1.25;
   letter-spacing: .02em;
   color: #0a0a0c;
-  margin: 0 0 clamp(16px, 2.5vw, 24px);
-  word-break: keep-all;
+  margin: 0 0 clamp(12px, 2vw, 20px);
 }
-.rx-casehero__lead {
+.rx-chero__lead {
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
   font-weight: 400;
-  font-size: clamp(1rem, .95rem + .25vw, 1.0625rem);
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
   line-height: 1.9;
-  color: #6e7280;
-  margin: 0 auto;
-  max-width: 720px;
+  color: #3f4651;
+  max-width: 34em;
+  margin: 0;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
-
-/* サマリー数字: 3つ横並び（SPは縦積み）・罫線区切りの編集者的な帯 */
-.rx-casehero__stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-width: 880px;
-  margin: clamp(40px, 6vw, 72px) auto 0;
-  padding: 0;
-  list-style: none;
-}
-.rx-casehero__stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: clamp(8px, 1.5vw, 16px) clamp(12px, 2vw, 24px);
-  border-left: 1px solid #e7e7eb;
-}
-.rx-casehero__stat:first-child { border-left: 0; }
-.rx-casehero__stat-num {
-  font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 700;
-  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
-  line-height: 1.1;
-  color: #ec2d87;
-  letter-spacing: -.01em;
-  display: inline-flex;
-  align-items: baseline;
-  gap: .08em;
-}
-.rx-casehero__stat-num b { font-weight: 700; }
-.rx-casehero__stat-num small {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 700;
-  font-size: .45em;
-  color: #0a0a0c;
-}
-.rx-casehero__stat-label {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .8125rem;
-  letter-spacing: .04em;
-  color: #6e7280;
-}
-@media (max-width: 600px) {
-  .rx-casehero__stats { grid-template-columns: 1fr; gap: 20px; }
-  .rx-casehero__stat { border-left: 0; border-top: 1px solid #e7e7eb; padding-top: 20px; }
-  .rx-casehero__stat:first-child { border-top: 0; padding-top: 0; }
+/* SP: 写真は薄く背景化して文字の可読性を確保 */
+@media (max-width: 768px) {
+  .rx-chero__photo { width: 100%; opacity: .3; }
+  .rx-chero::after { width: 100%; }
 }
 
 /* =====================================================================
-   ピックアップ事例（Before → After の大型パネル）
+   事例一覧: フィルタ + 2カラムカード
    ===================================================================== */
-.rx-casefeat {
+.rx-clist {
   background: #fff;
-  padding: 0 0 clamp(72px, 10vw, 140px);
+  padding: clamp(36px, 5vw, 64px) 0 clamp(72px, 10vw, 128px);
 }
-.rx-casefeat__inner {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: clamp(32px, 5vw, 64px) clamp(24px, 4vw, 64px);
-  background: #fafafa;
-  border: 1px solid #e7e7eb;
-  border-radius: 24px;
-  text-align: center;
-}
-/* パネルの左右余白（コンテナ代わり） */
-@media (max-width: 1128px) {
-  .rx-casefeat__inner { margin-left: clamp(20px, 4vw, 40px); margin-right: clamp(20px, 4vw, 40px); }
-}
-.rx-casefeat__tag {
-  font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 500;
-  font-size: .8125rem;
-  letter-spacing: .14em;
-  color: #6e7280;
-  text-transform: uppercase;
-  margin: 0 0 clamp(14px, 2vw, 22px);
-}
-.rx-casefeat__heading {
-  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
-  font-weight: 500;
-  font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.375rem);
-  line-height: 1.5;
-  letter-spacing: .02em;
-  color: #0a0a0c;
-  margin: 0 0 clamp(32px, 4.5vw, 48px);
-  word-break: keep-all;
-}
-
-/* Before → After */
-.rx-casefeat__ba {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: clamp(16px, 3vw, 40px);
-  margin: 0 0 clamp(32px, 4.5vw, 48px);
-}
-.rx-casefeat__before,
-.rx-casefeat__after {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-.rx-casefeat__ba-label {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: .75rem;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: #6e7280;
-}
-.rx-casefeat__after .rx-casefeat__ba-label { color: #ec2d87; }
-.rx-casefeat__ba-num {
-  font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 700;
-  line-height: 1.05;
-  display: inline-flex;
-  align-items: baseline;
-  gap: .1em;
-  white-space: nowrap;
-}
-.rx-casefeat__before .rx-casefeat__ba-num {
-  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
-  color: #9aa0ab;
-}
-.rx-casefeat__after .rx-casefeat__ba-num {
-  font-size: clamp(3rem, 1.8rem + 5vw, 6rem);
-  color: #ec2d87;
-  letter-spacing: -.02em;
-}
-.rx-casefeat__after .rx-casefeat__ba-num span {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .4em;
-  font-weight: 700;
-  color: #0a0a0c;
-}
-.rx-casefeat__ba-num small {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .4em;
-  font-weight: 700;
-  color: #0a0a0c;
-}
-.rx-casefeat__before .rx-casefeat__ba-num small { color: #9aa0ab; }
-.rx-casefeat__ba-note {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .8125rem;
-  line-height: 1.7;
-  color: #6e7280;
-  max-width: 30em;
-}
-.rx-casefeat__arrow {
-  width: clamp(28px, 4vw, 44px);
-  height: clamp(28px, 4vw, 44px);
-  color: #ec2d87;
-  flex-shrink: 0;
-}
-@media (max-width: 640px) {
-  .rx-casefeat__ba { grid-template-columns: 1fr; }
-  .rx-casefeat__arrow { margin: 0 auto; transform: rotate(90deg); }
-}
-
-/* 指標 */
-.rx-casefeat__data {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1px;
-  background: #e7e7eb;            /* セル間1pxの罫線 */
-  border: 1px solid #e7e7eb;
-  border-radius: 14px;
-  overflow: hidden;
-  margin: 0 0 clamp(20px, 3vw, 28px);
-}
-.rx-casefeat__data > div {
-  background: #fff;
-  padding: clamp(12px, 1.8vw, 18px) clamp(8px, 1.5vw, 16px);
-}
-.rx-casefeat__data dt {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .75rem;
-  letter-spacing: .08em;
-  color: #6e7280;
-  margin: 0 0 4px;
-}
-.rx-casefeat__data dd {
-  font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 700;
-  font-size: clamp(.9375rem, .9rem + .3vw, 1.125rem);
-  color: #0a0a0c;
-  margin: 0;
-  font-variant-numeric: tabular-nums;
-}
-.rx-casefeat__note {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .8125rem;
-  line-height: 1.8;
-  color: #6e7280;
-  margin: 0;
-}
-
-/* =====================================================================
-   事例一覧（フィルタ + カードグリッド）
-   ===================================================================== */
-.rx-cases {
-  background: #fafafa;
-  padding: clamp(72px, 10vw, 140px) 0;
-}
-.rx-cases__inner {
+.rx-clist__inner {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 40px);
 }
-.rx-cases__heading {
-  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
-  font-weight: 500;
-  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
-  line-height: 1.4;
-  letter-spacing: .02em;
-  color: #0a0a0c;
-  text-align: center;
-  margin: 0 0 clamp(28px, 4vw, 44px);
-}
 
-/* 業種フィルタ */
-.rx-cases__filter {
+/* フィルタ: 非選択はテキスト / 選択中は黒ピル（モック準拠） */
+.rx-clist__filter {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin: 0 0 clamp(32px, 5vw, 56px);
+  align-items: center;
+  gap: clamp(6px, 1.5vw, 14px);
+  margin: 0 0 clamp(32px, 5vw, 52px);
 }
-.rx-cases__filter-btn {
+.rx-clist__filter-btn {
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
   font-weight: 500;
   font-size: .9375rem;
   letter-spacing: .04em;
   color: #0a0a0c;
-  background: #fff;
-  border: 1px solid #e7e7eb;
+  background: transparent;
+  border: 0;
   border-radius: 999px;
-  padding: .6em 1.5em;
+  padding: .65em 1.5em;
   min-height: 44px;                       /* タップ領域（DEVICE-RULES §12） */
   cursor: pointer;
-  transition: border-color .2s ease, background-color .2s ease, color .2s ease;
+  transition: color .2s ease, background-color .2s ease;
 }
-.rx-cases__filter-btn:hover { border-color: #ec2d87; }
-.rx-cases__filter-btn[aria-pressed="true"] {
+.rx-clist__filter-btn:hover { color: #ec2d87; }
+.rx-clist__filter-btn[aria-pressed="true"] {
   background: #0a0a0c;
-  border-color: #0a0a0c;
   color: #fff;
+  font-weight: 700;
 }
 
-/* カードグリッド */
-.rx-cases__grid {
+/* グリッド: PC=2カラム / SP=1カラム */
+.rx-clist__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(16px, 2.5vw, 28px);
+  gap: clamp(20px, 2.5vw, 32px);
   margin: 0;
   padding: 0;
   list-style: none;
 }
-@media (min-width: 640px)  { .rx-cases__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1025px) { .rx-cases__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .rx-clist__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* カード */
-.rx-case {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+/* ---------------------------------------------------------------- カード
+   PC: グリッド3列（24% / 14% / 1fr）
+   - 写真は 1〜2列目（=幅38%）を縦いっぱいに敷く
+   - 指標タイルは 2〜3列目 → 写真の右端に少し重なる（モックの浮きタイル）
+   ---------------------------------------------------------------- */
+.rx-ccard {
+  display: grid;
+  grid-template-columns: 24% 14% 1fr;
+  grid-template-rows: auto auto auto;
   background: #fff;
-  border: 1px solid #e7e7eb;
-  border-radius: 20px;
-  padding: clamp(22px, 3vw, 30px);
-  transition: transform .2s ease, box-shadow .25s ease;
+  border: 1px solid #ecedf1;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, .06);
+  min-width: 0;
 }
-.rx-case:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(15, 23, 42, .08);
-}
-@media (prefers-reduced-motion: reduce) {
-  .rx-case, .rx-case:hover { transform: none; transition: none; }
-}
-.rx-case[hidden] { display: none; }
+.rx-ccard[hidden] { display: none; }
 
-.rx-case__meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 14px;
+.rx-ccard__media {
+  grid-column: 1 / 3;
+  grid-row: 1 / 4;
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+  background: #eef0f4;
 }
-.rx-case__cat {
+.rx-ccard__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rx-ccard__body {
+  grid-column: 3;
+  grid-row: 1;
+  padding: clamp(20px, 2.4vw, 28px) clamp(20px, 2.4vw, 28px) 14px;
+  min-width: 0;
+}
+.rx-ccard__cat {
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
   font-weight: 500;
-  font-size: .75rem;
-  letter-spacing: .06em;
-  border-radius: 999px;
-  padding: .25em 1em;
-}
-.rx-case__cat--food  { color: #d61f76; background: rgba(236, 45, 135, .08); }
-.rx-case__cat--clean { color: #2467c4; background: rgba(47, 128, 237, .08); }
-.rx-case__area {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
   font-size: .8125rem;
-  color: #6e7280;
   letter-spacing: .04em;
+  color: #ec2d87;
+  margin: 0 0 8px;
 }
-.rx-case__company {
-  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
-  font-weight: 600;
-  font-size: clamp(1.0625rem, 1rem + .3vw, 1.1875rem);
-  line-height: 1.5;
-  letter-spacing: .02em;
+.rx-ccard__cat span { color: #c4c9d2; margin: 0 .3em; }
+.rx-ccard__company {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.125rem, 1.05rem + .4vw, 1.375rem);
+  line-height: 1.45;
+  letter-spacing: .01em;
   color: #0a0a0c;
-  margin: 0 0 4px;
+  margin: 0 0 8px;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
-.rx-case__role {
+.rx-ccard__desc {
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .8125rem;
-  line-height: 1.6;
-  color: #6e7280;
-  margin: 0 0 18px;
+  font-weight: 400;
+  font-size: .875rem;
+  line-height: 1.75;
+  color: #3f4651;
+  margin: 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
-/* Before → After（カード内・横並び） */
-.rx-case__ba {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 0;
-  border-top: 1px solid #e7e7eb;
-  margin: auto 0 0;                       /* 上の本文量が違ってもBA行の高さを揃える */
+/* 指標タイル: 写真に少し重ねて浮かせる */
+.rx-ccard__stats {
+  grid-column: 2 / 4;
+  grid-row: 2;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px, 1vw, 12px);
+  margin: 10px 0 0;
+  padding: 0 clamp(20px, 2.4vw, 28px) 0 0;
+  list-style: none;
 }
-.rx-case__ba--solo { justify-content: flex-start; }
-/* 注意: 中身は裸のインラインテキスト（<b>53</b>名<small>/月</small>）のため
-   flexにすると1要素ずつ縦に割れる。blockのままインラインで流す */
-.rx-case__before,
-.rx-case__after {
-  display: block;
+.rx-ccard__stats li {
+  background: #fff;
+  border: 1px solid #f0f0f3;
+  border-radius: 12px;
+  padding: clamp(10px, 1.2vw, 14px) clamp(10px, 1.2vw, 14px);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, .09);
   min-width: 0;
 }
-.rx-case__ba-label {
+.rx-ccard__stat-label {
   display: block;
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .6875rem;
-  letter-spacing: .1em;
+  font-size: .75rem;
+  letter-spacing: .04em;
   color: #6e7280;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  white-space: nowrap;
 }
-.rx-case__before {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 500;
-  font-size: .9375rem;
-  line-height: 1.4;
-  color: #9aa0ab;
-}
-.rx-case__after {
+.rx-ccard__stat-value {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
   font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.1;
   color: #ec2d87;
   white-space: nowrap;
 }
-.rx-case__after b {
+.rx-ccard__stat-value b {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: clamp(1.375rem, 1.2rem + .7vw, 1.75rem);
+  line-height: 1.1;
   letter-spacing: -.01em;
 }
-.rx-case__after small {
+.rx-ccard__stat-value small {
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 500;
+  font-weight: 700;
   font-size: .75rem;
-  color: #6e7280;
-  margin-left: .2em;
 }
-.rx-case__arrow {
-  width: 18px;
-  height: 18px;
-  color: #ec2d87;
+.rx-ccard__stat-arrow {
+  width: 14px;
+  height: 14px;
+  margin-left: auto;
+  align-self: center;
   flex-shrink: 0;
 }
 
-/* 指標（カード内） */
-.rx-case__data {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-  gap: 10px 14px;
-  border-top: 1px solid #e7e7eb;
-  padding: 14px 0 0;
-  margin: 0 0 14px;
-}
-.rx-case__data > div { min-width: 0; }
-.rx-case__data dt {
+/* 詳しく見る（詳細ページ未作成のためリンクではなく表示のみ） */
+.rx-ccard__more {
+  grid-column: 3;
+  grid-row: 3;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .6875rem;
-  letter-spacing: .08em;
-  color: #6e7280;
-  margin: 0 0 2px;
-}
-.rx-case__data dd {
-  font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
   font-weight: 700;
-  font-size: .9375rem;
-  color: #0a0a0c;
+  font-size: .875rem;
+  letter-spacing: .04em;
+  color: #ec2d87;
   margin: 0;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.4;
+  padding: 14px clamp(20px, 2.4vw, 28px) clamp(18px, 2vw, 24px) 0;
 }
-.rx-case__note {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: .8125rem;
-  line-height: 1.75;
-  color: #0a0a0c;
-  margin: 0;
-  word-break: keep-all;
-  overflow-wrap: anywhere;
+.rx-ccard__more svg { width: 15px; height: 15px; }
+
+/* SP/TAB(〜899px): 写真を上に積む */
+@media (max-width: 899px) {
+  .rx-ccard {
+    display: flex;
+    flex-direction: column;
+  }
+  .rx-ccard__media {
+    min-height: 0;
+    height: clamp(170px, 42vw, 260px);
+  }
+  .rx-ccard__body { padding: 20px 20px 12px; }
+  .rx-ccard__stats {
+    margin: 0;
+    padding: 0 20px;
+  }
+  .rx-ccard__stats li { box-shadow: none; background: #fafafa; border-color: #f0f0f3; }
+  .rx-ccard__more { padding: 12px 20px 18px 0; align-self: flex-end; }
+}
+/* 極小幅: タイル内の数字を少し詰める */
+@media (max-width: 380px) {
+  .rx-ccard__stat-value b { font-size: 1.1875rem; }
+  .rx-ccard__stat-value small { font-size: .6875rem; }
+  .rx-ccard__stat-arrow { width: 12px; height: 12px; }
 }
 
-.rx-cases__disclaimer {
+.rx-clist__disclaimer {
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
   font-size: .8125rem;
   line-height: 1.8;
@@ -487,40 +354,53 @@
 /* =====================================================================
    CTA
    ===================================================================== */
-.rx-casecta {
-  background: #fff;
-  padding: clamp(80px, 11vw, 160px) 0;
+.rx-ccta {
+  background: #fafafa;
+  padding: clamp(72px, 10vw, 140px) 0;
 }
-.rx-casecta__inner {
+.rx-ccta__inner {
   max-width: 760px;
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 40px);
   text-align: center;
 }
-.rx-casecta__eyebrow {
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  font-size: .875rem;
-  letter-spacing: .14em;
-  color: #6e7280;
-  text-transform: uppercase;
-  margin: 0 0 clamp(12px, 1.8vw, 20px);
-}
-.rx-casecta__heading {
-  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
-  font-weight: 500;
-  font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+.rx-ccta__heading {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
   line-height: 1.45;
   letter-spacing: .02em;
   color: #0a0a0c;
-  margin: 0 0 clamp(16px, 2.5vw, 24px);
+  margin: 0 0 clamp(12px, 2vw, 18px);
   word-break: keep-all;
 }
-.rx-casecta__lead {
+.rx-ccta__lead {
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-size: clamp(1rem, .95rem + .25vw, 1.0625rem);
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
   line-height: 1.9;
-  color: #6e7280;
-  margin: 0 0 clamp(32px, 4.5vw, 44px);
+  color: #3f4651;
+  margin: 0 0 clamp(28px, 4vw, 40px);
   word-break: keep-all;
 }
+.rx-ccta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6em;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: .04em;
+  color: #fff;
+  background: #0a0a0c;
+  border-radius: 999px;
+  padding: 16px 40px;
+  min-height: 52px;
+  transition: background-color .2s ease, transform .15s ease, box-shadow .2s ease;
+}
+.rx-ccta__btn:hover {
+  background: #26262b;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(10, 10, 12, .25);
+}
+.rx-ccta__btn svg { width: 16px; height: 16px; }

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>導入事例｜リクルートX</title>
-  <meta name="description" content="リクルートXの採用支援事例。給与などの労働条件は変えずに、求人原稿と運用の改善だけで月1名の応募が82名に。飲食店・清掃会社を中心とした採用改善の実績をご紹介します。">
+  <meta name="description" content="リクルートXの採用支援事例。給与などの労働条件は変えずに、求人原稿と運用の改善だけで月数名の応募がひと月で82名に。飲食店・清掃会社を中心とした採用改善の実績をご紹介します。">
   <!-- CSP: GA4/Clarity等のタグを追加する際は script-src / connect-src への追記が必要 -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -15,19 +15,20 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/case.css">
 </head>
-<body class="rx-jp-body">
+<body class="rx-jp-body rx-casepage">
 
-  <!-- ===================== ヘッダーナビゲーション ===================== -->
+  <!-- ===================== ヘッダーナビゲーション（このページのみモック準拠の見た目に上書き） ===================== -->
   <header class="rx-nav" id="nav">
     <div class="rx-nav__inner">
       <a class="rx-nav__brand" href="index.html" aria-label="リクルートX トップへ">
-        <span class="rx-nav__brand-name">Recruit&nbsp;X</span>
+        <span class="rx-nav__brand-name">RecruitX</span>
       </a>
       <nav class="rx-nav__menu" id="navMenu" aria-label="メインナビゲーション">
-        <a class="rx-nav__link" href="index.html#service">サービス</a>
+        <a class="rx-nav__link rx-nav__link--caret" href="index.html#service">サービス<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></a>
         <a class="rx-nav__link" href="case.html" aria-current="page">事例</a>
-        <a class="rx-nav__link" href="index.html#company">会社情報</a>
-        <a class="rx-nav__link" href="index.html#news">お知らせ</a>
+        <a class="rx-nav__link rx-nav__link--caret" href="index.html" aria-disabled="true">料金プラン<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></a>
+        <a class="rx-nav__link rx-nav__link--caret" href="index.html" aria-disabled="true">お役立ち資料<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></a>
+        <a class="rx-nav__link rx-nav__link--caret" href="index.html#company">会社概要<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></a>
       </nav>
       <a class="rx-nav__cta" href="contact.html">
         <span class="rx-nav__cta-text">お問い合わせ</span>
@@ -41,286 +42,228 @@
 
   <main>
 
-    <!-- ===================== ページヘッダー ===================== -->
-    <section class="rx-casehero" aria-labelledby="caseHeading">
-      <div class="rx-casehero__inner">
-        <p class="rx-casehero__eyebrow">CASE STUDY</p>
-        <h1 class="rx-casehero__heading" id="caseHeading">数字が語る、<br class="rx-br-sp">採用の変わり方。</h1>
-        <p class="rx-casehero__lead">給与や待遇はそのまま。求人原稿と運用の見直しだけで、応募はここまで変わります。<br class="rx-br-pc">飲食店・清掃会社を中心とした採用支援の実績をご紹介します。</p>
-
-        <ul class="rx-casehero__stats">
-          <li class="rx-casehero__stat">
-            <span class="rx-casehero__stat-num"><b class="rx-stat-num" data-countup="1484">1,484</b><small>名</small></span>
-            <span class="rx-casehero__stat-label">掲載事例ののべ応募数</span>
-          </li>
-          <li class="rx-casehero__stat">
-            <span class="rx-casehero__stat-num"><b class="rx-stat-num" data-countup="10">10</b><small>日</small></span>
-            <span class="rx-casehero__stat-label">最短の成果到達</span>
-          </li>
-          <li class="rx-casehero__stat">
-            <span class="rx-casehero__stat-num"><b class="rx-stat-num" data-countup="92">92</b><small>%</small></span>
-            <span class="rx-casehero__stat-label">採用単価の最大削減率</span>
-          </li>
-        </ul>
+    <!-- ===================== ページヘッダー（右に写真・左へ白フェード） ===================== -->
+    <section class="rx-chero" aria-labelledby="caseHeading">
+      <img class="rx-chero__photo" src="images/case/hero-office.jpg"
+           alt="" width="1672" height="941" loading="eager" fetchpriority="high" decoding="async">
+      <div class="rx-chero__inner">
+        <p class="rx-chero__eyebrow">CASE STUDIES</p>
+        <h1 class="rx-chero__heading" id="caseHeading">導入事例</h1>
+        <p class="rx-chero__lead">リクルートXの求人広告運用代行で、採用成果を最大化した企業様の事例をご紹介します。</p>
       </div>
     </section>
 
-    <!-- ===================== ピックアップ事例（Before → After） ===================== -->
-    <section class="rx-casefeat" aria-labelledby="caseFeatHeading">
-      <div class="rx-casefeat__inner rx-anim">
-        <p class="rx-casefeat__tag">PICK UP ─ ハンバーガーショップ（東京都港区）</p>
-        <h2 class="rx-casefeat__heading" id="caseFeatHeading">月数名だった応募が、<br class="rx-br-sp">ひと月で82名に。</h2>
+    <!-- ===================== 事例一覧（業種フィルタ + カード） ===================== -->
+    <section class="rx-clist" aria-label="事例一覧">
+      <div class="rx-clist__inner">
 
-        <div class="rx-casefeat__ba">
-          <div class="rx-casefeat__before">
-            <span class="rx-casefeat__ba-label">Before</span>
-            <span class="rx-casefeat__ba-num">月 1〜4<small>名</small></span>
-            <span class="rx-casefeat__ba-note">求人広告を出しても、応募はわずか</span>
-          </div>
-          <svg class="rx-casefeat__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-          <div class="rx-casefeat__after">
-            <span class="rx-casefeat__ba-label">After</span>
-            <span class="rx-casefeat__ba-num"><span>月</span><b class="rx-stat-num" data-countup="82">82</b><small>名</small></span>
-            <span class="rx-casefeat__ba-note">原稿改善後・1店舗（店長候補14名 + ホール15名 + キッチン53名）</span>
-          </div>
+        <div class="rx-clist__filter" role="group" aria-label="業種で絞り込み" data-case-filter>
+          <button type="button" class="rx-clist__filter-btn" data-filter="all" aria-pressed="true">すべての事例</button>
+          <button type="button" class="rx-clist__filter-btn" data-filter="food" aria-pressed="false">飲食</button>
+          <button type="button" class="rx-clist__filter-btn" data-filter="clean" aria-pressed="false">清掃・家事代行</button>
         </div>
 
-        <dl class="rx-casefeat__data">
-          <div><dt>期間</dt><dd>1か月</dd></div>
-          <div><dt>費用</dt><dd>40万円</dd></div>
-          <div><dt>応募単価</dt><dd>4,878円</dd></div>
-          <div><dt>採用</dt><dd>3名（採用単価13万円）</dd></div>
-        </dl>
+        <ul class="rx-clist__grid">
 
-        <p class="rx-casefeat__note">株式会社ガネーシャ様（SHOGUN BURGER 運営）。給与などの基本的な労働条件は変えず、求人原稿の改善と運用設計のみで達成しています。</p>
-      </div>
-    </section>
-
-    <!-- ===================== 事例一覧（業種フィルタ） ===================== -->
-    <section class="rx-cases" aria-labelledby="caseListHeading">
-      <div class="rx-cases__inner">
-        <h2 class="rx-cases__heading" id="caseListHeading">支援実績一覧</h2>
-
-        <div class="rx-cases__filter" role="group" aria-label="業種で絞り込み" data-case-filter>
-          <button type="button" class="rx-cases__filter-btn" data-filter="all" aria-pressed="true">すべて</button>
-          <button type="button" class="rx-cases__filter-btn" data-filter="food" aria-pressed="false">飲食</button>
-          <button type="button" class="rx-cases__filter-btn" data-filter="clean" aria-pressed="false">清掃・家事代行</button>
-        </div>
-
-        <ul class="rx-cases__grid">
-
-          <li class="rx-case rx-anim" data-category="food">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--food">飲食</span>
-              <span class="rx-case__area">東京都</span>
-            </p>
-            <h3 class="rx-case__company">株式会社ミナデイン様</h3>
-            <p class="rx-case__role">和食・洋食店｜ホール・キッチン正社員</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>月10名</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">53</b>名<small>/月</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>期間</dt><dd>1か月・2店舗</dd></div>
-              <div><dt>費用</dt><dd>44万円</dd></div>
-              <div><dt>応募単価</dt><dd>8,301円</dd></div>
-            </dl>
-            <p class="rx-case__note">合同説明会が頼りだった採用が、原稿改善だけで応募5倍に。</p>
+          <li class="rx-ccard rx-anim" data-category="food">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-01-burger-tokyo" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">飲食 <span>/</span> 正社員・アルバイト採用</p>
+              <h3 class="rx-ccard__company">株式会社ガネーシャ様</h3>
+              <p class="rx-ccard__desc">月数名だった応募が、原稿改善後はひと月で82名に。給与などの条件は変えずに達成。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">82</b><small>名/月</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">応募単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">4,878</b><small>円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">13</b><small>万円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="food">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--food">飲食</span>
-              <span class="rx-case__area">東京都</span>
-            </p>
-            <h3 class="rx-case__company">HVIEW株式会社様</h3>
-            <p class="rx-case__role">居酒屋など11業態17店舗｜正社員・アルバイト</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>リファラル中心</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">584</b>名<small>/年</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>正社員採用</dt><dd>26名/年</dd></div>
-              <div><dt>応募単価</dt><dd>6,361円</dd></div>
-              <div><dt>採用単価</dt><dd>142,881円</dd></div>
-            </dl>
-            <p class="rx-case__note">採用基盤を整え、2年で年商6億円から17億円・17店舗へ。アルバイトは5日間で112名応募。</p>
+          <li class="rx-ccard rx-anim" data-category="food">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-02-fc-aichi" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">飲食 <span>/</span> 正社員採用</p>
+              <h3 class="rx-ccard__company">株式会社トラム様</h3>
+              <p class="rx-ccard__desc">6か月で2名だった採用が1か月で14名に。採用単価は150万円から12万円へ。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">52</b><small>倍</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">14</b><small>名/月</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">92</b><small>%減</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="food">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--food">飲食</span>
-              <span class="rx-case__area">東京都</span>
-            </p>
-            <h3 class="rx-case__company">株式会社奴ダイニング様</h3>
-            <p class="rx-case__role">居酒屋・ステーキバル6店舗｜キッチン正社員</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>月4名</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">27</b>名<small>/月</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>期間</dt><dd>4か月・6店舗</dd></div>
-              <div><dt>費用</dt><dd>60万円</dd></div>
-              <div><dt>採用単価</dt><dd>15万円</dd></div>
-            </dl>
-            <p class="rx-case__note">4か月で111名が応募し、キッチン正社員4名を採用。</p>
+          <li class="rx-ccard rx-anim" data-category="food">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-03-restaurant-tokyo" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">飲食 <span>/</span> ホール・キッチン正社員採用</p>
+              <h3 class="rx-ccard__company">株式会社ミナデイン様</h3>
+              <p class="rx-ccard__desc">合同説明会が頼りだった採用が、原稿改善でひと月の応募10名から53名へ。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">5.3</b><small>倍</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">応募単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">8,301</b><small>円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">期間</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">1</b><small>か月</small></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="food">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--food">飲食</span>
-              <span class="rx-case__area">愛知県</span>
-            </p>
-            <h3 class="rx-case__company">株式会社トラムスコープ様</h3>
-            <p class="rx-case__role">ベーカリー「パンのトラ」6店舗｜パン製造正社員</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>3か月で12名・採用0</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">39</b>名<small>/15日</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>採用</dt><dd>12名</dd></div>
-              <div><dt>費用</dt><dd>37万円</dd></div>
-              <div><dt>採用単価</dt><dd>3万円</dd></div>
-            </dl>
-            <p class="rx-case__note">採用ゼロが続いた募集が、わずか15日で12名採用に。</p>
+          <li class="rx-ccard rx-anim" data-category="food">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-04-izakaya-tokyo" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">飲食 <span>/</span> 正社員・アルバイト採用</p>
+              <h3 class="rx-ccard__company">HVIEW株式会社様</h3>
+              <p class="rx-ccard__desc">リファラル中心から年間584名が応募する採用基盤へ。2年で17店舗に拡大。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">584</b><small>名/年</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">26</b><small>名/年</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">14.3</b><small>万円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="food">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--food">飲食</span>
-              <span class="rx-case__area">愛知県</span>
-            </p>
-            <h3 class="rx-case__company">株式会社トラム様</h3>
-            <p class="rx-case__role">大手バーガー・ドーナツFC 12店舗｜正社員</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>月1.6名</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">84</b>名<small>/月</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>採用</dt><dd>14名/月</dd></div>
-              <div><dt>採用単価</dt><dd>150万円 → 12万円</dd></div>
-            </dl>
-            <p class="rx-case__note">6か月300万円で2名だった採用が、1か月で14名に。</p>
+          <li class="rx-ccard rx-anim" data-category="food">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-05-steak-tokyo" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">飲食 <span>/</span> キッチン正社員採用</p>
+              <h3 class="rx-ccard__company">株式会社奴ダイニング様</h3>
+              <p class="rx-ccard__desc">6店舗で月4名だった応募が月27名に。4か月で111名が応募し、4名を採用。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">6.8</b><small>倍</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">4</b><small>名</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">15</b><small>万円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="food">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--food">飲食</span>
-              <span class="rx-case__area">東京都</span>
-            </p>
-            <h3 class="rx-case__company">株式会社RAZULIT&rsquo;e様</h3>
-            <p class="rx-case__role">大衆肉ビストロ・フルーツパーラー2店舗｜正社員</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>月6名</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">99</b>名<small>/月</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>採用</dt><dd>4名</dd></div>
-              <div><dt>採用単価</dt><dd>90万円 → 10.5万円</dd></div>
-            </dl>
-            <p class="rx-case__note">店長経験者2名を含む4名を、1か月で採用。</p>
+          <li class="rx-ccard rx-anim" data-category="food">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-06-bakery-aichi" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">飲食 <span>/</span> パン製造正社員採用</p>
+              <h3 class="rx-ccard__company">株式会社トラムスコープ様</h3>
+              <p class="rx-ccard__desc">3か月採用ゼロだった募集が、原稿改善後は15日間で39名応募・12名採用に。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">採用数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">12</b><small>名</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">期間</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">15</b><small>日</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">3</b><small>万円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="food">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--food">飲食</span>
-              <span class="rx-case__area">沖縄県・石川県</span>
-            </p>
-            <h3 class="rx-case__company">SHOGUN BURGER 地方店舗</h3>
-            <p class="rx-case__role">ハンバーガーショップ｜キッチン正社員・アルバイト</p>
-            <p class="rx-case__ba rx-case__ba--solo">
-              <span class="rx-case__after"><span class="rx-case__ba-label">沖縄恩納村店</span><b class="rx-stat-num">55</b>名<small>/月</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>費用</dt><dd>9万円</dd></div>
-              <div><dt>応募単価</dt><dd>1,636円</dd></div>
-              <div><dt>金沢店</dt><dd>91名/4か月</dd></div>
-            </dl>
-            <p class="rx-case__note">採用が難しい地方エリアでも、低予算で応募を獲得。</p>
+          <li class="rx-ccard rx-anim" data-category="food">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-07-bistro-tokyo" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">飲食 <span>/</span> 正社員採用</p>
+              <h3 class="rx-ccard__company">株式会社RAZULIT&rsquo;e様</h3>
+              <p class="rx-ccard__desc">月6名の応募が99名に。店長経験者2名を含む4名を1か月で採用。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">16</b><small>倍</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">4</b><small>名</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">88</b><small>%減</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="clean">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--clean">清掃</span>
-              <span class="rx-case__area">神奈川県</span>
-            </p>
-            <h3 class="rx-case__company">A.R.C.craft株式会社様</h3>
-            <p class="rx-case__role">ハウスクリーニングスタッフ</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>リファラルのみ</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">74</b>名<small>/29日</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>費用</dt><dd>13万円</dd></div>
-              <div><dt>応募単価</dt><dd>1,758円</dd></div>
-              <div><dt>採用</dt><dd>1名</dd></div>
-            </dl>
-            <p class="rx-case__note">初めての求人掲載で、29日間に74名の応募。</p>
+          <li class="rx-ccard rx-anim" data-category="food">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-08-burger-local" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">飲食 <span>/</span> キッチン正社員・アルバイト採用</p>
+              <h3 class="rx-ccard__company">SHOGUN BURGER 地方店舗</h3>
+              <p class="rx-ccard__desc">採用が難しい地方エリアでも低予算で応募を獲得。金沢店は4か月で91名が応募。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">55</b><small>名/月</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">費用</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">9</b><small>万円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">応募単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">1,636</b><small>円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="clean">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--clean">家事代行</span>
-              <span class="rx-case__area">東京都</span>
-            </p>
-            <h3 class="rx-case__company">株式会社アール・アソシエイツ様</h3>
-            <p class="rx-case__role">家事代行スタッフ</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>月10名</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">54</b>名<small>/月</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>採用</dt><dd>20名/月</dd></div>
-              <div><dt>応募単価</dt><dd>15,000円 → 4,132円</dd></div>
-              <div><dt>採用単価</dt><dd>11,158円</dd></div>
-            </dl>
-            <p class="rx-case__note">応募5.4倍・応募単価は4分の1に。月20名の採用を実現。</p>
+          <li class="rx-ccard rx-anim" data-category="clean">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-09-housekeeping-tokyo" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">家事代行 <span>/</span> 家事代行スタッフ採用</p>
+              <h3 class="rx-ccard__company">株式会社アール・アソシエイツ様</h3>
+              <p class="rx-ccard__desc">応募数5.4倍・応募単価は4分の1に。月20名の採用を実現。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">5.4</b><small>倍</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">採用数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">20</b><small>名/月</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">応募単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">72</b><small>%減</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
-          <li class="rx-case rx-anim" data-category="clean">
-            <p class="rx-case__meta">
-              <span class="rx-case__cat rx-case__cat--clean">清掃</span>
-              <span class="rx-case__area">東京都</span>
-            </p>
-            <h3 class="rx-case__company">株式会社SWEEP様</h3>
-            <p class="rx-case__role">ハウスクリーニングスタッフ</p>
-            <p class="rx-case__ba">
-              <span class="rx-case__before"><span class="rx-case__ba-label">改善前</span>創業時・実績なし</span>
-              <svg class="rx-case__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M13 5l7 7-7 7"/></svg>
-              <span class="rx-case__after"><span class="rx-case__ba-label">改善後</span><b class="rx-stat-num">46</b>名<small>/10日</small></span>
-            </p>
-            <dl class="rx-case__data">
-              <div><dt>費用</dt><dd>40,374円</dd></div>
-              <div><dt>応募単価</dt><dd>877円</dd></div>
-              <div><dt>採用</dt><dd>1名</dd></div>
-            </dl>
-            <p class="rx-case__note">実績ゼロの創業期でも、10日間で46名が応募。</p>
+          <li class="rx-ccard rx-anim" data-category="clean">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-10-cleaning-kanagawa" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">清掃 <span>/</span> ハウスクリーニングスタッフ採用</p>
+              <h3 class="rx-ccard__company">A.R.C.craft株式会社様</h3>
+              <p class="rx-ccard__desc">リファラル頼みだった採用で初の求人掲載。29日間で74名の応募を獲得。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">74</b><small>名/29日</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">応募単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">1,758</b><small>円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">費用</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">13</b><small>万円</small></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
+          </li>
+
+          <li class="rx-ccard rx-anim" data-category="clean">
+            <figure class="rx-ccard__media">
+              <img src="images/placeholders/photo.svg" data-photo="case-11-cleaning-tokyo" alt="" width="724" height="543" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-ccard__body">
+              <p class="rx-ccard__cat">清掃 <span>/</span> ハウスクリーニングスタッフ採用</p>
+              <h3 class="rx-ccard__company">株式会社SWEEP様</h3>
+              <p class="rx-ccard__desc">創業直後・実績ゼロからのスタートで、10日間で46名の応募を獲得。</p>
+            </div>
+            <ul class="rx-ccard__stats">
+              <li><span class="rx-ccard__stat-label">応募数</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">46</b><small>名/10日</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">応募単価</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">877</b><small>円</small><svg class="rx-ccard__stat-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li>
+              <li><span class="rx-ccard__stat-label">費用</span><span class="rx-ccard__stat-value"><b class="rx-stat-num">4</b><small>万円</small></span></li>
+            </ul>
+            <p class="rx-ccard__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></p>
           </li>
 
         </ul>
 
-        <p class="rx-cases__disclaimer">※ 数値はいずれも支援当時の実績です。給与などの基本的な労働条件は変えずに、求人原稿と運用の改善で達成しています。</p>
+        <p class="rx-clist__disclaimer">※ 数値はいずれも支援当時の実績です。給与などの基本的な労働条件は変えずに、求人原稿と運用の改善で達成しています。</p>
       </div>
     </section>
 
     <!-- ===================== CTA ===================== -->
-    <section class="rx-casecta" aria-labelledby="caseCtaHeading">
-      <div class="rx-casecta__inner rx-anim">
-        <p class="rx-casecta__eyebrow">CONTACT</p>
-        <h2 class="rx-casecta__heading" id="caseCtaHeading">同じ変化を、<br class="rx-br-sp">貴社の採用でも。</h2>
-        <p class="rx-casecta__lead">いまの求人原稿と運用状況をお聞かせください。<br class="rx-br-pc">改善の余地がどこにあるか、具体的にご提案します。</p>
-        <a class="rx-btn rx-btn--primary" href="contact.html">
-          <span>お問い合わせ</span>
-          <svg class="rx-btn__chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 10h10M10 5l5 5-5 5"/></svg>
-        </a>
+    <section class="rx-ccta" aria-labelledby="caseCtaHeading">
+      <div class="rx-ccta__inner rx-anim">
+        <h2 class="rx-ccta__heading" id="caseCtaHeading">同じ変化を、貴社の採用でも。</h2>
+        <p class="rx-ccta__lead">いまの求人原稿と運用状況をお聞かせください。改善の余地がどこにあるか、具体的にご提案します。</p>
+        <a class="rx-ccta__btn" href="contact.html">お問い合わせ<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></a>
       </div>
     </section>
 
