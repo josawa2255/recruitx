@@ -214,20 +214,8 @@
 
   document.body.appendChild(fab);
 
-  var SHOW_AFTER = 200; // px スクロールしたら表示し、以後ずっと追従
-  var shown = false, ticking = false;
-  function apply() {
-    ticking = false;
-    var should = window.scrollY > SHOW_AFTER;
-    if (should !== shown) { shown = should; fab.classList.toggle('is-visible', shown); }
-  }
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(apply);
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  apply();
+  // 常時表示（最上部でも・上にスクロールしても消えない）。入場アニメだけ一度再生
+  window.requestAnimationFrame(function () { fab.classList.add('is-visible'); });
 })();
 
 /* お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
