@@ -29,6 +29,16 @@
 | 編集前の必読 | ContentX_HP側の `CLAUDE.md`・`BUGS.md` Pre-flight・`docs/operations/WP-SERVICE-ONBOARDING.md`（スキルの §0b 別ワークスペース実行プロトコルに従う） |
 | 本番反映 | お名前.comファイルマネージャーで手動アップロード（コード修正＝本番反映ではない） |
 
+## SEO記事・事例の制作手順（⭐毎回この手順で）
+
+SEO記事（コラム）・採用事例の本文を書くときは、**必ず7ステップワークフロー**で進める:
+`/competitive-brief` → `/seo-plan` → `/draft-content` → 画像提案 → `/brand-review` → `/seo-content` → `/seo-page`
+
+- **手順とトンマナの正本**: 非公開のコラム制作リポ（採用ワークスペース直下 `../column-project/`）の `clients/recruitx.md`。作業前に必ず読む
+- **事例単位のSEO仕様書**: 同 `clients/recruitx_cases/{slug}.md`（1事例=1MD）。**KW割当マップ `_index.md` を着手前に確認・着手後に更新**（カニバリ防止）
+- **SEO戦略・KW割当をこの公開リポに書かない**（公開してよいのはメタの実装値のみ → docs/content/SEO.md）
+- 本文の正本はWP（採用事例=rx_case / コラム=cx_column相乗り）。**事例は3,000〜5,000字・コラムは7,000字以上**
+
 ## エンジニアリング規約（Contents X 系共通・厳守）
 
 - **リンクのパス**: 単一ページLP（リポルート配置）のため**同階層相対**で書く（例 `href="css/style.css"`）。これで `file://` ダブルクリックでもローカルサーバーでも GitHub Pages でも解決する。**ページが増えてサブディレクトリ化したら絶対パス（`/` 始まり）に切り替える**
