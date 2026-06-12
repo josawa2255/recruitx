@@ -83,9 +83,10 @@
 @media (max-width: 768px) { .rx-p-br-sp { display: inline; } }
 
 /* =========================================================================
-   1. ヒーロー（写真＋実績カード）— 最新版.png 準拠
-   PC: 左コピー+右ビジュアル（写真＋浮遊カード2枚） / スマホ: 縦積み
-   ベースの鮮やかピンクはこのセクション内のみ（--hp / --hp-grad でスコープ）
+   1. ヒーロー（写真フルブリード背景＋浮遊カード）— 最新版.png 準拠
+   PC: 左コピー / 右半分は写真を上下右の端まで断ち落としで敷き、カードを重ねる
+   SP: コピー → フル幅の写真バナー（カード重ね）の縦積み
+   鮮やかピンクはこのセクション内のみ（--hp / --hp-grad）
    ========================================================================= */
 .rx-phero2 {
   --hp: #f00858;
@@ -93,45 +94,42 @@
   position: relative;
   overflow: hidden;
   background: #ffffff;
-  padding: calc(72px + clamp(28px, 4.5vw, 64px)) 0 clamp(56px, 7vw, 120px);
+  padding: calc(72px + clamp(24px, 4vw, 56px)) 0 clamp(48px, 6vw, 96px);
 }
-@media (max-width: 768px) { .rx-phero2 { padding-top: calc(60px + 24px); } }
+@media (min-width: 961px) {
+  .rx-phero2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: clamp(560px, 44vw, 760px);
+    padding: 72px 0 0;
+  }
+}
+@media (max-width: 768px) { .rx-phero2 { padding-top: calc(60px + 20px); } }
 
-/* 下部のピンク波（装飾） */
+/* 下部のピンク波（写真より前面・最前面のコピー/カードより背面） */
 .rx-phero2::before {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  height: clamp(120px, 26%, 300px);
+  height: clamp(80px, 18%, 220px);
+  z-index: 1;
   background:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath fill='%23fdebf3' d='M0,170 C260,110 520,205 760,176 C1000,148 1240,108 1440,156 L1440,320 L0,320 Z'/%3E%3Cpath fill='%23fcd7e6' d='M0,238 C300,196 560,270 880,232 C1120,206 1320,250 1440,236 L1440,320 L0,320 Z'/%3E%3C/svg%3E")
     bottom center / 100% 100% no-repeat;
-  z-index: 0;
-  pointer-events: none;
-}
-/* 左上のごく淡いピンクのにじみ */
-.rx-phero2::after {
-  content: "";
-  position: absolute;
-  left: -6%; top: 8%;
-  width: 38%; height: 60%;
-  background: radial-gradient(closest-side, rgba(240, 8, 88, .06), transparent 70%);
-  z-index: 0;
   pointer-events: none;
 }
 
 .rx-phero2__inner {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   width: min(100%, 1320px);
   margin: 0 auto;
   padding: 0 clamp(16px, 3vw, 32px);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
-  gap: clamp(28px, 3.6vw, 64px);
-  align-items: center;
 }
-@media (max-width: 960px) { .rx-phero2__inner { grid-template-columns: 1fr; } }
+@media (min-width: 961px) {
+  .rx-phero2__copy { width: min(50%, 560px); }
+}
 
 /* ---- 左: コピー ---- */
 .rx-phero2 .rx-p-pink { color: var(--hp); }
@@ -146,10 +144,7 @@
   margin-top: .7em;
 }
 .rx-phero2__line3 { white-space: nowrap; }
-.rx-phero2__under {
-  position: relative;
-  white-space: nowrap;
-}
+.rx-phero2__under { position: relative; white-space: nowrap; }
 .rx-phero2__under::after {
   content: "";
   position: absolute;
@@ -212,33 +207,69 @@
 .rx-phero2__assure-icon svg { width: 60%; height: 60%; }
 .rx-phero2__assure-icon--fill { background: var(--hp-grad); }
 
-/* ---- 右: 写真＋浮遊カード ---- */
-.rx-phero2__visual {
-  position: relative;
-  padding: clamp(14px, 1.6vw, 26px) clamp(12px, 1.4vw, 22px);
-}
+/* ---- 右: 写真フルブリード背景＋カード ---- */
+.rx-phero2__visual { position: relative; }
 .rx-phero2__photo {
-  margin: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-  box-shadow: 0 24px 54px rgba(40, 30, 40, .16);
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.rx-phero2__photo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* SP: コピーの下にフル幅の写真バナー */
+@media (max-width: 960px) {
+  .rx-phero2__visual {
+    margin: clamp(28px, 6vw, 44px) calc(-1 * clamp(16px, 3vw, 32px)) 0;
+    aspect-ratio: 16 / 11;
+  }
+  .rx-phero2__photo {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 50% 34%;
+  }
+}
+
+/* PC: 右半分に絶対配置で上下右いっぱいに敷く */
+@media (min-width: 961px) {
+  .rx-phero2__visual {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: min(58vw, 1060px);
+    margin: 0;
+  }
+  .rx-phero2__photo {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: 50% 38%;
+  }
+  /* 左端を白へなじませるフェード */
+  .rx-phero2__visual::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(95deg, #fff 0%, rgba(255,255,255,.7) 9%, rgba(255,255,255,0) 32%);
+    pointer-events: none;
+  }
+}
 
 .rx-phero2__card {
   position: absolute;
+  z-index: 2;
   background: #fff;
   border-radius: 14px;
-  box-shadow: 0 18px 44px rgba(40, 30, 40, .18);
+  box-shadow: 0 18px 44px rgba(40, 30, 40, .2);
 }
 
-/* プランカード（右上） */
+/* プランカード（写真の上部・やや中央寄り） */
 .rx-phero2__card--plan {
-  top: 0;
-  right: 0;
-  width: clamp(186px, 17vw, 232px);
+  top: clamp(96px, 15%, 150px);
+  left: 50%;
+  transform: translateX(-54%);
+  width: clamp(186px, 17vw, 234px);
   padding: clamp(16px, 1.5vw, 22px) clamp(16px, 1.5vw, 20px) clamp(16px, 1.5vw, 20px);
+}
+@media (max-width: 960px) {
+  .rx-phero2__card--plan { top: clamp(14px, 4vw, 26px); left: clamp(14px, 4vw, 30px); transform: none; }
 }
 .rx-phero2__card-badge {
   position: absolute;
@@ -300,16 +331,24 @@
 }
 .rx-phero2__card-feats svg { flex-shrink: 0; width: 1.15em; height: 1.15em; }
 
-/* 実績カード（右下） */
+/* 実績カード（写真の下部・中央寄り） */
 .rx-phero2__card--proof {
-  bottom: clamp(-6px, -.4vw, 0px);
-  right: clamp(4%, 6vw, 9%);
+  bottom: clamp(40px, 10%, 96px);
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   width: clamp(196px, 17vw, 244px);
   padding: clamp(14px, 1.4vw, 18px) clamp(14px, 1.4vw, 20px) clamp(14px, 1.4vw, 18px);
+}
+@media (max-width: 960px) {
+  .rx-phero2__card--proof {
+    bottom: clamp(14px, 4vw, 26px);
+    left: auto; right: clamp(14px, 4vw, 30px);
+    transform: none;
+  }
 }
 .rx-phero2__proof-icon { display: block; }
 .rx-phero2__proof-icon svg { width: clamp(30px, 2.6vw, 38px); height: auto; }
@@ -336,11 +375,9 @@
   color: var(--rxp-muted);
   margin: .5em 0 0;
 }
-
-/* スマホ: カードは写真内に収め、サイズを少し圧縮 */
-@media (max-width: 480px) {
-  .rx-phero2__card--plan  { width: clamp(150px, 46vw, 196px); }
-  .rx-phero2__card--proof { right: 4%; width: clamp(150px, 46vw, 196px); }
+@media (max-width: 420px) {
+  .rx-phero2__card--plan  { width: clamp(150px, 44vw, 196px); }
+  .rx-phero2__card--proof { width: clamp(160px, 48vw, 210px); }
 }
 
 /* =========================================================================
