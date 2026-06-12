@@ -69,6 +69,10 @@
   - 会社情報: 「リクルートX（RecruitX）」＋「運営：コンテンツエックス株式会社 ／ Contents X Co., Ltd.」、著作権「© 2026 Contents X Co., Ltd.」
   - SNS・法的リンク（プライバシーポリシー/特商法）・コーポレートサイトリンクは**未確定のため当面は非掲載**。URL確定後に追加（追加時はこの節を更新）
   - SP（≤640px）は上段・下段とも縦積み
+- **フローティングお問い合わせボタン（`.rx-fab`・全ページ共通／お問い合わせページを除く）**: 画面左下に固定し、200px以上スクロールしたら表示して以後ずっと追従（`contents-x.co.jp` の追従CTAに倣う）。
+  - `js/main.js` が `<body>` 直下へ**DOM生成で挿入**（innerHTML不使用）。`#rx-contact-form` がある `contact.html` では挿入しない（＝自ページでは出さない）ため、ページ追加時も自動で付与・除外される
+  - 見た目はブランドグラデのpill（メールアイコン＋「お問い合わせ」）。`href="contact.html"`。z-indexは `--z-fab`。`env(safe-area-inset-bottom)` 対応・`prefers-reduced-motion`/`print` 配慮
+  - スタイルは `css/style.css` 末尾の `.rx-fab`（`.is-visible` で表示）
 - ヘッダー / CTA / モーダル 等の仕様: `TBD`
 - デザイン値は [DESIGN.md](DESIGN.md)、表示崩れ防止は [DEVICE-RULES.md](DEVICE-RULES.md) に従う
 

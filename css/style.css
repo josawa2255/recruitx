@@ -1703,3 +1703,49 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   .rx-footer__top    { flex-direction: column; gap: 28px; }
   .rx-footer__bottom { flex-direction: column; align-items: flex-start; }
 }
+
+/* =====================================================================
+   フローティングお問い合わせボタン（全ページ共通・お問い合わせページを除く）
+   - 画面左下に固定。少しスクロールしたら表示し、以後ずっと追従
+   - JS（main.js）が <body> 直下に動的挿入。お問い合わせページ(#rx-contact-form)では挿入しない
+   - z-index は階層変数（DEVICE-RULES §11）。FAB 層
+   ===================================================================== */
+.rx-fab {
+  position: fixed;
+  left: clamp(16px, 2vw, 28px);
+  bottom: max(clamp(16px, 2.4vw, 28px), env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-fab);
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+  padding: clamp(.72rem, .62rem + .3vw, .95rem) clamp(1.1rem, .9rem + .7vw, 1.6rem);
+  border-radius: var(--rx-radius-pill);
+  background: var(--rx-grad);
+  color: #fff;
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: clamp(.875rem, .84rem + .2vw, 1rem);
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(var(--rx-accent-rgb), .4);
+  /* 初期は隠す → is-visible で表示 */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition: opacity .32s ease, transform .32s ease, box-shadow .2s ease, visibility .32s;
+}
+.rx-fab.is-visible { opacity: 1; visibility: visible; transform: none; }
+.rx-fab:hover  { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(var(--rx-accent-rgb), .52); }
+.rx-fab:active { transform: translateY(-1px); }
+.rx-fab:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .45); outline-offset: 3px; }
+.rx-fab__icon { width: 1.25em; height: 1.25em; flex-shrink: 0; }
+
+@media (max-width: 640px) {
+  .rx-fab { font-size: .875rem; padding: .72rem 1.1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rx-fab { transition: opacity .2s ease, visibility .2s; transform: none; }
+  .rx-fab.is-visible { transform: none; }
+  .rx-fab:hover, .rx-fab:active { transform: none; }
+}
+@media print { .rx-fab { display: none !important; } }

@@ -177,6 +177,59 @@
   update();
 })();
 
+/* フローティングお問い合わせボタン（左下固定・スクロール追従）
+   - 全ページ共通。お問い合わせページ（#rx-contact-form あり）では出さない
+   - 少しスクロールしたら表示し、以後ずっと追従（.is-visible をトグル）
+   - DOM生成のみ（innerHTML不使用・ユーザー入力なし） */
+(function () {
+  'use strict';
+
+  if (document.getElementById('rx-contact-form')) return; // お問い合わせページ自身では出さない
+  if (document.querySelector('.rx-fab')) return;          // 二重挿入ガード
+
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function svgEl(name, attrs) {
+    var el = document.createElementNS(SVGNS, name);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    return el;
+  }
+
+  var fab = document.createElement('a');
+  fab.className = 'rx-fab';
+  fab.href = 'contact.html';
+  fab.setAttribute('aria-label', 'お問い合わせ');
+
+  var svg = svgEl('svg', {
+    'class': 'rx-fab__icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
+    'stroke-width': '1.9', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true'
+  });
+  svg.appendChild(svgEl('path', { d: 'M4 5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H8l-4 3V6a1 1 0 0 1 1-1Z' }));
+  svg.appendChild(svgEl('path', { d: 'm5 7 7 5 7-5' }));
+  fab.appendChild(svg);
+
+  var label = document.createElement('span');
+  label.className = 'rx-fab__text';
+  label.textContent = 'お問い合わせ';
+  fab.appendChild(label);
+
+  document.body.appendChild(fab);
+
+  var SHOW_AFTER = 200; // px スクロールしたら表示し、以後ずっと追従
+  var shown = false, ticking = false;
+  function apply() {
+    ticking = false;
+    var should = window.scrollY > SHOW_AFTER;
+    if (should !== shown) { shown = should; fab.classList.toggle('is-visible', shown); }
+  }
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(apply);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  apply();
+})();
+
 /* お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - 入力はtrim + 文字数上限でサニタイズ
    - honeypot（bot対策）: 隠しフィールドが埋まっていたら送信せず成功表示
