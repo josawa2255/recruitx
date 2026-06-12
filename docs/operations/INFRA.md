@@ -35,6 +35,11 @@
 
 ### WordPress（WP）運用メモ
 - CMSは社内WP環境（実URL非公開）。**PHPローカルがマスター**、お名前.comファイルマネージャーでアップロード。
+- **採用事例CMS（2026-06-12 WP側実装済み）**: case.html のカード＋「詳しく見る」詳細ページをWPの専用投稿タイプ `rx_case` で管理する。
+  - API: 一覧 `GET {API}/cases` / 個別 `GET {API}/cases/{id}`（詳細本文 `content` つき）
+  - フィールド: 会社名（タイトル）/ タグ（`rx_case_tag`・チェックボックス選択）/ 成果概要 / メイン画像（アイキャッチ＋フォーカルポイント `focal.x/y` → フロントは `object-position: x% y%` で再現）/ 実績数値 `stats[{label,value,unit,arrow:up|down|none}]` 最大3個可変
+  - 詳細ページURLは `/case/{slug}` 予定（サブディレクトリ化に伴い、該当ページはパス規約を絶対パスへ切替）
+  - フロント実装（fetch JS・静的ビルド・日次cron）は未着手。WP側手順の正本は ContentX_HP 側 `docs/operations/WP-SERVICE-ONBOARDING.md`
 
 ## 4. 触ってはいけない領域 ⛔（既存資産を参照・流用する際の地雷）
 
