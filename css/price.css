@@ -83,221 +83,264 @@
 @media (max-width: 768px) { .rx-p-br-sp { display: inline; } }
 
 /* =========================================================================
-   1. ヒーロー（30秒プラン診断）— モック1
-   PC: 左コピー+右診断パネルの2カラム / スマホ: 左→上・右→下の縦積み
+   1. ヒーロー（写真＋実績カード）— 最新版.png 準拠
+   PC: 左コピー+右ビジュアル（写真＋浮遊カード2枚） / スマホ: 縦積み
+   ベースの鮮やかピンクはこのセクション内のみ（--hp / --hp-grad でスコープ）
    ========================================================================= */
-.rx-phero {
-  background:
-    radial-gradient(circle at 91% 64%, rgba(235, 42, 99, .05) 0 30%, transparent 31%),
-    radial-gradient(circle at 91% 64%, rgba(235, 42, 99, .05) 0 22%, transparent 23%),
-    radial-gradient(circle at 91% 64%, rgba(235, 42, 99, .05) 0 14%, transparent 15%),
-    var(--rxp-bg-gray);
-  padding: calc(72px + clamp(40px, 6vw, 84px)) 0 clamp(48px, 6vw, 96px);
+.rx-phero2 {
+  --hp: #f00858;
+  --hp-grad: linear-gradient(95deg, #f8246a 0%, #ef0a5a 58%, #e80a64 100%);
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  padding: calc(72px + clamp(28px, 4.5vw, 64px)) 0 clamp(56px, 7vw, 120px);
 }
-@media (max-width: 768px) {
-  .rx-phero { padding-top: calc(60px + 32px); }
+@media (max-width: 768px) { .rx-phero2 { padding-top: calc(60px + 24px); } }
+
+/* 下部のピンク波（装飾） */
+.rx-phero2::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: clamp(120px, 26%, 300px);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath fill='%23fdebf3' d='M0,170 C260,110 520,205 760,176 C1000,148 1240,108 1440,156 L1440,320 L0,320 Z'/%3E%3Cpath fill='%23fcd7e6' d='M0,238 C300,196 560,270 880,232 C1120,206 1320,250 1440,236 L1440,320 L0,320 Z'/%3E%3C/svg%3E")
+    bottom center / 100% 100% no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+/* 左上のごく淡いピンクのにじみ */
+.rx-phero2::after {
+  content: "";
+  position: absolute;
+  left: -6%; top: 8%;
+  width: 38%; height: 60%;
+  background: radial-gradient(closest-side, rgba(240, 8, 88, .06), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
 }
 
-.rx-phero__inner {
+.rx-phero2__inner {
+  position: relative;
+  z-index: 1;
   width: min(100%, 1320px);
   margin: 0 auto;
   padding: 0 clamp(16px, 3vw, 32px);
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
-  gap: clamp(28px, 3.4vw, 60px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+  gap: clamp(28px, 3.6vw, 64px);
   align-items: center;
 }
-/* スマホ: 左（コピー）が上、右（診断パネル）が下 */
-@media (max-width: 960px) {
-  .rx-phero__inner { grid-template-columns: 1fr; }
-}
+@media (max-width: 960px) { .rx-phero2__inner { grid-template-columns: 1fr; } }
 
-.rx-phero__heading {
+/* ---- 左: コピー ---- */
+.rx-phero2 .rx-p-pink { color: var(--hp); }
+
+.rx-phero2__heading {
   font-family: var(--rxp-font);
   font-weight: 900;
-  font-size: clamp(1.625rem, 1rem + 2.3vw, 2.85rem);
-  line-height: 1.5;
+  font-size: clamp(1.875rem, 1.15rem + 2.9vw, 3.25rem);
+  line-height: 1.45;
   letter-spacing: .01em;
   color: var(--rxp-text);
-  margin-top: .9em;
+  margin-top: .7em;
+}
+.rx-phero2__line3 { white-space: nowrap; }
+.rx-phero2__under {
+  position: relative;
+  white-space: nowrap;
+}
+.rx-phero2__under::after {
+  content: "";
+  position: absolute;
+  left: -.02em; right: -.02em;
+  bottom: .02em;
+  height: .14em;
+  background: var(--hp);
+  border-radius: 3px;
 }
 
-.rx-phero__lead {
+.rx-phero2__lead {
   font-family: var(--rxp-font);
-  font-size: clamp(.9375rem, .9rem + .25vw, 1.125rem);
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
   line-height: 2;
   color: var(--rxp-text);
-  margin-top: 1.4em;
+  margin-top: 1.5em;
 }
 
-.rx-phero__channels {
-  display: flex;
-  gap: clamp(20px, 2.6vw, 44px);
-  margin-top: clamp(24px, 3vw, 40px);
+.rx-phero2__cta {
+  margin-top: clamp(26px, 3.2vw, 40px);
+  width: min(100%, 520px);
+  background: var(--hp-grad);
+  box-shadow: 0 14px 30px rgba(240, 8, 88, .34);
+  font-size: clamp(1rem, .95rem + .4vw, 1.25rem);
+  padding-top: clamp(1rem, .88rem + .55vw, 1.35rem);
+  padding-bottom: clamp(1rem, .88rem + .55vw, 1.35rem);
 }
-.rx-phero__channel {
+.rx-phero2__cta:hover { box-shadow: 0 18px 36px rgba(240, 8, 88, .44); }
+
+.rx-phero2__assures {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(10px, 1.2vw, 16px);
+  margin: clamp(20px, 2.4vw, 30px) 0 0;
+  padding: 0;
+}
+.rx-phero2__assure {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  background: #fff;
+  border-radius: var(--rx-radius-pill);
+  box-shadow: 0 6px 20px rgba(40, 30, 40, .09);
+  padding: .6em 1.15em;
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.78125rem, .75rem + .2vw, .9375rem);
+  color: var(--rxp-text);
+}
+.rx-phero2__assure-icon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 1.85em;
+  height: 1.85em;
+  border-radius: 50%;
+  background: #fde4ee;
+}
+.rx-phero2__assure-icon svg { width: 60%; height: 60%; }
+.rx-phero2__assure-icon--fill { background: var(--hp-grad); }
+
+/* ---- 右: 写真＋浮遊カード ---- */
+.rx-phero2__visual {
+  position: relative;
+  padding: clamp(14px, 1.6vw, 26px) clamp(12px, 1.4vw, 22px);
+}
+.rx-phero2__photo {
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: 0 24px 54px rgba(40, 30, 40, .16);
+}
+.rx-phero2__photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.rx-phero2__card {
+  position: absolute;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(40, 30, 40, .18);
+}
+
+/* プランカード（右上） */
+.rx-phero2__card--plan {
+  top: 0;
+  right: 0;
+  width: clamp(186px, 17vw, 232px);
+  padding: clamp(16px, 1.5vw, 22px) clamp(16px, 1.5vw, 20px) clamp(16px, 1.5vw, 20px);
+}
+.rx-phero2__card-badge {
+  position: absolute;
+  top: 0; left: clamp(16px, 1.5vw, 20px);
+  transform: translateY(-50%);
+  background: var(--hp-grad);
+  color: #fff;
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.6875rem, .66rem + .15vw, .8125rem);
+  line-height: 1;
+  padding: .45em 1em;
+  border-radius: var(--rx-radius-pill);
+  margin: 0;
+}
+.rx-phero2__card-plan {
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
+  color: var(--rxp-text);
+  margin: .5em 0 0;
+}
+.rx-phero2__card-price {
+  margin: .25em 0 0;
+  color: var(--rxp-text);
+  display: flex;
+  align-items: baseline;
+  gap: .15em;
+}
+.rx-phero2__card-price b {
+  font-family: var(--rxp-font-num);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  color: var(--hp);
+  letter-spacing: -.01em;
+}
+.rx-phero2__card-price small {
+  font-family: var(--rxp-font);
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--rxp-muted);
+}
+.rx-phero2__card-feats {
+  list-style: none;
+  margin: clamp(10px, 1.2vw, 14px) 0 0;
+  padding: clamp(10px, 1.2vw, 14px) 0 0;
+  border-top: 1px solid #f0eef0;
+  display: grid;
+  gap: clamp(7px, .8vw, 10px);
+}
+.rx-phero2__card-feats li {
+  display: flex;
+  align-items: center;
+  gap: .55em;
+  font-family: var(--rxp-font);
+  font-size: clamp(.75rem, .73rem + .12vw, .8125rem);
+  font-weight: 500;
+  color: var(--rxp-text);
+}
+.rx-phero2__card-feats svg { flex-shrink: 0; width: 1.15em; height: 1.15em; }
+
+/* 実績カード（右下） */
+.rx-phero2__card--proof {
+  bottom: clamp(-6px, -.4vw, 0px);
+  right: clamp(4%, 6vw, 9%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .55em;
+  text-align: center;
+  width: clamp(196px, 17vw, 244px);
+  padding: clamp(14px, 1.4vw, 18px) clamp(14px, 1.4vw, 20px) clamp(14px, 1.4vw, 18px);
 }
-.rx-phero__channel-circle {
-  display: grid;
-  place-items: center;
-  width: clamp(64px, 5.4vw, 84px);
-  height: clamp(64px, 5.4vw, 84px);
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 6px 20px rgba(40, 30, 40, .1);
-}
-.rx-phero__channel-circle svg { width: 52%; height: 52%; }
-.rx-phero__channel-name {
-  font-family: var(--rxp-font);
-  font-size: clamp(.75rem, .72rem + .2vw, .875rem);
-  font-weight: 500;
-  color: var(--rxp-text);
-}
-
-.rx-phero__cta {
-  margin-top: clamp(28px, 3.4vw, 46px);
-  width: min(100%, 540px);
-  font-size: clamp(1.0625rem, 1rem + .45vw, 1.375rem);
-  padding-top: clamp(1.05rem, .9rem + .6vw, 1.4rem);
-  padding-bottom: clamp(1.05rem, .9rem + .6vw, 1.4rem);
-}
-
-.rx-phero__note {
-  display: flex;
-  align-items: center;
-  gap: .55em;
-  margin-top: 1.4em;
-  font-family: var(--rxp-font);
-  font-size: clamp(.8125rem, .78rem + .2vw, .9375rem);
-  color: var(--rxp-text);
-}
-.rx-phero__note svg { width: 1.3em; height: 1.3em; color: var(--rxp-pink); flex-shrink: 0; }
-
-/* ---- 右: 3問プラン診断パネル ---- */
-.rx-pdiag {
-  background: #fff;
-  border-radius: 22px;
-  box-shadow: 0 18px 50px rgba(40, 30, 40, .1);
-  padding: clamp(22px, 2.6vw, 38px) clamp(18px, 2.4vw, 36px) clamp(18px, 2.2vw, 30px);
-}
-
-.rx-pdiag__title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .8em;
-  font-family: var(--rxp-font);
-  font-weight: 700;
-  font-size: clamp(1.0625rem, 1rem + .4vw, 1.3125rem);
-  letter-spacing: .08em;
-  color: var(--rxp-pink);
-  margin: 0;
-}
-.rx-pdiag__title-dash {
-  width: 2em;
-  height: 2px;
-  background: var(--rxp-pink);
-  border-radius: 2px;
-}
-
-.rx-pdiag__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  counter-reset: none;
-}
-.rx-pdiag__row {
-  display: flex;
-  align-items: center;
-  gap: clamp(10px, 1.3vw, 18px);
-  padding: clamp(14px, 1.8vw, 22px) 0;
-}
-.rx-pdiag__row + .rx-pdiag__row { border-top: 2px dotted #e9e3e6; }
-
-.rx-pdiag__num {
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  width: 1.7em;
-  height: 1.7em;
-  border-radius: 50%;
-  background: var(--rxp-pink);
-  color: #fff;
-  font-family: var(--rxp-font-num);
-  font-weight: 700;
-  font-size: clamp(.875rem, .84rem + .2vw, 1rem);
-}
-.rx-pdiag__icon {
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  width: clamp(46px, 4vw, 60px);
-  height: clamp(46px, 4vw, 60px);
-  border-radius: 50%;
-}
-.rx-pdiag__icon svg { width: 56%; height: 56%; }
-.rx-pdiag__icon--pink { background: var(--rxp-pink-pale); }
-.rx-pdiag__icon--gray { background: #f1f1f3; }
-.rx-pdiag__icon--line { background: #eafaf0; }
-.rx-pdiag__icon--line svg { width: 70%; height: 70%; }
-
-.rx-pdiag__qa { flex: 1; min-width: 0; }
-.rx-pdiag__q {
-  display: block;
-  font-family: var(--rxp-font);
-  font-weight: 500;
-  font-size: clamp(.8125rem, .77rem + .3vw, .9375rem);
-  color: var(--rxp-text);
-  line-height: 1.6;
-}
-.rx-pdiag__btns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(8px, 1vw, 14px);
-  margin-top: .6em;
-}
-.rx-pdiag__btn {
+.rx-phero2__proof-icon { display: block; }
+.rx-phero2__proof-icon svg { width: clamp(30px, 2.6vw, 38px); height: auto; }
+.rx-phero2__proof-stat {
   font-family: var(--rxp-font);
   font-weight: 700;
   font-size: clamp(.8125rem, .78rem + .2vw, .9375rem);
-  line-height: 1;
-  padding: .7em 0;
-  border-radius: 8px;
-  background: #fff;
-  cursor: pointer;
-  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
-}
-.rx-pdiag__btn--yes { border: 1.5px solid var(--rxp-pink); color: var(--rxp-pink); }
-.rx-pdiag__btn--no  { border: 1.5px solid #d9d9de; color: var(--rxp-text); }
-.rx-pdiag__btn--yes:hover { background: var(--rxp-pink-faint); }
-.rx-pdiag__btn--no:hover  { background: #f6f6f7; }
-.rx-pdiag__btn--yes.is-on { background: var(--rxp-pink); color: #fff; }
-.rx-pdiag__btn--no.is-on  { background: var(--rxp-dark); border-color: var(--rxp-dark); color: #fff; }
-
-.rx-pdiag__result {
-  display: flex;
-  align-items: center;
-  gap: .9em;
-  background: var(--rxp-pink-pale);
-  border-radius: 12px;
-  padding: clamp(12px, 1.6vw, 18px) clamp(14px, 1.8vw, 22px);
-  margin-top: clamp(4px, .6vw, 8px);
-  font-family: var(--rxp-font);
-  font-weight: 700;
-  font-size: clamp(.875rem, .83rem + .3vw, 1rem);
   color: var(--rxp-text);
+  margin: .35em 0 0;
+  white-space: nowrap;
 }
-.rx-pdiag__result-icon { flex-shrink: 0; width: 2em; height: 2em; }
-.rx-pdiag__result-plan {
-  color: var(--rxp-pink);
+.rx-phero2__proof-stat b {
   font-family: var(--rxp-font-num);
-  font-size: 1.5em;
-  letter-spacing: .02em;
-  padding: 0 .1em;
+  font-weight: 800;
+  font-size: 1.7em;
+  color: var(--hp);
+  letter-spacing: -.01em;
+  padding: 0 .06em;
+}
+.rx-phero2__proof-note {
+  font-family: var(--rxp-font);
+  font-size: clamp(.625rem, .6rem + .12vw, .71875rem);
+  line-height: 1.65;
+  color: var(--rxp-muted);
+  margin: .5em 0 0;
+}
+
+/* スマホ: カードは写真内に収め、サイズを少し圧縮 */
+@media (max-width: 480px) {
+  .rx-phero2__card--plan  { width: clamp(150px, 46vw, 196px); }
+  .rx-phero2__card--proof { right: 4%; width: clamp(150px, 46vw, 196px); }
 }
 
 /* =========================================================================

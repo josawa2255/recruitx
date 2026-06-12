@@ -145,6 +145,8 @@ section { padding: clamp(80px, 12vw, 200px) 0; }   /* 旧 48→160 から拡大 
 | 用途 | 変数 | 値 |
 |------|------|-----|
 | 主ピンク（数字・強調・枠） | `--rxp-pink` | `#eb2a63` |
+| **ヒーロー専用の鮮やかピンク**（`.rx-phero2` スコープ。最新版.png 準拠） | `--hp` | `#f00858` |
+| **ヒーロー専用CTAグラデ**（同上） | `--hp-grad` | `linear-gradient(95deg, #f8246a 0%, #ef0a5a 58%, #e80a64 100%)` |
 | CTAグラデ | `--rxp-grad` | `linear-gradient(95deg, #e8205c 0%, #ee316b 55%, #f24a80 100%)` |
 | 薄ピンク面（9ヶ月総額帯・診断バンド等） | `--rxp-pink-pale` | `#fdeef4` |
 | プラン頭帯・期タグの黒 | `--rxp-dark` | `#1a191c` |
