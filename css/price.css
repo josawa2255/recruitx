@@ -101,10 +101,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* 広い画面ほど縦に大きく（白い余白を減らす） */
-    min-height: clamp(580px, 46vw, 960px);
+    /* 写真は16:9で全体表示するため、その高さ(=幅×9/16)＋上余白が収まる高さを確保 */
+    min-height: clamp(540px, 38vw, 920px);
     /* ヘッダー(固定72px)の下から始める余白を確保 */
-    padding: clamp(104px, 7.5vw, 180px) 0 clamp(40px, 4vw, 80px);
+    padding: clamp(104px, 7.5vw, 170px) 0 clamp(40px, 4vw, 80px);
   }
 }
 @media (max-width: 768px) { .rx-phero2 { padding-top: calc(60px + 28px); } }
@@ -138,7 +138,7 @@
     padding-left: clamp(28px, 3vw, 120px);
     padding-right: 0;
   }
-  .rx-phero2__copy { width: min(40vw, 880px); }
+  .rx-phero2__copy { width: min(38vw, 820px); }
 }
 
 /* ---- 左: コピー ---- */
@@ -254,21 +254,22 @@
   }
 }
 
-/* PC: 右半分に絶対配置。ヘッダー(72px)の下から右・下いっぱいに敷く。左下は大きな半径で丸くくり抜く。
-   プランカードが画像右上に焼き込まれているため、右上を切らないよう object-position を右寄せ */
+/* PC: 右側に絶対配置。ヘッダー(72px)の下から右端いっぱいに敷くが、
+   画像は16:9のまま「全体」を表示（焼き込みカードも女性の顔も切らない）。左下は丸くくり抜く */
 @media (min-width: 961px) {
   .rx-phero2__visual {
     position: absolute;
-    top: clamp(72px, 4.5vw, 116px); right: 0; bottom: 0;
-    width: min(52vw, 1500px);
+    top: clamp(72px, 4.5vw, 112px); right: 0;
+    width: min(54vw, 1500px);
+    aspect-ratio: 1672 / 941;   /* 画像と同比率 → ノークロップで全体表示 */
     margin: 0;
   }
   .rx-phero2__photo {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: 86% 28%;
-    border-bottom-left-radius: clamp(160px, 20vw, 380px);
+    object-position: 50% 50%;
+    border-bottom-left-radius: clamp(120px, 14vw, 260px);
   }
 }
 
