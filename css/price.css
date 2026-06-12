@@ -138,7 +138,7 @@
     padding-left: clamp(28px, 3vw, 120px);
     padding-right: 0;
   }
-  .rx-phero2__copy { width: min(40vw, 820px); }
+  .rx-phero2__copy { width: min(40vw, 880px); }
 }
 
 /* ---- 左: コピー ---- */
@@ -156,7 +156,10 @@
 }
 /* PCは画面比率に応じて大きく。狭いPC幅でも「一緒に整理しませんか？」がコピー内に収まる曲線 */
 @media (min-width: 961px) {
-  .rx-phero2__heading { font-size: clamp(2rem, 3.2vw, 3.625rem); }
+  .rx-phero2__heading { font-size: clamp(2rem, 3.3vw, 4.25rem); }
+  /* 大きい画面では本文・ラベルも合わせて拡大 */
+  .rx-phero2 .rx-p-eyebrow { font-size: clamp(.875rem, .72rem + .28vw, 1.125rem); }
+  .rx-phero2__lead { font-size: clamp(1rem, .62rem + .6vw, 1.4375rem); line-height: 2.05; }
 }
 .rx-phero2__line3 { white-space: nowrap; }
 .rx-phero2__under { position: relative; white-space: nowrap; }

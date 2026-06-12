@@ -21,7 +21,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: min(56%, 820px);
+  width: min(56%, 1100px);
   height: 100%;
   object-fit: cover;
   object-position: center;
@@ -35,7 +35,7 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  width: min(56%, 820px);
+  width: min(56%, 1100px);
   height: 38%;
   background: linear-gradient(to top, rgba(251, 234, 243, .85), transparent);
   pointer-events: none;
@@ -43,7 +43,8 @@
 .rx-chero__inner {
   position: relative;
   z-index: 1;
-  max-width: 1200px;
+  /* 広い画面ほど横を広く使う（中央寄りすぎを解消） */
+  max-width: clamp(1200px, 92vw, 1760px);
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 40px);
 }
@@ -90,7 +91,8 @@
   padding: clamp(36px, 5vw, 64px) 0 clamp(72px, 10vw, 128px);
 }
 .rx-clist__inner {
-  max-width: 1200px;
+  /* 広い画面ほど横を広く使う（中央寄りすぎを解消・事例カードを大きく） */
+  max-width: clamp(1200px, 92vw, 1760px);
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 40px);
 }
