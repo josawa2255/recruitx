@@ -222,25 +222,23 @@
   height: auto;
 }
 
-/* SP: コピーの下にフル幅の写真バナー（左下を丸くくり抜き） */
+/* SP・タブレット: コピーの下にフル幅バナー。画像比率(16:9)に合わせ全体を表示（カード焼き込み済み） */
 @media (max-width: 960px) {
   .rx-phero2__visual {
     margin: clamp(28px, 6vw, 44px) calc(-1 * clamp(16px, 3vw, 32px)) 0;
-    aspect-ratio: 5 / 4;
+    aspect-ratio: 1672 / 941;
   }
   .rx-phero2__photo {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: 55% 24%;
+    object-position: 50% 50%;
     border-bottom-left-radius: clamp(80px, 22vw, 160px);
   }
 }
-@media (min-width: 561px) and (max-width: 960px) {
-  .rx-phero2__visual { aspect-ratio: 2 / 1; }
-}
 
-/* PC: 右半分に絶対配置。ヘッダー(72px)の下から右・下いっぱいに敷く。左下は大きな半径で丸くくり抜く */
+/* PC: 右半分に絶対配置。ヘッダー(72px)の下から右・下いっぱいに敷く。左下は大きな半径で丸くくり抜く。
+   プランカードが画像右上に焼き込まれているため、右上を切らないよう object-position を右寄せ */
 @media (min-width: 961px) {
   .rx-phero2__visual {
     position: absolute;
@@ -252,7 +250,7 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: 52% 36%;
+    object-position: 88% 22%;
     border-bottom-left-radius: clamp(160px, 22vw, 360px);
   }
 }
