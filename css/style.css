@@ -1597,3 +1597,109 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
   letter-spacing: .1em;
   color: #6e7280;
 }
+
+/* =====================================================================
+   共通フッター（全ページ複製・同一マークアップ / 濃紺地 + グラデの上線）
+   ナビ＝ヘッダー同期（準備中項目は aria-disabled で薄表示）。会社情報＋著作権。
+   ===================================================================== */
+.rx-footer {
+  position: relative;
+  background: var(--rx-text);
+  color: #fff;
+  margin-top: clamp(64px, 10vw, 120px);
+}
+.rx-footer::before {                      /* ブランドグラデの細いアクセント上線 */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--rx-grad);
+}
+.rx-footer__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 64px) clamp(16px, 3vw, 32px) clamp(28px, 4vw, 40px);
+}
+@media (min-width: 1440px) { .rx-footer__inner { max-width: 1340px; } }
+@media (min-width: 1920px) { .rx-footer__inner { max-width: 1560px; } }
+
+.rx-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: clamp(28px, 5vw, 48px);
+}
+
+/* --- ブランド（ロゴは明朝・ナビと同書体） --- */
+.rx-footer__brand { min-width: 0; max-width: 30em; }
+.rx-footer__logo { display: inline-block; text-decoration: none; }
+.rx-footer__logo-name {
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-weight: 600;
+  font-size: clamp(1.125rem, 1rem + .5vw, 1.5rem);
+  color: #fff;
+  letter-spacing: .04em;
+}
+.rx-footer__tagline {
+  margin-top: .75em;
+  font-size: var(--rx-fs-small);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, .7);
+}
+
+/* --- ナビ（Zen Kaku・ヘッダーと同期） --- */
+.rx-footer__links {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: clamp(10px, 1.4vw, 14px) clamp(28px, 4vw, 48px);
+}
+.rx-footer__link {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 500;
+  font-size: .9375rem;
+  letter-spacing: .04em;
+  color: rgba(255, 255, 255, .82);
+  transition: color .2s ease;
+}
+.rx-footer__link:hover,
+.rx-footer__link:focus-visible { color: #fff; }
+/* 準備中（料金プラン・お役立ち情報・コラム）: href無し・非遷移（ナビと同方針） */
+.rx-footer__link[aria-disabled="true"] {
+  opacity: .4;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* --- 下段（会社情報・著作権） --- */
+.rx-footer__bottom {
+  margin-top: clamp(28px, 4vw, 44px);
+  padding-top: clamp(20px, 3vw, 28px);
+  border-top: 1px solid rgba(255, 255, 255, .14);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px 24px;
+}
+.rx-footer__company-service {
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: var(--rx-fs-small);
+  color: rgba(255, 255, 255, .85);
+}
+.rx-footer__company-name {
+  margin-top: .35em;
+  font-size: var(--rx-fs-small);
+  color: rgba(255, 255, 255, .6);
+}
+.rx-footer__copyright small {
+  font-size: .8125rem;
+  color: rgba(255, 255, 255, .5);
+  letter-spacing: .03em;
+}
+
+/* SP: 縦積み */
+@media (max-width: 640px) {
+  .rx-footer__top    { flex-direction: column; gap: 28px; }
+  .rx-footer__bottom { flex-direction: column; align-items: flex-start; }
+}
