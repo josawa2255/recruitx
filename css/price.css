@@ -101,10 +101,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* 写真は16:9で全体表示するため、その高さ(=幅×9/16)＋上余白が収まる高さを確保 */
-    min-height: clamp(540px, 38vw, 920px);
-    /* ヘッダー(固定72px)の下から始める余白を確保 */
-    padding: clamp(104px, 7.5vw, 170px) 0 clamp(40px, 4vw, 80px);
+    /* 写真は16:9で全体表示。セクションはコピーに詰めて、写真下に白帯を残さない
+       （下端のピンク波が写真の下端まで覆う高さに収める） */
+    min-height: clamp(470px, 35vw, 900px);
+    /* ヘッダー(固定72px)の下から。コピーを詰めてセクションを低くし、表示窓を広げる */
+    padding: clamp(80px, 5vw, 116px) 0 clamp(18px, 1.4vw, 32px);
   }
 }
 @media (max-width: 768px) { .rx-phero2 { padding-top: calc(60px + 28px); } }
@@ -149,17 +150,17 @@
   font-weight: 900;
   /* モバイル〜タブレット用（PCは下の @media で上書き） */
   font-size: clamp(1.875rem, 1rem + 2.6vw, 2.5rem);
-  line-height: 1.45;
+  line-height: 1.38;
   letter-spacing: .01em;
   color: var(--rxp-text);
-  margin-top: .7em;
+  margin-top: .5em;
 }
 /* PCは画面比率に応じて大きく。狭いPC幅でも「一緒に整理しませんか？」がコピー内に収まる曲線 */
 @media (min-width: 961px) {
   .rx-phero2__heading { font-size: clamp(2rem, 3.3vw, 4.25rem); }
   /* 大きい画面では本文・ラベルも合わせて拡大 */
   .rx-phero2 .rx-p-eyebrow { font-size: clamp(.875rem, .72rem + .28vw, 1.125rem); }
-  .rx-phero2__lead { font-size: clamp(1rem, .62rem + .6vw, 1.4375rem); line-height: 2.05; }
+  .rx-phero2__lead { font-size: clamp(1rem, .62rem + .6vw, 1.4375rem); line-height: 1.8; }
 }
 .rx-phero2__line3 { white-space: nowrap; }
 .rx-phero2__under { position: relative; white-space: nowrap; }
@@ -176,13 +177,13 @@
 .rx-phero2__lead {
   font-family: var(--rxp-font);
   font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
-  line-height: 2;
+  line-height: 1.85;
   color: var(--rxp-text);
-  margin-top: 1.5em;
+  margin-top: 1.05em;
 }
 
 .rx-phero2__cta {
-  margin-top: clamp(26px, 3.2vw, 40px);
+  margin-top: clamp(18px, 2.4vw, 32px);
   width: min(100%, 520px);
   background: var(--hp-grad);
   box-shadow: 0 14px 30px rgba(240, 8, 88, .34);
@@ -197,7 +198,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: clamp(7px, .8vw, 11px);
-  margin: clamp(20px, 2.4vw, 30px) 0 0;
+  margin: clamp(14px, 1.8vw, 24px) 0 0;
   padding: 0;
 }
 /* PC〜タブレットは3つを必ず1行に */
@@ -259,17 +260,16 @@
 @media (min-width: 961px) {
   .rx-phero2__visual {
     position: absolute;
-    top: clamp(72px, 4.5vw, 112px); right: 0;
+    top: clamp(72px, 4.5vw, 112px); right: 0; bottom: 0;   /* フル高さ＝写真下に白帯を作らない */
     width: min(54vw, 1500px);
-    aspect-ratio: 1672 / 941;   /* 画像と同比率 → ノークロップで全体表示 */
     margin: 0;
   }
   .rx-phero2__photo {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: 50% 50%;
-    border-bottom-left-radius: clamp(120px, 14vw, 260px);
+    object-position: 94% 50%;   /* セクションを詰めて表示窓を広げ、顔・カードの両方を収める（右端のカードを切らない） */
+    border-bottom-left-radius: clamp(140px, 18vw, 320px);
   }
 }
 
