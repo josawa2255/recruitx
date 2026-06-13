@@ -184,7 +184,7 @@ def build_card(case: dict) -> str:
         f'\n            <ul class="rx-ccard__stats">'
         f'\n{stats_items}'
         f'\n            </ul>'
-        f'\n            <a class="rx-ccard__more" href="/case/{slug}">詳しく見る{SVG_MORE}</a>'
+        f'\n            <a class="rx-ccard__more" href="case/{slug}/">詳しく見る{SVG_MORE}</a>'
         f'\n          </li>'
     )
 
