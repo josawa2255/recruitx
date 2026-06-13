@@ -31,6 +31,9 @@
 
 ## 5. 運用メモ
 
-- 公開後に Google Search Console へ登録・サイトマップ送信
+- **sitemap.xml**: ルート直下に配置済み（2026-06-13）。トップ/case.html/price.html/contact.html＋全 `/case/{slug}/`。**case エントリは build-cases.py が日次で自動更新**（`update_sitemap`）するので手動編集不要。新規の静的ページを足したら sitemap.xml に1行追加する
+- **robots.txt**: ルート直下に配置済み。全許可＋ `Sitemap:` 行で sitemap.xml を明示
+- サブドメイン開通済み（`https://recruitx.contentsx.jp/`）。**github.io 旧URLは 301 で新ドメインへ自動リダイレクト**（重複コンテンツはGitHub側で解消済み）
+- Google Search Console へ登録・サイトマップ送信（`https://recruitx.contentsx.jp/sitemap.xml`）— **未対応**。要ユーザーのGoogleアカウント操作（プロパティ追加＋所有権確認）
 - GSC API は表示回数があったクエリしか返さない（任意KWの順位だけ知りたい場合は別手段）
 - SEO監査は `seo-*` スキル（seo-audit / seo-technical / seo-content / seo-geo 等）を使う
