@@ -164,8 +164,8 @@ def _build_stats_items(stats: list) -> str:
             f'              <li>'
             f'{label_html}'
             f'<span class="rx-ccard__stat-value">'
-            f'<b class="rx-stat-num">{value}</b>'
-            f'<small>{unit}</small>{arrow_svg}'
+            f'<span class="rx-ccard__stat-fig"><b class="rx-stat-num">{value}</b><small>{unit}</small></span>'
+            f'{arrow_svg}'
             f'</span></li>'
         )
     return "\n".join(items)
@@ -340,8 +340,8 @@ def _generate_one(case: dict, template: str) -> str:
             f'<li>'
             f'{label_html}'
             f'<span class="rx-ccard__stat-value">'
-            f'<b class="rx-stat-num">{value}</b>'
-            f'<small>{unit}</small>{arrow_svg}'
+            f'<span class="rx-ccard__stat-fig"><b class="rx-stat-num">{value}</b><small>{unit}</small></span>'
+            f'{arrow_svg}'
             f'</span></li>\n              '
         )
 
