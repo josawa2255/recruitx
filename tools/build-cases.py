@@ -9,6 +9,7 @@ Fetch rx_case posts from WP REST API:
 import json
 import re
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from html.parser import HTMLParser
 from pathlib import Path
@@ -190,13 +191,19 @@ def build_card(case: dict) -> str:
 
 # ---- API fetching ----
 
+# キャッシュバスター: 公開API(/contentsx/v1/cases)はNginx/CDNキャッシュ(max-age=300,
+# s-maxage=600)が効くため、固定URLだと直前に公開した事例が反映されない。毎回ユニークな
+# クエリを付けてキャッシュをすり抜け、常に最新の公開状態でビルドする。
+_CB = str(int(time.time()))
+
+
 def _fetch_json(url: str, timeout: int = 20) -> object:
     with urllib.request.urlopen(url, timeout=timeout) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
 
 def fetch_cases() -> list:
-    url = f"{API_BASE}/cases?per_page=100&orderby=date&order=desc"
+    url = f"{API_BASE}/cases?per_page=100&orderby=date&order=desc&_cb={_CB}"
     try:
         data = _fetch_json(url)
         if not isinstance(data, list):
@@ -208,7 +215,7 @@ def fetch_cases() -> list:
 
 
 def fetch_case_detail(case_id: int) -> Optional[dict]:
-    url = f"{API_BASE}/cases/{case_id}"
+    url = f"{API_BASE}/cases/{case_id}?_cb={_CB}"
     try:
         data = _fetch_json(url)
         return data if isinstance(data, dict) else None
