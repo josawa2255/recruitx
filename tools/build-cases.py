@@ -150,6 +150,9 @@ def _norm_stat(s: dict) -> dict:
     unit = (rem[:nm.start()] + rem[nm.end():]).strip()
     # カード幅対策: 採用単価等の "/名" はラベルで自明なので落とす
     unit = re.sub(r"\s*/\s*名$", "", unit)
+    # 「名/4か月」「名応募/月」など期間付きの長い名-単位は「名」に簡略化（期間は説明文に残る）
+    if unit.startswith("名") and len(unit) > 3:
+        unit = "名"
     # 6桁以上の「円」は万円に丸めて桁幅を抑える（例 142,881円 → 14.3万円）
     if unit.startswith("円"):
         digits = value.replace(",", "").replace("，", "")
