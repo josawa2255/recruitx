@@ -22,6 +22,26 @@
 | ドメイン | `recruitx.contentsx.jp`（CNAME）— **2026-06-13 開通済み・常時SSL** |
 | DNS | お名前.com（CNAME `recruitx`→`josawa2255.github.io`） |
 
+### サブドメイン開通手順（ランブック・他サービスにも流用可）
+
+GitHub Pages のプロジェクトページに `*.contentsx.jp` サブドメインを割り当てる標準手順。`recruitx.contentsx.jp` 開通（2026-06-13）で実証済み。新サービスでも同じ流れ。
+
+1. **お名前.com で CNAME レコード追加**（DNS設定 → DNSレコード設定 → 対象ドメイン `contentsx.jp` → 「レコード追加」）
+   - ホスト名: `<サブドメイン>`（例 `recruitx`。`.contentsx.jp` は自動付与。フルFQDNを書かない）
+   - TYPE: `CNAME` / VALUE: `<GitHubユーザー名>.github.io`（例 `josawa2255.github.io`。リポ所有者の Pages ホスト。末尾ドット任意） / TTL: `3600`
+   - 「追加」→「確認画面へ進む」→「設定する」。伝播は数分〜1時間
+   - ※ネームサーバーが `01〜04.dnsv.jp`（有効）であることが前提（お名前.comのDNSレコード設定が使える状態）
+2. **GitHub Pages でカスタムドメイン設定**（Settings → Pages）
+   - Custom domain に `<サブドメイン>.contentsx.jp` を入力して Save → リポ直下に `CNAME` ファイルが自動生成される（手動作成不要）
+   - 「DNS Check in Progress」→ 伝播後に緑 ✓。証明書は自動発行（approved になる）
+3. **Enforce HTTPS にチェック**（証明書発行後に押せるようになる）。これで `http://` → `https://` 301リダイレクト＝常時SSL
+4. **検証コマンド**:
+   - `dig <サブドメイン>.contentsx.jp +short` → `<user>.github.io.` ＋ GitHub IP `185.199.108-111.153` が返る
+   - `gh api repos/<owner>/<repo>/pages` → `cname` 一致・`https_enforced: true`・証明書 `state: approved`
+   - `curl -sI -o /dev/null -w "%{http_code} -> %{redirect_url}\n" http://<サブドメイン>.contentsx.jp/` → `301 -> https://...`
+
+**注意**: 当リポは相対パス設計のため、サブパス配信（`josawa2255.github.io/recruitx/`）でもルート配信（`recruitx.contentsx.jp/`）でもリンク・CSSが壊れない。絶対パス（`/css/...`）に戻すとサブパス時に壊れる（→ CLAUDE.md・BUGS.md）。
+
 ## 3. 外部サービス（種別とリクルートX方針）
 
 | サービス | 実IDの所在 | リクルートX方針 |
