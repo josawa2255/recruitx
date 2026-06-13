@@ -148,6 +148,14 @@ def _norm_stat(s: dict) -> dict:
         return {"label": label, "value": rem, "unit": "", "arrow": arrow}
     value = nm.group(0).rstrip(".,，")
     unit = (rem[:nm.start()] + rem[nm.end():]).strip()
+    # カード幅対策: 採用単価等の "/名" はラベルで自明なので落とす
+    unit = re.sub(r"\s*/\s*名$", "", unit)
+    # 6桁以上の「円」は万円に丸めて桁幅を抑える（例 142,881円 → 14.3万円）
+    if unit.startswith("円"):
+        digits = value.replace(",", "").replace("，", "")
+        if digits.isdigit() and int(digits) >= 100000:
+            value = f"{int(digits) / 10000:.1f}".rstrip("0").rstrip(".")
+            unit = "万" + unit
     return {"label": label, "value": value, "unit": unit, "arrow": arrow}
 
 
