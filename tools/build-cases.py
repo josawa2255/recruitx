@@ -126,16 +126,43 @@ def _arrow_svg(arrow: str) -> str:
     return ""
 
 
+def _norm_stat(s: dict) -> dict:
+    """カード/詳細タイル用に stat を「ラベル / 数字 / 短い単位」へ正規化する。
+    WP側の数値はラベルに括弧補足や before→after が混ざっていてカードからはみ出すため、
+    表示直前にここで整える（WPデータは変更しない）。
+      - 括弧（…）/(…) の補足を除去（81%減・15日・2店舗・沖縄 等は詳細ページに残る）
+      - before→after（A→B）は到達値 B を採用
+      - 先頭の数値（1,234 / 5.3 / 10〜15 等）を value、残りを unit に分離
+    """
+    full = f"{s.get('label','')} {s.get('value','')} {s.get('unit','')}".strip()
+    arrow = str(s.get("arrow", "none"))
+    full = re.sub(r"[（(][^）)]*[）)]", "", full)          # 括弧補足を除去
+    full = re.sub(r"\s+", " ", full).strip()
+    m = re.match(r"^([^\d，,]+?)\s*(?=[\d，,])", full)      # 先頭の非数値=ラベル
+    label = m.group(1).strip() if m else ""
+    rem = full[m.end():].strip() if m else full
+    if "→" in rem:                                          # before→after は後者を採用
+        rem = rem.split("→")[-1].strip()
+    nm = re.search(r"[\d][\d,\.，〜~]*", rem)               # 数値（範囲含む）
+    if not nm:
+        return {"label": label, "value": rem, "unit": "", "arrow": arrow}
+    value = nm.group(0).rstrip(".,，")
+    unit = (rem[:nm.start()] + rem[nm.end():]).strip()
+    return {"label": label, "value": value, "unit": unit, "arrow": arrow}
+
+
 def _build_stats_items(stats: list) -> str:
     items = []
     for s in stats[:3]:
-        label = str(s.get("label", ""))
-        value = str(s.get("value", ""))
-        unit = str(s.get("unit", ""))
-        arrow_svg = _arrow_svg(str(s.get("arrow", "none")))
+        n = _norm_stat(s)
+        label = n["label"]
+        value = n["value"]
+        unit = n["unit"]
+        arrow_svg = _arrow_svg(n["arrow"])
+        label_html = f'<span class="rx-ccard__stat-label">{label}</span>' if label else ''
         items.append(
             f'              <li>'
-            f'<span class="rx-ccard__stat-label">{label}</span>'
+            f'{label_html}'
             f'<span class="rx-ccard__stat-value">'
             f'<b class="rx-stat-num">{value}</b>'
             f'<small>{unit}</small>{arrow_svg}'
@@ -303,13 +330,15 @@ def _generate_one(case: dict, template: str) -> str:
     # stats for detail hero
     stats_items_html = ""
     for s in stats[:3]:
-        label = str(s.get("label", ""))
-        value = str(s.get("value", ""))
-        unit = str(s.get("unit", ""))
-        arrow_svg = _arrow_svg(str(s.get("arrow", "none")))
+        n = _norm_stat(s)
+        label = n["label"]
+        value = n["value"]
+        unit = n["unit"]
+        arrow_svg = _arrow_svg(n["arrow"])
+        label_html = f'<span class="rx-ccard__stat-label">{label}</span>' if label else ''
         stats_items_html += (
             f'<li>'
-            f'<span class="rx-ccard__stat-label">{label}</span>'
+            f'{label_html}'
             f'<span class="rx-ccard__stat-value">'
             f'<b class="rx-stat-num">{value}</b>'
             f'<small>{unit}</small>{arrow_svg}'

@@ -237,15 +237,17 @@
   letter-spacing: .04em;
   color: #6e7280;
   margin-bottom: 4px;
-  white-space: nowrap;
+  overflow-wrap: anywhere;   /* 長いラベルでもタイル外にはみ出さない */
 }
 .rx-ccard__stat-value {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;           /* 安全網: 長い値はタイル内で折り返す（見切れ防止）*/
   gap: 2px;
+  min-width: 0;
   font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
   color: #ec2d87;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 .rx-ccard__stat-value b {
   font-weight: 700;
