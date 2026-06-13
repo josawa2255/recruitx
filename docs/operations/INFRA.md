@@ -19,8 +19,8 @@
 | 項目 | 値 |
 |------|-----|
 | ホスティング | GitHub Pages（既存2サイトと同方式） |
-| ドメイン | `recruitx.contentsx.jp`（CNAME） |
-| DNS | お名前.com |
+| ドメイン | `recruitx.contentsx.jp`（CNAME）— **2026-06-13 開通済み・常時SSL** |
+| DNS | お名前.com（CNAME `recruitx`→`josawa2255.github.io`） |
 
 ## 3. 外部サービス（種別とリクルートX方針）
 
