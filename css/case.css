@@ -238,7 +238,8 @@
   letter-spacing: .04em;
   color: #6e7280;
   margin-bottom: 4px;
-  overflow-wrap: anywhere;   /* 長いラベルでもタイル外にはみ出さない */
+  white-space: nowrap;       /* 「アルバイト応募単価」等が途中で割れないよう1行に保つ
+                                （タイルは min-width:min-content で必要分だけ広がる）*/
 }
 .rx-ccard__stat-value {
   display: flex;
