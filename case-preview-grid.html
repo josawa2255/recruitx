@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>事例（UXプレビュー・密度グリッド）｜リクルートX</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cms.contentsx.jp; base-uri 'self'">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+Antique:wght@400;500;700&family=Inter:wght@600;700&display=swap">
+  <style>
+    :root{--ac:#ec2d87;--ink:#0a0a0c;--ink2:#3f4651;--mut:#6e7280;--bg:#fbfbfc;--line:#ecedf1;
+      --jp:'Zen Kaku Gothic Antique','Hiragino Sans',sans-serif;--mc:'Shippori Mincho',serif;--num:'Inter',sans-serif;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--jp);color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased}
+    img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
+    .pv-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--ac);z-index:50;transition:width .1s linear}
+
+    .gi{max-width:clamp(1100px,92vw,1480px);margin:0 auto;padding:clamp(88px,11vw,150px) clamp(20px,4vw,48px) clamp(28px,3vw,44px)}
+    .gi__eye{font-family:var(--num);font-weight:700;letter-spacing:.18em;font-size:.8rem;color:var(--ac);text-transform:uppercase;margin-bottom:14px}
+    .gi__title{font-family:var(--mc);font-weight:700;line-height:1.24;letter-spacing:.02em;font-size:clamp(2.1rem,1.5rem+2.6vw,3.6rem)}
+    .gi__lead{font-size:clamp(.95rem,.9rem+.25vw,1.1rem);line-height:1.9;color:var(--ink2);max-width:40em;margin-top:16px}
+
+    /* フィルタ */
+    .gf{position:sticky;top:0;z-index:30;background:rgba(251,251,252,.86);backdrop-filter:saturate(1.1) blur(10px);
+      border-bottom:1px solid var(--line)}
+    .gf__in{max-width:clamp(1100px,92vw,1480px);margin:0 auto;padding:12px clamp(20px,4vw,48px);display:flex;gap:10px;flex-wrap:wrap}
+    .gf__btn{font-family:var(--jp);font-weight:700;font-size:.875rem;letter-spacing:.03em;color:var(--ink2);
+      background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 20px;cursor:pointer;
+      transition:color .2s,background-color .2s,border-color .2s,transform .12s}
+    .gf__btn:hover{transform:translateY(-1px)}
+    .gf__btn[aria-pressed="true"]{color:#fff;background:var(--ink);border-color:var(--ink)}
+    .gf__btn:focus-visible{outline:3px solid rgba(236,45,135,.5);outline-offset:2px}
+
+    /* グリッド（密度：1行2件） */
+    .gg{max-width:clamp(1100px,92vw,1480px);margin:0 auto;padding:clamp(28px,3vw,48px) clamp(20px,4vw,48px) clamp(72px,9vw,120px);
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,2.6vw,44px)}
+    @media(max-width:760px){.gg{grid-template-columns:1fr}}
+
+    .g-card{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+    .g-card.in{opacity:1;transform:none}
+    .g-card.is-hide{display:none}
+    .g-card__link{display:block;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+      box-shadow:0 10px 30px rgba(15,23,42,.05);transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
+    .g-card__link:hover{transform:translateY(-6px);box-shadow:0 22px 50px rgba(15,23,42,.13)}
+    .g-card__link:focus-visible{outline:3px solid rgba(236,45,135,.55);outline-offset:3px}
+
+    .g-card__media{position:relative;aspect-ratio:16/10;overflow:hidden;background:#f1f1f4}
+    .g-card__media img{position:absolute;inset:-9% 0;width:100%;height:118%;object-fit:cover;object-position:center;
+      transition:transform .5s cubic-bezier(.2,.7,.2,1);will-change:transform}
+    .g-card__link:hover .g-card__media img{transform:scale(1.06)}
+    .g-card__media::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,12,.18),transparent 38%)}
+
+    .g-card__body{padding:clamp(20px,2vw,28px)}
+    .g-card__cat{font-weight:500;font-size:.8125rem;letter-spacing:.04em;color:var(--ac);margin-bottom:8px}
+    .g-card__cat span{color:#c4c9d2;margin:0 .3em}
+    .g-card__co{font-family:var(--mc);font-weight:700;font-size:clamp(1.2rem,1.05rem+.6vw,1.6rem);line-height:1.4;letter-spacing:.01em;margin-bottom:10px}
+    .g-card__sum{font-size:.9rem;line-height:1.8;color:var(--ink2);margin-bottom:18px;
+      display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+    .g-card__stats{list-style:none;display:flex;flex-wrap:wrap;gap:14px 22px;margin-bottom:18px}
+    .g-stat__label{display:block;font-size:.72rem;color:var(--mut);margin-bottom:3px;white-space:nowrap}
+    .g-stat__val{display:inline-flex;align-items:baseline;gap:3px;color:var(--ink);white-space:nowrap}
+    .g-stat__num{font-family:var(--num);font-weight:700;font-size:clamp(1.3rem,1.1rem+.6vw,1.7rem);line-height:1;letter-spacing:-.02em}
+    .g-stat__val small{font-weight:700;font-size:.8rem;color:var(--ink2)}
+    .g-stat__val svg{width:14px;height:14px;color:var(--ac);align-self:center;margin-left:1px}
+
+    .g-card__more{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.875rem;letter-spacing:.04em;color:var(--ink)}
+    .g-card__more svg{width:18px;height:18px;color:var(--ac);transition:transform .2s}
+    .g-card__link:hover .g-card__more svg{transform:translateX(4px)}
+
+    .ge{background:var(--ink);color:#fff;text-align:center;padding:clamp(64px,8vw,104px) 24px;display:flex;flex-direction:column;align-items:center;gap:20px}
+    .ge__t{font-family:var(--mc);font-weight:700;font-size:clamp(1.6rem,1.2rem+2vw,2.6rem)}
+    .ge__b{display:inline-flex;align-items:center;gap:10px;background:var(--ac);color:#fff;font-weight:700;padding:15px 38px;border-radius:999px;transition:transform .2s,box-shadow .2s}
+    .ge__b:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(236,45,135,.4)}
+    .ge__b svg{width:20px;height:20px}
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .g-card{opacity:1;transform:none;transition:none}
+      .g-card__media img{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="pv-progress" id="pvProgress"></div>
+
+  <header class="gi">
+    <p class="gi__eye">CASE STUDIES</p>
+    <h1 class="gi__title">22社の、たしかな変化。</h1>
+    <p class="gi__lead">給与などの条件は変えずに、求人原稿と運用の改善だけで。飲食・清掃・家事代行・畜産まで、業種を越えて積み上げた実績です。</p>
+  </header>
+
+  <nav class="gf" aria-label="業種で絞り込み">
+    <div class="gf__in" id="gfilter">
+      <button class="gf__btn" data-f="all" aria-pressed="true">すべて</button>
+      <button class="gf__btn" data-f="food" aria-pressed="false">飲食</button>
+      <button class="gf__btn" data-f="clean" aria-pressed="false">清掃・家事代行</button>
+      <button class="gf__btn" data-f="other" aria-pressed="false">畜産・ケータリング</button>
+    </div>
+  </nav>
+
+  <section class="gg" id="grid">
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/tram/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/tram-main-1024x1024.webp" alt="株式会社トラム様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社トラム様</h3>
+            <p class="g-card__sum">6か月で2名だった採用が1か月で14名に。採用単価は150万円から12万円へ（92%減）。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="52">0</b><small>倍</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="14">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="92">0</b><small>%減</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/minadein/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/minadein-main-1024x1024.webp" alt="株式会社ミナデイン様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社ミナデイン様</h3>
+            <p class="g-card__sum">合同説明会依存から脱却し、1か月で53名の応募を獲得。応募単価8,301円・5.3倍の応募増を実現。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="5.3">0</b><small>倍</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__val"><b class="g-stat__num" data-to="53">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="8301">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/yakko-dining/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/case-05-steak-tokyo-1024x768.webp" alt="株式会社奴ダイニング様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社奴ダイニング様</h3>
+            <p class="g-card__sum">キッチン正社員がほぼ応募ゼロから4か月で111名応募。6店舗合計で採用4名・採用単価15万円。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="111">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="15">0</b><small>万円</small></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="8301">0</b><small>円</small></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/shogun-burger/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/shogun-burger-main-1024x1024.webp" alt="株式会社ガネーシャ様（SHOGUN BURGER 地方店舗）の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">アルバイト採用 <span>/</span> 正社員採用・飲食</p>
+            <h3 class="g-card__co">株式会社ガネーシャ様（SHOGUN BURGER 地方店舗）</h3>
+            <p class="g-card__sum">費用9万円で55名応募（沖縄）。地方・低予算でも求人票の伝え方で採用結果が変わる事例。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="55">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="1636">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="91">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/hview/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/case-04-izakaya-tokyo-1024x768.webp" alt="HVIEW株式会社様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">アルバイト採用 <span>/</span> 正社員採用・飲食</p>
+            <h3 class="g-card__co">HVIEW株式会社様</h3>
+            <p class="g-card__sum">年間584名応募・採用単価14.3万円。リファラル採用中心から脱却し、17店舗11業態の採用基盤を構築。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">年間応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="584">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="14.3">0</b><small>万円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">アルバイト応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="263">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/tramscope/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/case-06-bakery-aichi-1024x768.webp" alt="株式会社トラムスコープ様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社トラムスコープ様</h3>
+            <p class="g-card__sum">3か月・60万円で採用ゼロだったパン製造正社員が、わずか15日で12名採用。応募単価81%削減・採用単価3万円/名。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="12">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="3">0</b><small>万円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="9487">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/razulite/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/razulite-main-1-1024x1024.webp" alt="株式会社RAZULIT&#x27;e様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社RAZULIT&#x27;e様</h3>
+            <p class="g-card__sum">3か月で1名だった採用が1か月で4名に。採用単価は90万円から10.5万円へ（88%削減）。店長経験者2名を含む質の高い採用を実現。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="16.5">0</b><small>倍</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="4">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="88">0</b><small>%減</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="clean">
+        <a class="g-card__link" href="case/r-associates/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/r-associates-main-1-1024x1024.webp" alt="株式会社アール・アソシエイツ様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">スタッフ採用 <span>/</span> 家事代行</p>
+            <h3 class="g-card__co">株式会社アール・アソシエイツ様</h3>
+            <p class="g-card__sum">月10名だった応募が54名に5.4倍増。採用単価は15,000〜30,000円から11,158円へ大幅削減。給与条件を変えずに達成。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="5.4">0</b><small>倍</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="20">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="73">0</b><small>%減</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="clean">
+        <a class="g-card__link" href="case/arc-craft/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/arc-craft-main-1-1024x1024.webp" alt="A.R.C.craft株式会社様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">スタッフ採用 <span>/</span> 清掃</p>
+            <h3 class="g-card__co">A.R.C.craft株式会社様</h3>
+            <p class="g-card__sum">リファラル採用のみだった清掃会社が初めて求人票を掲載。1回目29日間で74名応募・1名採用（採用単価130,159円）、2回目16日間で26名応募・1名採用（採用単価47,462円）。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="none"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="74">0</b><small>名</small></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="1758">0</b><small>円</small></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="47462">0</b><small>円</small></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="clean">
+        <a class="g-card__link" href="case/sweep/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/sweep-main-1-1024x1024.webp" alt="株式会社SWEEP様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">スタッフ採用 <span>/</span> 清掃</p>
+            <h3 class="g-card__co">株式会社SWEEP様</h3>
+            <p class="g-card__sum">創業直後の初回掲載で10日間46名応募・1名採用。応募単価877円、費用40,374円。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="none"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="46">0</b><small>名</small></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="877">0</b><small>円</small></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">費用</span><span class="g-stat__val"><b class="g-stat__num" data-to="40374">0</b><small>円</small></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/satsutaru-kanko/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/satsutaru-kanko-main-1-1024x1024.webp" alt="札樽観光株式会社様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">アルバイト採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">札樽観光株式会社様</h3>
+            <p class="g-card__sum">1か月費用79,504円で応募0名だった状態が、9日間費用46,930円で117名応募・4名採用に。採用単価約10.5万円を実現。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="117">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="4">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">費用</span><span class="g-stat__val"><b class="g-stat__num" data-to="46930">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/shiromura/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/shiromura-main-1-1024x1024.webp" alt="株式会社しろむらホールディングス様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社しろむらホールディングス様</h3>
+            <p class="g-card__sum">3か月間採用ゼロ（月5名応募）から1か月で2店舗合計58名応募・5名採用。採用単価30万円以上→10〜15万円に改善。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="58">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="5">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num">10〜15</b><small>万円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/eatjoy/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/eatjoy-main-1-1024x1024.webp" alt="株式会社イートジョイ・フードサービス様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社イートジョイ・フードサービス様</h3>
+            <p class="g-card__sum">3か月で0名採用が1か月で5名に。店長経験者2名を含む質の高い採用を実現。採用単価30万円以上から10〜15万円/名へ。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="58">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="5">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num">10〜15</b><small>万円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/bw-consulting/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/bw-consulting-main-1-1024x1024.webp" alt="BWコンサルティング株式会社様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">アルバイト採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">BWコンサルティング株式会社様</h3>
+            <p class="g-card__sum">2店舗でタウンワークを活用していたが採用単価が高止まり。求人原稿改善後、3日間で7名採用・採用単価3,169円を実現。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="none"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="3169">0</b><small>円</small></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="7">0</b><small>名</small></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">採用単価最大</span><span class="g-stat__val"><b class="g-stat__num" data-to="95">0</b><small>%削減</small></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/kakogawa-houston/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/kakogawa-houston-main-1-1024x1024.webp" alt="加古川ヒューストン株式会社様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">加古川ヒューストン株式会社様</h3>
+            <p class="g-card__sum">3か月・50万円で採用ゼロだった状態から、1か月・広告費0円で正社員16名の応募・5名採用を実現。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="16">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="5">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">広告費</span><span class="g-stat__val"><b class="g-stat__num" data-to="0">0</b><small>円</small></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/sg-foods/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/sg-foods-main-1-1024x1024.webp" alt="株式会社SG.foods様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社SG.foods様</h3>
+            <p class="g-card__sum">2か月で1名だった応募が1か月で55名に。採用ゼロから2名の正社員採用を実現。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数 約</span><span class="g-stat__val"><b class="g-stat__num" data-to="110">0</b><small>倍</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="7636">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="2">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/winners/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/winners-main-1-1024x1024.webp" alt="株式会社ウィナーズ様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">株式会社ウィナーズ様</h3>
+            <p class="g-card__sum">1か月費用14万円・応募単価7万円から、20日間で採用単価9,499円を達成。年間468名応募の継続成果へ。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="down"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="1676">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="9499">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">年間応募</span><span class="g-stat__val"><b class="g-stat__num" data-to="468">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/horie-shoten/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/horie-shoten-main-1-1024x1024.webp" alt="有限会社 堀江商店様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">有限会社 堀江商店様</h3>
+            <p class="g-card__sum">人材紹介会社依存（採用単価150万円）から脱却。2か月で正社員2名採用、採用単価18.5万円（約88%削減）。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="88">0</b><small>%削減</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="18.5">0</b><small>万円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="46205">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="other">
+        <a class="g-card__link" href="case/kanedai-ohashi/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/kanedai-ohashi-main-1-1024x1024.webp" alt="株式会社カネダイ大橋牧場様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">正社員採用 <span>/</span> 牧場・畜産</p>
+            <h3 class="g-card__co">株式会社カネダイ大橋牧場様</h3>
+            <p class="g-card__sum">1年間応募0名だった牧場が3か月で63名応募。牧場経験者2名を含む3名を採用単価22万円で採用。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="63">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="up"><span class="g-stat__label">採用数</span><span class="g-stat__val"><b class="g-stat__num" data-to="3">0</b><small>名</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="22">0</b><small>万円</small></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/hir/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/hir-main-1-1024x1024.webp" alt="HIR株式会社様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">アルバイト採用 <span>/</span> 飲食</p>
+            <h3 class="g-card__co">HIR株式会社様</h3>
+            <p class="g-card__sum">1か月1名だったアルバイト応募が6名に。採用費用11,178円・採用単価5,589円を実現。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="6">0</b><small>倍</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="5589">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">採用費用</span><span class="g-stat__val"><b class="g-stat__num" data-to="11178">0</b><small>円</small></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="other">
+        <a class="g-card__link" href="case/second-table/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/second-table-main-1-1024x1024.webp" alt="2nd table様（セカンドテーブル）の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">アルバイト採用 <span>/</span> ケータリング</p>
+            <h3 class="g-card__co">2nd table様（セカンドテーブル）</h3>
+            <p class="g-card__sum">応募0名から1か月111名へ。広告掲載費0円で東京・大阪2店舗合計111名のアルバイト応募を実現。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="111">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">広告掲載費</span><span class="g-stat__val"><b class="g-stat__num" data-to="0">0</b><small>円</small></span></li><li class="g-stat" data-arrow="none"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="0">0</b><small>円</small></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+      <article class="g-card" data-cat="food">
+        <a class="g-card__link" href="case/ganesha/">
+          <div class="g-card__media"><img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/case-01-burger-tokyo-1024x768.webp" alt="株式会社ガネーシャ様の採用成功事例" loading="lazy" decoding="async"></div>
+          <div class="g-card__body">
+            <p class="g-card__cat">アルバイト採用 <span>/</span> 正社員採用・飲食</p>
+            <h3 class="g-card__co">株式会社ガネーシャ様</h3>
+            <p class="g-card__sum">月数名だった応募が、原稿改善後はひと月で82名に。給与などの条件は変えずに達成。</p>
+            <ul class="g-card__stats"><li class="g-stat" data-arrow="up"><span class="g-stat__label">応募数</span><span class="g-stat__val"><b class="g-stat__num" data-to="82">0</b><small>名/月</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 13 13 3M6 3h7v7"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">応募単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="4878">0</b><small>円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li><li class="g-stat" data-arrow="down"><span class="g-stat__label">採用単価</span><span class="g-stat__val"><b class="g-stat__num" data-to="13">0</b><small>万円</small><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l10 10M13 6v7H6"/></svg></span></li></ul>
+            <span class="g-card__more">詳しく見る<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></span>
+          </div>
+        </a>
+      </article>
+  </section>
+
+  <section class="ge">
+    <p class="ge__t">次は、貴社の番です。</p>
+    <a class="ge__b" href="contact.html">無料でご相談いただく
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h14M11 4l6 6-6 6"/></svg></a>
+  </section>
+
+  <script>
+  (function(){
+    var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var bar=document.getElementById('pvProgress');
+    function prog(){var h=document.documentElement;bar.style.width=(h.scrollTop/((h.scrollHeight-h.clientHeight)||1)*100).toFixed(2)+'%';}
+    addEventListener('scroll',prog,{passive:true});prog();
+
+    /* カウントアップ */
+    function fmt(n,d){return (d?n.toFixed(d):Math.round(n)).toLocaleString('en-US');}
+    function count(el){var s=el.getAttribute('data-to');if(s==null)return;var to=parseFloat(s);var d=(s.split('.')[1]||'').length;
+      if(reduce||isNaN(to)){el.textContent=fmt(to,d);return;}
+      var t0=performance.now(),dur=1000;
+      function step(t){var k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,3);el.textContent=fmt(to*e,d);if(k<1)requestAnimationFrame(step);else el.textContent=fmt(to,d);}
+      requestAnimationFrame(step);}
+
+    /* リビール（段階的）＋カウント発火 */
+    var cards=[].slice.call(document.querySelectorAll('.g-card'));
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){
+      if(!en.isIntersecting)return;var c=en.target;
+      var sib=[].slice.call(c.parentNode.children).filter(function(x){return !x.classList.contains('is-hide')});
+      var i=sib.indexOf(c); c.style.transitionDelay=((i%2)*0.08)+'s';
+      c.classList.add('in');
+      c.querySelectorAll('.g-stat__num').forEach(function(n){if(!n.dataset.done){n.dataset.done='1';count(n);}});
+      io.unobserve(c);
+    });},{threshold:.2,rootMargin:'0px 0px -8% 0px'});
+    cards.forEach(function(c){io.observe(c);});
+
+    /* カード内画像のパララックス（スクロール連動・控えめ・PCのみ） */
+    if(!reduce && matchMedia('(min-width:761px)').matches){
+      var ticking=false;
+      function par(){ticking=false;var vh=innerHeight;
+        cards.forEach(function(c){if(c.classList.contains('is-hide'))return;
+          var r=c.getBoundingClientRect();if(r.bottom<-60||r.top>vh+60)return;
+          var img=c.querySelector('.g-card__media img');if(!img)return;
+          var p=((r.top+r.height/2)-vh/2)/vh;p=Math.max(-1,Math.min(1,p));
+          img.style.transform='translateY('+(p*-6).toFixed(2)+'%)';   /* hoverのscaleはCSS側で上書きされる前提の控えめ視差 */
+        });}
+      addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(par);}},{passive:true});
+      par();
+    }
+
+    /* フィルタ（滑らかに再配置） */
+    var fil=document.getElementById('gfilter');
+    fil.addEventListener('click',function(e){var b=e.target.closest('.gf__btn');if(!b)return;
+      [].forEach.call(fil.children,function(x){x.setAttribute('aria-pressed', x===b?'true':'false');});
+      var f=b.getAttribute('data-f');
+      cards.forEach(function(c){var show=(f==='all'||c.getAttribute('data-cat')===f);
+        c.classList.toggle('is-hide',!show);
+        if(show && !c.classList.contains('in')){c.classList.add('in');}
+      });
+    });
+  })();
+  </script>
+</body>
+</html>
