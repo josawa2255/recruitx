@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../images/favicon/apple-touch-icon.png">
   <title>{{seo_title}}</title>
   <meta name="description" content="{{seo_description}}">
   <meta name="robots" content="index, follow">
@@ -38,7 +41,7 @@
   <header class="rx-nav" id="nav">
     <div class="rx-nav__inner">
       <a class="rx-nav__brand" href="../../index.html" aria-label="リクルートX トップへ">
-        <span class="rx-nav__brand-name">Recruit&nbsp;X</span>
+        <img class="rx-nav__brand-img" src="../../images/logo/recruitx-logo.png" alt="リクルートX" width="763" height="160">
       </a>
       <nav class="rx-nav__menu" id="navMenu" aria-label="メインナビゲーション">
         <a class="rx-nav__link" href="../../index.html#service">サービス</a>
@@ -108,7 +111,7 @@
       <div class="rx-footer__top">
         <div class="rx-footer__brand">
           <a class="rx-footer__logo" href="../../index.html" aria-label="リクルートX トップへ">
-            <span class="rx-footer__logo-name">Recruit&nbsp;X</span>
+            <img class="rx-footer__logo-img" src="../../images/logo/recruitx-logo.png" alt="リクルートX" width="763" height="160">
           </a>
           <p class="rx-footer__tagline">求人広告に頼らない、SNS時代の採用へ。</p>
         </div>

@@ -154,3 +154,18 @@ section { padding: clamp(80px, 12vw, 200px) 0; }   /* 旧 48→160 から拡大 
 | 見出し書体 | — | Noto Sans JP 900（モック準拠。ページ内のみ） |
 | 英字・数字 | — | Inter 700（金額・PRICE PLAN・ステップ番号） |
 | LINEブランド緑 | — | `#06c755`（SVGアイコンのみ） |
+
+## ロゴ・ファビコン
+
+ヘッダー／フッターのブランドは**企業ロゴ画像**（横組みワードマーク／濃紺Recruit＋ピンクX、透過PNG）。原典は `images/企業ロゴ.png`・`images/ファビコン案.png`。
+
+| 用途 | ファイル | 実装 |
+|------|---------|------|
+| ロゴ（共通） | `images/logo/recruitx-logo.png`（763×160・**背景透過**PNG） | ヘッダー `.rx-nav__brand-img` は原色のまま。フッター `.rx-footer__logo-img` は濃紺背景のため `filter: brightness(0) invert(1)` で**白抜き化**（ピンクXも白の単色になる） |
+| ファビコン | `images/favicon/favicon-32.png` / `favicon-16.png` / `favicon-192.png`（**背景透過**・中の白Rxは保持）／ `apple-touch-icon.png`（180・**ピンク地で塗り潰し**） | 全ページ `<head>` に `rel="icon"` / `apple-touch-icon` を相対パスで設置 |
+
+- 原典 `images/企業ロゴ.png` は**白背景（透過なし）**。透過マスターは `images/企業ロゴ_透過.png`（白→アルファのColor-to-Alpha処理＋余白トリミング済み）。表示用ロゴはそこから高さ160へリサンプル。
+- `width`/`height` 属性は実寸の **763×160**（CLS対策）。CSSは高さ固定・`width:auto`。
+- パスは**各ページからの相対**（事例ページは `../../images/...`）。ルート絶対パス禁止の原則に従う。
+- 事例詳細のビルド雛形 `tools/templates/case-detail.html.tpl` も同じ画像ロゴ＋faviconに更新済み（再ビルドで戻らない）。
+- ロゴ差し替え手順: ① `images/企業ロゴ.png` を更新 → ② Pillowで白→透過（Color-to-Alpha, 近白しきい値14, getbboxでトリミング）→ `企業ロゴ_透過.png` 保存 → ③ 高さ160へLanczosリサンプルし `logo/recruitx-logo.png` 出力 → ④ 縦横比が変われば全HTML＋tplの `width/height` 属性を更新。ファビコンは外周flood fillで背景白のみ透過（中央の白Rxは保持）→ `favicon-master-transparent.png` から各サイズをLanczos縮小。apple-touch-iconはiOSの黒角回避のためサンプルしたピンク地に合成して出力。
