@@ -1,0 +1,309 @@
+/* =========================================================================
+   case-detail.css — リクルートX 事例詳細ページ（/case/{slug}/）専用
+   依存: css/tokens.css → css/style.css の後に読み込む
+   パスはすべて絶対パス（/始まり）。同階層相対パスは使わない
+   ========================================================================= */
+
+/* ---- ヒーロー ---- */
+.rx-cdtl-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: clamp(360px, 50vw, 640px);
+  background: linear-gradient(135deg, #0a0a0c 0%, #1a0d12 100%);
+  overflow: hidden;
+}
+
+.rx-cdtl-hero__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(96px, 12vw, 160px) clamp(24px, 4vw, 64px) clamp(48px, 6vw, 80px);
+  position: relative;
+  z-index: 1;
+}
+
+.rx-cdtl-hero__img-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.rx-cdtl-hero__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.85) 30%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,.85) 30%);
+}
+
+/* パンくず */
+.rx-cdtl-bread ol {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0 0 clamp(16px, 2vw, 24px);
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.rx-cdtl-bread li {
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .5);
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+}
+
+.rx-cdtl-bread li + li::before {
+  content: "/";
+  margin-right: 8px;
+  color: rgba(255, 255, 255, .3);
+}
+
+.rx-cdtl-bread a {
+  color: rgba(255, 255, 255, .5);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.rx-cdtl-bread a:hover {
+  color: #ec2d87;
+}
+
+.rx-cdtl-hero__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: .75rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #ec2d87;
+  margin: 0 0 12px;
+}
+
+.rx-cdtl-hero__heading {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem);
+  line-height: 1.3;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.rx-cdtl-hero__tags {
+  font-size: .875rem;
+  color: rgba(255, 255, 255, .65);
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  margin: 0 0 clamp(24px, 3vw, 40px);
+}
+
+/* 成果サマリー（stats の再掲）*/
+.rx-cdtl-hero__stats {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 32px;
+}
+
+.rx-cdtl-hero__stats .rx-ccard__stat-label {
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .5);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.rx-cdtl-hero__stats .rx-ccard__stat-value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  color: #fff;
+}
+
+.rx-cdtl-hero__stats .rx-stat-num {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.5rem, 1.25rem + .8vw, 2rem);
+  font-weight: 700;
+  color: #fff;
+}
+
+.rx-cdtl-hero__stats small {
+  font-size: .8125rem;
+  color: rgba(255, 255, 255, .7);
+}
+
+.rx-cdtl-hero__stats .rx-ccard__stat-arrow {
+  width: 14px;
+  height: 14px;
+  stroke: #ec2d87;
+  flex-shrink: 0;
+}
+
+/* SP: 縦積み */
+@media (max-width: 768px) {
+  .rx-cdtl-hero {
+    grid-template-columns: 1fr;
+  }
+  .rx-cdtl-hero__img-wrap {
+    height: clamp(200px, 50vw, 320px);
+    order: -1;
+  }
+  .rx-cdtl-hero__img-wrap img {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .rx-cdtl-hero__inner {
+    padding-top: 32px;
+  }
+}
+
+/* ---- 本文エリア ---- */
+.rx-cdtl-body {
+  padding: clamp(48px, 8vw, 96px) 0;
+  background: #fff;
+}
+
+.rx-cdtl-body__inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+
+/* WP本文の標準的なブロックスタイル */
+.rx-cdtl-article h2 {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: clamp(1.25rem, 1.1rem + .8vw, 1.625rem);
+  font-weight: 700;
+  color: #0a0a0c;
+  margin: 2.5em 0 .75em;
+  padding-bottom: .4em;
+  border-bottom: 2px solid #ec2d87;
+  line-height: 1.4;
+}
+
+.rx-cdtl-article h3 {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: clamp(1.0625rem, 1rem + .4vw, 1.25rem);
+  font-weight: 700;
+  color: #0a0a0c;
+  margin: 2em 0 .6em;
+  line-height: 1.5;
+}
+
+.rx-cdtl-article p {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 2;
+  color: #2d3340;
+  margin: 0 0 1.4em;
+}
+
+.rx-cdtl-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.6em 0;
+  font-size: .9375rem;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+}
+
+.rx-cdtl-article th,
+.rx-cdtl-article td {
+  padding: 10px 14px;
+  border: 1px solid #e0e0e5;
+  text-align: left;
+  line-height: 1.7;
+  color: #2d3340;
+}
+
+.rx-cdtl-article th {
+  background: #f8f0f5;
+  font-weight: 700;
+  color: #0a0a0c;
+}
+
+.rx-cdtl-article ul,
+.rx-cdtl-article ol {
+  padding-left: 1.6em;
+  margin: 0 0 1.4em;
+}
+
+.rx-cdtl-article li {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.9;
+  color: #2d3340;
+  margin-bottom: .4em;
+}
+
+.rx-cdtl-article dl {
+  margin: 0 0 1.4em;
+}
+
+.rx-cdtl-article dt {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  color: #0a0a0c;
+  margin: 1.2em 0 .3em;
+}
+
+.rx-cdtl-article dd {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.9;
+  color: #2d3340;
+  margin: 0 0 .6em 1.2em;
+}
+
+.rx-cdtl-article a {
+  color: #ec2d87;
+  text-decoration: underline;
+  text-decoration-color: rgba(236, 45, 135, .4);
+  text-underline-offset: 3px;
+  transition: color .2s;
+}
+
+.rx-cdtl-article a:hover {
+  color: #c2186d;
+  text-decoration-color: rgba(194, 24, 109, .6);
+}
+
+/* 免責注記 */
+.rx-cdtl-disclaimer {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .8125rem;
+  color: #888;
+  line-height: 1.8;
+  margin: 2em 0 0;
+  padding-top: 1.2em;
+  border-top: 1px solid #eee;
+}
+
+/* ---- 事例一覧へ戻るリンク ---- */
+.rx-cdtl-back {
+  text-align: center;
+  padding: clamp(24px, 4vw, 40px) 0;
+  background: #fff;
+}
+
+.rx-cdtl-back a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .9375rem;
+  font-weight: 700;
+  color: #ec2d87;
+  text-decoration: none;
+  letter-spacing: .04em;
+  transition: opacity .2s;
+}
+
+.rx-cdtl-back a:hover {
+  opacity: .65;
+}
+
+.rx-cdtl-back svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}

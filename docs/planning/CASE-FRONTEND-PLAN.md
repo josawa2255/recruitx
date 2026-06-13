@@ -1,7 +1,8 @@
 # 採用事例フロント実装計画（CASE-FRONTEND-PLAN）
 
 > 「事例カードをクリックすると詳細ページが表示される」を実現する静的ビルドの要件書。
-> WP側（CPT `rx_case`・REST API）は実装済みで、コンテンツも入り始めている。**未実装なのはこのフロントだけ。**
+> **実装済み（2026-06-13）**: `tools/build-cases.py` / `tools/templates/case-detail.html.tpl` / `css/case-detail.css` / `.github/workflows/build-cases.yml` / case.html BUILD markers。
+> WP側（CPT `rx_case`・REST API）は実装済みで、コンテンツも入り始めている。
 > 着手トリガー: 「詳細ページを作りたい」「フロント実装」「ビルドして」等。
 
 ## ゴール（3点セット）

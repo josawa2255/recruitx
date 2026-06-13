@@ -266,8 +266,9 @@
   flex-shrink: 0;
 }
 
-/* 詳しく見る（詳細ページ未作成のためリンクではなく表示のみ） */
+/* 詳しく見る（ビルド済みカードでは <a> タグに変わる） */
 .rx-ccard__more {
+  text-decoration: none;
   grid-column: 3;
   grid-row: 3;
   justify-self: end;

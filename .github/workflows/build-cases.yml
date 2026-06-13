@@ -1,0 +1,41 @@
+name: Build Case Pages
+
+on:
+  schedule:
+    # 毎日 JST 06:00（UTC 21:00）に実行
+    - cron: "0 21 * * *"
+  workflow_dispatch:
+    # WP編集後に手動で即時ビルド
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run build-cases.py
+        run: python3 tools/build-cases.py
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet && echo "changed=false" >> "$GITHUB_OUTPUT" || echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add case.html case/
+          git commit -m "build: update case pages from WP API [skip ci]"
+          git push
