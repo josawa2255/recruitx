@@ -103,7 +103,8 @@
     justify-content: center;
     /* 写真は16:9で全体表示。セクションはコピーに詰めて、写真下に白帯を残さない
        （下端のピンク波が写真の下端まで覆う高さに収める） */
-    min-height: clamp(470px, 35vw, 900px);
+    /* 写真を下までしっかり使う。ただし高くしすぎると cover の窓が狭まり顔が切れるため上限を抑える */
+    min-height: clamp(540px, 43vw, 1040px);
     /* ヘッダー(固定72px)の下から。コピーを詰めてセクションを低くし、表示窓を広げる */
     padding: clamp(80px, 5vw, 116px) 0 clamp(18px, 1.4vw, 32px);
   }
@@ -295,13 +296,26 @@
   width: clamp(196px, 17vw, 244px);
   padding: clamp(14px, 1.4vw, 18px) clamp(14px, 1.4vw, 20px) clamp(14px, 1.4vw, 18px);
 }
+/* SP・タブレット: 画像が縮小されてバナーが浅いので、実績カードは
+   注記を隠した横長コンパクト（pill）にして下端中央へ。焼き込みカード(右上)とも顔とも重ならない */
 @media (max-width: 960px) {
   .rx-phero2__card--proof {
-    bottom: clamp(12px, 3vw, 22px);
-    left: auto; right: clamp(12px, 3vw, 22px);
-    transform: none;
-    width: clamp(170px, 44vw, 216px);
+    bottom: clamp(8px, 2vw, 16px);
+    left: 50%; right: auto;
+    transform: translateX(-50%);
+    flex-direction: row;
+    align-items: center;
+    gap: .5em;
+    width: auto;
+    max-width: 90%;
+    text-align: left;
+    padding: clamp(6px, 1.6vw, 10px) clamp(12px, 3vw, 18px);
+    border-radius: var(--rx-radius-pill);
   }
+  .rx-phero2__proof-icon { line-height: 0; }
+  .rx-phero2__proof-icon svg { width: clamp(20px, 5vw, 24px); }
+  .rx-phero2__proof-stat { margin: 0; font-size: clamp(.8125rem, 3vw, .9375rem); white-space: nowrap; }
+  .rx-phero2__proof-note { display: none; }
 }
 .rx-phero2__proof-icon { display: block; }
 .rx-phero2__proof-icon svg { width: clamp(30px, 2.6vw, 38px); height: auto; }
