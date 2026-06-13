@@ -40,7 +40,9 @@
     /* 1事例＝全幅パネル */
     .pv-case{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;isolation:isolate}
     .pv-case__media{position:absolute;inset:0;z-index:-2}
-    .pv-case__media img{width:100%;height:120%;object-fit:cover;object-position:center;will-change:transform}
+    .pv-case__media img{width:100%;height:132%;object-fit:cover;object-position:center;transform:translate3d(0,0,0) scale(1.08);will-change:transform}
+    .pv-case__inner{will-change:transform}
+    .pv-idx{will-change:transform}
     /* ヒーロー継承の白フェード：右の写真→左の白へ溶ける（PC） */
     .pv-case__veil{position:absolute;inset:0;z-index:-1;
       background:linear-gradient(90deg,#fff 0%,#fff 30%,rgba(255,255,255,.92) 42%,rgba(255,255,255,.55) 58%,rgba(255,255,255,0) 80%)}
@@ -283,23 +285,32 @@
     },{threshold:.35});
     document.querySelectorAll('.pv-case').forEach(function(s){ io.observe(s); });
 
-    /* 写真の視差（控えめ・reduced-motionでは無効） */
-    if(!reduce){
-      var imgs = [].slice.call(document.querySelectorAll('.pv-case'));
+    /* スクロール連動・多層パララックス（写真=遅い / 番号=中間・逆 / 文字=速い）
+       連続的にスクロール量へ比例。reduced-motion とモバイルでは無効化（体感重視＋ジャンク回避）*/
+    var canParallax = !reduce && matchMedia('(min-width:901px)').matches;
+    if(canParallax){
+      var cases = [].slice.call(document.querySelectorAll('.pv-case'));
       var ticking=false;
       function par(){
         ticking=false;
         var vh = innerHeight;
-        imgs.forEach(function(sec){
+        cases.forEach(function(sec){
           var r = sec.getBoundingClientRect();
-          if(r.bottom<0 || r.top>vh) return;
+          if(r.bottom < -80 || r.top > vh+80) return;
+          /* p: パネル中心が画面中心からどれだけズレているか（下=+, 中央=0, 上=-）*/
+          var p = ((r.top + r.height/2) - vh/2) / vh;
+          p = Math.max(-1, Math.min(1, p));
           var img = sec.querySelector('.pv-case__media img');
-          if(!img) return;
-          var prog = (r.top + r.height/2 - vh/2) / vh; // -0.5..0.5付近
-          img.style.transform = 'translateY(' + (prog*-7) + '%)';
+          var idx = sec.querySelector('.pv-idx');
+          var inner = sec.querySelector('.pv-case__inner');
+          /* 写真はゆっくり（奥）＋わずかにズーム、番号は逆方向に大きく、文字は手前で速く */
+          if(img)   img.style.transform   = 'translate3d(0,'+(p*9).toFixed(2)+'%,0) scale('+(1.085 - Math.abs(p)*0.03).toFixed(3)+')';
+          if(idx)   idx.style.transform   = 'translate3d(0,'+(p*-54).toFixed(1)+'px,0)';
+          if(inner) inner.style.transform = 'translate3d(0,'+(p*22).toFixed(1)+'px,0)';
         });
       }
       addEventListener('scroll', function(){ if(!ticking){ ticking=true; requestAnimationFrame(par); } }, {passive:true});
+      addEventListener('resize', function(){ if(!ticking){ ticking=true; requestAnimationFrame(par); } }, {passive:true});
       par();
     }
   })();
