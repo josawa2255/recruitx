@@ -215,20 +215,21 @@
   grid-row: 2;
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;             /* 等幅gridから可変flexへ: 内容が広いタイルは必要分だけ広がる */
+  flex-wrap: wrap;           /* 1行に収まらなければ折り返し、カードが縦に伸びる（動的サイズ）*/
   gap: clamp(8px, 1vw, 12px);
   margin: 10px 0 0;
   padding: 0 clamp(20px, 2.4vw, 28px) 0 0;
   list-style: none;
 }
 .rx-ccard__stats li {
+  flex: 1 1 0;               /* 通常は等幅、必要時のみ min-content まで広がる */
+  min-width: min-content;    /* 数字＋単位より狭くならない＝見切れない */
   background: #fff;
   border: 1px solid #f0f0f3;
   border-radius: 12px;
   padding: clamp(10px, 1.2vw, 14px) clamp(10px, 1.2vw, 14px);
   box-shadow: 0 8px 22px rgba(15, 23, 42, .09);
-  min-width: 0;
 }
 .rx-ccard__stat-label {
   display: block;
