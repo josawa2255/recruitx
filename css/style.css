@@ -657,7 +657,7 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
 }
 .rx-nav__brand-img {            /* 企業ロゴ画像（白背景ヘッダー用・原色のまま） */
   display: block;
-  height: clamp(26px, 1.2rem + 1vw, 34px);
+  height: clamp(42px, 2rem + 1.4vw, 54px);
   width: auto;
 }
 .rx-nav__menu {
@@ -1640,7 +1640,7 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(72px + 16px); }
 .rx-footer__logo { display: inline-block; text-decoration: none; }
 .rx-footer__logo-img {          /* 企業ロゴ画像（濃紺フッター用・白抜き化） */
   display: block;
-  height: clamp(24px, 1.1rem + .9vw, 32px);
+  height: clamp(40px, 1.9rem + 1.3vw, 52px);
   width: auto;
   filter: brightness(0) invert(1);
 }
