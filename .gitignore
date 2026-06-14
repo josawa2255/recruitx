@@ -6,3 +6,6 @@ docs/operations/INFRA-PRIVATE.md
 
 # 画像生成の受け渡し用フォルダ（生PNG。正本はWPメディア・リポに入れない）
 images/case/export*/
+
+# 画像生成の生PNG受け渡し置き場（WPメディアが正本・コミットしない）
+images/精製物/
