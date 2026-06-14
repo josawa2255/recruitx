@@ -233,7 +233,7 @@ def _cat_text(tags: list) -> str:
     return tags[0] if tags else ""
 
 
-def build_related(case: dict, all_cases: list, limit: int = 3) -> str:
+def build_related(case: dict, all_cases: list, limit: int = 6) -> str:
     """同じ業態タグを多く共有する事例を上位 limit 件選び、関連カードHTMLを返す。
     詳細ページ間リンクは相対パス ../{slug}/ で出力する。"""
     me = case.get("slug", "")
