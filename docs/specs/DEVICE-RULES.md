@@ -59,12 +59,32 @@ section { padding: clamp(48px, 8vw, 160px) 0; }
 ## 12. タッチターゲット最低 44×44px
 タップUIは `min-width/height:44px`。視覚的に小さくても padding か擬似要素でタップ領域確保。隣接要素間に最低8pxギャップ。
 
-## 13. スティッキーヘッダーのアンカーオフセット
+## 13. 固定ヘッダーの重なり対策（最初のセクション＋アンカーオフセット）
+
+固定ヘッダー `.rx-nav` は `position: fixed`・半透明グラスで本文の上に重なる。実高さは
+`max(64px, ロゴ clamp(42→54px) + 上下padding clamp(12→18px))` で**ワイド画面では約90px**まで伸びる。
+これを 1 箇所のトークン `--rx-header-h: clamp(68px, 4.2vw + 34px, 92px)`（[DESIGN.md](DESIGN.md) レイアウト・トークン）に集約し、ハードコードの `72px`/`64px` 等を散らさない。
+
+- **各ページ最初のセクション（ヒーロー）は `padding-top` に `--rx-header-h`（＋デザイン余白）を必ず確保する。** 特に2カラムヒーローの画像側カラムや、SPで画像が上に来る（`order:-1`）構成は余白を忘れやすく、ヘッダーと画像が重なる（2026-06-14 事例詳細 `.rx-cdtl-hero` で発生・修正、BUGS.md）。
+- 既存の妥当値を尊重しつつ最低限を保証したい場合は `padding-top: max(var(--rx-header-h), <従来値>)`（例: price.html `.rx-phero2`）。
+- ページ内アンカーは `scroll-margin-top: calc(var(--rx-header-h) + 16px)` で見出しがヘッダー下に隠れないようにする。
+
 ```css
 html { scroll-behavior: smooth; }
-h1,h2,h3,h4,[id]:not(html,body){ scroll-margin-top: calc(72px + 16px); }
-@media (max-width:768px){ h1,h2,h3,h4,[id]:not(html,body){ scroll-margin-top: calc(60px + 16px);} }
+/* 最初のセクション */
+.first-section { padding-top: var(--rx-header-h); }
+/* アンカー */
+h1,h2,h3,h4,[id]:not(html,body){ scroll-margin-top: calc(var(--rx-header-h) + 16px); }
 ```
+
+現状の各ページ最初のセクション（いずれも `--rx-header-h`≈最大90px を満たす）:
+| ページ | セクション | 上余白（最小〜） |
+|---|---|---|
+| index.html | `.rx-hero` | 全画面sticky・中央寄せ（グラスヘッダーが浮く設計でOK） |
+| case.html | `.rx-chero` | `calc(64px + clamp(40→80px))`＝104px〜 |
+| contact.html | `.rx-contact` | `clamp(80→200px)` |
+| price.html | `.rx-phero2` | PC `max(var(--rx-header-h), clamp(80→116px))` / SP `60+28px` |
+| case/{slug}/ | `.rx-cdtl-hero` | `var(--rx-header-h)`（＋inner余白） |
 
 ## 14. i18n: EN は日本語より約30%長い（多言語化する場合）
 ナビ/ボタンの最小幅はENを基準に。`html[lang="en"]` 専用にgap/font-sizeを詰める。翻訳は `data-ja`/`data-en` で明示。

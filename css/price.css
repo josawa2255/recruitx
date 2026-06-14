@@ -105,8 +105,9 @@
        （下端のピンク波が写真の下端まで覆う高さに収める） */
     /* 写真を下までしっかり使う。ただし高くしすぎると cover の窓が狭まり顔が切れるため上限を抑える */
     min-height: clamp(540px, 43vw, 1040px);
-    /* ヘッダー(固定72px)の下から。コピーを詰めてセクションを低くし、表示窓を広げる */
-    padding: clamp(80px, 5vw, 116px) 0 clamp(18px, 1.4vw, 32px);
+    /* ヘッダー高さ(--rx-header-h)を必ず確保しつつ、足りている幅では従来の詰めた値を維持。
+       コピーを詰めてセクションを低くし、表示窓を広げる */
+    padding: max(var(--rx-header-h), clamp(80px, 5vw, 116px)) 0 clamp(18px, 1.4vw, 32px);
   }
 }
 @media (max-width: 768px) { .rx-phero2 { padding-top: calc(60px + 28px); } }

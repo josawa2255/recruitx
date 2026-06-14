@@ -9,6 +9,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: clamp(360px, 50vw, 640px);
+  /* 固定ヘッダー(.rx-nav)の高さ分だけヒーロー全体を下げ、画像・テキスト双方の重なりを解消 */
+  padding-top: var(--rx-header-h);
   background: linear-gradient(135deg, #0a0a0c 0%, #1a0d12 100%);
   overflow: hidden;
 }
@@ -17,7 +19,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(96px, 12vw, 160px) clamp(24px, 4vw, 64px) clamp(48px, 6vw, 80px);
+  padding: clamp(40px, 5vw, 72px) clamp(24px, 4vw, 64px) clamp(48px, 6vw, 80px);
   position: relative;
   z-index: 1;
 }

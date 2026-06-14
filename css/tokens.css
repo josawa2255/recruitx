@@ -22,6 +22,14 @@
   --rx-card-bg:       #ffffff;
   --rx-shadow:        0 4px 24px rgba(28, 40, 74, .08);
 
+  /* --- レイアウト --- */
+  /* 固定ヘッダー(.rx-nav)の実高さに数px余裕を足した安全値。
+     実体 = max(64px, ロゴ clamp(42→54px) + 上下padding clamp(12→18px)) で、
+     ワイド画面では約90pxまで伸びる。各ページ最初のセクションは重なり防止のため
+     padding-top に必ずこの値（＋デザイン上の余白）を確保し、ページ内アンカーの
+     scroll-margin-top もこの値を基準にする */
+  --rx-header-h:      clamp(68px, 4.2vw + 34px, 92px);
+
   /* --- 角丸 --- */
   --rx-radius:        16px;               /* 標準カード */
   --rx-radius-lg:     24px;               /* 大カード/モーダル */
