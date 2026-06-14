@@ -227,6 +227,59 @@ def build_card(case: dict) -> str:
     )
 
 
+def _cat_text(tags: list) -> str:
+    if len(tags) >= 2:
+        return f'{tags[0]} <span>/</span> {"・".join(tags[1:])}'
+    return tags[0] if tags else ""
+
+
+def build_related(case: dict, all_cases: list, limit: int = 3) -> str:
+    """同じ業態タグを多く共有する事例を上位 limit 件選び、関連カードHTMLを返す。
+    詳細ページ間リンクは相対パス ../{slug}/ で出力する。"""
+    me = case.get("slug", "")
+    my_tags = set(case.get("tag_slugs") or [])
+    my_cat = (case.get("tag_slugs") or ["other"])[0]
+
+    scored = []
+    for c in all_cases:
+        if c.get("slug") == me:
+            continue
+        ctags = set(c.get("tag_slugs") or [])
+        cat = (c.get("tag_slugs") or ["other"])[0]
+        score = len(my_tags & ctags) * 10 + (1 if cat == my_cat else 0)
+        scored.append((score, c))
+    # スコア降順・同点は元の並び（API=新着順）を維持（Pythonのソートは安定）
+    scored.sort(key=lambda x: -x[0])
+    picks = [c for _, c in scored[:limit]]
+
+    items = []
+    for c in picks:
+        slug = c.get("slug", "")
+        company = c.get("company", "")
+        summary = c.get("summary", "")
+        image = c.get("image", "")
+        cat_text = _cat_text(c.get("tags", []))
+        img_html = (
+            f'<img src="{image}" alt="{company}の採用成功事例"'
+            f' width="724" height="543" loading="lazy" decoding="async">'
+            if image else ""
+        )
+        items.append(
+            f'\n          <li class="rx-rel__item">'
+            f'\n            <a class="rx-rel__link" href="../{slug}/" aria-label="{company}の採用成功事例を見る">'
+            f'\n              <figure class="rx-rel__media">{img_html}</figure>'
+            f'\n              <div class="rx-rel__body">'
+            f'\n                <p class="rx-rel__cat">{cat_text}</p>'
+            f'\n                <h3 class="rx-rel__company">{company}</h3>'
+            f'\n                <p class="rx-rel__desc">{summary}</p>'
+            f'\n                <span class="rx-rel__more">詳しく見る{SVG_MORE}</span>'
+            f'\n              </div>'
+            f'\n            </a>'
+            f'\n          </li>'
+        )
+    return "".join(items)
+
+
 # ---- API fetching ----
 
 # キャッシュバスター: 公開API(/contentsx/v1/cases)はNginx/CDNキャッシュ(max-age=300,
@@ -320,11 +373,12 @@ def _make_jsonld(detail: dict, page_url: str) -> tuple:
     )
 
 
-def _generate_one(case: dict, template: str) -> str:
+def _generate_one(case: dict, template: str, all_cases: list) -> str:
     slug = case.get("slug", "")
     detail = fetch_case_detail(case.get("id", 0))
     if detail is None:
         return f"[SKIP] {slug}: detail fetch failed"
+    related_html = build_related(case, all_cases)
 
     company = detail.get("company", "")
     tags = detail.get("tags", [])
@@ -372,6 +426,7 @@ def _generate_one(case: dict, template: str) -> str:
         .replace("{{page_url}}", page_url)
         .replace("{{article_jsonld}}", article_jsonld)
         .replace("{{breadcrumb_jsonld}}", breadcrumb_jsonld)
+        .replace("{{related_cases}}", related_html)
     )
 
     out_dir = CASE_DIR / slug
@@ -388,7 +443,7 @@ def generate_details(cases: list) -> None:
     CASE_DIR.mkdir(exist_ok=True)
 
     with ThreadPoolExecutor(max_workers=8) as pool:
-        futures = {pool.submit(_generate_one, c, template): c.get("slug") for c in cases}
+        futures = {pool.submit(_generate_one, c, template, cases): c.get("slug") for c in cases}
         for f in as_completed(futures):
             print(f.result())
 

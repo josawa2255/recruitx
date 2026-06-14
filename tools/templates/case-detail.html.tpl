@@ -95,6 +95,13 @@
       </div>
     </section>
 
+    <section class="rx-rel" aria-labelledby="relHeading">
+      <div class="rx-rel__inner">
+        <h2 class="rx-rel__heading" id="relHeading">関連する採用成功事例</h2>
+        <ul class="rx-rel__grid">{{related_cases}}</ul>
+      </div>
+    </section>
+
     <section class="rx-ccta" aria-labelledby="caseDetailCtaHeading">
       <div class="rx-ccta__inner rx-anim">
         <h2 class="rx-ccta__heading" id="caseDetailCtaHeading">同じ変化を、貴社の採用でも。</h2>

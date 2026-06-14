@@ -374,3 +374,115 @@
   box-shadow: 0 10px 26px rgba(10, 10, 12, .25);
 }
 .rx-ccta__btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* =====================================================================
+   関連事例（詳細ページ）— 同業態の事例3件へ内部リンク。case.css を
+   読まないため自己完結で定義（rx-ccard とは別系統）。
+   ===================================================================== */
+.rx-rel {
+  background: #fff;
+  padding: clamp(48px, 7vw, 88px) 0 clamp(4px, 1vw, 12px);
+}
+.rx-rel__inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+.rx-rel__heading {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  letter-spacing: .04em;
+  color: #0a0a0c;
+  text-align: center;
+  margin: 0 0 clamp(24px, 4vw, 40px);
+}
+.rx-rel__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.4vw, 28px);
+}
+.rx-rel__item { display: flex; }
+.rx-rel__link {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ececef;
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .18s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.rx-rel__link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(10, 10, 12, .12);
+  border-color: #e0e0e4;
+}
+.rx-rel__media {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  background: #f3f3f5;
+  overflow: hidden;
+}
+.rx-rel__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.rx-rel__body {
+  padding: clamp(14px, 1.6vw, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.rx-rel__cat {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: #ec2d87;
+  margin: 0;
+}
+.rx-rel__cat span { opacity: .5; margin: 0 .2em; }
+.rx-rel__company {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #0a0a0c;
+  margin: 0;
+}
+.rx-rel__desc {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .875rem;
+  line-height: 1.75;
+  color: #3f4651;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rx-rel__more {
+  margin-top: auto;
+  padding-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: #ec2d87;
+}
+.rx-rel__more svg { width: 14px; height: 14px; flex-shrink: 0; }
+@media (max-width: 768px) {
+  .rx-rel__grid { grid-template-columns: 1fr; gap: 16px; }
+}
