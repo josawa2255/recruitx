@@ -149,26 +149,12 @@
   min-width: 0;
   padding: clamp(20px, 2.6vw, 36px) clamp(8px, 1.5vw, 22px);
 }
-/* ピンクのブロブ */
+/* 背景画像（背景.png）— 3カードの背後に敷く */
 .rx-colhero__featured::before {
   content: "";
   position: absolute;
-  inset: 6% -2% 8% 4%;
-  background: radial-gradient(58% 58% at 44% 48%, rgba(236, 45, 135, .16), rgba(236, 45, 135, 0) 72%);
-  z-index: 0;
-  pointer-events: none;
-}
-/* ドットの装飾 */
-.rx-colhero__featured::after {
-  content: "";
-  position: absolute;
-  right: 1%;
-  bottom: 4%;
-  width: 86px;
-  height: 64px;
-  background-image: radial-gradient(rgba(236, 45, 135, .4) 1.4px, transparent 1.5px);
-  background-size: 12px 12px;
-  opacity: .5;
+  inset: -10% -8%;
+  background: url('../images/column/featured-bg.webp') no-repeat center bottom / cover;
   z-index: 0;
   pointer-events: none;
 }
