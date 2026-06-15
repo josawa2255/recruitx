@@ -149,15 +149,6 @@
   min-width: 0;
   padding: clamp(20px, 2.6vw, 36px) clamp(8px, 1.5vw, 22px);
 }
-/* 背景画像（背景.png）— 3カードの背後に敷く */
-.rx-colhero__featured::before {
-  content: "";
-  position: absolute;
-  inset: -10% -8%;
-  background: url('../images/column/featured-bg.webp') no-repeat center bottom / cover;
-  z-index: 0;
-  pointer-events: none;
-}
 .rx-colfeat {
   position: relative;
   z-index: 1;
