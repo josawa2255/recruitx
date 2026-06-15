@@ -286,7 +286,7 @@
   align-items: center;
   background: #fff;
   border: 1px solid var(--rx-border);
-  border-radius: var(--rx-radius-lg);
+  border-radius: 10px;
   overflow: hidden;
   text-decoration: none;
   box-shadow: 0 14px 36px rgba(28, 40, 74, .08);
@@ -397,7 +397,7 @@
   min-width: 0;
   background: #fff;
   border: 1px solid var(--rx-border);
-  border-radius: var(--rx-radius);
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(15, 23, 42, .06);
   transition: transform .18s ease, box-shadow .18s ease;
