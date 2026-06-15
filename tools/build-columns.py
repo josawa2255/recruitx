@@ -264,7 +264,7 @@ def _replace_block(src: str, marker: str, inner: str) -> str:
 
 def update_column_html(columns: list) -> None:
     src = COLUMN_HTML.read_text(encoding="utf-8")
-    src = _replace_block(src, "COLUMN_FEATURED", build_featured(columns))
+    # ヒーロー右の新着はモック素材(hero-featured.webp)の固定ビジュアル。動的差し替えはしない。
     src = _replace_block(src, "COLUMN_TABS", build_tabs(columns))
     src = _replace_block(src, "COLUMN_PICKUP", build_pickup(columns))
     cards = "".join(build_card(c) for c in columns)
