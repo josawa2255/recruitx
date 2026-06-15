@@ -149,79 +149,30 @@
   min-width: 0;
   padding: clamp(20px, 2.6vw, 36px) clamp(8px, 1.5vw, 22px);
 }
+/* ヒーロー新着 = 下のグリッドと同じ rx-colcard を浮遊クラスタに配置（縦に重ねて軽く回転） */
 .rx-colfeat {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(10px, 1.2vw, 16px);
   margin: 0;
   padding: 0;
   list-style: none;
-}
-.rx-colfeat__item { min-width: 0; }
-.rx-colfeat__item:nth-child(1) { transform: rotate(-4deg); }
-.rx-colfeat__item:nth-child(2) { transform: rotate(4deg); margin-top: clamp(18px, 3vw, 34px); }
-.rx-colfeat__item:nth-child(3) {
-  grid-column: 1 / 3;
-  justify-self: center;
-  width: 66%;
-  margin-top: clamp(-10px, -0.7vw, -4px);
-  transform: rotate(-2deg);
-}
-.rx-colfeat__link {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  background: #fff;
-  border-radius: 14px;
-  overflow: hidden;
-  text-decoration: none;
-  box-shadow: 0 14px 30px rgba(28, 40, 74, .14);
-  transition: transform .18s ease, box-shadow .18s ease;
+  gap: clamp(12px, 1.6vw, 20px);
 }
-.rx-colfeat__item:hover { z-index: 2; position: relative; }
-.rx-colfeat__link:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 18px 38px rgba(28, 40, 74, .2); }
-.rx-colfeat__media {
-  position: relative;
-  display: block;
-  aspect-ratio: 16 / 11;
-  background: #eef0f4 center/cover no-repeat;
+.rx-colfeat .rx-colcard {
+  width: 90%;
+  box-shadow: 0 16px 34px rgba(28, 40, 74, .14);
 }
-.rx-colfeat__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.rx-colfeat__badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 700;
-  font-size: .625rem;
-  letter-spacing: .02em;
-  color: #fff;
-  background: var(--rx-accent);
-  border-radius: 5px;
-  padding: 3px 8px;
-  box-shadow: 0 3px 8px rgba(var(--rx-accent-rgb), .3);
-}
-.rx-colfeat__body { padding: 8px 11px 11px; display: flex; flex-direction: column; gap: 5px; flex: 1 1 auto; }
-.rx-colfeat__title {
-  font-family: 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 700;
-  font-size: .6875rem;
-  line-height: 1.45;
-  color: #0a0a0c;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.rx-colfeat__date { margin-top: auto; font-family: 'Inter', sans-serif; font-size: .5625rem; color: #8a93a3; letter-spacing: .02em; }
+.rx-colfeat .rx-colcard:nth-child(1) { align-self: flex-start; transform: rotate(-3deg); }
+.rx-colfeat .rx-colcard:nth-child(2) { align-self: flex-end;   transform: rotate(2.5deg); }
+.rx-colfeat .rx-colcard:nth-child(3) { align-self: flex-start; transform: rotate(-2deg); }
+.rx-colfeat .rx-colcard:hover { transform: translateY(-4px) rotate(0deg); z-index: 2; }
 
 /* ---- 下段: 検索＋ピル（フル幅・左寄せ。ピルは1行に収まる） ---- */
 .rx-colhero__search { max-width: 100%; }
 
 /* プレースホルダー（記事未投入時の見た目用・ビルドで実データに置換） */
-.is-placeholder .rx-colfeat__media,
 .is-placeholder .rx-pickup__media,
 .is-placeholder .rx-colcard__media {
   background: linear-gradient(135deg, #f7d6e6 0%, #f3e3f1 55%, #e7ecfa 100%);
@@ -610,12 +561,11 @@
   .rx-colcta__art { display: none; }
 }
 @media (max-width: 560px) {
-  /* 浮遊回転は狭幅で見切れるため弱める */
-  .rx-colfeat__item:nth-child(1) { transform: rotate(-2deg); }
-  .rx-colfeat__item:nth-child(2) { transform: rotate(2deg); margin-top: 16px; }
-  .rx-colfeat__item:nth-child(3) { width: 72%; transform: rotate(-1deg); }
-  .rx-colfeat__title { font-size: .75rem; }
-  .rx-colfeat__date { font-size: .625rem; }
+  /* 浮遊回転は狭幅で見切れるため弱め、カードを広く使う */
+  .rx-colfeat .rx-colcard { width: 100%; }
+  .rx-colfeat .rx-colcard:nth-child(1) { transform: rotate(-1.5deg); }
+  .rx-colfeat .rx-colcard:nth-child(2) { transform: rotate(1.5deg); }
+  .rx-colfeat .rx-colcard:nth-child(3) { transform: rotate(-1deg); }
 }
 /* PICK UP をSPで縦積み */
 @media (max-width: 768px) {

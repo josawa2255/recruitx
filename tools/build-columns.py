@@ -174,22 +174,29 @@ def build_tabs(columns: list) -> str:
 
 
 def build_featured(columns: list) -> str:
-    """ヒーロー右の新着クラスタ = 最新の公開3件（自動）。"""
+    """ヒーロー右の新着クラスタ = 最新の公開3件（自動）。下のグリッドと同じ rx-colcard を使用。"""
     out = []
     for c in columns[:3]:
         slug = c.get("slug", "")
         cat = c.get("category") or ""
-        media_img = _media_html(c.get("thumbnail", ""), c.get("title", ""), "")
-        badge = f'<span class="rx-colfeat__badge">{esc(cat)}</span>' if cat else ""
+        media = _media_html(c.get("thumbnail", ""), c.get("title", ""), "")
+        cat_badge = f'<span class="rx-colcard__cat">{esc(cat)}</span>' if cat else ""
+        desc = c.get("excerpt", "")
+        desc_html = f'<p class="rx-colcard__desc">{esc(desc)}</p>' if desc else ""
         ph = "" if c.get("thumbnail") else " is-placeholder"
         out.append(
-            f'              <li class="rx-colfeat__item{ph}">\n'
-            f'                <a class="rx-colfeat__link" href="column/{esc(slug)}/">\n'
-            f'                  <span class="rx-colfeat__media">{media_img}{badge}</span>\n'
-            f'                  <span class="rx-colfeat__body">\n'
-            f'                    <span class="rx-colfeat__title">{esc(c.get("title",""))}</span>\n'
-            f'                    <span class="rx-colfeat__date">{esc(c.get("date",""))}</span>\n'
-            f'                  </span>\n'
+            f'              <li class="rx-colcard{ph}" data-category="{esc(cat)}">\n'
+            f'                <a class="rx-colcard__link" href="column/{esc(slug)}/">\n'
+            f'                  <figure class="rx-colcard__media">{media}</figure>\n'
+            f'                  <div class="rx-colcard__body">\n'
+            f'                    {cat_badge}\n'
+            f'                    <h3 class="rx-colcard__title">{esc(c.get("title",""))}</h3>\n'
+            f'                    {desc_html}\n'
+            f'                    <div class="rx-colcard__foot">\n'
+            f'                      <span class="rx-colcard__date">{SVG_CAL}{esc(c.get("date",""))}</span>\n'
+            f'                      <span class="rx-colcard__arrow" aria-hidden="true">{SVG_ARROW}</span>\n'
+            f'                    </div>\n'
+            f'                  </div>\n'
             f'                </a>\n'
             f'              </li>'
         )
