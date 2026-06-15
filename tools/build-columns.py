@@ -100,8 +100,8 @@ SVG_CAL = (
     '<path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" stroke-linecap="round"/></svg>'
 )
 SVG_ARROW = (
-    '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"'
-    ' stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h14M11 4l6 6-6 6"/></svg>'
+    '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"'
+    ' stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>'
 )
 
 
@@ -219,21 +219,28 @@ def build_pickup(columns: list) -> str:
 
 
 def build_card(c: dict) -> str:
+    """画像左・テキスト右の横型カード（バッジ→タイトル→説明→日付/矢印）。"""
     slug = c.get("slug", "")
     cat = c.get("category") or ""
     title = c.get("title", "")
     media = _media_html(c.get("thumbnail", ""), title, "")  # img は figure 内、class無し
     cat_badge = f'<span class="rx-colcard__cat">{esc(cat)}</span>' if cat else ""
+    desc = c.get("excerpt", "")
+    desc_html = f'<p class="rx-colcard__desc">{esc(desc)}</p>' if desc else ""
     ph = "" if c.get("thumbnail") else " is-placeholder"
     return (
         f'\n          <li class="rx-colcard rx-anim{ph}" data-category="{esc(cat)}" data-title="{esc(title)}">'
         f'\n            <a class="rx-colcard__link" href="column/{esc(slug)}/">'
-        f'\n              <figure class="rx-colcard__media">{media}{cat_badge}</figure>'
+        f'\n              <figure class="rx-colcard__media">{media}</figure>'
         f'\n              <div class="rx-colcard__body">'
+        f'\n                {cat_badge}'
         f'\n                <h3 class="rx-colcard__title">{esc(title)}</h3>'
-        f'\n                <p class="rx-colcard__date">{SVG_CAL}{esc(c.get("date",""))}</p>'
+        f'\n                {desc_html}'
+        f'\n                <div class="rx-colcard__foot">'
+        f'\n                  <span class="rx-colcard__date">{SVG_CAL}{esc(c.get("date",""))}</span>'
+        f'\n                  <span class="rx-colcard__arrow" aria-hidden="true">{SVG_ARROW}</span>'
+        f'\n                </div>'
         f'\n              </div>'
-        f'\n              <span class="rx-colcard__arrow" aria-hidden="true">{SVG_ARROW}</span>'
         f'\n            </a>'
         f'\n          </li>'
     )
@@ -295,14 +302,22 @@ def build_related(me: dict, all_cols: list, limit: int = 3) -> str:
         media = _media_html(c.get("thumbnail", ""), c.get("title", ""), "")
         cat = c.get("category") or ""
         cat_badge = f'<span class="rx-colcard__cat">{esc(cat)}</span>' if cat else ""
+        desc = c.get("excerpt", "")
+        desc_html = f'<p class="rx-colcard__desc">{esc(desc)}</p>' if desc else ""
         ph = "" if c.get("thumbnail") else " is-placeholder"
         items.append(
             f'\n            <li class="rx-colcard{ph}" data-category="{esc(cat)}">'
             f'\n              <a class="rx-colcard__link" href="../{esc(slug)}/">'
-            f'\n                <figure class="rx-colcard__media">{media}{cat_badge}</figure>'
-            f'\n                <div class="rx-colcard__body"><h3 class="rx-colcard__title">{esc(c.get("title",""))}</h3>'
-            f'<p class="rx-colcard__date">{SVG_CAL}{esc(c.get("date",""))}</p></div>'
-            f'\n                <span class="rx-colcard__arrow" aria-hidden="true">{SVG_ARROW}</span>'
+            f'\n                <figure class="rx-colcard__media">{media}</figure>'
+            f'\n                <div class="rx-colcard__body">'
+            f'\n                  {cat_badge}'
+            f'\n                  <h3 class="rx-colcard__title">{esc(c.get("title",""))}</h3>'
+            f'\n                  {desc_html}'
+            f'\n                  <div class="rx-colcard__foot">'
+            f'\n                    <span class="rx-colcard__date">{SVG_CAL}{esc(c.get("date",""))}</span>'
+            f'\n                    <span class="rx-colcard__arrow" aria-hidden="true">{SVG_ARROW}</span>'
+            f'\n                  </div>'
+            f'\n                </div>'
             f'\n              </a>'
             f'\n            </li>'
         )

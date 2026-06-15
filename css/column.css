@@ -392,7 +392,7 @@
 @media (min-width: 600px) { .rx-collist__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1000px) { .rx-collist__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
-/* ---- カード（PC: 縦積み・画像上＋バッジ） ---- */
+/* ---- カード（画像左・テキスト右の横型。モック準拠） ---- */
 .rx-colcard {
   min-width: 0;
   background: #fff;
@@ -406,15 +406,17 @@
 .rx-colcard:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(15, 23, 42, .12); }
 .rx-colcard__link {
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 100%;
   text-decoration: none;
-  position: relative;
 }
 .rx-colcard__media {
   position: relative;
+  flex: 0 0 38%;
+  max-width: 38%;
   margin: 0;
-  aspect-ratio: 16 / 10;
+  min-height: 132px;
   background: #eef0f4 center/cover no-repeat;
   overflow: hidden;
 }
@@ -425,42 +427,63 @@
   height: 100%;
   object-fit: cover;
 }
+.rx-colcard__body {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(13px, 1.5vw, 17px) clamp(14px, 1.6vw, 18px);
+}
 .rx-colcard__cat {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 1;
+  align-self: flex-start;
   font-family: 'Zen Kaku Gothic Antique', sans-serif;
   font-weight: 700;
-  font-size: .75rem;
+  font-size: .6875rem;
   letter-spacing: .03em;
   color: #fff;
   background: var(--rx-accent);
-  border-radius: 6px;
-  padding: 4px 11px;
-  box-shadow: 0 4px 12px rgba(var(--rx-accent-rgb), .35);
-}
-.rx-colcard__body {
-  flex: 1 1 auto;
-  padding: clamp(14px, 1.6vw, 18px) clamp(15px, 1.8vw, 20px) 8px;
+  border-radius: 5px;
+  padding: 3px 10px;
 }
 .rx-colcard__title {
   font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
   font-weight: 700;
-  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
-  line-height: 1.6;
+  font-size: clamp(.9375rem, .9rem + .2vw, 1.0625rem);
+  line-height: 1.5;
   letter-spacing: .01em;
   color: #0a0a0c;
   margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
-.rx-colcard__date {
+.rx-colcard__desc {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .8125rem;
+  line-height: 1.7;
+  color: #5c6b85;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.rx-colcard__foot {
+  margin-top: auto;
+  padding-top: 6px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.rx-colcard__date {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   font-family: 'Inter', sans-serif;
@@ -468,36 +491,27 @@
   color: #8a93a3;
   letter-spacing: .02em;
   margin: 0;
-  padding: 4px clamp(15px, 1.8vw, 20px) clamp(40px, 4vw, 46px);
 }
 .rx-colcard__date svg { width: 14px; height: 14px; flex-shrink: 0; }
 .rx-colcard__arrow {
-  position: absolute;
-  right: clamp(12px, 1.6vw, 16px);
-  bottom: clamp(12px, 1.6vw, 16px);
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  color: #fff;
-  background: var(--rx-grad);
-  box-shadow: 0 6px 16px rgba(var(--rx-accent-rgb), .32);
-  transition: transform .18s ease;
+  color: var(--rx-accent);
+  background: #fce7f1;
+  transition: transform .18s ease, background-color .18s ease;
 }
-.rx-colcard__arrow svg { width: 16px; height: 16px; }
-.rx-colcard__link:hover .rx-colcard__arrow { transform: translateX(3px); }
+.rx-colcard__arrow svg { width: 14px; height: 14px; }
+.rx-colcard__link:hover .rx-colcard__arrow { transform: translateX(2px); background: var(--rx-accent); color: #fff; }
 
-/* SP（≤599px）: 横並びカード（画像左 / テキスト右） — モック準拠 */
-@media (max-width: 599px) {
-  .rx-colcard__link { flex-direction: row; align-items: stretch; }
-  .rx-colcard__media { flex: 0 0 40%; aspect-ratio: auto; min-height: 100%; }
-  .rx-colcard__cat { top: 8px; left: 8px; font-size: .6875rem; padding: 3px 9px; }
-  .rx-colcard__body { padding: 12px 14px 4px; }
-  .rx-colcard__title { -webkit-line-clamp: 2; font-size: .9375rem; }
-  .rx-colcard__date { padding: 4px 14px 12px; }
-  .rx-colcard__arrow { display: none; }
+/* 極小幅（≤380px）: 画像を少し狭め文字を確保 */
+@media (max-width: 380px) {
+  .rx-colcard__media { flex-basis: 34%; max-width: 34%; }
+  .rx-colcard__desc { -webkit-line-clamp: 2; }
 }
 
 .rx-collist__empty {
