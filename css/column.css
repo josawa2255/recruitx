@@ -1,0 +1,813 @@
+/* =========================================================================
+   column.css — リクルートX コラムページ（column.html / column/{slug}/ 一覧部）
+   依存: css/tokens.css → css/style.css の後に読み込む
+   デザイン: 「デザイン候補/コラム/heroPC.png・heroスマホ.png」を忠実に再現
+   ブレークポイント（DEVICE-RULES §3）: SP ≤768 / TAB 769–1024 / PC ≥1025
+   ========================================================================= */
+
+/* ナビ・フッターはブランド標準（style.css）に統一。固有上書きは行わない。 */
+
+:root {
+  --rx-col-maxw: clamp(1120px, 92vw, 1320px);
+}
+
+/* =====================================================================
+   ヒーロー: 左コピー＋検索 / 右 新着ストリップ
+   ===================================================================== */
+.rx-colhero {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  padding: calc(var(--rx-header-h) + clamp(28px, 5vw, 56px)) 0 clamp(36px, 6vw, 64px);
+}
+.rx-colhero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--rx-col-maxw);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+/* 上段: 左コピー / 右 新着ビジュアル（大きめ） */
+.rx-colhero__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 48px);
+  align-items: center;
+  margin: 0 0 clamp(22px, 3vw, 34px);
+}
+.rx-colhero__intro { min-width: 0; }
+.rx-colhero__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: .8125rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--rx-accent);
+  margin: 0 0 clamp(10px, 1.5vw, 16px);
+}
+.rx-colhero__heading {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.875rem, 1.3rem + 2.4vw, 3rem);
+  line-height: 1.3;
+  letter-spacing: .02em;
+  color: #0a0a0c;
+  margin: 0 0 clamp(14px, 2vw, 22px);
+}
+.rx-colhero__accent { color: var(--rx-accent); }
+.rx-colhero__lead {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 400;
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
+  line-height: 1.95;
+  color: #3f4651;
+  max-width: 34em;
+  margin: 0 0 clamp(20px, 3vw, 30px);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+/* ---- 検索ボックス（角丸長方形・左に虫眼鏡・右に塗りボタン） ---- */
+.rx-colsearch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 520px;
+  background: #fff;
+  border: 1px solid var(--rx-border);
+  border-radius: 14px;
+  padding: 6px 6px 6px 14px;
+  box-shadow: var(--rx-shadow);
+}
+.rx-colsearch__icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: #9aa3b2;
+}
+.rx-colsearch__icon svg { width: 20px; height: 20px; }
+.rx-colsearch__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: 1rem;
+  color: var(--rx-text);
+  padding: 10px 8px;
+}
+.rx-colsearch__input::placeholder { color: #9aa3b2; }
+.rx-colsearch__input:focus { outline: none; }
+.rx-colsearch:focus-within { border-color: var(--rx-accent); box-shadow: 0 0 0 3px rgba(var(--rx-accent-rgb), .14); }
+.rx-colsearch:focus-within .rx-colsearch__icon { color: var(--rx-accent); }
+.rx-colsearch__btn {
+  flex: 0 0 auto;
+  border: 0;
+  cursor: pointer;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: .9375rem;
+  letter-spacing: .08em;
+  color: #fff;
+  background: var(--rx-accent);
+  border-radius: 10px;
+  padding: 0 clamp(22px, 2.6vw, 32px);
+  min-height: 46px;
+  transition: background-color .2s ease, transform .15s ease;
+}
+.rx-colsearch__btn:hover { background: var(--rx-accent-hover); transform: translateY(-1px); }
+
+/* ---- よく検索されるタグ（チェック丸アイコン付き） ---- */
+.rx-colsearch__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin: clamp(14px, 2vw, 18px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.rx-colsearch__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .8125rem;
+  letter-spacing: .02em;
+  color: var(--rx-accent);
+  background: #fff;
+  border: 1px solid #f3c6dd;
+  border-radius: var(--rx-radius-pill);
+  padding: 7px 16px 7px 12px;
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.rx-colsearch__tagic { width: 15px; height: 15px; flex-shrink: 0; }
+.rx-colsearch__tag:hover { background: var(--rx-accent); color: #fff; border-color: var(--rx-accent); }
+
+/* ---- 右: 新着コラム（WP連動・最新3件の浮遊カードクラスタ。hero素材.png を再現） ---- */
+.rx-colhero__featured {
+  position: relative;
+  min-width: 0;
+  padding: clamp(20px, 2.6vw, 36px) clamp(8px, 1.5vw, 22px);
+}
+/* ピンクのブロブ */
+.rx-colhero__featured::before {
+  content: "";
+  position: absolute;
+  inset: 6% -2% 8% 4%;
+  background: radial-gradient(58% 58% at 44% 48%, rgba(236, 45, 135, .16), rgba(236, 45, 135, 0) 72%);
+  z-index: 0;
+  pointer-events: none;
+}
+/* ドットの装飾 */
+.rx-colhero__featured::after {
+  content: "";
+  position: absolute;
+  right: 1%;
+  bottom: 4%;
+  width: 86px;
+  height: 64px;
+  background-image: radial-gradient(rgba(236, 45, 135, .4) 1.4px, transparent 1.5px);
+  background-size: 12px 12px;
+  opacity: .5;
+  z-index: 0;
+  pointer-events: none;
+}
+.rx-colfeat {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(10px, 1.2vw, 16px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rx-colfeat__item { min-width: 0; }
+.rx-colfeat__item:nth-child(1) { transform: rotate(-4deg); }
+.rx-colfeat__item:nth-child(2) { transform: rotate(4deg); margin-top: clamp(18px, 3vw, 34px); }
+.rx-colfeat__item:nth-child(3) {
+  grid-column: 1 / 3;
+  justify-self: center;
+  width: 66%;
+  margin-top: clamp(-10px, -0.7vw, -4px);
+  transform: rotate(-2deg);
+}
+.rx-colfeat__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 14px 30px rgba(28, 40, 74, .14);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.rx-colfeat__item:hover { z-index: 2; position: relative; }
+.rx-colfeat__link:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 18px 38px rgba(28, 40, 74, .2); }
+.rx-colfeat__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 11;
+  background: #eef0f4 center/cover no-repeat;
+}
+.rx-colfeat__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.rx-colfeat__badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: .625rem;
+  letter-spacing: .02em;
+  color: #fff;
+  background: var(--rx-accent);
+  border-radius: 5px;
+  padding: 3px 8px;
+  box-shadow: 0 3px 8px rgba(var(--rx-accent-rgb), .3);
+}
+.rx-colfeat__body { padding: 8px 11px 11px; display: flex; flex-direction: column; gap: 5px; flex: 1 1 auto; }
+.rx-colfeat__title {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: .6875rem;
+  line-height: 1.45;
+  color: #0a0a0c;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rx-colfeat__date { margin-top: auto; font-family: 'Inter', sans-serif; font-size: .5625rem; color: #8a93a3; letter-spacing: .02em; }
+
+/* ---- 下段: 検索＋ピル（フル幅・左寄せ。ピルは1行に収まる） ---- */
+.rx-colhero__search { max-width: 100%; }
+
+/* プレースホルダー（記事未投入時の見た目用・ビルドで実データに置換） */
+.is-placeholder .rx-colfeat__media,
+.is-placeholder .rx-pickup__media,
+.is-placeholder .rx-colcard__media {
+  background: linear-gradient(135deg, #f7d6e6 0%, #f3e3f1 55%, #e7ecfa 100%);
+}
+
+/* =====================================================================
+   PICK UP（注目記事）
+   ===================================================================== */
+.rx-pickup {
+  background: #fff;
+  padding: clamp(32px, 5vw, 56px) 0 clamp(10px, 2vw, 16px);
+}
+.rx-pickup__inner {
+  max-width: var(--rx-col-maxw);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+.rx-pickup__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: .12em;
+  color: var(--rx-accent);
+  margin: 0 0 clamp(14px, 2vw, 20px);
+}
+.rx-pickup__label::after {
+  content: "";
+  width: clamp(40px, 8vw, 88px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--rx-accent), rgba(var(--rx-accent-rgb), 0));
+}
+.rx-pickup__card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--rx-border);
+  border-radius: var(--rx-radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 14px 36px rgba(28, 40, 74, .08);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.rx-pickup__card:hover { transform: translateY(-3px); box-shadow: 0 20px 44px rgba(28, 40, 74, .14); }
+.rx-pickup__media {
+  display: block;
+  align-self: stretch;
+  min-height: clamp(200px, 24vw, 300px);
+  background: #eef0f4 center/cover no-repeat;
+  object-fit: cover;
+  width: 100%;
+}
+.rx-pickup__content { padding: clamp(20px, 3vw, 36px) clamp(20px, 3vw, 40px) clamp(20px, 3vw, 36px) 0; display: flex; flex-direction: column; gap: clamp(10px, 1.4vw, 14px); }
+.rx-pickup__cat {
+  align-self: flex-start;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: .75rem;
+  letter-spacing: .04em;
+  color: #fff;
+  background: var(--rx-accent);
+  border-radius: 6px;
+  padding: 4px 12px;
+}
+.rx-pickup__title {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  line-height: 1.5;
+  color: #0a0a0c;
+}
+.rx-pickup__desc {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .9375rem;
+  line-height: 1.85;
+  color: #3f4651;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rx-pickup__date {
+  font-family: 'Inter', sans-serif;
+  font-size: .8125rem;
+  color: #8a93a3;
+  letter-spacing: .02em;
+}
+
+/* =====================================================================
+   一覧: カテゴリタブ + カードグリッド
+   ===================================================================== */
+.rx-collist {
+  background: #fff;
+  padding: clamp(28px, 4vw, 48px) 0 clamp(64px, 9vw, 112px);
+}
+.rx-collist__inner {
+  max-width: var(--rx-col-maxw);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+
+/* タブ: 非選択は白ピル / 選択中はピンク（モック準拠） */
+.rx-collist__filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(8px, 1.2vw, 12px);
+  margin: 0 0 clamp(24px, 4vw, 40px);
+  padding-bottom: clamp(4px, 1vw, 8px);
+}
+.rx-collist__filter-btn {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: .875rem;
+  letter-spacing: .04em;
+  color: #4a5468;
+  background: #fff;
+  border: 1px solid var(--rx-border);
+  border-radius: var(--rx-radius-pill);
+  padding: .6em 1.45em;
+  min-height: 42px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease;
+}
+.rx-collist__filter-btn:hover { color: var(--rx-accent); border-color: #f3c6dd; }
+.rx-collist__filter-btn[aria-pressed="true"] {
+  background: var(--rx-grad);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* グリッド: PC=3列 / TAB=2列 / SP=1列 */
+.rx-collist__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2vw, 26px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 600px) { .rx-collist__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .rx-collist__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* ---- カード（PC: 縦積み・画像上＋バッジ） ---- */
+.rx-colcard {
+  min-width: 0;
+  background: #fff;
+  border: 1px solid var(--rx-border);
+  border-radius: var(--rx-radius);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, .06);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.rx-colcard[hidden] { display: none; }
+.rx-colcard:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(15, 23, 42, .12); }
+.rx-colcard__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  position: relative;
+}
+.rx-colcard__media {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 10;
+  background: #eef0f4 center/cover no-repeat;
+  overflow: hidden;
+}
+.rx-colcard__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rx-colcard__cat {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: .75rem;
+  letter-spacing: .03em;
+  color: #fff;
+  background: var(--rx-accent);
+  border-radius: 6px;
+  padding: 4px 11px;
+  box-shadow: 0 4px 12px rgba(var(--rx-accent-rgb), .35);
+}
+.rx-colcard__body {
+  flex: 1 1 auto;
+  padding: clamp(14px, 1.6vw, 18px) clamp(15px, 1.8vw, 20px) 8px;
+}
+.rx-colcard__title {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
+  line-height: 1.6;
+  letter-spacing: .01em;
+  color: #0a0a0c;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.rx-colcard__date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: .75rem;
+  color: #8a93a3;
+  letter-spacing: .02em;
+  margin: 0;
+  padding: 4px clamp(15px, 1.8vw, 20px) clamp(40px, 4vw, 46px);
+}
+.rx-colcard__date svg { width: 14px; height: 14px; flex-shrink: 0; }
+.rx-colcard__arrow {
+  position: absolute;
+  right: clamp(12px, 1.6vw, 16px);
+  bottom: clamp(12px, 1.6vw, 16px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--rx-grad);
+  box-shadow: 0 6px 16px rgba(var(--rx-accent-rgb), .32);
+  transition: transform .18s ease;
+}
+.rx-colcard__arrow svg { width: 16px; height: 16px; }
+.rx-colcard__link:hover .rx-colcard__arrow { transform: translateX(3px); }
+
+/* SP（≤599px）: 横並びカード（画像左 / テキスト右） — モック準拠 */
+@media (max-width: 599px) {
+  .rx-colcard__link { flex-direction: row; align-items: stretch; }
+  .rx-colcard__media { flex: 0 0 40%; aspect-ratio: auto; min-height: 100%; }
+  .rx-colcard__cat { top: 8px; left: 8px; font-size: .6875rem; padding: 3px 9px; }
+  .rx-colcard__body { padding: 12px 14px 4px; }
+  .rx-colcard__title { -webkit-line-clamp: 2; font-size: .9375rem; }
+  .rx-colcard__date { padding: 4px 14px 12px; }
+  .rx-colcard__arrow { display: none; }
+}
+
+.rx-collist__empty {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .9375rem;
+  color: #6e7280;
+  text-align: center;
+  padding: clamp(40px, 8vw, 80px) 0;
+  margin: 0;
+}
+
+/* =====================================================================
+   CTA バナー（ピンク・イラスト＋チェック＋予約ボタン）
+   ===================================================================== */
+.rx-colcta {
+  background: #fff;
+  padding: 0 0 clamp(56px, 8vw, 96px);
+}
+.rx-colcta__inner {
+  max-width: var(--rx-col-maxw);
+  margin: 0 auto;
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 56px);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+  background: linear-gradient(105deg, #fde8f1 0%, #fbeef4 45%, #fdf0f6 100%);
+  border: 1px solid #f7d6e6;
+  border-radius: var(--rx-radius-lg);
+}
+.rx-colcta__art { flex-shrink: 0; }
+.rx-colcta__art svg { width: clamp(120px, 16vw, 180px); height: auto; display: block; }
+.rx-colcta__heading {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.05rem + 1vw, 1.875rem);
+  line-height: 1.4;
+  letter-spacing: .02em;
+  color: #0a0a0c;
+  margin: 0 0 8px;
+  word-break: keep-all;
+}
+.rx-colcta__lead {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: clamp(.875rem, .85rem + .2vw, 1rem);
+  line-height: 1.8;
+  color: #3f4651;
+  margin: 0 0 12px;
+  word-break: keep-all;
+}
+.rx-colcta__points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.rx-colcta__points li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .8125rem;
+  font-weight: 500;
+  color: #4a5468;
+}
+.rx-colcta__points svg { width: 15px; height: 15px; color: var(--rx-accent); flex-shrink: 0; }
+.rx-colcta__action { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; }
+.rx-colcta__badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 3px;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .8125rem;
+  font-weight: 700;
+  color: var(--rx-accent);
+  background: #fff;
+  border: 1px solid #f3c6dd;
+  border-radius: var(--rx-radius-pill);
+  padding: 4px 14px;
+}
+.rx-colcta__badge b { font-family: 'Inter', sans-serif; font-size: 1rem; }
+.rx-colcta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6em;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: .04em;
+  color: #fff;
+  background: var(--rx-grad);
+  border-radius: var(--rx-radius-pill);
+  padding: 16px clamp(28px, 3vw, 44px);
+  min-height: 56px;
+  white-space: nowrap;
+  box-shadow: 0 12px 28px rgba(var(--rx-accent-rgb), .32);
+  transition: filter .2s ease, transform .15s ease, box-shadow .2s ease;
+}
+.rx-colcta__btn:hover { filter: brightness(1.05); transform: translateY(-2px); box-shadow: 0 16px 34px rgba(var(--rx-accent-rgb), .4); }
+.rx-colcta__btn svg { width: 17px; height: 17px; }
+.rx-colcta__note {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .75rem;
+  color: #8a93a3;
+  margin: 0;
+}
+
+/* =====================================================================
+   レスポンシブ
+   ===================================================================== */
+/* TAB以下: ヒーローを縦積み（コピー → 画像 → 検索 → ピル の順） */
+@media (max-width: 1024px) {
+  .rx-colhero__top { grid-template-columns: 1fr; gap: clamp(20px, 4vw, 30px); }
+  .rx-colhero__featured { max-width: 560px; margin: 0 auto; width: 100%; }
+  .rx-colcta__inner { grid-template-columns: 1fr auto; }
+  .rx-colcta__art { display: none; }
+}
+@media (max-width: 560px) {
+  /* 浮遊回転は狭幅で見切れるため弱める */
+  .rx-colfeat__item:nth-child(1) { transform: rotate(-2deg); }
+  .rx-colfeat__item:nth-child(2) { transform: rotate(2deg); margin-top: 16px; }
+  .rx-colfeat__item:nth-child(3) { width: 72%; transform: rotate(-1deg); }
+  .rx-colfeat__title { font-size: .75rem; }
+  .rx-colfeat__date { font-size: .625rem; }
+}
+/* PICK UP をSPで縦積み */
+@media (max-width: 768px) {
+  .rx-pickup__card { grid-template-columns: 1fr; }
+  .rx-pickup__media { min-height: 0; aspect-ratio: 16 / 9; }
+  .rx-pickup__content { padding: clamp(18px, 4vw, 24px); }
+}
+@media (max-width: 680px) {
+  .rx-colcta__inner { grid-template-columns: 1fr; text-align: center; gap: 18px; }
+  .rx-colcta__points { justify-content: center; }
+  .rx-colcta__action { width: 100%; }
+  .rx-colcta__btn { width: 100%; }
+}
+
+/* =====================================================================
+   コラム詳細ページ（column/{slug}/）
+   ===================================================================== */
+.rx-cold {
+  background: #fff;
+  padding: calc(var(--rx-header-h) + clamp(24px, 4vw, 44px)) 0 clamp(32px, 5vw, 56px);
+}
+.rx-cold__inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+.rx-cold__bread { margin: 0 0 clamp(16px, 2.4vw, 24px); }
+.rx-cold__bread ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .75rem;
+  color: #8a93a3;
+}
+.rx-cold__bread li { display: inline-flex; align-items: center; }
+.rx-cold__bread li + li::before { content: "／"; margin: 0 8px; color: #c4c9d2; }
+.rx-cold__bread a { color: var(--rx-accent); text-decoration: none; }
+.rx-cold__bread a:hover { text-decoration: underline; }
+.rx-cold__head { margin: 0 0 clamp(18px, 3vw, 28px); }
+.rx-cold__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 14px;
+}
+.rx-cold__cat {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: .75rem;
+  letter-spacing: .04em;
+  color: #fff;
+  background: var(--rx-accent);
+  border-radius: 6px;
+  padding: 4px 12px;
+}
+.rx-cold__date {
+  font-family: 'Inter', sans-serif;
+  font-size: .8125rem;
+  color: #8a93a3;
+  letter-spacing: .02em;
+}
+.rx-cold__title {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+  line-height: 1.5;
+  letter-spacing: .02em;
+  color: #0a0a0c;
+  margin: 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.rx-cold__hero {
+  margin: 0 0 clamp(24px, 4vw, 40px);
+  border-radius: var(--rx-radius-lg);
+  overflow: hidden;
+  background: #eef0f4;
+}
+.rx-cold__hero-img { display: block; width: 100%; height: auto; }
+.rx-cold__hero:empty { display: none; }
+
+/* 本文タイポグラフィ（WP本文をサニタイズして流し込む） */
+.rx-cold__body {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: 1.0625rem;
+  line-height: 2;
+  color: #2b3242;
+}
+.rx-cold__body > :first-child { margin-top: 0; }
+.rx-cold__body p { margin: 0 0 1.5em; }
+.rx-cold__body h2 {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.3rem, 1.1rem + .8vw, 1.6rem);
+  line-height: 1.5;
+  color: #0a0a0c;
+  margin: 2.2em 0 .9em;
+  padding: 0 0 .5em;
+  border-bottom: 2px solid #f3d9e6;
+}
+.rx-cold__body h3 {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1.05rem + .5vw, 1.35rem);
+  line-height: 1.55;
+  color: #0a0a0c;
+  margin: 1.8em 0 .7em;
+  padding-left: .6em;
+  border-left: 4px solid var(--rx-accent);
+}
+.rx-cold__body h4 { font-weight: 700; font-size: 1.0625rem; color: #0a0a0c; margin: 1.6em 0 .6em; }
+.rx-cold__body ul, .rx-cold__body ol { margin: 0 0 1.5em; padding-left: 1.5em; }
+.rx-cold__body li { margin: 0 0 .5em; }
+.rx-cold__body a { color: var(--rx-accent); text-decoration: underline; text-underline-offset: 2px; }
+.rx-cold__body img { max-width: 100%; height: auto; border-radius: 12px; margin: .5em 0 1.5em; }
+.rx-cold__body strong { font-weight: 700; color: #0a0a0c; }
+.rx-cold__body blockquote {
+  margin: 1.5em 0;
+  padding: 16px 20px;
+  background: #fdf2f8;
+  border-left: 4px solid var(--rx-accent);
+  border-radius: 0 12px 12px 0;
+  color: #4a5468;
+}
+.rx-cold__body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.5em;
+  font-size: .9375rem;
+}
+.rx-cold__body th, .rx-cold__body td {
+  border: 1px solid var(--rx-border);
+  padding: 10px 14px;
+  text-align: left;
+}
+.rx-cold__body th { background: #fdf2f8; font-weight: 700; }
+.rx-cold__back {
+  max-width: 760px;
+  margin: clamp(28px, 4vw, 44px) auto 0;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+.rx-cold__back a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-weight: 700;
+  font-size: .9375rem;
+  color: var(--rx-accent);
+  text-decoration: none;
+}
+.rx-cold__back svg { width: 17px; height: 17px; }
+
+/* 関連コラム */
+.rx-colrel {
+  background: #fafafa;
+  padding: clamp(40px, 6vw, 72px) 0;
+}
+.rx-colrel__inner {
+  max-width: var(--rx-col-maxw);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+.rx-colrel__heading {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.1rem + .7vw, 1.625rem);
+  letter-spacing: .02em;
+  color: #0a0a0c;
+  margin: 0 0 clamp(20px, 3vw, 32px);
+  text-align: center;
+}
+.rx-colrel__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2vw, 26px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 600px) { .rx-colrel__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .rx-colrel__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

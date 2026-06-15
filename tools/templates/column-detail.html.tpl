@@ -16,13 +16,11 @@
   <meta property="og:type" content="article">
   <meta property="og:url" content="{{page_url}}">
   <meta property="og:site_name" content="リクルートX">
-  <meta property="og:image" content="{{image}}">
   <meta property="og:locale" content="ja_JP">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{seo_title}}">
   <meta name="twitter:description" content="{{seo_description}}">
-  <meta name="twitter:image" content="{{image}}">
   <!-- Structured Data -->
   <script type="application/ld+json">{{article_jsonld}}</script>
   <script type="application/ld+json">{{breadcrumb_jsonld}}</script>
@@ -37,7 +35,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700&family=Inter:wght@500;700&display=swap">
   <link rel="stylesheet" href="../../css/tokens.css">
   <link rel="stylesheet" href="../../css/style.css">
-  <link rel="stylesheet" href="../../css/case-detail.css">
+  <link rel="stylesheet" href="../../css/column.css">
 </head>
 <body class="rx-jp-body">
 
@@ -50,7 +48,7 @@
         <a class="rx-nav__link" href="../../index.html#service">サービス</a>
         <a class="rx-nav__link" href="../../case.html">事例</a>
         <a class="rx-nav__link" href="../../price.html">料金プラン</a>
-        <a class="rx-nav__link" href="../../column.html">コラム</a>
+        <a class="rx-nav__link" href="../../column.html" aria-current="page">コラム</a>
       </nav>
       <a class="rx-nav__cta" href="../../contact.html">
         <span class="rx-nav__cta-text">お問い合わせ</span>
@@ -64,53 +62,66 @@
 
   <main>
 
-    <section class="rx-cdtl-hero" aria-labelledby="caseDetailHeading">
-      <div class="rx-cdtl-hero__inner">
-        <nav class="rx-cdtl-bread" aria-label="パンくず">
+    <article class="rx-cold">
+      <div class="rx-cold__inner">
+        <nav class="rx-cold__bread" aria-label="パンくず">
           <ol>
             <li><a href="../../">トップ</a></li>
-            <li><a href="../../case.html">事例一覧</a></li>
-            <li aria-current="page">{{company}}</li>
+            <li><a href="../../column.html">コラム</a></li>
+            <li aria-current="page">{{title}}</li>
           </ol>
         </nav>
-        <p class="rx-cdtl-hero__eyebrow">CASE STUDY</p>
-        <h1 class="rx-cdtl-hero__heading" id="caseDetailHeading">{{company}}</h1>
-        <p class="rx-cdtl-hero__tags">{{tags_display}}</p>
-        <ul class="rx-ccard__stats rx-cdtl-hero__stats">
-          {{stats_items}}
-        </ul>
-      </div>
-      <div class="rx-cdtl-hero__img-wrap">
-        <img src="{{image}}" alt="{{image_alt}}" width="1200" height="675" loading="eager" fetchpriority="high" decoding="async">
-      </div>
-    </section>
 
-    <section class="rx-cdtl-body">
-      <div class="rx-cdtl-body__inner">
-        <article class="rx-cdtl-article">
+        <header class="rx-cold__head">
+          <p class="rx-cold__meta">{{category}}<time class="rx-cold__date" datetime="{{date_ymd}}">{{date}}</time></p>
+          <h1 class="rx-cold__title">{{title}}</h1>
+        </header>
+
+        <figure class="rx-cold__hero">{{hero_image}}</figure>
+
+        <div class="rx-cold__body">
           {{content_html}}
-        </article>
-        <p class="rx-cdtl-disclaimer">※ 数値はいずれも支援当時の実績です。給与などの基本的な労働条件は変えずに、求人原稿と運用の改善で達成しています。</p>
+        </div>
+      </div>
+    </article>
+
+    <section class="rx-colrel" aria-labelledby="relHeading">
+      <div class="rx-colrel__inner">
+        <h2 class="rx-colrel__heading" id="relHeading">関連するコラム</h2>
+        <ul class="rx-colrel__grid">{{related}}</ul>
       </div>
     </section>
 
-    <section class="rx-rel" aria-labelledby="relHeading">
-      <div class="rx-rel__inner">
-        <h2 class="rx-rel__heading" id="relHeading">関連する採用成功事例</h2>
-        <ul class="rx-rel__grid">{{related_cases}}</ul>
+    <!-- CTA バナー -->
+    <section class="rx-colcta" aria-labelledby="colCtaHeading">
+      <div class="rx-colcta__inner rx-anim">
+        <div class="rx-colcta__art" aria-hidden="true">
+          <svg viewBox="0 0 200 140" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
+            <rect x="14" y="34" width="172" height="78" rx="10" fill="#fff" stroke="#f7c6dd" stroke-width="2"/>
+            <circle cx="62" cy="58" r="15" fill="#fbe0ec"/><rect x="44" y="76" width="36" height="26" rx="8" fill="#f7c6dd"/>
+            <circle cx="132" cy="58" r="15" fill="#fbe0ec"/><rect x="114" y="76" width="36" height="26" rx="8" fill="#f7c6dd"/>
+            <path d="M86 64h28M86 74h20" stroke="#ec2d87" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="rx-colcta__text">
+          <h2 class="rx-colcta__heading" id="colCtaHeading">貴社の採用課題をプロが解決します</h2>
+          <p class="rx-colcta__lead">採用でお悩みの方、まずは無料のオンライン相談で気軽にご相談ください。</p>
+          <ul class="rx-colcta__points">
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5"/></svg>採用戦略のご相談</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5"/></svg>自社に合った媒体のご提案</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 5"/></svg>無料の改善診断</li>
+          </ul>
+        </div>
+        <div class="rx-colcta__action">
+          <span class="rx-colcta__badge"><b>60分</b>無料</span>
+          <a class="rx-colcta__btn" href="../../contact.html">無料相談を予約する<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></a>
+          <p class="rx-colcta__note">オンラインで気軽に相談できます</p>
+        </div>
       </div>
     </section>
 
-    <section class="rx-ccta" aria-labelledby="caseDetailCtaHeading">
-      <div class="rx-ccta__inner rx-anim">
-        <h2 class="rx-ccta__heading" id="caseDetailCtaHeading">同じ変化を、貴社の採用でも。</h2>
-        <p class="rx-ccta__lead">いまの求人原稿と運用状況をお聞かせください。改善の余地がどこにあるか、具体的にご提案します。</p>
-        <a class="rx-ccta__btn" href="../../contact.html">お問い合わせ<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h14M11 4l6 6-6 6"/></svg></a>
-      </div>
-    </section>
-
-    <div class="rx-cdtl-back">
-      <a href="../../case.html"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 10H3M9 16l-6-6 6-6"/></svg>事例一覧へ戻る</a>
+    <div class="rx-cold__back">
+      <a href="../../column.html"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 10H3M9 16l-6-6 6-6"/></svg>コラム一覧へ戻る</a>
     </div>
 
   </main>

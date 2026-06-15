@@ -9,3 +9,6 @@ images/case/export*/
 
 # 画像生成の生PNG受け渡し置き場（WPメディアが正本・コミットしない）
 images/精製物/
+
+# Python キャッシュ
+__pycache__/
