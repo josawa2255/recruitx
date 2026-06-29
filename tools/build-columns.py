@@ -26,7 +26,7 @@ COLUMN_DIR = ROOT / "column"
 TEMPLATE_PATH = ROOT / "tools" / "templates" / "column-detail.html.tpl"
 SITEMAP_PATH = ROOT / "sitemap.xml"
 
-SITE_URL = "https://recruitx.contentsx.jp"
+SITE_URL = "https://ichioshi.contentsx.jp"
 API_BASE = "https://cms.contentsx.jp/wp-json/contentsx/v1"
 
 # ---- XSS sanitizer (allowlist-based HTMLParser、build-cases.py と同方針) ----

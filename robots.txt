@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://recruitx.contentsx.jp/sitemap.xml
+Sitemap: https://ichioshi.contentsx.jp/sitemap.xml

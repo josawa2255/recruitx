@@ -10,7 +10,7 @@
 
 - 運営: コンテンツエックス株式会社（[../operations/INFRA.md](../operations/INFRA.md) に詳細）
 - 既存サービス: **Contents X**（contentsx.jp / コーポレート・タグライン「伝える」を、再発明する）、**BizManga**（bizmanga.contentsx.jp / ビジネス向け縦スクロール漫画制作）
-- 新サービス: **リクルートX**（recruitx.contentsx.jp / 採用LP・デザイン新規）
+- 新サービス: **リクルートX**（ichioshi.contentsx.jp / 採用LP・デザイン新規）
 
 ## 2. コア思想（メッセージ設計の下敷き）
 

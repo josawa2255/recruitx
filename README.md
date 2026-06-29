@@ -76,7 +76,7 @@ python3 -m http.server 8753
 |---|---|
 | 構造 | **素の HTML / CSS / JavaScript**（フレームワーク非依存・ビルド不要） |
 | フォント | Shippori Mincho（見出し） / Zen Kaku Gothic Antique（本文） / Inter（英字・数字）／ Google Fonts経由 |
-| デプロイ | GitHub Pages + CNAME `recruitx.contentsx.jp`（DNS: お名前.com） |
+| デプロイ | GitHub Pages + CNAME `ichioshi.contentsx.jp`（DNS: お名前.com） |
 | お問い合わせ | HubSpot Forms API v3 に `fetch()` で直接POST（埋め込みウィジェット不使用） |
 | 解析 | GA4 / Microsoft Clarity（新規発行予定） |
 | 広告 | Meta広告 / Google広告 |

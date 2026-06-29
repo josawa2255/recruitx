@@ -14,7 +14,7 @@
 | 一言説明 | `TBD` |
 | ターゲット | `TBD` |
 | 提供価値 | `TBD` |
-| ドメイン | `recruitx.contentsx.jp` |
+| ドメイン | `ichioshi.contentsx.jp` |
 
 ## 2. ページ構成
 
@@ -93,4 +93,4 @@
 
 ## 8. デプロイ
 
-- GitHub Pages / CNAME `recruitx.contentsx.jp` / DNS お名前.com
+- GitHub Pages / CNAME `ichioshi.contentsx.jp` / DNS お名前.com

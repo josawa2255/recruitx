@@ -23,7 +23,7 @@ CASE_DIR = ROOT / "case"
 TEMPLATE_PATH = ROOT / "tools" / "templates" / "case-detail.html.tpl"
 SITEMAP_PATH = ROOT / "sitemap.xml"
 
-SITE_URL = "https://recruitx.contentsx.jp"
+SITE_URL = "https://ichioshi.contentsx.jp"
 API_BASE = "https://cms.contentsx.jp/wp-json/contentsx/v1"
 
 # ---- XSS sanitizer (allowlist-based HTMLParser) ----
