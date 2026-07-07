@@ -15,7 +15,7 @@
   <meta property="og:description" content="{{seo_description}}">
   <meta property="og:type" content="article">
   <meta property="og:url" content="{{page_url}}">
-  <meta property="og:site_name" content="リクルートX">
+  <meta property="og:site_name" content="イチオシ採用">
   <meta property="og:image" content="{{image}}">
   <meta property="og:locale" content="ja_JP">
   <!-- Twitter Card -->
@@ -43,8 +43,8 @@
 
   <header class="rx-nav" id="nav">
     <div class="rx-nav__inner">
-      <a class="rx-nav__brand" href="../../index.html" aria-label="リクルートX トップへ">
-        <img class="rx-nav__brand-img" src="../../images/logo/recruitx-logo.png" alt="リクルートX" width="483" height="160">
+      <a class="rx-nav__brand" href="../../index.html" aria-label="イチオシ採用 トップへ">
+        <img class="rx-nav__brand-img" src="../../images/logo/recruitx-logo.png" alt="イチオシ採用" width="483" height="160">
       </a>
       <nav class="rx-nav__menu" id="navMenu" aria-label="メインナビゲーション">
         <a class="rx-nav__link" href="../../index.html#service">サービス</a>
@@ -119,8 +119,8 @@
     <div class="rx-footer__inner">
       <div class="rx-footer__top">
         <div class="rx-footer__brand">
-          <a class="rx-footer__logo" href="../../index.html" aria-label="リクルートX トップへ">
-            <img class="rx-footer__logo-img" src="../../images/logo/recruitx-logo.png" alt="リクルートX" width="483" height="160">
+          <a class="rx-footer__logo" href="../../index.html" aria-label="イチオシ採用 トップへ">
+            <img class="rx-footer__logo-img" src="../../images/logo/recruitx-logo.png" alt="イチオシ採用" width="483" height="160">
           </a>
           <p class="rx-footer__tagline">求人広告に頼らない、SNS時代の採用へ。</p>
         </div>
@@ -136,7 +136,7 @@
       </div>
       <div class="rx-footer__bottom">
         <div class="rx-footer__company">
-          <p class="rx-footer__company-service">リクルートX（RecruitX）</p>
+          <p class="rx-footer__company-service">イチオシ採用</p>
           <p class="rx-footer__company-name">運営：コンテンツエックス株式会社 ／ Contents X Co., Ltd.</p>
         </div>
         <p class="rx-footer__copyright"><small>&#169; 2026 Contents X Co., Ltd.</small></p>

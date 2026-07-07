@@ -1,6 +1,6 @@
-# リクルートX — 採用LP
+# イチオシ採用 — 採用LP（リポジトリ名 recruitx）
 
-> **求人広告に頼らない採用へ。** SNS運用・コンテンツ制作・Meta広告運用を通じて、共感から応募へつなげる採用支援サービス**リクルートX**のランディングページ。
+> **求人広告に頼らない採用へ。** SNS運用・コンテンツ制作・Meta広告運用を通じて、共感から応募へつなげる採用支援サービス**イチオシ採用**のランディングページ。
 
 [![Stack: HTML/CSS/JS](https://img.shields.io/badge/stack-HTML%2FCSS%2FJS-0a0a0c)](#技術スタック)
 [![License: 内部](https://img.shields.io/badge/license-internal-ec2d87)](#ライセンス)
@@ -40,7 +40,7 @@ python3 -m http.server 8753
 
 ```
 1. Hero          ヒーロー（scroll-triggered 文字スワップ）
-2. About         リクルートXとは（画像＋編集者的リード）
+2. About         イチオシ採用とは（画像＋編集者的リード）
 3. Problem       こんなお悩み、ありませんか？（3カード）
 4. Service       3つのステップで採用を変える（縦フロー）
    ├ STEP 01 — コンテンツ制作

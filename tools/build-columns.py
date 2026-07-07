@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-tools/build-columns.py  —  RecruitX コラムビルダー
+tools/build-columns.py  —  イチオシ採用 (recruitx) コラムビルダー
 共有コラム cx_column の掲載先=recruitx（/contentsx/v1/columns?site=recruitx）を取得し:
   1. column.html のカテゴリタブ / PICK UP / カードグリッドを更新（BUILD markers 間を差し替え）
   2. /column/{slug}/index.html を静的生成
@@ -276,7 +276,7 @@ def update_column_html(columns: list) -> None:
 # ---- 詳細ページ生成 ----
 def _make_jsonld(d: dict, page_url: str) -> tuple:
     title = d.get("title", "")
-    seo_title = d.get("seo_title") or f"{title}｜リクルートX コラム"
+    seo_title = d.get("seo_title") or f"{title}｜イチオシ採用 コラム"
     seo_desc = d.get("seo_description") or d.get("excerpt", "")
     image = d.get("thumbnail", "")
     article = {
@@ -284,7 +284,7 @@ def _make_jsonld(d: dict, page_url: str) -> tuple:
         "headline": seo_title, "description": seo_desc, "url": page_url,
         "datePublished": d.get("date_ymd", ""),
         "dateModified": d.get("modified_ymd", "") or d.get("date_ymd", ""),
-        "publisher": {"@type": "Organization", "name": "リクルートX", "url": SITE_URL},
+        "publisher": {"@type": "Organization", "name": "イチオシ採用", "url": SITE_URL},
     }
     if image:
         article["image"] = image
@@ -340,7 +340,7 @@ def _generate_one(c: dict, template: str, all_cols: list) -> str:
     cat = detail.get("category") or ""
     image = detail.get("thumbnail", "")
     content_html = sanitize_html(detail.get("content", ""))
-    seo_title = detail.get("seo_title") or f"{title}｜リクルートX コラム"
+    seo_title = detail.get("seo_title") or f"{title}｜イチオシ採用 コラム"
     seo_desc = detail.get("seo_description") or detail.get("excerpt", "")
     page_url = f"{SITE_URL}/column/{slug}/"
     article_jsonld, breadcrumb_jsonld = _make_jsonld(detail, page_url)
