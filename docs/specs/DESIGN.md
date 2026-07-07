@@ -165,15 +165,16 @@ section { padding: clamp(80px, 12vw, 200px) 0; }   /* 旧 48→160 から拡大 
 
 ## ロゴ・ファビコン
 
-ヘッダー／フッターのブランドは**企業ロゴ画像**（横組みワードマーク「RecruitX」＋Rから立ち上がりXで上昇するピンクのループ矢印＝採用導線の循環を表現／透過PNG）。原典は `images/ロゴ.png`・`images/ファビコン案.png`。
+ヘッダー／フッターのブランドは**企業ロゴ画像**（ワードマーク「イチオシ採用」＋上昇するピンクの矢印と星＝採用の勢い・推し感を表現／透過PNG）。2026-07-07にドメイン改名（ichioshi.contentsx.jp）に合わせてロゴ・アイコンを刷新。原典はGPT生成の `ICON A`（角丸ピンク背景＋白「1」マーク＋紺三角）・`LOGO A`（ワードマーク）。
 
 | 用途 | ファイル | 実装 |
 |------|---------|------|
-| ロゴ（共通） | `images/logo/recruitx-logo.png`（570×160・**背景透過**PNG） | ヘッダー `.rx-nav__brand-img` は原色のまま。フッター `.rx-footer__logo-img` は濃紺背景のため `filter: brightness(0) invert(1)` で**白抜き化**（ピンクの矢印も白の単色になる） |
-| ファビコン | `images/favicon/favicon-32.png` / `favicon-16.png` / `favicon-192.png`（**背景透過**・中の白Rxは保持）／ `apple-touch-icon.png`（180・**ピンク地で塗り潰し**） | 全ページ `<head>` に `rel="icon"` / `apple-touch-icon` を相対パスで設置 |
+| ロゴ（共通） | `images/logo/recruitx-logo.png`（483×160・**背景透過**PNG） | ヘッダー `.rx-nav__brand-img` は原色のまま。フッター `.rx-footer__logo-img` は濃紺背景のため `filter: brightness(0) invert(1)` で**白抜き化**（ピンクの矢印も白の単色になる） |
+| ファビコン | `images/favicon/favicon-32.png` / `favicon-16.png` / `favicon-192.png` / `apple-touch-icon.png`（180）/ `favicon-master-transparent.png`（192・マスター） | 全サイズ共通で**角丸ピンク背景ごと**（透過なし・完成品アイコンをそのままリサイズ）。iOS黒角回避の合成処理は不要（元から背景込みのため）。全ページ `<head>` に `rel="icon"` / `apple-touch-icon` を相対パスで設置 |
 
-- 原典 `images/ロゴ.png` は**白背景＋上部にキャプション付き**。キャプションを除いたロゴ帯のみを切り出し、白→アルファのColor-to-Alpha処理＋余白トリミングした透過マスターが `images/ロゴ_透過.png`。表示用ロゴはそこから高さ160へリサンプル。
-- `width`/`height` 属性は実寸の **570×160**（CLS対策）。CSSは高さ固定・`width:auto`。
+- ロゴ原典はGPT生成の「LOGO A」（白背景＋上部に見出しラベル「LOGO A」付き）。ラベル行を除いた文字帯のみをPillowでbboxクロップし、白→アルファのColor-to-Alpha処理（近白しきい値・境界のみ段階的減衰）で透過化 → 高さ160へLanczosリサンプルし `logo/recruitx-logo.png` として出力。
+- 実寸は**483×160**（旧570×160から新素材のアスペクト比に合わせて幅を変更）。`width`/`height` 属性はCLS対策のため実寸と一致させる（DEVICE-RULES.md §1）。CSSは高さ固定・`width:auto`。
+- アイコン原典はGPT生成の「ICON A」（複数バリエーションのプレビュー付き1枚絵）。ピンク画素のbbox検出でメインアイコン（角丸正方形）のみをクロップし、そのまま各サイズ（16/32/180/192）へLanczos縮小。**角丸ピンク背景ごと**なので透過処理・iOS黒角合成は行わない。
 - パスは**各ページからの相対**（事例ページは `../../images/...`）。ルート絶対パス禁止の原則に従う。
-- 事例詳細のビルド雛形 `tools/templates/case-detail.html.tpl` も同じ画像ロゴ＋faviconに更新済み（再ビルドで戻らない）。
-- ロゴ差し替え手順: ① `images/ロゴ.png` を更新 → ② 画像内にキャプション等があれば行帯解析でロゴ部分のみ切り出し → ③ Pillowで白→透過（Color-to-Alpha, 近白しきい値14, getbboxでトリミング）→ `ロゴ_透過.png` 保存 → ④ 高さ160へLanczosリサンプルし `logo/recruitx-logo.png` 出力 → ⑤ 縦横比が変われば全HTML＋tplの `width/height` 属性を更新。ファビコンは外周flood fillで背景白のみ透過（中央の白Rxは保持）→ `favicon-master-transparent.png` から各サイズをLanczos縮小。apple-touch-iconはiOSの黒角回避のためサンプルしたピンク地に合成して出力。
+- 事例詳細のビルド雛形 `tools/templates/case-detail.html.tpl` も同じ画像ロゴ＋faviconを参照（相対パスのため差し替え不要）。
+- ロゴ差し替え手順（新素材が背景込み完成品の場合）: ① 元画像からロゴ/アイコン部分のみ範囲検出しクロップ → ② ロゴは白→透過化、アイコンは背景ごと維持 → ③ ロゴは高さ160、アイコンは各サイズへLanczosリサンプル → ④ 縦横比が変わった場合は全HTML＋tplの `width/height` 属性を一括置換。
