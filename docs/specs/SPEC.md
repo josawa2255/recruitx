@@ -21,7 +21,7 @@
 | ページ | ファイル | 主要JS | 状態 |
 |--------|---------|--------|------|
 | トップLP | `index.html` | `js/main.js`（ナビsticky/ハンバーガー/入場アニメ） | 制作中（ヒーローのみ） |
-| お問い合わせ | `contact.html` | `js/main.js`（HubSpot Forms API v3 直送） | 実装済み・要テスト送信 |
+| お問い合わせ | `contact.html` | `js/main.js`（HubSpot Forms API v3 直送 ＋ CRM受信箱へ並行POST。§7） | 実装済み（2026-08-04 再構築。**ファイルが0バイト＝本番も真っ白の状態だった**のを復元。詳細は [BUGS.md](../../BUGS.md)） |
 | 導入事例 | `case.html` | `js/main.js` + `js/case.js`（業種フィルタ） | 実装済み |
 | 料金プラン | `price.html` | `js/main.js`（入場アニメのみ） | 実装済み |
 
@@ -90,6 +90,13 @@
 
 - 設定値の正本は [../operations/INFRA.md](../operations/INFRA.md)。ここでは「どの連携を使うか」のみ管理。
 - 使用予定: GA4（新規）/ Clarity（新規）/ HubSpot フォーム（`TBD`）
+
+| 連携先 | 用途 | 実装 |
+|---|---|---|
+| HubSpot Forms API v3 | お問い合わせの受付（**主**） | `js/main.js` から直送。仕様の正本は [../operations/HUBSPOT-CTA-HANDOFF.md](../operations/HUBSPOT-CTA-HANDOFF.md) |
+| Contents X CRM | お問い合わせをCRMの受信箱へ連携（2026-08-04 追加。3サイト目） | `js/main.js` の HubSpot送信**直前**に `https://contentsx-crm.vercel.app/api/inbound/web` へも POST（`CRM_ENDPOINT` / `CRM_TOKEN` 定数、`site: "ichioshi"`）。**CRM送信が失敗してもHubSpot送信とサンクス表示は従来どおり動く**（`.catch` で握りつぶす＝送信者に影響させない）。CRM側は受信箱に溜めるだけで、担当者が `/inbox` で承認して初めて会社・担当者・活動が作られる。ハニーポット `#website`（画面外・`.rx-form__hp`）の値は `hp` として送り、埋まっていればCRM側が黙って破棄する。`CRM_TOKEN` は静的サイトのJSに埋まる＝**機密ではない**（総当たり抑止の門番。実質の対策はCRM側のIPレート制限とハニーポット）。⚠️ **本サイトだけ `contact.html` の CSP `connect-src` に送信先を明示している**（他2サイトは `https:` 許容のため不要）。送信先を変える時はCSPも同時に直す。⚠️ **トークンをローテーションする時は【4箇所】を同時に更新する**（①CRM側 Vercel の `INBOUND_SECRET`＝更新後に再デプロイ ②BizManga `contact.html` ③ContentsX `js/contact.js` ④本サイト `js/main.js`）。一部だけだとそのサイトのCRM送信が全件401で落ちるが、**HubSpot受付とサンクス表示は正常なまま＝気づきにくい**。なお ContentX_HP 側の `crm-token-sync` フックは別リポジトリの本サイトを検知できない |
+
+- 📌 `crm.contentsx.jp` 割当後は `CRM_ENDPOINT`・`contact.html` のCSP・本表を差し替える。
 
 ## 8. デプロイ
 

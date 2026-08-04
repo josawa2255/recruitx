@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+  <title>お問い合わせ｜イチオシ採用</title>
+  <meta name="description" content="イチオシ採用へのお問い合わせ・ご相談はこちらから。現在の採用状況やお悩みをお聞かせください。3営業日以内に担当者よりご連絡いたします。ご相談は無料です。">
+  <!-- CSP: GA4/Clarity等のタグを追加する際は script-src / connect-src への追記が必要。
+       このページは connect-src に送信先を明示する（他ページより2つ多い）:
+         - api.hsforms.com          … HubSpot Forms API v3（お問い合わせ受付の本線）
+         - contentsx-crm.vercel.app … 社内CRMの問い合わせ受信箱への並行POST
+       ※ 送信先を増やすときは必ずここに追記する。漏れると fetch がCSPでブロックされ、
+         「送信に失敗しました」だけが出て原因が分かりにくい
+       ※ CRMを独自ドメイン（crm.contentsx.jp）へ移すときはここも差し替える -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com; connect-src 'self' https://api.hsforms.com https://contentsx-crm.vercel.app https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <!-- Google tag (gtag.js) — GA4 G-S2RDKPM1LE -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2RDKPM1LE"></script>
+  <script src="js/ga4.js"></script>
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@500;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="rx-jp-body">
+
+  <!-- ===================== ヘッダーナビゲーション（price.html と同一構成） ===================== -->
+  <header class="rx-nav" id="nav">
+    <div class="rx-nav__inner">
+      <a class="rx-nav__brand" href="index.html" aria-label="イチオシ採用 トップへ">
+        <img class="rx-nav__brand-img" src="images/logo/recruitx-logo.png" alt="イチオシ採用" width="483" height="160">
+      </a>
+      <nav class="rx-nav__menu" id="navMenu" aria-label="メインナビゲーション">
+        <a class="rx-nav__link" href="index.html#service">サービス</a>
+        <a class="rx-nav__link" href="case.html">事例</a>
+        <a class="rx-nav__link" href="price.html">料金プラン</a>
+        <a class="rx-nav__link" href="column.html">コラム</a>
+      </nav>
+      <a class="rx-nav__cta" href="contact.html" aria-current="page">
+        <span class="rx-nav__cta-text">お問い合わせ</span>
+        <span class="rx-nav__cta-alt" aria-hidden="true">Contact</span>
+      </a>
+      <button class="rx-nav__hamburger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== お問い合わせフォーム =====================
+         送信処理は js/main.js（HubSpot Forms API v3 直送）。仕様の正本は
+         docs/operations/HUBSPOT-CTA-HANDOFF.md。
+         - id="rx-contact-form" は変更しない（main.js がこのidでハンドラを束ね、
+           同時にフローティングCTAの出し分け判定にも使っている）
+         - input の name は main.js の LIMITS / readField と対応。リネームする場合は
+           main.js と HUBSPOT-CTA-HANDOFF.md のマッピング表も同時に直すこと
+           （画面の name=department は HubSpot 側では busyo に載せ替えている） -->
+    <section class="rx-contact" aria-labelledby="contactHeading">
+      <div class="rx-contact__inner">
+
+        <p class="rx-contact__eyebrow">CONTACT</p>
+        <h1 class="rx-contact__heading" id="contactHeading">お問い合わせ</h1>
+        <p class="rx-contact__lead">
+          採用のお悩みやご相談を、お気軽にお聞かせください。<br>
+          内容を確認のうえ、3営業日以内に担当者よりご連絡いたします。
+        </p>
+
+        <form class="rx-form" id="rx-contact-form" novalidate>
+
+          <div class="rx-form__row">
+            <label class="rx-form__field">
+              <span class="rx-form__label">会社名<em>必須</em></span>
+              <input type="text" name="company" maxlength="200" required
+                     autocomplete="organization" placeholder="コンテンツエックス株式会社">
+            </label>
+            <label class="rx-form__field">
+              <span class="rx-form__label">部署</span>
+              <input type="text" name="department" maxlength="100"
+                     autocomplete="organization-title" placeholder="人事部">
+            </label>
+          </div>
+
+          <div class="rx-form__row">
+            <label class="rx-form__field">
+              <span class="rx-form__label">お名前<em>必須</em></span>
+              <input type="text" name="fullName" maxlength="100" required
+                     autocomplete="name" placeholder="採用 太郎">
+            </label>
+            <label class="rx-form__field">
+              <span class="rx-form__label">メールアドレス<em>必須</em></span>
+              <input type="email" name="email" maxlength="254" required
+                     autocomplete="email" placeholder="example@company.co.jp">
+            </label>
+          </div>
+
+          <label class="rx-form__field">
+            <span class="rx-form__label">お問い合わせ内容<em>必須</em></span>
+            <textarea name="message" rows="7" maxlength="4000" required
+                      placeholder="現在の採用状況や、ご相談したい内容をご記入ください。"></textarea>
+          </label>
+
+          <!-- honeypot: botだけが埋める不可視フィールド。display:none は回避されやすいため
+               .rx-form__hp で画面外へ退避する。main.js が送信時にこの値を検査し、
+               埋まっていれば送信せず成功表示に倒す（bot に失敗を悟らせない） -->
+          <div class="rx-form__hp" aria-hidden="true">
+            <label for="website">Website (do not fill)</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button class="rx-form__submit" type="submit">
+            <span>送信する</span>
+            <svg class="rx-form__submit-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5.5 2.5 5.5 5.5-5.5 5.5"/></svg>
+          </button>
+
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rx-footer" role="contentinfo">
+    <div class="rx-footer__inner">
+      <div class="rx-footer__top">
+        <div class="rx-footer__brand">
+          <a class="rx-footer__logo" href="index.html" aria-label="イチオシ採用 トップへ">
+            <img class="rx-footer__logo-img" src="images/logo/recruitx-logo.png" alt="イチオシ採用" width="483" height="160">
+          </a>
+          <p class="rx-footer__tagline">求人広告に頼らない、SNS時代の採用へ。</p>
+        </div>
+        <nav class="rx-footer__nav" aria-label="フッターナビゲーション">
+          <ul class="rx-footer__links">
+            <li><a class="rx-footer__link" href="index.html#service">サービス</a></li>
+            <li><a class="rx-footer__link" href="case.html">事例</a></li>
+            <li><a class="rx-footer__link" href="contact.html">お問い合わせ</a></li>
+            <li><a class="rx-footer__link" href="price.html">料金プラン</a></li>
+            <li><a class="rx-footer__link" href="column.html">コラム</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="rx-footer__bottom">
+        <div class="rx-footer__company">
+          <p class="rx-footer__company-service">イチオシ採用</p>
+          <p class="rx-footer__company-name">運営：コンテンツエックス株式会社 ／ Contents X Co., Ltd.</p>
+        </div>
+        <p class="rx-footer__copyright"><small>© 2026 Contents X Co., Ltd.</small></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

@@ -229,6 +229,15 @@
   var HUBSPOT_FORM_GUID = 'b6da14d0-d60d-4357-89fc-0015ed32b704';
   var SERVICE_NAME      = 'リクルートX';
 
+  // 社内CRMの問い合わせ受信箱（/inbox）へ並行送信する。仕様は
+  // ユーザーレベルスキル jou-crm-contact-web が正本。
+  // CRM_TOKEN は総当たり抑止の門番であり機密ではない（静的サイトのJSに埋まる＝
+  // ブラウザから読める前提の設計）。実質の防御はCRM側のIPレート制限とハニーポット。
+  // ⚠️ ローテーションする場合は CRM側Vercel + 全HPリポジトリを同時に更新すること
+  //    （1箇所ズレるとそのサイトだけ401になるが、HubSpotは正常なので気づきにくい）
+  var CRM_ENDPOINT = 'https://contentsx-crm.vercel.app/api/inbound/web';
+  var CRM_TOKEN    = 'ENoK7H4O60a8KdKlTal12exoV2rqSNlIb841sj3dSeo=';
+
   var form = document.getElementById('rx-contact-form');
   if (!form) return;
   var PARAMS = new URLSearchParams(window.location.search);
@@ -315,10 +324,12 @@
     tracking.push('ページ: ' + window.location.href.slice(0, 300));
     var trackingNote = '\n\n---\n' + tracking.join('\n');
 
+    var department = readField(fd, 'department');
+
     var payload = {
       fields: [
         { name: 'company',   value: company },
-        { name: 'busyo',     value: readField(fd, 'department') },
+        { name: 'busyo',     value: department },
         { name: 'lastname',  value: fullName },
         { name: 'firstname', value: fullName },
         { name: 'email',     value: email },
@@ -329,6 +340,37 @@
         pageName: SERVICE_NAME + ' - お問い合わせ'
       }
     };
+
+    // CRM受信箱へも送る（HubSpotとは独立。失敗しても送信者には影響させない＝
+    // CRMが落ちていてもHubSpot側の受付とサンクス表示は従来どおり動く）。
+    // 受信データは承認されるまで web_inquiries に隔離される。
+    try {
+      fetch(CRM_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + CRM_TOKEN
+        },
+        body: JSON.stringify({
+          site: 'ichioshi',
+          company_name: company,
+          department: department,
+          full_name: fullName,
+          email: email,
+          message: message,
+          page_url: window.location.href,
+          utm_source: utmSource,
+          utm_medium: utmMedium,
+          utm_campaign: utmCampaign,
+          referrer: document.referrer || null,
+          hp: document.getElementById('website') ? document.getElementById('website').value : ''
+        })
+      }).catch(function (err) {
+        console.warn('CRM inbound failed (ignored):', err);
+      });
+    } catch (err) {
+      console.warn('CRM inbound skipped:', err);
+    }
 
     var url = 'https://api.hsforms.com/submissions/v3/integration/submit/'
       + HUBSPOT_PORTAL_ID + '/' + HUBSPOT_FORM_GUID;

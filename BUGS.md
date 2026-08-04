@@ -12,6 +12,7 @@
 ## バグ履歴
 
 <!-- ここに1行ずつ追記。最新を上に。 -->
+- 2026-08-04: **お問い合わせページが本番で真っ白＝問い合わせ受付が機能していなかった** | `contact.html` が0バイト。git履歴を遡っても全コミットで0バイト（2026-06-09以降）＝どこかで中身が失われたまま気づかず commit/push され、GitHub Pages がそれをそのまま配信していた。iCloud同期破損（採用ワークスペース側の `docs/WORKSPACE-GUIDE.md` 参照）の取りこぼしと推定。0バイトHTMLは他に無し。JS(`js/main.js`)とCSS(`.rx-form*`)は無傷で、フォームのマークアップだけが消えていた | `js/main.js` が要求するname属性・`docs/operations/HUBSPOT-CTA-HANDOFF.md` の参照HTML・CSSのクラス定義から再構築し、Playwrightで送信/バリデーション/ハニーポットを検証。再発防止: **0バイトファイルはgrepが無言で通るため気づけない**。ページを触る前に `find . -name "*.html" -size 0` で確認する
 - 2026-06-14: 事例詳細ヒーローが固定ヘッダーと重なる（画像側カラム/SPの上配置画像がヘッダー下に潜る） | `.rx-cdtl-hero` がtop:0開始で画像カラムにヘッダー分の余白なし。さらにヘッダー実高さが各ページ72px等とハードコードされ、ロゴ+paddingでワイド画面では約90pxに達するため price.html等も数px重なっていた | 固定ヘッダー高さをトークン `--rx-header-h: clamp(68px,4.2vw+34px,92px)` に集約。詳細ヒーローは `padding-top: var(--rx-header-h)`、price PCは `max(var,従来値)`、アンカーは `calc(var+16px)` に統一。再発防止: 最初のセクションは必ず `--rx-header-h` を確保（[DEVICE-RULES.md](docs/specs/DEVICE-RULES.md) §13）
 - 2026-06-13: 事例詳細ページのCTA矢印が巨大化 | CTAの `.rx-ccta*` は case.css 定義だが詳細ページは case.css を読まず、`.rx-ccta__btn svg` のサイズ未指定で style.css の `svg{max-width:100%}` が効いて矢印が膨張 | 必要な `.rx-ccta*`（svgは16px）を case-detail.css に複製。再発防止: 詳細ページで使うコンポーネントのCSSは読み込むCSSに含まれているか確認
 - 2026-06-13: 一覧 case.html で事例カードの画像が全滅（altのみ表示） | ページCSPが `img-src 'self' data:` で、WP(cms.contentsx.jp)ホストの画像をブロック（curlはCSP非評価で200に見える） | case.html の img-src に `https://cms.contentsx.jp` を追加（詳細テンプレは既に `https:` 許可済）。再発防止: 外部ホスト画像を使うページはCSP img-src に当該ホストを追加
