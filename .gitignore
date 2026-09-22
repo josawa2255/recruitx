@@ -12,3 +12,6 @@ images/精製物/
 
 # Python キャッシュ
 __pycache__/
+
+# 社内資料の置き場（公開リポのためコミットしない）
+docs/private/
