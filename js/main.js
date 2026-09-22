@@ -1,9 +1,9 @@
 /* =========================================================================
-   main.js — イチオシ採用 全ページ共通
+   main.js — リクルートX トップLP
    - CTA アンカーのスムーススクロール（scroll-margin-top は CSS §13 で担保）
    - IntersectionObserver による軽い入場アニメ（.rx-anim → .is-in）
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
-   - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
+   - ヒーロー sticky pin + scrub（h1フェード + 階段リードの行カスケードを1ループに統合）
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
    ========================================================================= */
@@ -100,20 +100,92 @@
   }
 })();
 
+/* ヒーロー sticky pin + scrub:
+   1スクロールリスナー・1RAF・1回のレイアウト読み取りで
+   h1のフェードアウトと階段リード各行のカスケードを同時に駆動する。
+   寸法（offsetHeight / innerHeight）は resize 時のみ再計測し、毎フレームの再レイアウトを避ける */
+(function () {
+  'use strict';
+
+  var hero = document.getElementById('hero');
+  if (!hero) return;
+  var titleEl = hero.querySelector('.rx-hero__title');
+  var swapEl  = hero.querySelector('.rx-hero__title-swap');
+  if (!titleEl || !swapEl) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; // 静的表示
+
+  var lines = swapEl.querySelectorAll('.rx-hero__title-swap-line');
+
+  // カスケード設定: 行 i は START_BASE + i*STAGGER から REVEAL の長さでフェードイン
+  var START_BASE = 0.18;
+  var STAGGER    = 0.08;
+  var REVEAL     = 0.18;
+  // 文字アニメは進行度0〜0.6（=150svh）で完結。残り0.6〜1.0（=100svh）は
+  // 背景固定のままAboutが下から覆うカーテンリビール区間（CSS側で実装）
+  var TEXT_PHASE = 0.6;
+
+  var ticking = false;
+  var scrollable = 1;
+
+  // 親swapは常時表示・行単位で出し入れする（初期化時に1度だけ設定）
+  swapEl.style.opacity = '1';
+  swapEl.style.transform = 'none';
+
+  function measure() {
+    scrollable = Math.max(hero.offsetHeight - window.innerHeight, 1);
+  }
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function update() {
+    ticking = false;
+    var p = -hero.getBoundingClientRect().top / scrollable;
+    if (p < 0) p = 0; else if (p > 1) p = 1;
+    p = p / TEXT_PHASE;              // 文字アニメ用の進行度に変換（0.6で1.0に到達）
+    if (p > 1) p = 1;
+
+    // h1: 進行度 0〜0.5 でフェードアウト
+    var titleOp = 1 - p * 2;
+    if (titleOp < 0) titleOp = 0;
+    titleEl.style.opacity = titleOp.toFixed(3);
+    titleEl.style.transform = 'translateY(' + (-16 * p).toFixed(2) + 'px)';
+
+    // 階段リード: 各行が左上から順に流れ落ちる
+    for (var i = 0, n = lines.length; i < n; i++) {
+      var t = (p - (START_BASE + i * STAGGER)) / REVEAL;
+      if (t < 0) t = 0; else if (t > 1) t = 1;
+      var e = easeOutCubic(t);
+      lines[i].style.opacity = e.toFixed(3);
+      lines[i].style.transform =
+        'translate(' + ((1 - e) * -10).toFixed(1) + 'px, ' + ((1 - e) * -16).toFixed(1) + 'px)';
+    }
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(update);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () {
+    measure();
+    onScroll();
+  }, { passive: true });
+
+  measure();
+  update();
+})();
+
 /* フローティングお問い合わせボタン（左下固定・スクロール追従）
    - 全ページ共通。お問い合わせページ（#rx-contact-form あり）では出さない
    - 少しスクロールしたら表示し、以後ずっと追従（.is-visible をトグル）
-   - DOM生成のみ（innerHTML不使用・ユーザー入力なし）
-   - 文言・遷移先は <body data-fab-label="…" data-fab-href="…"> で上書き可
-     （ホームは「無料診断を申し込む」→ contact.html?source=free-diagnosis） */
+   - DOM生成のみ（innerHTML不使用・ユーザー入力なし） */
 (function () {
   'use strict';
 
   if (document.getElementById('rx-contact-form')) return; // お問い合わせページ自身では出さない
   if (document.querySelector('.rx-fab')) return;          // 二重挿入ガード
-
-  var fabLabel = document.body.getAttribute('data-fab-label') || 'お問い合わせ';
-  var fabHref  = document.body.getAttribute('data-fab-href')  || 'contact.html';
 
   var SVGNS = 'http://www.w3.org/2000/svg';
   function svgEl(name, attrs) {
@@ -124,8 +196,8 @@
 
   var fab = document.createElement('a');
   fab.className = 'rx-fab';
-  fab.href = fabHref;
-  fab.setAttribute('aria-label', fabLabel);
+  fab.href = 'contact.html';
+  fab.setAttribute('aria-label', 'お問い合わせ');
 
   var svg = svgEl('svg', {
     'class': 'rx-fab__icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
@@ -137,7 +209,7 @@
 
   var label = document.createElement('span');
   label.className = 'rx-fab__text';
-  label.textContent = fabLabel;
+  label.textContent = 'お問い合わせ';
   fab.appendChild(label);
 
   document.body.appendChild(fab);
