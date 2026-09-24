@@ -4,6 +4,7 @@
    - IntersectionObserver による軽い入場アニメ（.rx-anim → .is-in）
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
    - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
+   - ホームのヒーロー: スクロール量を CSS 変数 --rx-hero-shift(0〜1) に流す視差
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
    ========================================================================= */
@@ -58,6 +59,41 @@
   } else {
     init();
   }
+})();
+
+/* ホームのヒーロー視差: スクロール進行度を --rx-hero-shift（0〜1）としてCSSへ渡す。
+   動きの実体はCSS側（home.css）。prefers-reduced-motion では何もしない */
+(function () {
+  'use strict';
+
+  var hero = document.querySelector('.rx-home-hero');
+  if (!hero) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var ticking = false;
+  var span = 1;
+
+  function measure() {
+    span = Math.max(hero.offsetHeight, 1);
+  }
+
+  function update() {
+    ticking = false;
+    var p = -hero.getBoundingClientRect().top / span;
+    if (p < 0) p = 0; else if (p > 1) p = 1;
+    hero.style.setProperty('--rx-hero-shift', p.toFixed(3));
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(update);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { measure(); onScroll(); }, { passive: true });
+  measure();
+  update();
 })();
 
 /* ヘッダーナビ: スクロールで背景を白くする + SPハンバーガー開閉 */

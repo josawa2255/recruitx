@@ -360,10 +360,10 @@
 }
 .rx-home-market__visual img {
   width: 100%;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: 58% 42%;
-  border-radius: 0 clamp(20px, 2.4vw, 32px) clamp(20px, 2.4vw, 32px) 0;
+  object-position: 50% 42%;
+  border-radius: clamp(20px, 2.4vw, 32px);
 }
 .rx-home-market__dot {
   position: absolute;
@@ -374,10 +374,7 @@
   border-radius: 50%;
   background: rgba(var(--rx-accent-rgb), .22);
 }
-@media (min-width: 1025px) {
-  /* 画像を画面の左端まで広げる（コンテナの外へ引き出す） */
-  .rx-home-market__visual { margin-left: calc(50% - 50vw); width: calc(100% + 50vw - 50%); }
-}
+.rx-home-market__visual { max-width: 460px; justify-self: center; }
 .rx-home-market__stats { margin: 0; display: grid; gap: clamp(20px, 2.4vw, 28px); }
 .rx-home-market__stat {
   display: grid;
@@ -417,7 +414,7 @@
 }
 @media (max-width: 1024px) {
   .rx-home-market__body { grid-template-columns: 1fr; }
-  .rx-home-market__visual img { border-radius: clamp(20px, 2.4vw, 32px); aspect-ratio: 16 / 10; }
+  .rx-home-market__visual { max-width: 420px; }
 }
 
 /* =========================================================================
@@ -665,7 +662,7 @@
    ========================================================================= */
 .rx-home-cases__list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(16px, 2vw, 28px);
   margin-top: clamp(36px, 4.5vw, 56px);
 }
@@ -935,4 +932,55 @@
 /* ヘッダーCTA: 狭いSPでは「無料診断」だけにしてハンバーガーを画面内に保つ（DEVICE-RULES §7） */
 @media (max-width: 480px) {
   .rx-nav__cta-more { display: none; }
+}
+
+/* =========================================================================
+   ヒーローの動き（読み込み時のカスケード＋写真のゆっくり寄り＋スクロール視差）
+   - prefers-reduced-motion: reduce では一切動かさない（DEVICE-RULES §6/§16の方針）
+   - 視差は js/main.js が --rx-hero-shift を更新（transform のみ・レイアウトを揺らさない）
+   ========================================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  .rx-home-hero__copy > *,
+  .rx-home-hero__visual {
+    opacity: 0;
+    animation: rx-hero-in .9s cubic-bezier(.22, 1, .36, 1) forwards;
+  }
+  .rx-home-hero__copy > *:nth-child(1) { animation-delay: .05s; }
+  .rx-home-hero__copy > *:nth-child(2) { animation-delay: .16s; }
+  .rx-home-hero__copy > *:nth-child(3) { animation-delay: .28s; }
+  .rx-home-hero__copy > *:nth-child(4) { animation-delay: .40s; }
+  .rx-home-hero__visual { animation-delay: .22s; animation-duration: 1.1s; }
+
+  /* 見出しは3行が下から順に立ち上がる */
+  .rx-home-hero__title { animation: none; opacity: 1; }
+  .rx-home-hero__title-line {
+    display: block;
+    opacity: 0;
+    animation: rx-hero-line .95s cubic-bezier(.22, 1, .36, 1) forwards;
+  }
+  .rx-home-hero__title-line:nth-child(1) { animation-delay: .12s; }
+  .rx-home-hero__title-line:nth-child(2) { animation-delay: .24s; }
+  .rx-home-hero__title-line:nth-child(3) { animation-delay: .36s; }
+
+  /* 写真はゆっくり寄っていく（枠は動かさず中身だけ拡大） */
+  .rx-home-hero__photo { animation: rx-hero-zoom 14s ease-out .3s forwards; }
+
+  /* スクロールで主役写真と副写真が少しずれて動く（視差） */
+  .rx-home-hero__photo  { transform: translateY(calc(var(--rx-hero-shift, 0) * -14px)); }
+  .rx-home-hero__photo-sub { transform: translateY(calc(var(--rx-hero-shift, 0) * 26px)); }
+  .rx-home-hero__dot--lg { transform: translateY(calc(var(--rx-hero-shift, 0) * -34px)); }
+  .rx-home-hero__dot--sm { transform: translateY(calc(var(--rx-hero-shift, 0) * 22px)); }
+}
+
+@keyframes rx-hero-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes rx-hero-line {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes rx-hero-zoom {
+  from { scale: 1; }
+  to   { scale: 1.06; }
 }
