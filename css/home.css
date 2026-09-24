@@ -45,7 +45,7 @@
 @media (min-width: 1440px) { .rx-home__inner { max-width: 1280px; } }
 @media (min-width: 1920px) { .rx-home__inner { max-width: 1400px; } }
 
-.rx-home-sec { padding: clamp(72px, 9vw, 140px) 0; }
+.rx-home-sec { padding: clamp(88px, 11vw, 172px) 0; }
 .rx-home-sec--alt { background: var(--hm-alt); }
 
 .rx-home-eyebrow {
@@ -420,24 +420,27 @@
 /* =========================================================================
    5. 仕組み（取材 → 4コンテンツ → 5接点）
    ========================================================================= */
-/* 仕組み: 写真を画面左端まで広げ、右に見出し・リードを置く帯 */
+/* 仕組み: 写真を画面右端まで広げ、左に見出し・リードを置く帯
+   （右方向のブリードは画面外へ伸びて横スクロールを生むため、セクションで切り取る） */
+.rx-home-mech { overflow-x: clip; }
 .rx-home-mech__band {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   align-items: center;
   gap: clamp(28px, 4vw, 64px);
   width: min(100%, 1200px);
   margin: 0 auto clamp(40px, 5vw, 72px);
-  padding-right: clamp(16px, 4vw, 40px);
+  padding-left: clamp(16px, 4vw, 40px);
 }
 @media (min-width: 1440px) { .rx-home-mech__band { max-width: 1280px; } }
 @media (min-width: 1920px) { .rx-home-mech__band { max-width: 1400px; } }
 .rx-home-mech__photo { margin: 0; }
+.rx-home-mech__photo { order: 2; }
 .rx-home-mech__photo img {
   width: 100%;
   aspect-ratio: 16 / 11;
   object-fit: cover;
-  border-radius: 0 clamp(20px, 2.4vw, 32px) clamp(20px, 2.4vw, 32px) 0;
+  border-radius: clamp(20px, 2.4vw, 32px) 0 0 clamp(20px, 2.4vw, 32px);
 }
 .rx-home-mech__intro { min-width: 0; }
 .rx-home-mech__intro .rx-home-eyebrow,
@@ -445,10 +448,12 @@
 .rx-home-mech__intro .rx-home-lead { margin-left: 0; text-align: left; }
 
 @media (min-width: 1025px) {
-  .rx-home-mech__photo { margin-left: calc(50% - 50vw); width: calc(100% + 50vw - 50%); }
+  /* 写真は画面の右端まで広げる */
+  .rx-home-mech__photo { margin-right: calc(50% - 50vw); width: calc(100% + 50vw - 50%); }
 }
 @media (max-width: 1024px) {
-  .rx-home-mech__band { grid-template-columns: 1fr; padding-left: clamp(16px, 4vw, 40px); }
+  .rx-home-mech__band { grid-template-columns: 1fr; padding-right: clamp(16px, 4vw, 40px); }
+  .rx-home-mech__photo { order: 0; }
   .rx-home-mech__photo img { border-radius: clamp(20px, 2.4vw, 32px); aspect-ratio: 16 / 9; }
   .rx-home-mech__intro .rx-home-eyebrow,
   .rx-home-mech__intro .rx-home-h2,
@@ -532,10 +537,12 @@
 .rx-home-mech__summary strong { color: var(--rx-accent); font-weight: 700; }
 
 @media (max-width: 1024px) {
-  /* 仕組み: 写真を画面左端まで広げ、右に見出し・リードを置く帯 */
+  /* 仕組み: 写真を画面右端まで広げ、左に見出し・リードを置く帯
+   （右方向のブリードは画面外へ伸びて横スクロールを生むため、セクションで切り取る） */
+.rx-home-mech { overflow-x: clip; }
 .rx-home-mech__band {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   align-items: center;
   gap: clamp(28px, 4vw, 64px);
   width: min(100%, 1200px);
@@ -545,11 +552,12 @@
 @media (min-width: 1440px) { .rx-home-mech__band { max-width: 1280px; } }
 @media (min-width: 1920px) { .rx-home-mech__band { max-width: 1400px; } }
 .rx-home-mech__photo { margin: 0; }
+.rx-home-mech__photo { order: 2; }
 .rx-home-mech__photo img {
   width: 100%;
   aspect-ratio: 16 / 11;
   object-fit: cover;
-  border-radius: 0 clamp(20px, 2.4vw, 32px) clamp(20px, 2.4vw, 32px) 0;
+  border-radius: clamp(20px, 2.4vw, 32px) 0 0 clamp(20px, 2.4vw, 32px);
 }
 .rx-home-mech__intro { min-width: 0; }
 .rx-home-mech__intro .rx-home-eyebrow,
@@ -557,10 +565,12 @@
 .rx-home-mech__intro .rx-home-lead { margin-left: 0; text-align: left; }
 
 @media (min-width: 1025px) {
-  .rx-home-mech__photo { margin-left: calc(50% - 50vw); width: calc(100% + 50vw - 50%); }
+  /* 写真は画面の右端まで広げる */
+  .rx-home-mech__photo { margin-right: calc(50% - 50vw); width: calc(100% + 50vw - 50%); }
 }
 @media (max-width: 1024px) {
-  .rx-home-mech__band { grid-template-columns: 1fr; padding-left: clamp(16px, 4vw, 40px); }
+  .rx-home-mech__band { grid-template-columns: 1fr; padding-right: clamp(16px, 4vw, 40px); }
+  .rx-home-mech__photo { order: 0; }
   .rx-home-mech__photo img { border-radius: clamp(20px, 2.4vw, 32px); aspect-ratio: 16 / 9; }
   .rx-home-mech__intro .rx-home-eyebrow,
   .rx-home-mech__intro .rx-home-h2,
@@ -883,21 +893,11 @@
   overflow: hidden;
   max-width: 1040px;
   margin: 0 auto;
-  padding: 0;
+  padding: clamp(40px, 5.5vw, 80px) clamp(20px, 5vw, 72px);
   border-radius: var(--rx-radius-lg);
   background: #fff;
   box-shadow: 0 20px 60px rgba(var(--rx-accent-rgb), .12);
   text-align: center;
-  display: grid;
-  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
-  align-items: stretch;
-}
-.rx-home-cta__photo { margin: 0; height: 100%; }
-.rx-home-cta__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
-.rx-home-cta__body { padding: clamp(36px, 4.5vw, 64px) clamp(20px, 3.4vw, 56px); }
-@media (max-width: 900px) {
-  .rx-home-cta__panel { grid-template-columns: 1fr; }
-  .rx-home-cta__photo img { aspect-ratio: 16 / 9; height: auto; }
 }
 .rx-home-cta__panel::before {                 /* ブランドグラデの細い上線（DESIGN.md: 細い帯のみ可） */
   content: "";
@@ -940,8 +940,7 @@
    - 視差は js/main.js が --rx-hero-shift を更新（transform のみ・レイアウトを揺らさない）
    ========================================================================= */
 @media (prefers-reduced-motion: no-preference) {
-  .rx-home-hero__copy > *,
-  .rx-home-hero__visual {
+  .rx-home-hero__copy > * {
     opacity: 0;
     animation: rx-hero-in .9s cubic-bezier(.22, 1, .36, 1) forwards;
   }
@@ -949,7 +948,6 @@
   .rx-home-hero__copy > *:nth-child(2) { animation-delay: .16s; }
   .rx-home-hero__copy > *:nth-child(3) { animation-delay: .28s; }
   .rx-home-hero__copy > *:nth-child(4) { animation-delay: .40s; }
-  .rx-home-hero__visual { animation-delay: .22s; animation-duration: 1.1s; }
 
   /* 見出しは3行が下から順に立ち上がる */
   .rx-home-hero__title { animation: none; opacity: 1; }
@@ -962,25 +960,45 @@
   .rx-home-hero__title-line:nth-child(2) { animation-delay: .24s; }
   .rx-home-hero__title-line:nth-child(3) { animation-delay: .36s; }
 
-  /* 写真はゆっくり寄っていく（枠は動かさず中身だけ拡大） */
-  .rx-home-hero__photo { animation: rx-hero-zoom 14s ease-out .3s forwards; }
+  /* 写真は拭うように現れ、その後ゆっくり寄る（枠は動かさず中身だけ拡大） */
+  .rx-home-hero__photo {
+    animation: rx-hero-reveal 1.1s cubic-bezier(.22, 1, .36, 1) .25s both,
+               rx-hero-zoom 12s ease-out 1.2s forwards;
+  }
+  .rx-home-hero__photo-sub { animation: rx-hero-in 1s cubic-bezier(.22, 1, .36, 1) .7s both; }
 
-  /* スクロールで主役写真と副写真が少しずれて動く（視差） */
-  .rx-home-hero__photo  { transform: translateY(calc(var(--rx-hero-shift, 0) * -14px)); }
-  .rx-home-hero__photo-sub { transform: translateY(calc(var(--rx-hero-shift, 0) * 26px)); }
-  .rx-home-hero__dot--lg { transform: translateY(calc(var(--rx-hero-shift, 0) * -34px)); }
-  .rx-home-hero__dot--sm { transform: translateY(calc(var(--rx-hero-shift, 0) * 22px)); }
+  /* スクロールで主役写真・副写真・装飾円が別の速さで動く（視差） */
+  .rx-home-hero__photo  { transform: translateY(calc(var(--rx-hero-shift, 0) * -60px)); }
+  .rx-home-hero__photo-sub { transform: translateY(calc(var(--rx-hero-shift, 0) * 90px)); }
+  .rx-home-hero__dot--lg {
+    transform: translateY(calc(var(--rx-hero-shift, 0) * -120px));
+    animation: rx-hero-float 7s ease-in-out 1.4s infinite;
+  }
+  .rx-home-hero__dot--sm {
+    transform: translateY(calc(var(--rx-hero-shift, 0) * 80px));
+    animation: rx-hero-float 5.5s ease-in-out 2s infinite reverse;
+  }
 }
 
 @keyframes rx-hero-in {
-  from { opacity: 0; transform: translateY(22px); }
+  from { opacity: 0; transform: translateY(40px); }
   to   { opacity: 1; transform: none; }
 }
 @keyframes rx-hero-line {
-  from { opacity: 0; transform: translateY(26px); }
+  from { opacity: 0; transform: translateY(46px); }
   to   { opacity: 1; transform: none; }
+}
+/* 写真は下から拭うように現れ、そのあとゆっくり寄る */
+@keyframes rx-hero-reveal {
+  from { opacity: 0; clip-path: inset(18% 0 0 0 round clamp(20px, 2.4vw, 32px)); }
+  to   { opacity: 1; clip-path: inset(0 0 0 0 round clamp(20px, 2.4vw, 32px)); }
 }
 @keyframes rx-hero-zoom {
   from { scale: 1; }
-  to   { scale: 1.06; }
+  to   { scale: 1.12; }
+}
+/* 装飾の円はゆっくり上下に漂う */
+@keyframes rx-hero-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -14px; }
 }
