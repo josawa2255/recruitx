@@ -17,6 +17,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="images/home/hero-reading.webp" fetchpriority="high">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700&family=Inter:wght@500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/style.css">
@@ -41,8 +42,6 @@
     <symbol id="i-users" viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3.2"/><path d="M2.5 20c.4-3.6 2.8-5.8 6-5.8s5.6 2.2 6 5.8"/><circle cx="16.5" cy="7.5" r="2.6"/><path d="M16 12.3c3 .1 5 2.2 5.5 5.7"/></symbol>
     <symbol id="i-interview" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5"/><path d="M5.5 17c.6-3.3 3.1-5.3 6.5-5.3s5.9 2 6.5 5.3M3 17h18M6 17v4M18 17v4"/></symbol>
     <symbol id="i-ai" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="12" rx="4"/><path d="M12 7V4M9.2 12.5h.01M14.8 12.5h.01M9.5 15.5h5"/><circle cx="12" cy="3.2" r="1"/></symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
-    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H10l-4.5 3.5V16H4z"/><path d="M8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01"/></symbol>
     <symbol id="i-clip" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17.5" rx="2"/><path d="M9 4V2.8h6V4M8.5 10l1.5 1.5 3-3M8.5 16l1.5 1.5 3-3M15 10.5h1M15 16.5h1"/></symbol>
     <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16M7 20v-6M12 20V9M17 20V5"/></symbol>
     <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></symbol>
@@ -78,10 +77,11 @@
 
     <!-- ===================== 1. HERO（資料 p1・p13・p15） ===================== -->
     <section class="rx-home-hero" id="hero" aria-labelledby="heroHeading">
+      <div class="rx-home-hero__stage">
       <div class="rx-home__inner rx-home-hero__inner">
         <div class="rx-home-hero__copy">
           <p class="rx-home-eyebrow">コンテンツ採用</p>
-          <h1 class="rx-home-hero__title" id="heroHeading">会社の魅力を、<br><span class="rx-home-accent">人</span>にも<span class="rx-home-accent">AI</span>にも<br>届ける採用へ</h1>
+          <h1 class="rx-home-hero__title" id="heroHeading"><span class="rx-home-hero__title-line">会社の魅力を、</span><span class="rx-home-hero__title-line"><span class="rx-home-hero__word rx-home-accent">人</span><span class="rx-home-hero__word">にも</span><span class="rx-home-hero__word rx-home-accent">AI</span><span class="rx-home-hero__word">にも</span></span><span class="rx-home-hero__title-line">届ける採用へ</span></h1>
           <p class="rx-home-hero__lead">1回の取材から、採用漫画・アニメ・記事・掲載ページを制作。求人広告から面接前、AI検索まで、候補者が会社を理解できる接点をつくります。</p>
           <div class="rx-home-hero__actions">
             <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -89,53 +89,18 @@
           </div>
         </div>
 
-        <figure class="rx-home-hero__visual" aria-hidden="true">
-          <svg class="rx-ill" viewBox="0 56 700 250" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <!-- 3つの円（人 / 会社の魅力 / AI） -->
-            <circle class="rx-ill__ring" cx="100" cy="190" r="92"/>
-            <circle class="rx-ill__ring rx-ill__ring--main" cx="350" cy="190" r="108"/>
-            <circle class="rx-ill__ring" cx="600" cy="190" r="92"/>
-            <!-- ラベル -->
-            <rect class="rx-ill__pill" x="48" y="84" width="104" height="28" rx="14"/>
-            <text class="rx-ill__pill-text" x="100" y="103" text-anchor="middle">求職者</text>
-            <rect class="rx-ill__pill" x="266" y="68" width="168" height="28" rx="14"/>
-            <text class="rx-ill__pill-text" x="350" y="87" text-anchor="middle">会社の魅力</text>
-            <rect class="rx-ill__pill rx-ill__pill--dark" x="536" y="84" width="128" height="28" rx="14"/>
-            <text class="rx-ill__pill-text" x="600" y="103" text-anchor="middle">AI・検索</text>
-            <!-- 人：スマホを見る求職者＋ハートの吹き出し -->
-            <circle cx="94" cy="158" r="17"/>
-            <path d="M58 250c2-34 18-52 38-52s34 14 38 36"/>
-            <rect class="rx-ill__fill" x="104" y="200" width="22" height="36" rx="4" transform="rotate(-10 115 218)"/>
-            <path d="M90 232c6-6 14-8 20-6"/>
-            <path class="rx-ill__accent" d="M126 122a16 16 0 1 1 10 28l-6 6v-7a16 16 0 0 1-4-27z"/>
-            <path class="rx-ill__accent" d="M134 140c-3-3-8-1-7 3 1 3 7 7 7 7s6-4 7-7c1-4-4-6-7-3z"/>
-            <!-- 会社の魅力：開いた本＋動画＋記事 -->
-            <rect class="rx-ill__fill" x="274" y="130" width="54" height="40" rx="4"/>
-            <path class="rx-ill__accent" d="m296 142 12 8-12 8z"/>
-            <path class="rx-ill__fill" d="M378 118h34l10 10v44h-44z"/>
-            <path d="M388 138h24M388 148h24M388 158h16"/>
-            <path class="rx-ill__fill" d="M292 186c20-10 38-10 56 0v72c-18-10-36-10-56 0zM352 186c18-10 36-10 56 0v72c-20-10-38-10-56 0z"/>
-            <rect class="rx-ill__accent-fill" x="302" y="198" width="34" height="24" rx="2"/>
-            <path class="rx-ill__knock" d="m306 218 8-9 6 6 4-4 8 7"/>
-            <path d="M364 202h32M364 214h32M364 226h32M364 238h22"/>
-            <path class="rx-ill__accent" d="M430 208v10M425 213h10M282 106v8M278 110h8"/>
-            <!-- AI：検索バー＋ロボット -->
-            <rect class="rx-ill__fill" x="544" y="126" width="112" height="24" rx="12"/>
-            <path d="M556 138h52"/>
-            <circle class="rx-ill__accent" cx="636" cy="137" r="5"/>
-            <path class="rx-ill__accent" d="m640 141 5 5"/>
-            <path d="M600 174v-10"/><circle cx="600" cy="161" r="3"/>
-            <rect class="rx-ill__fill" x="568" y="174" width="64" height="48" rx="16"/>
-            <rect class="rx-ill__screen" x="578" y="185" width="44" height="26" rx="10"/>
-            <circle class="rx-ill__eye" cx="591" cy="198" r="3.5"/>
-            <circle class="rx-ill__eye" cx="609" cy="198" r="3.5"/>
-            <path d="M574 262v-18c0-8 6-14 14-14h24c8 0 14 6 14 14v18"/>
-            <text class="rx-ill__ai" x="600" y="257" text-anchor="middle">AI</text>
-            <!-- 行き来する矢印 -->
-            <path class="rx-ill__accent" d="M202 176h40m-8-7 8 7-8 7M244 204h-40m8-7-8 7 8 7"/>
-            <path class="rx-ill__accent" d="M460 176h40m-8-7 8 7-8 7M502 204h-40m8-7-8 7 8 7"/>
-          </svg>
+        <figure class="rx-home-hero__visual rx-anim">
+          <img class="rx-home-hero__photo" src="images/home/hero-reading.webp"
+               alt="電車の中でスマートフォンの採用漫画を読む女性"
+               width="1448" height="1086" loading="eager" fetchpriority="high" decoding="async">
+          <img class="rx-home-hero__photo-sub" src="images/home/interview.webp"
+               alt="社員インタビューを撮影する取材の様子"
+               width="1400" height="1050" loading="eager" decoding="async">
+          <span class="rx-home-hero__dot rx-home-hero__dot--lg" aria-hidden="true"></span>
+          <span class="rx-home-hero__dot rx-home-hero__dot--sm" aria-hidden="true"></span>
+          <span class="rx-home-hero__ring" aria-hidden="true"></span>
         </figure>
+      </div>
       </div>
     </section>
 
@@ -197,26 +162,15 @@
     <!-- ===================== 4. 市場の変化（資料 p4・p5・p6・p9） ===================== -->
     <section class="rx-home-sec rx-home-sec--alt rx-home-market" aria-labelledby="marketHeading">
       <div class="rx-home__inner">
+        <p class="rx-home-eyebrow">MARKET</p>
         <h2 class="rx-home-h2" id="marketHeading">候補者の企業研究は、<br class="rx-br-sp">求人票の外へ広がった</h2>
         <p class="rx-home-lead">求人票を見つけた後、候補者は自発的に外部の情報を確認します。<br class="rx-br-pc">求人票だけでは判断材料が足りず、応募後から面接前にも、情報不足による離脱が起きています。</p>
         <div class="rx-home-market__body">
-          <figure class="rx-home-market__visual rx-anim" aria-hidden="true">
-            <svg class="rx-ill" viewBox="0 0 420 300" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle class="rx-ill__disc" cx="92" cy="150" r="78"/>
-              <path class="rx-ill__fill" d="M58 96h56l14 14v94H58z"/>
-              <text class="rx-ill__label" x="72" y="126">求人票</text>
-              <rect class="rx-ill__accent-fill" x="70" y="140" width="18" height="18" rx="2"/>
-              <path d="M96 146h18M96 154h12M70 172h44M70 182h44M70 192h30"/>
-              <path class="rx-ill__accent" d="M150 138c40-10 60-46 104-66m-9-6 10 6-6 10"/>
-              <path class="rx-ill__accent" d="M150 150h104m-8-7 8 7-8 7"/>
-              <path class="rx-ill__accent" d="M150 162c40 10 60 46 104 66m-10 5 10-5-5-10"/>
-              <use href="#i-phone" x="268" y="46" width="44" height="44" stroke-width="1.2"/>
-              <use href="#i-chat" x="268" y="128" width="44" height="44" stroke-width="1.2"/>
-              <use href="#i-ai" x="268" y="210" width="44" height="44" stroke-width="1.2"/>
-              <text class="rx-ill__label" x="324" y="74">SNS</text>
-              <text class="rx-ill__label" x="324" y="156">口コミ</text>
-              <text class="rx-ill__label" x="324" y="238">AI検索</text>
-            </svg>
+          <figure class="rx-home-market__visual" data-reveal="left">
+            <img src="images/home/research.webp"
+                 alt="スマートフォンで企業の情報を調べる候補者"
+                 width="1122" height="1402" loading="lazy" decoding="async">
+            <span class="rx-home-market__dot" aria-hidden="true"></span>
           </figure>
           <dl class="rx-home-market__stats">
             <div class="rx-home-market__stat rx-anim">
@@ -241,10 +195,19 @@
 
     <!-- ===================== 5. 仕組み（資料 p8・p13・p15・p17）。#service はナビ/他ページの index.html#service の着地点 ===================== -->
     <section class="rx-home-sec rx-home-mech" id="service" aria-labelledby="mechHeading">
+      <div class="rx-home-mech__band">
+        <figure class="rx-home-mech__photo" data-reveal="right">
+          <img src="images/home/interview.webp"
+               alt="社員インタビューを撮影する取材の現場"
+               width="1400" height="1050" loading="lazy" decoding="async">
+        </figure>
+        <div class="rx-home-mech__intro" data-reveal="up">
+          <p class="rx-home-eyebrow">HOW IT WORKS</p>
+          <h2 class="rx-home-h2" id="mechHeading">1回の取材から、5つの接点へ</h2>
+          <p class="rx-home-lead">条件で選ばれ、条件で去る応募ではなく、魅力を理解した応募へ。取材を起点に採用コンテンツを一貫制作し、主要な採用接点で使い分けます。</p>
+        </div>
+      </div>
       <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">HOW IT WORKS</p>
-        <h2 class="rx-home-h2" id="mechHeading">1回の取材から、5つの接点へ</h2>
-        <p class="rx-home-lead">条件で選ばれ、条件で去る応募ではなく、魅力を理解した応募へ。<br class="rx-br-pc">取材を起点に採用コンテンツを一貫制作し、主要な採用接点で使い分けます。</p>
 
         <ol class="rx-home-mech__flow">
           <li class="rx-home-mech__stage rx-home-mech__stage--source rx-anim">
@@ -327,8 +290,8 @@
         <p class="rx-home-eyebrow">CASE</p>
         <h2 class="rx-home-h2" id="casesHeading">導入事例</h2>
         <ul class="rx-home-cases__list">
-          <li class="rx-anim">
-            <a class="rx-home-case" href="case/tram/">
+          <li class="rx-anim rx-home-cases__item--lead">
+            <a class="rx-home-case rx-home-case--lead" href="case/tram/">
               <figure class="rx-home-case__media">
                 <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/tram-main-1024x1024.webp" alt="株式会社トラム様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
               </figure>

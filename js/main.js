@@ -4,6 +4,7 @@
    - IntersectionObserver による軽い入場アニメ（.rx-anim → .is-in）
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
    - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
+   - ホームの動き: ヒーローの進行度(--rx-hero-p)・見出しの文字分割・出現・数字のカウントアップ
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
    ========================================================================= */
@@ -58,6 +59,133 @@
   } else {
     init();
   }
+})();
+
+/* ホームの動き（ヒーロー / 見出し / 出現 / 数字）
+   - ヒーロー: スクロール進行度を --rx-hero-p(0〜1) としてCSSへ渡す（動きの実体は home.css）
+   - 見出し: .rx-home-h2 を1文字ずつ <span class="rx-home-char"> に分け、順に出す
+   - 出現: [data-reveal] とカード類を IntersectionObserver で表示
+   - 数字: 実績・調査データの数値をカウントアップ
+   すべて prefers-reduced-motion: reduce では実行しない（静的表示のまま） */
+(function () {
+  'use strict';
+
+  if (!document.querySelector('.rx-home')) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  /* ---- ヒーロー: スクロール進行度 ---- */
+  var hero = document.querySelector('.rx-home-hero');
+  if (hero) {
+    var ticking = false;
+    var span = 1;
+
+    var measure = function () {
+      span = Math.max(hero.offsetHeight - window.innerHeight, hero.offsetHeight * 0.5);
+    };
+    var update = function () {
+      ticking = false;
+      var p = -hero.getBoundingClientRect().top / span;
+      if (p < 0) p = 0; else if (p > 1) p = 1;
+      hero.style.setProperty('--rx-hero-p', p.toFixed(3));
+      hero.style.setProperty('--rx-hero-shift', p.toFixed(3));
+    };
+    var onScroll = function () {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { measure(); onScroll(); }, { passive: true });
+    measure();
+    update();
+  }
+
+  /* ---- 見出しを1文字ずつに分ける（改行・色付きspanは保持） ---- */
+  function splitChars(el) {
+    var chars = [];
+    (function walk(node) {
+      var kids = Array.prototype.slice.call(node.childNodes);
+      kids.forEach(function (child) {
+        if (child.nodeType === 3) {                       // テキスト
+          var frag = document.createDocumentFragment();
+          child.nodeValue.split('').forEach(function (ch) {
+            if (ch === ' ' || ch === '\u3000') {
+              frag.appendChild(document.createTextNode(ch));
+              return;
+            }
+            var span = document.createElement('span');
+            span.className = 'rx-home-char';
+            span.textContent = ch;
+            frag.appendChild(span);
+            chars.push(span);
+          });
+          node.replaceChild(frag, child);
+        } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+          walk(child);
+        }
+      });
+    })(el);
+    chars.forEach(function (span, i) {
+      span.style.transitionDelay = (i * 0.028).toFixed(3) + 's';
+    });
+    return chars;
+  }
+
+  var headings = Array.prototype.slice.call(
+    document.querySelectorAll('.rx-home-sec .rx-home-h2, .rx-home-mech__intro .rx-home-h2')
+  );
+  headings.forEach(splitChars);
+
+  /* ---- 数字のカウントアップ ---- */
+  function countUp(el) {
+    var raw = el.textContent.trim();
+    if (!/^[0-9]+(\.[0-9]+)?$/.test(raw)) return;          // 「1/3」など数値でないものは触らない
+    var target = parseFloat(raw);
+    var decimals = (raw.split('.')[1] || '').length;
+    var start = null;
+    var dur = 1100;
+    el.textContent = (0).toFixed(decimals);
+    function step(ts) {
+      if (start === null) start = ts;
+      var t = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = (target * eased).toFixed(decimals);
+      if (t < 1) window.requestAnimationFrame(step);
+      else el.textContent = raw;
+    }
+    window.requestAnimationFrame(step);
+  }
+
+  /* ---- 表示されたら動かす ---- */
+  if (!('IntersectionObserver' in window)) return;
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      io.unobserve(el);
+
+      if (el.hasAttribute('data-reveal') || el.classList.contains('rx-home-eyebrow')) {
+        el.classList.add('is-in');
+        return;
+      }
+      if (el.classList.contains('rx-home-h2')) {
+        Array.prototype.forEach.call(el.querySelectorAll('.rx-home-char'), function (c) {
+          c.classList.add('is-in');
+        });
+        return;
+      }
+      Array.prototype.forEach.call(el.querySelectorAll('.rx-stat-num'), countUp);
+    });
+  }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+
+  var targets = []
+    .concat(Array.prototype.slice.call(document.querySelectorAll('[data-reveal]')))
+    .concat(headings)
+    .concat(Array.prototype.slice.call(document.querySelectorAll('.rx-home-sec .rx-home-eyebrow')))
+    .concat(Array.prototype.slice.call(document.querySelectorAll('.rx-home-stats__list, .rx-home-market__stats')));
+  targets.forEach(function (el) { io.observe(el); });
 })();
 
 /* ヘッダーナビ: スクロールで背景を白くする + SPハンバーガー開閉 */
