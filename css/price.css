@@ -242,11 +242,11 @@
   height: auto;
 }
 
-/* SP・タブレット: コピーの下にフル幅バナー。画像比率(16:9)に合わせ全体を表示（カード焼き込み済み） */
+/* SP・タブレット: コピーの下にフル幅バナー。画像比率(1218:941)に合わせ全体を表示 */
 @media (max-width: 960px) {
   .rx-phero2__visual {
     margin: clamp(28px, 6vw, 44px) calc(-1 * clamp(16px, 3vw, 32px)) 0;
-    aspect-ratio: 1672 / 941;
+    aspect-ratio: 1218 / 941;
   }
   .rx-phero2__photo {
     position: absolute; inset: 0;
@@ -257,8 +257,8 @@
   }
 }
 
-/* PC: 右側に絶対配置。ヘッダー(72px)の下から右端いっぱいに敷くが、
-   画像は16:9のまま「全体」を表示（焼き込みカードも女性の顔も切らない）。左下は丸くくり抜く */
+/* PC: 右側に絶対配置。ヘッダー(72px)の下から右端いっぱいに敷く。
+   画像は 1218×941（旧プラン「¥98,000/月〜」の焼き込みカードを 2026-09-25 に切り落とし済み）。左下は丸くくり抜く */
 @media (min-width: 961px) {
   .rx-phero2__visual {
     position: absolute;
@@ -270,7 +270,7 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    object-position: 94% 50%;   /* セクションを詰めて表示窓を広げ、顔・カードの両方を収める（右端のカードを切らない） */
+    object-position: 50% 50%;   /* 人物2人を中央に収める */
     border-bottom-left-radius: clamp(140px, 18vw, 320px);
   }
 }
@@ -283,7 +283,7 @@
   box-shadow: 0 18px 44px rgba(40, 30, 40, .2);
 }
 
-/* （スタンダードプランのカードは生成画像側で対応。プログラム側のカードは実績のみ） */
+/* （浮遊カードは「導入実績」のみ。旧プランの価格カードは画像から除去済み） */
 
 /* 実績カード（写真の下部・中央寄り） */
 .rx-phero2__card--proof {
@@ -298,7 +298,7 @@
   padding: clamp(14px, 1.4vw, 18px) clamp(14px, 1.4vw, 20px) clamp(14px, 1.4vw, 18px);
 }
 /* SP・タブレット: 画像が縮小されてバナーが浅いので、実績カードは
-   注記を隠した横長コンパクト（pill）にして下端中央へ。焼き込みカード(右上)とも顔とも重ならない */
+   注記を隠した横長コンパクト（pill）にして下端中央へ */
 @media (max-width: 960px) {
   .rx-phero2__card--proof {
     bottom: clamp(8px, 2vw, 16px);
@@ -345,7 +345,7 @@
 }
 
 /* =========================================================================
-   2. 料金プラン（A〜D）— モック2
+   2. 料金プラン（資料 p28・ライト / スタンダード / フル）
    ========================================================================= */
 .rx-plans { background: #fff; padding: clamp(56px, 7vw, 110px) 0 clamp(48px, 6vw, 96px); }
 
@@ -360,12 +360,11 @@
   margin: clamp(34px, 4vw, 60px) 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(14px, 1.6vw, 24px);
   align-items: stretch;
 }
-@media (max-width: 1100px) { .rx-plans__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 600px)  { .rx-plans__grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .rx-plans__grid { grid-template-columns: 1fr; } }
 
 .rx-pcard {
   position: relative;
@@ -424,36 +423,7 @@
   padding: clamp(18px, 2vw, 26px) clamp(14px, 1.6vw, 22px) 0;
 }
 
-.rx-pcard__target {
-  font-family: var(--rxp-font);
-  font-weight: 700;
-  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
-  line-height: 1.7;
-  text-align: center;
-  color: var(--rxp-text);
-}
-
-.rx-pcard__icons {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: clamp(8px, 1vw, 14px);
-  margin: clamp(14px, 1.6vw, 20px) 0 0;
-  padding: 0;
-}
-.rx-pcard__icons li { width: clamp(52px, 4.6vw, 66px); }
-.rx-pcard__icons img { width: 100%; height: auto; border-radius: 12px; }
-
-.rx-pcard__desc {
-  font-family: var(--rxp-font);
-  font-size: clamp(.78125rem, .75rem + .2vw, .875rem);
-  line-height: 1.85;
-  color: var(--rxp-muted);
-  text-align: center;
-  margin-top: clamp(12px, 1.4vw, 18px);
-}
-
-/* ---- 価格エリア（A/B: 期 → 月額 → ▼ → 期 → 月額） ---- */
+/* ---- 価格エリア（月額 → 内訳） ---- */
 .rx-pcard__pricing {
   margin-top: auto;
   padding: clamp(16px, 1.8vw, 22px) 0 clamp(14px, 1.6vw, 20px);
@@ -463,29 +433,7 @@
   align-items: center;
   gap: 6px;
 }
-.rx-pcard__body .rx-pcard__pricing { margin-top: clamp(14px, 1.6vw, 20px); }
 .rx-pcard__body { padding-bottom: 0; }
-
-.rx-pcard__phase { width: 100%; }
-.rx-pcard__phase-meta {
-  display: flex;
-  align-items: center;
-  gap: .7em;
-  font-family: var(--rxp-font);
-  font-size: clamp(.78125rem, .76rem + .15vw, .875rem);
-  font-weight: 500;
-  color: var(--rxp-text);
-}
-.rx-pcard__phase-tag {
-  flex-shrink: 0;
-  background: var(--rxp-dark);
-  color: #fff;
-  font-weight: 700;
-  font-size: .92em;
-  line-height: 1;
-  padding: .45em .8em;
-  border-radius: 4px;
-}
 
 .rx-pcard__price {
   font-family: var(--rxp-font);
@@ -504,63 +452,14 @@
   padding: 0 .08em;
 }
 
-.rx-pcard__arrow { width: 18px; height: 11px; margin: 2px 0; }
-
-/* ---- 9ヶ月総額帯（A/B） ---- */
-.rx-pcard__total {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .8em;
-  background: var(--rxp-pink-pale);
-  padding: clamp(12px, 1.5vw, 18px) 8px;
-  margin: 0;
-  font-family: var(--rxp-font);
-}
-.rx-pcard__total-label {
-  font-weight: 700;
-  font-size: clamp(.78125rem, .76rem + .15vw, .875rem);
-  color: var(--rxp-text);
-}
-.rx-pcard__total b {
-  font-family: var(--rxp-font-num);
-  font-weight: 700;
-  font-size: clamp(1.25rem, 1.15rem + .5vw, 1.625rem);
-  color: var(--rxp-pink);
-  letter-spacing: -.01em;
-}
-.rx-pcard__total b small {
-  font-family: var(--rxp-font);
-  font-size: .62em;
-  font-weight: 700;
-}
-
-/* ---- C: 単体価格 ---- */
-.rx-pcard__pricing--unit { gap: clamp(12px, 1.4vw, 18px); }
-.rx-pcard__unit { width: 100%; }
-.rx-pcard__unit-meta {
-  display: flex;
-  align-items: center;
-  gap: .7em;
-  font-family: var(--rxp-font);
-  font-size: clamp(.78125rem, .76rem + .15vw, .875rem);
-  font-weight: 500;
-  color: var(--rxp-text);
-}
-.rx-pcard__unit-tag {
-  flex-shrink: 0;
-  background: var(--rxp-grad);
-  color: #fff;
-  font-weight: 700;
-  font-size: .92em;
-  line-height: 1;
-  padding: .45em .9em;
-  border-radius: var(--rx-radius-pill);
-}
-.rx-pcard__unit .rx-pcard__price b { font-size: 2em; }
-
-/* ---- D: 月額単一価格 ---- */
+/* ---- 月額単一価格 ---- */
 .rx-pcard__pricing--single { gap: 0; }
+/* カード先頭に価格を置く版（上の区切り線と余白を外す） */
+.rx-pcard__pricing--lead {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+}
 .rx-pcard__single-label {
   font-family: var(--rxp-font);
   font-weight: 700;
@@ -571,9 +470,66 @@
 .rx-pcard__single-note {
   font-family: var(--rxp-font);
   font-weight: 700;
-  font-size: clamp(.875rem, .85rem + .15vw, 1rem);
+  font-size: clamp(.8125rem, .79rem + .15vw, .9375rem);
+  line-height: 1.7;
+  text-align: center;
   color: var(--rxp-text);
   margin-top: .2em;
+}
+
+/* ---- 成果物（漫画・アニメ・記事） ---- */
+.rx-pcard__goods {
+  margin-top: auto;
+  padding-top: clamp(14px, 1.6vw, 20px);
+}
+.rx-pcard__goods-label {
+  width: fit-content;
+  margin: 0 auto;
+  background: var(--rxp-pink-pale);
+  color: var(--rxp-pink);
+  border-radius: var(--rx-radius-pill);
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.71875rem, .7rem + .15vw, .8125rem);
+  line-height: 1;
+  padding: .5em 1.2em;
+}
+.rx-pcard__goods-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(8px, 1vw, 14px);
+  margin: clamp(12px, 1.4vw, 18px) 0 clamp(16px, 1.8vw, 22px);
+  padding: 0;
+}
+.rx-pcard__good {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .55em;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+.rx-pcard__good-icon {
+  display: grid;
+  place-items: center;
+  width: clamp(46px, 4vw, 58px);
+  height: clamp(46px, 4vw, 58px);
+  border-radius: 12px;
+  background: var(--rxp-bg-gray);
+}
+.rx-pcard__good-icon svg { width: 58%; height: 58%; }
+.rx-pcard__good-text {
+  font-family: var(--rxp-font);
+  font-size: clamp(.71875rem, .7rem + .15vw, .8125rem);
+  line-height: 1.6;
+  color: var(--rxp-text);
+  text-align: center;
+}
+.rx-pcard__good-text b {
+  font-weight: 700;
+  color: var(--rxp-pink);
 }
 
 /* ---- C/D 下注記 ---- */
@@ -626,7 +582,7 @@
 }
 
 /* =========================================================================
-   3. 費用対効果（消費から投資へ）— モック3
+   3. 費用の考え方（資料 p27・基本プランと任意オプション）— モック3
    ========================================================================= */
 .rx-pshift { background: #fff; padding: clamp(48px, 6vw, 96px) 0; }
 
@@ -649,12 +605,14 @@
 
 /* ---- 左右カード ---- */
 .rx-pshift__col {
+  display: flex;
+  flex-direction: column;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: var(--rxp-card-shadow);
 }
-.rx-pshift__col--old { background: #f4f4f3; }
-.rx-pshift__col--new { background: #fff; border: 2px solid var(--rxp-pink); }
+.rx-pshift__col--base   { background: #f4f4f3; }
+.rx-pshift__col--option { background: #fff; border: 2px solid var(--rxp-pink); }
 
 .rx-pshift__col-head {
   font-family: var(--rxp-font);
@@ -671,15 +629,29 @@
 .rx-pshift__col-head--pink {
   background: var(--rxp-grad);
   color: #fff;
-  font-family: var(--rxp-font-num);
-  letter-spacing: .03em;
 }
 
 .rx-pshift__list {
+  flex: 1;
   list-style: none;
   margin: 0;
   padding: clamp(6px, .8vw, 10px) clamp(16px, 1.8vw, 26px);
 }
+
+/* 各カード下端の請求区分（資料 p27「月額費用としてご請求」「広告費・応募課金は別建て」） */
+.rx-pshift__col-foot {
+  background: #fff;
+  border-radius: var(--rx-radius-pill);
+  margin: 0 clamp(16px, 1.8vw, 26px) clamp(16px, 1.8vw, 24px);
+  padding: .75em 1.2em;
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.75rem, .73rem + .15vw, .84375rem);
+  line-height: 1.5;
+  color: var(--rxp-text);
+  text-align: center;
+}
+.rx-pshift__col-foot--pink { background: var(--rxp-pink-pale); color: var(--rxp-pink); }
 .rx-pshift__item {
   display: flex;
   align-items: center;
@@ -687,7 +659,7 @@
   padding: clamp(13px, 1.5vw, 19px) 0;
 }
 .rx-pshift__item + .rx-pshift__item { border-top: 1px solid rgba(0, 0, 0, .07); }
-.rx-pshift__col--new .rx-pshift__item + .rx-pshift__item { border-top-color: #f3e3ea; }
+.rx-pshift__col--option .rx-pshift__item + .rx-pshift__item { border-top-color: #f3e3ea; }
 
 .rx-pshift__item-icon {
   flex-shrink: 0;
@@ -700,26 +672,6 @@
   box-shadow: 0 3px 10px rgba(40, 30, 40, .08);
 }
 .rx-pshift__item-icon svg { width: 52%; height: 52%; }
-.rx-pshift__item-icon--labeled {
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  box-shadow: none;
-  background: transparent;
-  width: clamp(52px, 4.6vw, 64px);
-  height: auto;
-}
-.rx-pshift__item-icon--labeled svg { width: clamp(30px, 2.6vw, 38px); height: clamp(30px, 2.6vw, 38px); }
-.rx-pshift__item-icon--labeled i {
-  font-style: normal;
-  font-family: var(--rxp-font);
-  font-size: .625rem;
-  color: var(--rxp-muted);
-  white-space: nowrap;
-}
-
 .rx-pshift__item-body { min-width: 0; }
 .rx-pshift__item-title {
   display: block;
@@ -737,6 +689,9 @@
   color: var(--rxp-muted);
   line-height: 1.7;
   margin-top: .1em;
+  word-break: normal;
+  overflow-wrap: normal;
+  line-break: strict;
 }
 
 /* ---- 中央（振り替え矢印） ---- */
@@ -835,7 +790,7 @@
 }
 
 /* =========================================================================
-   4. 導入5ステップ — モック4（薄グレーの大パネルに白カード）
+   4. 無料診断から運用開始までの流れ（資料 p29）— 薄グレーの大パネルに白カード
    ========================================================================= */
 .rx-psteps { background: #fff; padding: clamp(24px, 3vw, 48px) 0 clamp(48px, 6vw, 96px); }
 
@@ -847,21 +802,15 @@
   padding: clamp(40px, 5vw, 72px) clamp(18px, 3vw, 56px) clamp(32px, 4vw, 56px);
 }
 
-.rx-psteps__five {
-  font-family: var(--rxp-font-num);
-  font-size: 1.22em;
-  padding: 0 .04em;
-}
-
 .rx-psteps__list {
   list-style: none;
   margin: clamp(34px, 4vw, 56px) 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(26px, 2.6vw, 40px);
 }
-@media (max-width: 1100px) { .rx-psteps__list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1100px) { .rx-psteps__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px)  { .rx-psteps__list { grid-template-columns: 1fr; gap: 34px; } }
 
 .rx-psteps__step {
@@ -965,8 +914,78 @@
 .rx-psteps__note span { word-break: normal; overflow-wrap: normal; line-break: strict; }
 @media (max-width: 700px) { .rx-psteps__note { border-radius: 18px; } }
 
+/* ---- 既存施策を止めずに、チームで進める（資料 p24） ---- */
+.rx-psteps__team {
+  margin-top: clamp(32px, 4vw, 56px);
+  padding-top: clamp(28px, 3.4vw, 44px);
+  border-top: 1px solid var(--rxp-border);
+}
+.rx-psteps__team-head {
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, 1rem + .45vw, 1.375rem);
+  line-height: 1.6;
+  color: var(--rxp-text);
+  text-align: center;
+  margin: 0;
+}
+.rx-psteps__team-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin: clamp(20px, 2.4vw, 32px) 0 0;
+  padding: 0;
+}
+@media (max-width: 860px) { .rx-psteps__team-list { grid-template-columns: 1fr; } }
+
+.rx-psteps__team-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "icon title" "icon desc";
+  align-items: center;
+  column-gap: clamp(12px, 1.4vw, 16px);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--rxp-card-shadow);
+  padding: clamp(16px, 1.8vw, 22px) clamp(14px, 1.6vw, 20px);
+}
+.rx-psteps__team-icon {
+  grid-area: icon;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: clamp(44px, 3.6vw, 54px);
+  height: clamp(44px, 3.6vw, 54px);
+  border-radius: 50%;
+  border: 1.5px solid var(--rxp-pink);
+  background: #fff;
+}
+.rx-psteps__team-icon svg { width: 56%; height: 56%; }
+.rx-psteps__team-title {
+  grid-area: title;
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.875rem, .85rem + .2vw, 1rem);
+  line-height: 1.5;
+  color: var(--rxp-pink);
+  min-width: 0;
+}
+.rx-psteps__team-desc {
+  grid-area: desc;
+  font-family: var(--rxp-font);
+  font-size: clamp(.75rem, .73rem + .15vw, .8125rem);
+  line-height: 1.8;
+  color: var(--rxp-muted);
+  margin-top: .35em;
+  min-width: 0;
+  word-break: normal;
+  overflow-wrap: normal;
+  line-break: strict;
+}
+
 /* =========================================================================
-   5. 最終CTA — モック5（白→ピンクのグラデ背景）
+   5. 最終CTA（資料 p31・無料診断で優先ルートを決める）— 白→ピンクのグラデ背景
    ========================================================================= */
 .rx-pcta {
   background:
@@ -1045,5 +1064,3 @@
 }
 .rx-pcta__assure-icon svg { width: 62%; height: 62%; }
 .rx-pcta__assure-icon--fill { background: var(--rxp-grad); }
-.rx-pcta__assure-icon--plain { background: transparent; }
-.rx-pcta__assure-icon--plain svg { width: 100%; height: 100%; }
