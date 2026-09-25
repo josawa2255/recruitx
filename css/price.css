@@ -78,6 +78,24 @@
 .rx-p-btn__lead    { flex-shrink: 0; width: 1.35em; height: 1.35em; }
 .rx-p-btn__chevron { flex-shrink: 0; width: .8em; height: .8em; margin-left: .15em; }
 
+/* 和文の折り返し: `.rx-jp-body` の `word-break: keep-all` + `overflow-wrap: anywhere`
+   （tokens.css）は、1行に収まらないとき禁則を無視して任意の位置で割れる（「任意オ／プション」
+   のような語中改行や、行頭に「。」だけが落ちる）。本文系はブラウザ標準の折り返し＋禁則に戻す */
+.rx-phero2__proof-note,
+.rx-phero2__plan-list li,
+.rx-p-sublead,
+.rx-pcard__single-note,
+.rx-pcard__foot,
+.rx-pshift__item-desc,
+.rx-pshift__col-foot,
+.rx-pshift__banner-sub,
+.rx-psteps__team-desc,
+.rx-pcta__lead {
+  word-break: normal;
+  overflow-wrap: normal;
+  line-break: strict;
+}
+
 /* スマホでのみ効かせる改行 */
 .rx-p-br-sp { display: none; }
 @media (max-width: 768px) { .rx-p-br-sp { display: inline; } }
@@ -283,7 +301,97 @@
   box-shadow: 0 18px 44px rgba(40, 30, 40, .2);
 }
 
-/* （浮遊カードは「導入実績」のみ。旧プランの価格カードは画像から除去済み） */
+/* おすすめプランカード（資料 p28。**画像には焼き込まずHTMLで重ねる**＝料金改定時は
+   このマークアップだけ直せばよく、画像との食い違いが起きない。BUGS.md 2026-09-25 参照） */
+.rx-phero2__card--plan {
+  top: clamp(16px, 2.2vw, 32px);
+  left: clamp(16px, 2vw, 32px);
+  width: clamp(198px, 15vw, 232px);
+  padding: clamp(14px, 1.4vw, 20px) clamp(12px, 1.2vw, 18px) clamp(12px, 1.2vw, 16px);
+  text-align: center;
+}
+.rx-phero2__plan-badge {
+  display: inline-block;
+  background: var(--hp-grad);
+  color: #fff;
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.6875rem, .66rem + .15vw, .78125rem);
+  line-height: 1;
+  padding: .5em 1.2em;
+  border-radius: var(--rx-radius-pill);
+  margin: 0;
+}
+.rx-phero2__plan-name {
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.875rem, .84rem + .25vw, 1.0625rem);
+  color: var(--rxp-text);
+  letter-spacing: .02em;
+  margin: .7em 0 0;
+}
+.rx-phero2__plan-price {
+  font-family: var(--rxp-font);
+  font-weight: 700;
+  font-size: clamp(.75rem, .72rem + .2vw, .875rem);
+  color: var(--rxp-text);
+  line-height: 1.1;
+  margin: .45em 0 0;
+  white-space: nowrap;
+}
+.rx-phero2__plan-price b {
+  font-family: var(--rxp-font-num);
+  font-weight: 800;
+  font-size: 2.1em;
+  color: var(--hp);
+  letter-spacing: -.01em;
+  padding-right: .06em;
+}
+.rx-phero2__plan-per {
+  font-weight: 500;
+  color: var(--rxp-muted);
+  padding-left: .15em;
+}
+.rx-phero2__plan-list {
+  list-style: none;
+  margin: clamp(10px, 1vw, 14px) 0 0;
+  padding: clamp(10px, 1vw, 14px) 0 0;
+  border-top: 1px dashed var(--rxp-border);
+  display: grid;
+  gap: .5em;
+  text-align: left;
+}
+.rx-phero2__plan-list li {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  font-family: var(--rxp-font);
+  font-weight: 500;
+  font-size: clamp(.6875rem, .66rem + .15vw, .78125rem);
+  line-height: 1.5;
+  color: var(--rxp-text);
+}
+.rx-phero2__plan-list li::before {
+  content: "";
+  flex-shrink: 0;
+  width: 1.15em;
+  height: 1.15em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23f00858'/%3E%3Cpath d='m7 12.5 3.2 3.2L17 9' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* SP・タブレット: バナーが浅いので成果物リストを省いたコンパクト版にする */
+@media (max-width: 960px) {
+  .rx-phero2__card--plan {
+    top: clamp(10px, 2.4vw, 16px);
+    left: clamp(10px, 2.4vw, 16px);
+    width: auto;
+    min-width: clamp(124px, 34vw, 168px);
+    padding: clamp(8px, 2vw, 12px) clamp(10px, 2.4vw, 16px) clamp(9px, 2vw, 13px);
+    border-radius: 12px;
+  }
+  .rx-phero2__plan-name { margin-top: .5em; }
+  .rx-phero2__plan-list { display: none; }
+}
+
 
 /* 実績カード（写真の下部・中央寄り） */
 .rx-phero2__card--proof {
@@ -689,9 +797,6 @@
   color: var(--rxp-muted);
   line-height: 1.7;
   margin-top: .1em;
-  word-break: normal;
-  overflow-wrap: normal;
-  line-break: strict;
 }
 
 /* ---- 中央（振り替え矢印） ---- */
@@ -979,9 +1084,6 @@
   color: var(--rxp-muted);
   margin-top: .35em;
   min-width: 0;
-  word-break: normal;
-  overflow-wrap: normal;
-  line-break: strict;
 }
 
 /* =========================================================================
