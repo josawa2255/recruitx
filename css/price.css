@@ -305,8 +305,8 @@
    このマークアップだけ直せばよく、画像との食い違いが起きない。BUGS.md 2026-09-25 参照） */
 .rx-phero2__card--plan {
   top: clamp(16px, 2.2vw, 32px);
-  left: clamp(16px, 2vw, 32px);
-  width: clamp(198px, 15vw, 232px);
+  right: clamp(16px, 2vw, 32px);
+  width: clamp(212px, 15vw, 232px);
   padding: clamp(14px, 1.4vw, 20px) clamp(12px, 1.2vw, 18px) clamp(12px, 1.2vw, 16px);
   text-align: center;
 }
@@ -378,11 +378,12 @@
   height: 1.15em;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23f00858'/%3E%3Cpath d='m7 12.5 3.2 3.2L17 9' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-/* SP・タブレット: バナーが浅いので成果物リストを省いたコンパクト版にする */
-@media (max-width: 960px) {
+/* 狭いPC・タブレット・SP: 写真の幅が足りず人物にカードがかかるため、
+   成果物リストを省いたコンパクト版にして右端に寄せる */
+@media (max-width: 1240px) {
   .rx-phero2__card--plan {
     top: clamp(10px, 2.4vw, 16px);
-    left: clamp(10px, 2.4vw, 16px);
+    right: clamp(10px, 2.4vw, 16px);
     width: auto;
     min-width: clamp(124px, 34vw, 168px);
     padding: clamp(8px, 2vw, 12px) clamp(10px, 2.4vw, 16px) clamp(9px, 2vw, 13px);
@@ -390,6 +391,11 @@
   }
   .rx-phero2__plan-name { margin-top: .5em; }
   .rx-phero2__plan-list { display: none; }
+}
+/* SP・タブレットの写真バナーは左右の余白ぶん外側へ張り出す（negative margin）ため、
+   カードの right はその張り出し分を足さないと画面端で切れる */
+@media (max-width: 960px) {
+  .rx-phero2__card--plan { right: clamp(26px, 5.4vw, 48px); }
 }
 
 
