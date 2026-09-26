@@ -22,7 +22,7 @@
 |--------|---------|--------|------|
 | トップLP | `index.html` | `js/main.js`（ナビsticky/ハンバーガー/入場アニメ/固定CTA） | 実装済み（2026-09-23 営業資料準拠でリデザイン。スタイルは `css/home.css`） |
 | サービス | `service.html` | `js/main.js`（ナビsticky/ハンバーガー/入場アニメ/固定CTA） | 実装済み（2026-09-28 新設。ホーム内アンカー `#service` から独立ページ化。スタイルは `css/service.css`） |
-| お問い合わせ | `contact.html` | `js/main.js`（HubSpot Forms API v3 直送 ＋ CRM受信箱へ並行POST。§7） | 実装済み（2026-08-04 再構築。**ファイルが0バイト＝本番も真っ白の状態だった**のを復元。詳細は [BUGS.md](../../BUGS.md)） |
+| お問い合わせ | `contact.html` | `js/main.js`（HubSpot Forms API v3 直送 ＋ CRM受信箱へも送信。§7） | 実装済み（2026-08-04 再構築。**ファイルが0バイト＝本番も真っ白の状態だった**のを復元。詳細は [BUGS.md](../../BUGS.md)） |
 | 導入事例 | `case.html` | `js/main.js` + `js/case.js`（業種フィルタ） | 実装済み |
 | 料金プラン | `price.html` | `js/main.js`（入場アニメ/固定CTA） | 実装済み |
 | 会社概要 | `company.html` | `js/main.js`（ナビ/固定CTA） | 実装済み（2026-09-28 新設。レイアウトは bizform.contentsx.jp/company/ を参考、**会社情報の値は contentsx.jp/company から転記**（社名は登記表記「Contents X 株式会社」・設立 2026-03-03・事業内容4項目。メール `office@contentsx.jp`・電話 `03-6261-0764` はホーム最終CTAと同じ値）。スタイルは `css/legal.css`。導線はフッターのみ） |
@@ -177,9 +177,9 @@
 | 連携先 | 用途 | 実装 |
 |---|---|---|
 | HubSpot Forms API v3 | お問い合わせの受付（**主**） | `js/main.js` から直送。仕様の正本は [../operations/HUBSPOT-CTA-HANDOFF.md](../operations/HUBSPOT-CTA-HANDOFF.md) |
-| Contents X CRM | お問い合わせをCRMの受信箱へ連携（2026-08-04 追加。3サイト目） | `js/main.js` の HubSpot送信**直前**に `https://contentsx-crm.vercel.app/api/inbound/web` へも POST（`CRM_ENDPOINT` / `CRM_TOKEN` 定数、`site: "ichioshi"`）。**CRM送信が失敗してもHubSpot送信とサンクス表示は従来どおり動く**（`.catch` で握りつぶす＝送信者に影響させない）。CRM側は受信箱に溜めるだけで、担当者が `/inbox` で承認して初めて会社・担当者・活動が作られる。ハニーポット `#website`（画面外・`.rx-form__hp`）の値は `hp` として送り、埋まっていればCRM側が黙って破棄する。`CRM_TOKEN` は静的サイトのJSに埋まる＝**機密ではない**（総当たり抑止の門番。実質の対策はCRM側のIPレート制限とハニーポット）。⚠️ **本サイトだけ `contact.html` の CSP `connect-src` に送信先を明示している**（他2サイトは `https:` 許容のため不要）。送信先を変える時はCSPも同時に直す。⚠️ **トークンをローテーションする時は【4箇所】を同時に更新する**（①CRM側 Vercel の `INBOUND_SECRET`＝更新後に再デプロイ ②BizManga `contact.html` ③ContentsX `js/contact.js` ④本サイト `js/main.js`）。一部だけだとそのサイトのCRM送信が全件401で落ちるが、**HubSpot受付とサンクス表示は正常なまま＝気づきにくい**。なお ContentX_HP 側の `crm-token-sync` フックは別リポジトリの本サイトを検知できない |
+| Contents X CRM | お問い合わせをCRMの受信箱へ連携（2026-08-04 追加。2026-09-26 新方式へ移行） | `contact.html` の `</body>` 直前で CRM の `https://contentsx-crm.vercel.app/embed/inbound-v1.js` を読み込み（`data-source-key`＝本サイトの公開キー・`data-auto="false"`）、`js/main.js` の入力チェック通過後・HubSpot送信**直前**に `window.BizcarteInbound.sendForm(form)` を1行呼ぶ。公開キーは**秘密ではない**（CRM側は登録済みドメイン `https://ichioshi.contentsx.jp` の Origin だけを受け付け、送信元ごとに10分5件の連投制限あり）。`data-auto="false"` は必須（付けないと入力チェックで止まった送信まで拾う）。項目は欄の名前・ラベルから自動判別。**部署欄だけ `data-crm-field="department"` で指定**（`autocomplete="organization-title"` が会社名判定に当たり「その他の回答」へ回るため）。ハニーポット `#website`（`tabindex="-1"`）はスクリプトが自動認識。**CRM送信が失敗してもHubSpot送信とサンクス表示は従来どおり動く**（スクリプトは例外を外へ出さず応答も待たない）。CRM側は受信箱に溜めるだけで、担当者が `/inbox` で承認して初めて会社・担当者・活動が作られる。⚠️ **本サイトだけ `contact.html` の CSP に送信先を明示している**（`script-src` と `connect-src` の両方に `contentsx-crm.vercel.app`）。送信先を変える時はCSPも同時に直す。旧方式（`/api/inbound/web` へ `CRM_TOKEN` 付きで並行POST）は 2026-09-24 の CRM 側変更で受け付けられなくなり撤去済み（トークン同期は不要になった） |
 
-- 📌 `crm.contentsx.jp` 割当後は `CRM_ENDPOINT`・`contact.html` のCSP・本表を差し替える。
+- 📌 `crm.contentsx.jp` 割当後は `contact.html` の inbound-v1.js の読み込み先・CSP・本表を差し替える。
 
 ## 8. デプロイ
 

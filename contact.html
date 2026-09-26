@@ -9,13 +9,14 @@
   <title>お問い合わせ｜ビズ採用</title>
   <meta name="description" content="ビズ採用へのお問い合わせ・ご相談はこちらから。現在の採用状況やお悩みをお聞かせください。3営業日以内に担当者よりご連絡いたします。ご相談は無料です。">
   <!-- CSP: GA4/Clarity等のタグを追加する際は script-src / connect-src への追記が必要。
-       このページは connect-src に送信先を明示する（他ページより2つ多い）:
-         - api.hsforms.com          … HubSpot Forms API v3（お問い合わせ受付の本線）
-         - contentsx-crm.vercel.app … 社内CRMの問い合わせ受信箱への並行POST
+       このページは送信先を明示する（他ページより多い）:
+         - api.hsforms.com          … connect-src。HubSpot Forms API v3（お問い合わせ受付の本線）
+         - contentsx-crm.vercel.app … script-src と connect-src の両方。社内CRMの受信箱連携
+                                      （inbound-v1.js の読み込みと、そこからの送信）
        ※ 送信先を増やすときは必ずここに追記する。漏れると fetch がCSPでブロックされ、
          「送信に失敗しました」だけが出て原因が分かりにくい
-       ※ CRMを独自ドメイン（crm.contentsx.jp）へ移すときはここも差し替える -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com; connect-src 'self' https://api.hsforms.com https://contentsx-crm.vercel.app https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+       ※ CRMを独自ドメイン（crm.contentsx.jp）へ移すときはここと </body> 直前の script も差し替える -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://contentsx-crm.vercel.app; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com; connect-src 'self' https://api.hsforms.com https://contentsx-crm.vercel.app https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
   <!-- Google tag (gtag.js) — GA4 G-S2RDKPM1LE -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2RDKPM1LE"></script>
   <script src="js/ga4.js"></script>
@@ -83,7 +84,7 @@
             </label>
             <label class="rx-form__field">
               <span class="rx-form__label">部署</span>
-              <input type="text" name="department" maxlength="100"
+              <input type="text" name="department" maxlength="100" data-crm-field="department"
                      autocomplete="organization-title" placeholder="人事部">
             </label>
           </div>
@@ -157,5 +158,6 @@
   </footer>
 
   <script src="js/main.js" defer></script>
+  <script src="https://contentsx-crm.vercel.app/embed/inbound-v1.js" data-source-key="f773dd7b55e83f3e34d51fedeeaab80a" data-auto="false" async></script>
 </body>
 </html>

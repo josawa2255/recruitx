@@ -230,15 +230,6 @@
   var HUBSPOT_FORM_GUID = 'b6da14d0-d60d-4357-89fc-0015ed32b704';
   var SERVICE_NAME      = 'ビズ採用';   // HubSpot / 社内CRM へ送るサービス名（2026-09-28 リクルートX から変更）
 
-  // 社内CRMの問い合わせ受信箱（/inbox）へ並行送信する。仕様は
-  // ユーザーレベルスキル jou-crm-contact-web が正本。
-  // CRM_TOKEN は総当たり抑止の門番であり機密ではない（静的サイトのJSに埋まる＝
-  // ブラウザから読める前提の設計）。実質の防御はCRM側のIPレート制限とハニーポット。
-  // ⚠️ ローテーションする場合は CRM側Vercel + 全HPリポジトリを同時に更新すること
-  //    （1箇所ズレるとそのサイトだけ401になるが、HubSpotは正常なので気づきにくい）
-  var CRM_ENDPOINT = 'https://contentsx-crm.vercel.app/api/inbound/web';
-  var CRM_TOKEN    = 'ENoK7H4O60a8KdKlTal12exoV2rqSNlIb841sj3dSeo=';
-
   var form = document.getElementById('rx-contact-form');
   if (!form) return;
   var PARAMS = new URLSearchParams(window.location.search);
@@ -342,36 +333,10 @@
       }
     };
 
-    // CRM受信箱へも送る（HubSpotとは独立。失敗しても送信者には影響させない＝
-    // CRMが落ちていてもHubSpot側の受付とサンクス表示は従来どおり動く）。
-    // 受信データは承認されるまで web_inquiries に隔離される。
-    try {
-      fetch(CRM_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + CRM_TOKEN
-        },
-        body: JSON.stringify({
-          site: 'ichioshi',
-          company_name: company,
-          department: department,
-          full_name: fullName,
-          email: email,
-          message: message,
-          page_url: window.location.href,
-          utm_source: utmSource,
-          utm_medium: utmMedium,
-          utm_campaign: utmCampaign,
-          referrer: document.referrer || null,
-          hp: document.getElementById('website') ? document.getElementById('website').value : ''
-        })
-      }).catch(function (err) {
-        console.warn('CRM inbound failed (ignored):', err);
-      });
-    } catch (err) {
-      console.warn('CRM inbound skipped:', err);
-    }
+    // CRM の受信箱へも送る（失敗しても HubSpot の受付・完了表示には影響しない）。
+    // 送信本体は contact.html で読み込む inbound-v1.js（data-auto="false"＝入力チェックを
+    // 通った送信だけをここで手動で送る）。項目は欄の名前・ラベルから自動判別される
+    if (window.BizcarteInbound) window.BizcarteInbound.sendForm(form);
 
     var url = 'https://api.hsforms.com/submissions/v3/integration/submit/'
       + HUBSPOT_PORTAL_ID + '/' + HUBSPOT_FORM_GUID;
