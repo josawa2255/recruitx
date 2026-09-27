@@ -299,9 +299,9 @@
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 12;                        /* 面積を先に確保してCLSを防ぐ */
+  aspect-ratio: 16 / 11;                        /* 面積を先に確保してCLSを防ぐ */
   object-fit: cover;
-  object-position: 62% center;                  /* 人物（右寄り）を残す */
+  object-position: 70% center;                  /* 素材は16:9・人物が右寄り。顔（横69%付近）を基準に切る */
   background: var(--hm-pink-soft);              /* 読み込み前の下地 */
 }
 /* 付箋のような白いメモ（実テキスト。画像化しない） */
@@ -347,25 +347,36 @@
     row-gap: clamp(28px, 3.2vw, 44px);
     padding-right: 0;                            /* 写真を画面の右端まで届かせる */
   }
+  /* コピーとCTAは写真より前面（写真は左へ広がるが、ボタンの当たり判定は奪わせない） */
+  .rx-home-hero__copy,
+  .rx-home-hero__actions { position: relative; z-index: 1; }
   .rx-home-hero__copy    { align-self: end; }
   .rx-home-hero__actions { align-self: start; }
 
-  /* 写真はヒーローの上下端まで伸ばし、左端は白へ溶かしてコピーと地続きに見せる */
+  /* 写真はヒーローの上下端・右端いっぱいに置き、左端は白へ溶かしてコピーと地続きに見せる。
+     グリッドの visual 列は余白（＝コピーが写真の濃い部分に重ならないための幅）として残す */
   .rx-home-hero__visual {
-    align-self: stretch;
-    margin-top: calc(-1 * var(--hero-pt));
-    margin-bottom: calc(-1 * var(--hero-pb));
+    /* grid-area を外して、位置の基準をグリッドの「visual 列」からヒーロー全体に戻す
+       （列は 1fr のまま余白として残り、コピーが写真の濃い部分に重ならない） */
+    grid-area: auto;
+    position: absolute;
+    top: calc(-1 * var(--hero-pt));
+    bottom: calc(-1 * var(--hero-pb));
+    right: 0;
+    left: auto;
+    width: min(60%, 1180px);
+    margin: 0;
     border-radius: 0;
     overflow: visible;
   }
   .rx-home-hero__photo {
     height: 100%;
     aspect-ratio: auto;
-    object-position: 58% center;
-    -webkit-mask-image: linear-gradient(101deg, transparent 0, rgba(0, 0, 0, .35) 8%, #000 24%);
-            mask-image: linear-gradient(101deg, transparent 0, rgba(0, 0, 0, .35) 8%, #000 24%);
+    object-position: 76% center;                 /* PCは縦長に切られるので人物側へ寄せる */
+    -webkit-mask-image: linear-gradient(100deg, transparent 0, rgba(0, 0, 0, .3) 12%, #000 30%);
+            mask-image: linear-gradient(100deg, transparent 0, rgba(0, 0, 0, .3) 12%, #000 30%);
   }
-  .rx-home-hero__memo { left: clamp(40px, 16%, 180px); bottom: clamp(56px, 13%, 150px); }
+  .rx-home-hero__memo { left: clamp(120px, 42%, 520px); bottom: clamp(56px, 13%, 150px); }  /* 机の上あたりに置く */
 
   .rx-home-hero__pager {
     position: absolute;
@@ -396,13 +407,13 @@
 @media (min-width: 769px) and (max-width: 1024px) {
   /* CTAは写真の前（＝ファーストビュー内）に置く */
   .rx-home-hero__inner { grid-template-areas: "copy" "actions" "visual"; max-width: 880px; margin-inline: auto; }
-  .rx-home-hero__photo { aspect-ratio: 16 / 9; object-position: 60% 38%; }
+  .rx-home-hero__photo { aspect-ratio: 16 / 9; }          /* 素材と同じ比率＝切り取りなし */
   .rx-home-hero__lead  { max-width: 42em; }
 }
 
 /* =========================== スマートフォン =========================== */
 @media (max-width: 768px) {
-  .rx-home-hero__photo { aspect-ratio: 16 / 11; object-position: 62% 32%; }  /* 顔が切れない位置 */
+  .rx-home-hero__photo { aspect-ratio: 16 / 11; }         /* 顔が切れない位置（既定の70%のまま） */
   .rx-home-hero__title { line-height: 1.3; }
   .rx-home-hero__actions { flex-direction: column; align-items: stretch; }
   .rx-home-hero__btn { width: 100%; max-width: 420px; justify-content: center; }  /* 指で押しやすい幅に留める */
@@ -413,7 +424,7 @@
   /* 320px幅でも「応募前の職場体験を。」「ここで働く」…が1行に収まるところまで落とす */
   .rx-home-hero__title { font-size: clamp(1.625rem, 1.15rem + 3.1vw, 2.125rem); }
   .rx-home-hero__sub   { font-size: clamp(.9375rem, .8rem + 1.1vw, 1.125rem); letter-spacing: 0; }
-  .rx-home-hero__photo { aspect-ratio: 4 / 3.4; }
+  .rx-home-hero__photo { aspect-ratio: 4 / 3.2; object-position: 72% center; }
   .rx-home-hero__memo  { left: 12px; bottom: 12px; max-width: 82%; }
 }
 

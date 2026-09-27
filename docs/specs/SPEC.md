@@ -33,7 +33,7 @@
   - 「サービス」は index 内アンカー `#service`（他ページからは `index.html#service`）
 - ホームのセクション構成とアンカー（2026-09-23 リデザイン。主CTAはすべて「無料診断を申し込む」→ `contact.html?source=free-diagnosis`）:
   1. `#hero` ヒーロー（2026-09-27 デザイン案準拠で全面差し替え。見出し「採用に、／応募前の職場体験を。」＝「応募前の職場体験」をピンクで強調。アイブロウ「マンガ・アニメ・ゲーム業界の採用に」＋横罫 → 見出し → サブコピー「「ここで働く」が、応募前に見える。」→ 説明文 → CTA2つ）
-     - **レイアウト**: PC（≥1025px）は左コピー／右ビジュアルの2カラム。`.rx-home-hero__inner` は `grid-template-areas` を `. visual / copy visual / actions visual / . visual` とし、上下 `1fr` でコピー＋CTAを中央に寄せつつ写真の列だけヒーローの高さいっぱいに伸ばす。左余白は `.rx-home__inner` と同じ計算式（`max((100% - コンテナ幅)/2, 0) + clamp(16px,4vw,40px)`）で揃え、右は `padding-right: 0` ＋ 写真の左端マスクで画面の右端までブリードさせる
+     - **レイアウト**: PC（≥1025px）は左コピー／右ビジュアルの2カラム。写真は `position: absolute`（`grid-area: auto` で位置の基準をグリッド列からヒーロー全体に戻す）で**右端・上下端いっぱい・幅 `min(60%, 1180px)`** に置き、グリッドの `visual` 列（`1fr`）は「コピーが写真の濃い部分に重ならないための余白」として残す。コピーとCTAは `z-index: 1` で写真より前面にしてボタンの当たり判定を守る。`.rx-home-hero__inner` は `grid-template-areas` を `. visual / copy visual / actions visual / . visual` とし、上下 `1fr` でコピー＋CTAを中央に寄せる。左余白は `.rx-home__inner` と同じ計算式（`max((100% - コンテナ幅)/2, 0) + clamp(16px,4vw,40px)`）で揃え、右は `padding-right: 0` ＋ 写真の左端マスクで画面の右端までブリードさせる
      - 並び順は areas で切り替える: PC=コピー→CTA（写真は右に並走）／タブレット(769–1024px)=コピー→CTA→写真（CTAをファーストビューに残す）／SP(≤768px)=コピー→写真→CTA
      - **CTA**: 主＝「資料をダウンロードする」（`.rx-btn--primary`・`contact.html?source=document-download`）／副＝「お問い合わせ」（`.rx-home-hero__btn--line`＝白地・ピンク枠・ピンク文字・`contact.html`）。hoverは跳ねさせず、矢印を4px送る／枠と背景をわずかに濃くするのみ（`.rx-home-hero .rx-btn:hover { transform: none }` で共通ボタンの浮きを打ち消す）
      - **見出しのサイズ**: 2行目「応募前の職場体験を。」は10文字。どの幅でも1行に収まるよう `clamp(2rem, 1.55rem + 1.8vw, 3.75rem)`（≤480pxは別clamp）。係数を変えるときは 320 / 375 / 1025 / 1920px で折れないことを確認する
@@ -54,7 +54,7 @@
 
   **セクションの見分け**: 背景は白とごく薄いグレーを交互に。写真のあるセクションは英字アイブロウ（`MARKET` / `HOW IT WORKS`）で始め、写真の左右を交互（4=左・5=右）にして、別セクションであることを明示する。セクション上下の余白は `clamp(88px, 11vw, 172px)`。
 
-  **ホームの写真（`images/home/`）**: `hero-creator.webp`（ヒーロー主役。LCP対象＝`preload`＋`fetchpriority="high"`。**2026-09-27 時点は差し替え待ちのプレースホルダー**＝1600×1400のピンク斜線＋シルエット。本番画像は「液晶タブレットで作画するクリエイター」を人物右寄り・左3割を余白にした構図で用意し、同じパスへ上書きすれば差し替え完了）/ `hero-reading.webp`（旧ヒーロー主役。現在は未使用・予備）/ `interview.webp`（仕組み）/ `research.webp`（市場の変化）/ `cta-candidate.webp`（未使用。最終CTAから写真を外したため予備）。いずれも生成画像を `images/png/` から書き出したもの。
+  **ホームの写真（`images/home/`）**: `hero-creator.webp`（ヒーロー主役。**1672×941・16:9**。LCP対象＝`preload`＋`fetchpriority="high"`。液晶タブレットにペンを当てて考えるクリエイター＝**人物は横47〜93%・顔は横69%／上30%付近**、左半分は文字を重ねるための明るい余白、薄ピンクの斜め装飾は素材に焼き込み済み。差し替えるときは同じパスへ上書きし、寸法が変わる場合は `<img width height>`（[DEVICE-RULES.md](DEVICE-RULES.md) §1）と `object-position` を合わせる）/ `hero-reading.webp`（旧ヒーロー主役。現在は未使用・予備）/ `interview.webp`（仕組み）/ `research.webp`（市場の変化）/ `cta-candidate.webp`（未使用。最終CTAから写真を外したため予備）。いずれも生成画像を `images/png/` から書き出したもの。
   - `hero-reading.webp` は素材写真のスマホ画面を**合成で差し替え済み**。元素材の画面は営業漫画（ビズマンガ）の訴求で採用と food が合わないため、ビズマンガ自社採用漫画「ママさん採用」のコマをSNS投稿風に組み直し、画面の四隅に透視変換で合成（画面にかかる親指は元写真を前面に残す）。差し替え手順を再実行する場合は作業用スクリプトが必要（リポジトリには含めない）
   - 旧構成（ABOUT / お悩み / 3ステップ / PLUS求人広告運用代行、sticky scrubヒーロー）は廃止。旧CSSは style.css から削除、`js/main.js` のヒーロー scrub も削除
   - よくある質問は資料・既存ページに一般向けの内容が無いため未掲載
