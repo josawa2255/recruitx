@@ -56,14 +56,11 @@
        他ページのヘッダーは従来のままなので css/style.css には手を入れない ===================== -->
   <header class="rx-nav rx-nav--biz" id="nav">
     <div class="rx-nav__inner">
-      <!-- ロゴ: 支給ロゴ（濃紺の「ビズ採用」＋ピンクの矢印）に寄せた暫定のロゴタイプ。
-           ロゴ画像（SVG/PNG）を受け取ったら <img class="rx-navb__logo-img"> に置き換える -->
-      <a class="rx-nav__brand rx-navb__brand" href="#hero" aria-label="ビズ採用 トップへ">
-        <span class="rx-navb__name">ビズ採用</span>
-        <svg class="rx-navb__swoosh" viewBox="0 0 128 18" aria-hidden="true" focusable="false">
-          <path class="rx-navb__swoosh-line" d="M3 15.2C28 7.6 72 3.4 106 6.1"/>
-          <path class="rx-navb__swoosh-head" d="M101 1.4l25 5.2-22 6z"/>
-        </svg>
+      <!-- ロゴ: 支給ロゴ（白背景・タグライン部分を除いてトリミング済み）。
+           タグライン入りの全体版は images/logo/biz-saiyo-logo-full.webp -->
+      <a class="rx-nav__brand rx-navb__brand" href="#hero">
+        <img class="rx-navb__logo" src="images/logo/biz-saiyo-logo.webp" alt="ビズ採用"
+             width="540" height="191" fetchpriority="high" decoding="async">
       </a>
       <p class="rx-navb__tag">好きがはたらく、をつくる。</p>
       <nav class="rx-nav__menu" id="navMenu" aria-label="メインナビゲーション">

@@ -162,28 +162,12 @@
   gap: clamp(12px, 2vw, 26px);
   padding-block: clamp(14px, 1.8vw, 26px);       /* ヘッダー実高さ ≒ --rx-header-h（90〜92px） */
 }
-.rx-navb__brand {
-  position: relative;
-  display: inline-block;
-  padding-bottom: .42em;                          /* 矢印のぶん */
-  font-family: var(--hm-sans);
-  font-weight: 900;
-  font-size: clamp(1.25rem, 1rem + .75vw, 1.75rem);
-  line-height: 1.1;
-  letter-spacing: .04em;
-  color: #1b2a41;                                 /* 支給ロゴの濃紺 */
+.rx-navb__brand { display: block; flex-shrink: 0; line-height: 0; }
+.rx-navb__logo {
+  display: block;
+  height: clamp(34px, 2.6vw, 46px);               /* 幅は 540:191 の比率で追従 */
+  width: auto;
 }
-.rx-navb__name { display: block; }
-.rx-navb__swoosh {                                /* 文字の下をくぐるピンクの矢印 */
-  position: absolute;
-  left: -2%;
-  bottom: 0;
-  width: 108%;
-  height: auto;
-  overflow: visible;
-}
-.rx-navb__swoosh-line { fill: none; stroke: var(--rx-accent); stroke-width: 3.2; stroke-linecap: round; }
-.rx-navb__swoosh-head { fill: var(--rx-accent); }
 .rx-navb__tag {
   font-size: .8125rem;
   letter-spacing: .04em;
@@ -228,7 +212,7 @@
 }
 @media (max-width: 360px) {
   .rx-navb__cta { padding: .5em .85em; }
-  .rx-navb__name { font-size: 1.0625rem; }
+  .rx-navb__logo { height: 30px; }
 }
 
 /* =========================================================================
