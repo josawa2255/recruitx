@@ -930,7 +930,7 @@
 .rx-home-market__visual {
   position: relative;                            /* UIカードの位置基準（§10: 親に比率をロック） */
   margin: 0;
-  aspect-ratio: 16 / 13;
+  aspect-ratio: 16 / 10;
   border-radius: clamp(18px, 2.4vw, 28px);
   overflow: hidden;
 }
@@ -938,65 +938,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 42% 38%;                      /* 顔とスマートフォンを残す */
+  object-position: 30% center;                   /* 人物と情報UIを残す */
   background: var(--hm-pink-soft);
 }
-/* 右端を白へ溶かして、右側のテキストと地続きに見せる */
-.rx-home-market__visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(95deg, rgba(255, 255, 255, 0) 58%, rgba(255, 246, 250, .72) 82%, #fff 100%);
-  pointer-events: none;
-}
-
-/* --- 情報収集のUIカード（人物の上に重ねる） --- */
-.rx-home-market__ui {
-  position: absolute;
-  z-index: 2;
-  display: grid;
-  gap: .35em;
-  width: clamp(122px, 27%, 236px);
-  padding: .7em .85em;
-  background: rgba(255, 255, 255, .96);
-  border: 1px solid rgba(15, 23, 42, .07);
-  border-radius: 10px;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, .12);
-  font-size: clamp(.5rem, .42rem + .38vw, .6875rem);
-  line-height: 1.55;
-  color: var(--hm-ink);
-  text-align: left;
-}
-.rx-home-market__ui--sns    { left: 4%;  top: 6%; }
-.rx-home-market__ui--search { left: 30%; top: 2%;  width: clamp(140px, 32%, 280px); }
-.rx-home-market__ui--review { left: 8%;  bottom: 12%; }
-.rx-home-market__ui--ai     { left: 44%; bottom: 6%; }
-.rx-home-market__ui-head { display: flex; align-items: center; gap: .5em; }
-.rx-home-market__ui-avatar {
-  width: 1.7em; height: 1.7em; border-radius: 50%;
-  background: linear-gradient(135deg, #fbd3e1, #f8a8c8);
-}
-.rx-home-market__ui-name { font-weight: 700; letter-spacing: .02em; }
-.rx-home-market__ui-icon { width: 1.1em; height: 1.1em; fill: var(--rx-accent); }
-.rx-home-market__ui-body { color: #4a5164; }
-.rx-home-market__ui-tags { color: var(--rx-accent-hover); font-weight: 700; }
-.rx-home-market__ui-stars { color: #f5a623; letter-spacing: .08em; }
-.rx-home-market__ui-bar {
-  padding: .4em .7em;
-  border: 1px solid rgba(15, 23, 42, .12);
-  border-radius: var(--rx-radius-pill);
-  color: #4a5164;
-}
-.rx-home-market__ui-result { display: grid; gap: .1em; }
-.rx-home-market__ui-result b { color: #1b5fd0; font-weight: 700; }
-.rx-home-market__ui-result i { font-style: normal; color: #6f7687; font-size: .92em; }
 
 /* --- 右: コピー --- */
 .rx-home .rx-home-market__title {                /* 共通の text-wrap: balance より強く当てる */
   margin-top: clamp(14px, 1.6vw, 22px);
   font-family: var(--hm-sans);
   font-weight: 900;
-  font-size: clamp(1.625rem, .9rem + 2.2vw, 3rem);        /* 26 → 48px（HEROより小さく・2行目が折れない幅） */
+  font-size: clamp(1.5rem, .82rem + 2.05vw, 2.75rem);     /* 24 → 44px（HEROより小さく・2行目が折れない幅） */
   /* 指定の2行（会う前に、／すでに調べられている。）を保つ。
      共通の text-wrap: balance が効くと2行目がさらに割れてしまうため戻す */
   text-wrap: wrap;
@@ -1075,11 +1026,39 @@
 
 /* =========================== PC（左ビジュアル＋右コピー） =========================== */
 @media (min-width: 1025px) {
+  /* 支給画像は16:9で右側が余白。セクションの高さを画像の比率に近づけてから全面に敷く */
+  .rx-home-market { padding: clamp(64px, 7vw, 112px) 0; }
   .rx-home-market__inner {
-    grid-template-columns: minmax(0, 50%) minmax(0, 1fr);
-    column-gap: clamp(28px, 3.4vw, 60px);
+    position: static;                            /* 写真の位置基準をセクション全体に戻す */
+    grid-template-columns: minmax(0, 56%) minmax(0, 1fr);
+    column-gap: clamp(20px, 2.4vw, 36px);
+    align-items: center;
   }
-  .rx-home-market__visual { aspect-ratio: 4 / 5; }
+  /* 写真がグリッドから外れるので、コピーは明示的に右カラムへ */
+  .rx-home-market__copy { grid-column: 2; position: relative; z-index: 2; }
+  .rx-home-market__visual {
+    grid-area: auto;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    margin: 0;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+  .rx-home-market__photo { object-position: 34% center; }
+  /* 右側を白へ溶かし、テキストの下地をつくる（画像自体は白くしすぎない） */
+  .rx-home-market__visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(92deg,
+      rgba(255, 255, 255, 0) 36%,
+      rgba(255, 255, 255, .45) 48%,
+      rgba(255, 255, 255, .88) 58%,
+      rgba(255, 255, 255, .96) 68%,
+      #fff 78%);
+    pointer-events: none;
+  }
 }
 /* =========== タブレット・スマホ: 見出し → ビジュアル → 数値 → 出典 の縦並び =========== */
 @media (max-width: 1024px) {
@@ -1097,11 +1076,8 @@
 /* =========================== スマートフォン =========================== */
 @media (max-width: 700px) {
   .rx-home-market__visual { aspect-ratio: 4 / 3.2; }
+  .rx-home-market__photo  { object-position: 26% center; }
   .rx-home-market__stats  { gap: 6px; }
-  .rx-home-market__ui--search,
-  .rx-home-market__ui--review { display: none; } /* 小さすぎて読めなくなるため2枚に絞る */
-  .rx-home-market__ui--sns { left: 3%; top: 5%; width: 46%; font-size: .5625rem; }
-  .rx-home-market__ui--ai  { left: 40%; bottom: 5%; width: 55%; font-size: .5625rem; }
   .rx-home-market__ring { max-width: 132px; }
   .rx-home-market__num { font-size: clamp(1.75rem, 1.2rem + 2.6vw, 2.25rem); }   /* スマホでも読める大きさを保つ */
   .rx-home-market__value small { font-size: .9375rem; }
