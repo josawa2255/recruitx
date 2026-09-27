@@ -1,0 +1,103 @@
+{
+  "_comment": [
+    "ホーム『09 導入の流れ』の5ステップ。tools/build-home-flow.py が index.html の",
+    "<!-- BUILD:HOME_FLOW --> … <!-- /BUILD:HOME_FLOW --> を差し替える。",
+    "",
+    "⚠️ duration（各工程の所要期間）は、資料・正式原稿に明記があるときだけ入れる。",
+    "   デザイン案の『約1〜2週間 / 約2〜4週間 / 約1週間』は資料に無いので空のままにする。",
+    "   空なら期間バッジ自体が出ない。",
+    "   セクション全体の目安は資料 p40 の『ご契約から1本目の納品まで3週間〜1ヶ月』のみ。",
+    "",
+    "写真ができたら image に src / alt / width / height を入れるだけで差し替わる。",
+    "⚠️ HERO・市場の変化・導入事例の画像は流用しない。",
+    "note の出典は営業資料 p40。サイト上には出典名を出さない（社内資料のため）。",
+    "2026-09-27: 01 / 03 / 05 の写真を受領し、5工程すべて実素材になった。"
+  ],
+  "durationSource": "未確定（各工程の標準期間は資料に記載なし。2026-09-27 時点）",
+  "note": "※ご契約から1本目の納品まで3週間〜1ヶ月が目安です。",
+  "steps": [
+    {
+      "no": "01",
+      "title": "ヒアリング・企画設計",
+      "text": "貴社の採用課題や目的、求める人物像などをヒアリングし、最適な企画をご提案します。",
+      "icon": "i-mech-talk",
+      "duration": "",
+      "image": {
+        "src": "images/home/flow-01-hearing.webp",
+        "alt": "採用課題や求める人物像について打ち合わせをしている様子",
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "no": "02",
+      "title": "取材・撮影",
+      "text": "社員インタビューや職場の様子を取材・撮影し、会社のリアルな魅力を収集します。",
+      "icon": "i-flow-camera",
+      "duration": "",
+      "image": {
+        "src": "images/home/interview.webp",
+        "alt": "社員インタビューを撮影している取材の様子",
+        "width": 1400,
+        "height": 1050
+      }
+    },
+    {
+      "no": "03",
+      "title": "制作",
+      "text": "取材内容をもとに、動画・記事・デザインなど採用コンテンツを制作します。",
+      "icon": "i-laptop",
+      "duration": "",
+      "image": {
+        "src": "images/home/flow-03-production.webp",
+        "alt": "モニターで採用コンテンツの動画を編集している様子",
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "no": "04",
+      "title": "公開・運用サポート",
+      "text": "完成したコンテンツを最適なメディアで公開し、応募につながる導線を整えます。",
+      "icon": "i-launch",
+      "duration": "",
+      "image": {
+        "src": "images/service/service-step-02-sns.webp",
+        "alt": "スマートフォンに表示された採用コンテンツと制作スケジュール",
+        "width": 1400,
+        "height": 1050
+      }
+    },
+    {
+      "no": "05",
+      "title": "効果検証・改善",
+      "text": "公開後のアクセスや応募状況を分析し、継続的な改善で成果を最大化します。",
+      "icon": "i-chart",
+      "duration": "",
+      "image": {
+        "src": "images/home/flow-05-analytics.webp",
+        "alt": "ノートPCと資料でアクセスや応募状況の推移を分析している様子",
+        "width": 1448,
+        "height": 1086
+      }
+    }
+  ],
+  "supports": [
+    {
+      "icon": "i-mech-talk",
+      "title": "専任担当が伴走",
+      "text": "企画から運用まで一貫サポート"
+    },
+    {
+      "icon": "i-flow-shield",
+      "title": "初めてでも安心",
+      "text": "丁寧な説明で不安を解消"
+    },
+    {
+      "icon": "i-hand",
+      "title": "公開後も継続支援",
+      "text": "改善提案で成果を最大化"
+    }
+  ],
+  "supportHead": "はじめての方でも<br><b>安心のサポート体制</b>"
+}

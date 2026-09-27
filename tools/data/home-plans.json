@@ -1,0 +1,82 @@
+{
+  "_comment": [
+    "ホーム『08 料金』のプランデータ。tools/build-home-plans.py が index.html の",
+    "<!-- BUILD:HOME_PLANS --> … <!-- /BUILD:HOME_PLANS --> を差し替える。",
+    "",
+    "⚠️ 金額・プラン名・成果物・注記は **price.html（サイトの料金表記）からの転記のみ**。",
+    "   ホームと料金ページで食い違わせない。price.html を変えたらここも必ず合わせる。",
+    "   税区分・契約期間・追加費用は price.html に記載が無いので書かない。",
+    "",
+    "⚠️ 社内資料は2種類あり、料金の体系が異なる（どちらが正かは未確定）。",
+    "   - 『会社の魅力を、人にもAIにも届ける採用へ』32ページ版 p27・p28",
+    "     → ライト19.8万／スタンダード34.8万／フル58.9万（price.html はこちら）",
+    "   - 『ビズ採用｜人にもAIにも届く採用提案』44ページ版 p38",
+    "     → スターター月12万／ベーシック月19万／プレミアム月35万",
+    "   ページ数や体裁で優先順位を決めない。**正式な料金体系が確定するまでは price.html に合わせる**",
+    "   （2026-09-27 ユーザー判断）。",
+    "",
+    "price が数値なら大きな数字、文字列（例『個別お見積り』）ならそのまま文字で出る。",
+    "route を入れると PLAN 01 の右に A / B / AI のルート記号が出る。"
+  ],
+  "source": "price.html（サイトの料金表記。2026-09-27 時点の origin/main と一致）",
+  "note": "※広告費・応募課金は別建てです。",
+  "subNote": "",
+  "provisionalNote": "※料金はデザイン確認用の仮表記です。正式価格に差し替えてから公開してください。",
+  "cta": {
+    "label": "プランのご相談はこちら",
+    "href": "contact.html?source=plan-estimate"
+  },
+  "plans": [
+    {
+      "route": null,
+      "planNumber": "PLAN 01",
+      "title": "ライト",
+      "description": "",
+      "price": "19.8",
+      "pricePrefix": "月額",
+      "priceSuffix": "万円",
+      "priceSub": "",
+      "features": [
+        "漫画 1本"
+      ],
+      "extra": "制作・配給・レポート",
+      "recommended": false,
+      "provisional": false
+    },
+    {
+      "route": null,
+      "planNumber": "PLAN 02",
+      "title": "スタンダード",
+      "description": "",
+      "price": "34.8",
+      "pricePrefix": "月額",
+      "priceSuffix": "万円",
+      "priceSub": "",
+      "features": [
+        "漫画 1話",
+        "アニメ 1本"
+      ],
+      "extra": "制作・配給・レポート",
+      "recommended": true,
+      "provisional": false
+    },
+    {
+      "route": null,
+      "planNumber": "PLAN 03",
+      "title": "フル",
+      "description": "",
+      "price": "58.9",
+      "pricePrefix": "月額",
+      "priceSuffix": "万円",
+      "priceSub": "",
+      "features": [
+        "漫画 1話",
+        "アニメ 1本",
+        "記事 増量"
+      ],
+      "extra": "制作・配給・レポート",
+      "recommended": false,
+      "provisional": false
+    }
+  ]
+}

@@ -17,13 +17,13 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="images/home/hero-reading.webp" fetchpriority="high">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700&family=Inter:wght@500;700&display=swap">
+  <link rel="preload" as="image" href="images/home/hero-creator.webp" fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700;900&family=Yuji+Syuku&family=Inter:wght@500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/home.css">
 </head>
-<body class="rx-jp-body" data-fab-label="無料診断を申し込む" data-fab-href="contact.html?source=free-diagnosis">
+<body class="rx-jp-body" data-fab="off">
 
   <!-- ===================== アイコン定義（線画・currentColor。<use href="#i-..."> で参照。file:// でも解決する同一文書内スプライト） ===================== -->
   <svg class="rx-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -48,25 +48,68 @@
     <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4.5" y="5" width="15" height="10.5" rx="1.5"/><path d="M2.5 19h19M9 10.5l2 2 4-4"/></symbol>
     <symbol id="i-launch" viewBox="0 0 24 24"><path d="M14.5 4.5c2.5-1.2 4.6-1.4 5-1 .4.4.2 2.5-1 5L13 14l-3-3z"/><path d="M10 11 6.5 10.5 4 13l4 1M13 14l.5 3.5L11 20l-1-4M5.5 18.5 7 17"/></symbol>
     <symbol id="i-cycle" viewBox="0 0 24 24"><path d="M19.5 9A8 8 0 0 0 5 7.2M4.5 15A8 8 0 0 0 19 16.8"/><path d="M19.8 4.5V9h-4.5M4.2 19.5V15h4.5"/></symbol>
+    <!-- 最後のCTA（10）用 -->
+    <symbol id="i-cta-calendar" viewBox="0 0 24 24"><rect x="3.3" y="5.2" width="17.4" height="15.5" rx="2.2"/><path d="M3.3 9.8h17.4M8 3v4.2M16 3v4.2"/><path d="m9.6 14.6 1.7 1.7 3.4-3.4"/></symbol>
+    <!-- 導入の流れ（09）用 -->
+    <symbol id="i-flow-camera" viewBox="0 0 24 24"><path d="M3.5 7.5h3l1.4-2h6.2l1.4 2h3a1.6 1.6 0 0 1 1.6 1.6v8.3a1.6 1.6 0 0 1-1.6 1.6H3.5a1.6 1.6 0 0 1-1.6-1.6V9.1A1.6 1.6 0 0 1 3.5 7.5z"/><circle cx="12" cy="13.2" r="3.6"/></symbol>
+    <symbol id="i-flow-shield" viewBox="0 0 24 24"><path d="M12 2.8 20 5.6v6.1c0 4.6-3.2 8.2-8 9.5-4.8-1.3-8-4.9-8-9.5V5.6z"/><path d="m8.6 11.8 2.4 2.4 4.4-4.5"/></symbol>
+    <!-- 仕組み（05）用 -->
+    <symbol id="i-mech-job" viewBox="0 0 24 24"><path d="M6 2.8h8L18.5 7v14.2H6z"/><path d="M14 2.8V7h4.5"/><path d="M8.6 11.2h7M8.6 14.2h7M8.6 17.2h4"/></symbol>
+    <symbol id="i-mech-thin" viewBox="0 0 24 24"><rect x="4.5" y="4" width="15" height="16" rx="2"/><path d="M8 9h8M8 12.5h5"/></symbol>
+    <symbol id="i-mech-stack" viewBox="0 0 24 24"><rect x="3.2" y="6.5" width="11" height="14" rx="1.6"/><path d="M7 3.5h10a1.6 1.6 0 0 1 1.6 1.6v12"/><path d="M6 11h5.5M6 14.5h5.5"/></symbol>
+    <symbol id="i-mech-talk" viewBox="0 0 24 24"><path d="M3.2 9.6c0-2.4 2.2-4.4 5-4.4h3.6c2.8 0 5 2 5 4.4s-2.2 4.4-5 4.4H8l-3.4 2.6.5-3.1a4.2 4.2 0 0 1-1.9-3.9z"/><path d="M17.6 10.2c2 .5 3.4 2 3.4 3.8 0 1.5-1 2.9-2.5 3.5l.4 2.6-2.9-2.2h-2.6"/></symbol>
+    <symbol id="i-mech-plan" viewBox="0 0 24 24"><path d="M5.5 3.5h9L19 8v12.5H5.5z"/><path d="M14.5 3.5V8H19"/><path d="M8.4 12.4h4M8.4 15.6h3"/><path d="m16.8 12.6 2.6 2.6-4 4-2.8.3.3-2.8z"/></symbol>
+    <symbol id="i-mech-growth" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7.5 20v-5M12 20v-8.5M16.5 20v-4"/><path d="m5.5 10.5 4.5-4 3 2.5 5.5-5.5"/><path d="M15 3.5h4v4"/></symbol>
+    <symbol id="i-mech-agree" viewBox="0 0 24 24"><path d="M3.5 10c0-3.3 3.3-6 7.4-6h2.2c4.1 0 7.4 2.7 7.4 6s-3.3 6-7.4 6h-3.2l-4.4 3.2.7-3.9A6 6 0 0 1 3.5 10z"/><path d="m8.6 10.2 2.2 2.2 4.4-4.4"/></symbol>
+    <!-- 市場の変化（04）のバッジ用 -->
+    <symbol id="i-mk-sns" viewBox="0 0 24 24"><path d="M20.5 12.2c0 4.1-3.8 7.4-8.5 7.4-1 0-2-.15-2.9-.42L4 20.8l1.7-3.6C4.6 15.9 3.5 14.2 3.5 12.2c0-4.1 3.8-7.4 8.5-7.4s8.5 3.3 8.5 7.4z"/><path d="M9.4 9.6h5.6M8.8 13h6.4M10.6 8.2l-.7 6.6M13.9 8.2l-.7 6.6"/></symbol>
+    <symbol id="i-mk-review" viewBox="0 0 24 24"><path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.3-4.8-2.5-4.8 2.5.9-5.3L4.2 9.7l5.4-.8z"/></symbol>
+    <symbol id="i-mk-ai" viewBox="0 0 24 24"><path d="M12 3c.9 4.9 2.1 6.1 7 7-4.9.9-6.1 2.1-7 7-.9-4.9-2.1-6.1-7-7 4.9-.9 6.1-2.1 7-7z"/><path d="M19.2 15.6c.4 2 .9 2.5 2.9 2.9-2 .4-2.5.9-2.9 2.9-.4-2-.9-2.5-2.9-2.9 2-.4 2.5-.9 2.9-2.9z"/></symbol>
+    <!-- 課題ナビ（03）用。大きく表示するため viewBox は 48 で、線を細く描く -->
+    <symbol id="i-issue-ad" viewBox="0 0 48 48">
+      <circle cx="9.5" cy="28" r="3"/><path d="M4.2 36.6c.4-3 2.4-5.1 5.3-5.1s4.9 2.1 5.3 5.1"/>
+      <circle cx="17.5" cy="23.8" r="3.7"/><path d="M11 34.8c.6-3.9 3.2-6.4 6.5-6.4s5.9 2.5 6.5 6.4"/>
+      <circle cx="25.5" cy="28" r="3"/><path d="M20.2 36.6c.4-3 2.4-5.1 5.3-5.1s4.9 2.1 5.3 5.1"/>
+      <path d="M30.5 18.5v5l11.5 5V13.5z"/><path d="m33.6 23.9 1.5 4.6"/>
+      <path d="m44.6 15.2 2-1.2M45.1 20.6h2.2m-2.7 5.4 2 1.2"/>
+    </symbol>
+    <symbol id="i-issue-cost" viewBox="0 0 48 48">
+      <ellipse cx="13.5" cy="17" rx="8.5" ry="3.2"/>
+      <path d="M5 17v5.4c0 1.8 3.8 3.2 8.5 3.2s8.5-1.4 8.5-3.2V17"/>
+      <path d="M5 22.4v5.4c0 1.8 3.8 3.2 8.5 3.2s8.5-1.4 8.5-3.2v-5.4"/>
+      <path d="M5 27.8v5.4c0 1.8 3.8 3.2 8.5 3.2s8.5-1.4 8.5-3.2v-5.4"/>
+      <path d="M28 36.5V29M34 36.5V24M40 36.5V19"/>
+      <path d="M27 24.5 33 19l4 3 6.5-7"/><path d="M39 11.5h5v5"/>
+    </symbol>
+    <symbol id="i-issue-search" viewBox="0 0 48 48">
+      <circle cx="20.5" cy="22.5" r="11"/><path d="m28.6 30.6 9.4 9.4"/>
+      <path d="M38.5 8.5c.6 3.1 1.4 3.9 4.5 4.5-3.1.6-3.9 1.4-4.5 4.5-.6-3.1-1.4-3.9-4.5-4.5 3.1-.6 3.9-1.4 4.5-4.5z"/>
+    </symbol>
     <symbol id="i-hand" viewBox="0 0 24 24"><path d="M12 11.2c-1.3-2.2-4.8-1.6-4.8 1 0 2 2.4 3.6 4.8 5.3 2.4-1.7 4.8-3.3 4.8-5.3 0-2.6-3.5-3.2-4.8-1z"/><path d="M3 21h3.5l4-1.5h5l4.5-3"/></symbol>
   </svg>
 
-  <!-- ===================== ヘッダーナビゲーション ===================== -->
-  <header class="rx-nav" id="nav">
+  <!-- ===================== ヘッダーナビゲーション（ビズ採用・index.html 専用の配色/構成）
+       構造・JS（ハンバーガー開閉）は共通の .rx-nav を流用し、見た目だけ .rx-nav--biz で上書きする。
+       他ページのヘッダーは従来のままなので css/style.css には手を入れない ===================== -->
+  <header class="rx-nav rx-nav--biz" id="nav">
     <div class="rx-nav__inner">
-      <a class="rx-nav__brand" href="#hero" aria-label="イチオシ採用 トップへ">
-        <img class="rx-nav__brand-img" src="images/logo/recruitx-logo.png" alt="イチオシ採用" width="483" height="160">
+      <!-- ロゴ: 支給ロゴ（白背景・タグライン部分を除いてトリミング済み）。
+           タグライン入りの全体版は images/logo/biz-saiyo-logo-full.webp -->
+      <a class="rx-nav__brand rx-navb__brand" href="#hero">
+        <img class="rx-navb__logo" src="images/logo/biz-saiyo-logo.webp" alt="ビズ採用"
+             width="540" height="191" fetchpriority="high" decoding="async">
       </a>
+      <p class="rx-navb__tag">好きがはたらく、をつくる。</p>
       <nav class="rx-nav__menu" id="navMenu" aria-label="メインナビゲーション">
         <a class="rx-nav__link" href="#service">サービス</a>
         <a class="rx-nav__link" href="case.html">事例</a>
         <a class="rx-nav__link" href="price.html">料金プラン</a>
         <a class="rx-nav__link" href="column.html">コラム</a>
       </nav>
-      <a class="rx-nav__cta" href="contact.html?source=free-diagnosis">
-        <span class="rx-nav__cta-text">無料診断<span class="rx-nav__cta-more">を申し込む</span></span>
-        <span class="rx-nav__cta-alt" aria-hidden="true">Free Check</span>
-      </a>
+      <div class="rx-navb__ctas">
+        <a class="rx-navb__cta rx-navb__cta--line" href="contact.html?source=free-diagnosis">無料診断を申し込む</a>
+        <a class="rx-navb__cta rx-navb__cta--fill" href="contact.html">お問い合わせ</a>
+      </div>
       <button class="rx-nav__hamburger" type="button" aria-label="メニューを開く" aria-expanded="false" aria-controls="navMenu">
         <span></span><span></span><span></span>
       </button>
@@ -75,371 +118,770 @@
 
   <main class="rx-home">
 
-    <!-- ===================== 1. HERO（資料 p1・p13・p15） ===================== -->
+    <!-- ===================== 1. HERO（2026-09 リデザイン案準拠）
+         左=コピー / 右=クリエイターのビジュアル（右端まで到達）。
+         背景の薄ピンクの斜め面は装飾のみ（aria-hidden）。
+         写真は images/home/hero-creator.webp（1672x941・人物は右寄り）を差し替えるだけで更新できる。
+         寸法を変える場合は下の width/height と home.css の object-position も合わせる ===================== -->
     <section class="rx-home-hero" id="hero" aria-labelledby="heroHeading">
-      <div class="rx-home-hero__stage">
-      <div class="rx-home__inner rx-home-hero__inner">
+      <div class="rx-home-hero__deco" aria-hidden="true">
+        <span class="rx-home-hero__wedge"></span>
+        <span class="rx-home-hero__band"></span>
+      </div>
+
+      <div class="rx-home-hero__inner">
         <div class="rx-home-hero__copy">
-          <p class="rx-home-eyebrow">コンテンツ採用</p>
-          <h1 class="rx-home-hero__title" id="heroHeading"><span class="rx-home-hero__title-line">会社の魅力を、</span><span class="rx-home-hero__title-line"><span class="rx-home-hero__word rx-home-accent">人</span><span class="rx-home-hero__word">にも</span><span class="rx-home-hero__word rx-home-accent">AI</span><span class="rx-home-hero__word">にも</span></span><span class="rx-home-hero__title-line">届ける採用へ</span></h1>
-          <p class="rx-home-hero__lead">1回の取材から、採用漫画・アニメ・記事・掲載ページを制作。求人広告から面接前、AI検索まで、候補者が会社を理解できる接点をつくります。</p>
-          <div class="rx-home-hero__actions">
-            <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            <a class="rx-home-textlink" href="#service">仕組みを見る</a>
-          </div>
+          <p class="rx-home-hero__eyebrow">マンガ・アニメ・ゲーム業界の採用に</p>
+          <h1 class="rx-home-hero__title" id="heroHeading"><span class="rx-home-hero__title-line">採用に、</span><span class="rx-home-hero__title-line"><span class="rx-home-hero__mark">応募前の職場体験</span>を。</span></h1>
+          <p class="rx-home-hero__sub">「ここで働く」が、応募前に見える。</p>
+          <p class="rx-home-hero__lead">求人票だけでは伝わらない、仕事の中身、人、職場の空気、入社後の姿まで。ビズ採用は、会社のリアルをコンテンツに変え、応募する前から「働く自分」を想像できる採用をつくります。</p>
         </div>
 
-        <figure class="rx-home-hero__visual rx-anim">
-          <img class="rx-home-hero__photo" src="images/home/hero-reading.webp"
-               alt="電車の中でスマートフォンの採用漫画を読む女性"
-               width="1448" height="1086" loading="eager" fetchpriority="high" decoding="async">
-          <img class="rx-home-hero__photo-sub" src="images/home/interview.webp"
-               alt="社員インタビューを撮影する取材の様子"
-               width="1400" height="1050" loading="eager" decoding="async">
-          <span class="rx-home-hero__dot rx-home-hero__dot--lg" aria-hidden="true"></span>
-          <span class="rx-home-hero__dot rx-home-hero__dot--sm" aria-hidden="true"></span>
-          <span class="rx-home-hero__ring" aria-hidden="true"></span>
+        <!-- CTAは grid-template-areas で配置する（PC=コピーの下 / SP=ビジュアルの下） -->
+        <div class="rx-home-hero__actions">
+          <a class="rx-btn rx-btn--primary rx-home-hero__btn" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="rx-btn rx-home-hero__btn rx-home-hero__btn--line" href="contact.html">お問い合わせ<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+
+        <figure class="rx-home-hero__visual">
+          <img class="rx-home-hero__photo" src="images/home/hero-creator.webp"
+               alt="明るいスタジオで、液晶タブレットにペンを当てながらキャラクターのラフを考えるクリエイター"
+               width="1672" height="941" loading="eager" fetchpriority="high" decoding="async">
+          <figcaption class="rx-home-hero__memo">
+            <span class="rx-home-hero__memo-line"><span class="rx-home-hero__memo-hl">好き</span>な仕事で、</span>
+            <span class="rx-home-hero__memo-line">未来をつくる。</span>
+          </figcaption>
         </figure>
       </div>
-      </div>
+
+      <p class="rx-home-hero__scroll" aria-hidden="true"><span>SCROLL</span></p>
+      <p class="rx-home-hero__pager" aria-hidden="true"><span class="rx-home-hero__pager-now">01</span><span class="rx-home-hero__pager-rule"></span><span>02</span><span>03</span></p>
     </section>
 
-    <!-- ===================== 2. 実績（資料 p26） ===================== -->
-    <section class="rx-home-stats rx-home-sec--alt" aria-label="採用コンテンツの参考実績">
+    <!-- ===================== 2. 実績の数字（2026-09-27 デザイン案準拠）
+         HEROの次に置く「中」の強さのセクション。人物・写真・イラストは使わず、
+         数字そのものをビジュアルにする。背景は白＋ごく薄いピンクの斜め面のみ ===================== -->
+    <section class="rx-home-stats" id="results" aria-labelledby="statsHeading">
+      <div class="rx-home-stats__deco" aria-hidden="true">
+        <span class="rx-home-stats__shape rx-home-stats__shape--tr"></span>
+        <span class="rx-home-stats__shape rx-home-stats__shape--bl"></span>
+        <span class="rx-home-stats__shape rx-home-stats__shape--band"></span>
+      </div>
+
       <div class="rx-home__inner">
+        <p class="rx-home-stats__eyebrow">実績の数字</p>
+        <h2 class="rx-home-stats__title" id="statsHeading">数字で見る、ビズ採用の<span class="rx-home-accent">成果。</span></h2>
+        <p class="rx-home-stats__sub">採用クリエイティブの参考実績</p>
+
         <ul class="rx-home-stats__list">
           <li class="rx-home-stats__item rx-anim">
-            <p class="rx-home-stats__label">採用漫画による応募数</p>
-            <p class="rx-home-stats__value"><b class="rx-stat-num">1.8</b><small>倍</small></p>
+            <p class="rx-home-stats__label">応募数</p>
+            <span class="rx-home-stats__bar" aria-hidden="true"></span>
+            <p class="rx-home-stats__value"><b class="rx-home-stats__num">1.8</b><small>倍</small></p>
+            <p class="rx-home-stats__note">掲載の前後で比較</p>
           </li>
           <li class="rx-home-stats__item rx-anim">
-            <p class="rx-home-stats__label">スカウトの返信率</p>
-            <p class="rx-home-stats__value"><b class="rx-stat-num">58</b><small>%</small></p>
+            <p class="rx-home-stats__label">スカウト返信率</p>
+            <span class="rx-home-stats__bar" aria-hidden="true"></span>
+            <p class="rx-home-stats__value"><b class="rx-home-stats__num">58</b><small>%</small></p>
+            <p class="rx-home-stats__note">クリエイティブを添えた場合</p>
           </li>
           <li class="rx-home-stats__item rx-anim">
-            <p class="rx-home-stats__label">CPAの削減</p>
-            <p class="rx-home-stats__value"><small>約</small><b class="rx-stat-num">1/3</b></p>
+            <p class="rx-home-stats__label">応募単価</p>
+            <span class="rx-home-stats__bar" aria-hidden="true"></span>
+            <p class="rx-home-stats__value"><small>約</small><b class="rx-home-stats__num">1/3</b></p>
+            <p class="rx-home-stats__note">掲載前後のCPA推移</p>
           </li>
           <li class="rx-home-stats__item rx-anim">
             <p class="rx-home-stats__label">内容の理解度</p>
-            <p class="rx-home-stats__value"><b class="rx-stat-num">79</b><small>%</small></p>
+            <span class="rx-home-stats__bar" aria-hidden="true"></span>
+            <p class="rx-home-stats__value"><b class="rx-home-stats__num">79</b><small>%</small></p>
+            <p class="rx-home-stats__note">閲覧後アンケート</p>
           </li>
         </ul>
-        <p class="rx-home-note">※自社調べ（2025年度実績・サンプル限定）</p>
+
+        <p class="rx-home-stats__source">出典：自社実績（2025年度／導入企業での測定値）。<span class="rx-home-stats__source-sub">対象社数・測定期間・分母は、商談時に個別でご提示します。</span></p>
       </div>
     </section>
 
-    <!-- ===================== 3. 課題ナビ（資料 p12 の「課題」→ #6 の各ルートへ） ===================== -->
-    <section class="rx-home-sec rx-home-issues" aria-labelledby="issuesHeading">
-      <div class="rx-home__inner">
-        <h2 class="rx-home-h2" id="issuesHeading">あなたの採用課題は、どれですか？</h2>
+    <!-- ===================== 3. 課題ナビ（2026-09-27 デザイン案準拠）
+         左＝見出し / 右＝A・B・AI の3カード。カードは #6 の各ルートへのページ内リンク。
+         強さは「中」。人物・写真は置かず、線画アイコンは補助に留める ===================== -->
+    <section class="rx-home-issues" id="issues" aria-labelledby="issuesHeading">
+      <div class="rx-home-issues__deco" aria-hidden="true">
+        <span class="rx-home-issues__shape rx-home-issues__shape--r"></span>
+        <span class="rx-home-issues__shape rx-home-issues__shape--l"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-issues__inner">
+        <div class="rx-home-issues__head">
+          <p class="rx-home-issues__eyebrow">課題ナビ</p>
+          <h2 class="rx-home-issues__title" id="issuesHeading">いまの悩みから、<br><span class="rx-home-accent">次の一手</span>を選ぶ。</h2>
+          <p class="rx-home-issues__lead">よくある採用のつまずきを、<br>改善ルート別に整理しました。</p>
+        </div>
+
         <ul class="rx-home-issues__list">
-          <li class="rx-anim">
-            <a class="rx-home-issues__card" href="#route-a">
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-window"/></svg>
-              <span class="rx-home-issues__text">表示は出ているのに、<br>クリックや応募が少ない</span>
-              <span class="rx-home-issues__route">A 求人広告の改善<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <li>
+            <a class="rx-home-issues__card rx-anim" href="#route-a">
+              <span class="rx-home-issues__badge-row"><span class="rx-home-issues__badge">A</span></span>
+              <svg class="rx-home-issues__icon" aria-hidden="true"><use href="#i-issue-ad"/></svg>
+              <span class="rx-home-issues__name">求人広告改善</span>
+              <span class="rx-home-issues__desc">見つけてもらう。<br>惹きつける。</span>
+              <span class="rx-home-issues__tags">
+                <span class="rx-home-issues__tag">応募が少ない</span>
+                <span class="rx-home-issues__tag">クリック率が低い</span>
+              </span>
             </a>
           </li>
-          <li class="rx-anim">
-            <a class="rx-home-issues__card" href="#route-b">
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-coins"/></svg>
-              <span class="rx-home-issues__text">応募は来るが、<br>コストが高く効率が悪い</span>
-              <span class="rx-home-issues__route">B 応募課金型の改善<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <li>
+            <a class="rx-home-issues__card rx-anim" href="#route-b">
+              <span class="rx-home-issues__badge-row"><span class="rx-home-issues__badge">B</span></span>
+              <svg class="rx-home-issues__icon" aria-hidden="true"><use href="#i-issue-cost"/></svg>
+              <span class="rx-home-issues__name">応募課金改善</span>
+              <span class="rx-home-issues__desc">費用を見直し、<br>応募の質を整える</span>
+              <span class="rx-home-issues__tags">
+                <span class="rx-home-issues__tag">コストが重い</span>
+                <span class="rx-home-issues__tag">応募の質にばらつき</span>
+              </span>
             </a>
           </li>
-          <li class="rx-anim">
-            <a class="rx-home-issues__card" href="#route-ai">
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-search"/></svg>
-              <span class="rx-home-issues__text">検索しても求人が見つからず、<br>そもそも候補に入らない</span>
-              <span class="rx-home-issues__route">AI・検索対策<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          <li>
+            <a class="rx-home-issues__card rx-anim" href="#route-ai">
+              <span class="rx-home-issues__badge-row"><span class="rx-home-issues__badge">AI</span></span>
+              <svg class="rx-home-issues__icon" aria-hidden="true"><use href="#i-issue-search"/></svg>
+              <span class="rx-home-issues__name">検索対策</span>
+              <span class="rx-home-issues__desc">検索で見つかる<br>情報設計へ</span>
+              <span class="rx-home-issues__tags">
+                <span class="rx-home-issues__tag">検索に出ない</span>
+                <span class="rx-home-issues__tag">魅力が見つからない</span>
+              </span>
             </a>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- ===================== 4. 市場の変化（資料 p4・p5・p6・p9） ===================== -->
-    <section class="rx-home-sec rx-home-sec--alt rx-home-market" aria-labelledby="marketHeading">
-      <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">MARKET</p>
-        <h2 class="rx-home-h2" id="marketHeading">候補者の企業研究は、<br class="rx-br-sp">求人票の外へ広がった</h2>
-        <p class="rx-home-lead">求人票を見つけた後、候補者は自発的に外部の情報を確認します。<br class="rx-br-pc">求人票だけでは判断材料が足りず、応募後から面接前にも、情報不足による離脱が起きています。</p>
-        <div class="rx-home-market__body">
-          <figure class="rx-home-market__visual" data-reveal="left">
-            <img src="images/home/research.webp"
-                 alt="スマートフォンで企業の情報を調べる候補者"
-                 width="1122" height="1402" loading="lazy" decoding="async">
-            <span class="rx-home-market__dot" aria-hidden="true"></span>
-          </figure>
-          <dl class="rx-home-market__stats">
-            <div class="rx-home-market__stat rx-anim">
-              <dt>公式情報以外で実態を検索</dt>
-              <dd><b class="rx-stat-num">72.8</b><small>%</small></dd>
-              <dd class="rx-home-market__src">出典：ファングリー（就職・転職活動者412人、2026年1月）</dd>
-            </div>
-            <div class="rx-home-market__stat rx-anim">
-              <dt>スカウト受信後に、AI検索・情報収集で企業を確認</dt>
-              <dd><b class="rx-stat-num">53.2</b><small>%</small></dd>
-              <dd class="rx-home-market__src">出典：LANY「サイレント辞退」実態調査</dd>
-            </div>
-            <div class="rx-home-market__stat rx-anim">
-              <dt>書類選考通過後の面接前辞退</dt>
-              <dd><b class="rx-stat-num">60</b><small>%</small></dd>
-              <dd class="rx-home-market__src">出典：エン・ジャパン『人事のミカタ』（中途採用実施企業293社、2024年6〜7月、複数回答）</dd>
-            </div>
-          </dl>
-        </div>
+    <!-- ===================== 4. 市場の変化（2026-09-27 デザイン案準拠）
+         左＝人物ビジュアル（SNS・検索・口コミ・AI概要のUIは支給画像に描き込み済み） / 右＝見出し・説明・3つの数値。
+         画像は images/home/market-research.webp（1672x941・HEROとは別人物・別構図）
+         ⚠️ 数値と出典は勝手に変えない。出典は資料・既存原稿で確認できたものだけを書く ===================== -->
+    <section class="rx-home-market" id="market" aria-labelledby="marketHeading">
+      <div class="rx-home-market__deco" aria-hidden="true">
+        <span class="rx-home-market__shape rx-home-market__shape--tr"></span>
+        <span class="rx-home-market__shape rx-home-market__shape--br"></span>
       </div>
-    </section>
 
-    <!-- ===================== 5. 仕組み（資料 p8・p13・p15・p17）。#service はナビ/他ページの index.html#service の着地点 ===================== -->
-    <section class="rx-home-sec rx-home-mech" id="service" aria-labelledby="mechHeading">
-      <div class="rx-home-mech__band">
-        <figure class="rx-home-mech__photo" data-reveal="right">
-          <img src="images/home/interview.webp"
-               alt="社員インタビューを撮影する取材の現場"
-               width="1400" height="1050" loading="lazy" decoding="async">
+      <div class="rx-home__inner rx-home-market__inner">
+        <figure class="rx-home-market__visual">
+          <img class="rx-home-market__photo" src="images/home/market-research.webp"
+               alt="机に頬杖をついてスマートフォンで会社の評判や口コミ、AIの要約を調べている候補者"
+               width="1672" height="941" loading="lazy" decoding="async">
         </figure>
-        <div class="rx-home-mech__intro" data-reveal="up">
-          <p class="rx-home-eyebrow">HOW IT WORKS</p>
-          <h2 class="rx-home-h2" id="mechHeading">1回の取材から、5つの接点へ</h2>
-          <p class="rx-home-lead">条件で選ばれ、条件で去る応募ではなく、魅力を理解した応募へ。取材を起点に採用コンテンツを一貫制作し、主要な採用接点で使い分けます。</p>
-        </div>
-      </div>
-      <div class="rx-home__inner">
 
-        <ol class="rx-home-mech__flow">
-          <li class="rx-home-mech__stage rx-home-mech__stage--source rx-anim">
-            <p class="rx-home-mech__cap">起点</p>
-            <div class="rx-home-mech__source">
-              <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-mic"/></svg>
-              <span>取材（インタビュー）</span>
-            </div>
-          </li>
-          <li class="rx-home-mech__stage rx-anim">
-            <p class="rx-home-mech__cap">4つのコンテンツ</p>
-            <ul class="rx-home-mech__items">
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-manga"/></svg><span>漫画</span><small>ストーリーでわかりやすく</small></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-play"/></svg><span>アニメ</span><small>映像で印象的に</small></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-doc"/></svg><span>記事</span><small>情報を深掘りし信頼性を高める</small></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-page"/></svg><span>掲載ページ</span><small>魅力を網羅的に発信</small></li>
-            </ul>
-          </li>
-          <li class="rx-home-mech__stage rx-anim">
-            <p class="rx-home-mech__cap">5つの接点</p>
-            <ul class="rx-home-mech__items rx-home-mech__items--points">
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-ad"/></svg><span>求人広告</span></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-mail"/></svg><span>応募前</span></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-users"/></svg><span>選考中</span></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-interview"/></svg><span>面接前</span></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-ai"/></svg><span>AI検索</span></li>
-            </ul>
-          </li>
-        </ol>
-        <p class="rx-home-mech__summary">制作の手数は<strong>1回</strong>。届け先が<strong>5か所</strong>あるから、中長期で回収できます。</p>
-        <div class="rx-home-actions">
-          <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="rx-home-market__copy">
+          <div class="rx-home-market__head">
+            <p class="rx-home-market__eyebrow">市場の変化</p>
+            <h2 class="rx-home-market__title" id="marketHeading">会う前に、<br>すでに<span class="rx-home-accent">調べられている。</span></h2>
+            <p class="rx-home-market__lead">現代の候補者は、応募する前にSNSで社名を検索し、口コミサイトでリアルな声を確認し、生成AIや検索で企業の情報を収集しています。<br>採用は、出会う前から始まっています。</p>
+          </div>
+
+          <ul class="rx-home-market__stats">
+            <li class="rx-home-market__stat rx-anim">
+              <span class="rx-home-market__ring">
+                <span class="rx-home-market__badge"><svg aria-hidden="true"><use href="#i-mk-sns"/></svg></span>
+                <span class="rx-home-market__value"><b class="rx-home-market__num">85.8</b><small>%</small></span>
+              </span>
+              <span class="rx-home-market__label">SNSで<br>社名検索</span>
+            </li>
+            <li class="rx-home-market__stat rx-anim">
+              <span class="rx-home-market__ring">
+                <span class="rx-home-market__badge"><svg aria-hidden="true"><use href="#i-mk-review"/></svg></span>
+                <span class="rx-home-market__value"><b class="rx-home-market__num">72.8</b><small>%</small></span>
+              </span>
+              <span class="rx-home-market__label">SNS・口コミ<br>で検索</span>
+            </li>
+            <li class="rx-home-market__stat rx-anim">
+              <span class="rx-home-market__ring">
+                <span class="rx-home-market__badge"><svg aria-hidden="true"><use href="#i-mk-ai"/></svg></span>
+                <span class="rx-home-market__value"><b class="rx-home-market__num">76.2</b><small>%</small></span>
+              </span>
+              <span class="rx-home-market__label">就活で<br>生成AIを利用</span>
+            </li>
+          </ul>
+
+          <p class="rx-home-market__src">出典：85.8%＝<a href="https://prtimes.jp/main/html/rd/p/000000085.000087010.html" target="_blank" rel="noopener">株式会社リソースクリエイション「26卒におけるSNS就活についての実態調査」</a>（26卒就活生747名）／72.8%＝<a href="https://fungry.co.jp/news/2026-recruitment-pr-awareness-survey/" target="_blank" rel="noopener">株式会社ファングリー調べ</a>（2026年1月・就職／転職活動者412名）／76.2%＝<a href="https://prtimes.jp/main/html/rd/p/000000655.000055900.html" target="_blank" rel="noopener">ナイル株式会社「就職活動での生成AI活用実態調査」</a>（就活生419名）<span class="rx-home-market__src-note">※85.8%・76.2%は新卒就活生を対象とした調査です。</span></p>
         </div>
       </div>
     </section>
 
-    <!-- ===================== 6. 3つの改善ルート（資料 p11・p12・p18〜p23。B にSNS運用・Meta広告・求人広告運用代行を含む） ===================== -->
-    <section class="rx-home-sec rx-home-sec--alt rx-home-routes" id="routes" aria-labelledby="routesHeading">
-      <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">ROUTES</p>
-        <h2 class="rx-home-h2" id="routesHeading">3つの改善ルートは、<br class="rx-br-sp">採用課題から選ぶ</h2>
-        <p class="rx-home-lead">コンテンツ制作の土台の上に、課題に合ったルートを選ぶことで、施策の効果を最大化します。</p>
-        <div class="rx-home-routes__list">
-          <article class="rx-home-route rx-anim" id="route-a" aria-labelledby="routeAHeading">
-            <h3 class="rx-home-route__title" id="routeAHeading"><span class="rx-home-route__mark">A</span>求人広告の改善</h3>
-            <dl class="rx-home-route__rows">
-              <div><dt>課題</dt><dd>表示は出ているのに、クリックや応募が少ない</dd></div>
-              <div><dt>行うこと</dt><dd><ul><li>タイトル・画像・原稿の見直し</li><li>ターゲット・訴求の再設計</li><li>配信設定・掲載プランの最適化</li></ul></dd></div>
-              <div><dt>向く状態</dt><dd><ul><li>認知はあるが反応が弱い</li><li>クリック率や応募率が低い</li><li>競合と比較して埋もれている</li></ul></dd></div>
-            </dl>
-          </article>
-          <article class="rx-home-route rx-anim" id="route-b" aria-labelledby="routeBHeading">
-            <h3 class="rx-home-route__title" id="routeBHeading"><span class="rx-home-route__mark">B</span>応募課金型の改善</h3>
-            <dl class="rx-home-route__rows">
-              <div><dt>課題</dt><dd>応募は来るが、コストが高く効率が悪い</dd></div>
-              <div><dt>行うこと</dt><dd><ul><li>ターゲットの絞り込み強化</li><li>スクリーニング・設問の最適化</li><li>媒体・運用ルールの見直し</li></ul></dd></div>
-              <div><dt>向く状態</dt><dd><ul><li>応募単価が高騰している</li><li>ミスマッチ応募が多い</li><li>採用人数に対しコスト過多</li></ul></dd></div>
-            </dl>
-            <p class="rx-home-route__extra">SNS運用、Meta広告の運用、Indeedなどの求人広告の運用代行にも対応します。</p>
-          </article>
-          <article class="rx-home-route rx-anim" id="route-ai" aria-labelledby="routeAiHeading">
-            <h3 class="rx-home-route__title" id="routeAiHeading"><span class="rx-home-route__mark rx-home-route__mark--ai">AI</span>検索対策</h3>
-            <dl class="rx-home-route__rows">
-              <div><dt>課題</dt><dd>検索しても求人が見つからず、そもそも候補に入らない</dd></div>
-              <div><dt>行うこと</dt><dd><ul><li>キーワード設計・原稿の最適化</li><li>構造化データ・表示の最適化</li><li>AI検索・求人エンジン対策の強化</li></ul></dd></div>
-              <div><dt>向く状態</dt><dd><ul><li>検索流入が少ない／見られない</li><li>求人が検索結果に出てこない</li><li>指名検索・サイト流入が弱い</li></ul></dd></div>
-            </dl>
-            <p class="rx-home-route__extra">※順位や推薦を保証するものではありません。</p>
-          </article>
-        </div>
-        <div class="rx-home-actions">
-          <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
+    <!-- ===================== 5. 仕組み（2026-09-27 デザイン案準拠）
+         「従来の採用 → ビズ採用の仕組み（01〜04） → 応募前に伝わる採用」の横一本の図解。
+         このセクションの主役は図解そのもの。大きな人物写真は置かない。
+         #service はナビ/他ページの index.html#service の着地点なので id は変えない ===================== -->
+    <section class="rx-home-mech" id="service" aria-labelledby="mechHeading">
+      <div class="rx-home-mech__deco" aria-hidden="true">
+        <span class="rx-home-mech__shape rx-home-mech__shape--l"></span>
+        <span class="rx-home-mech__shape rx-home-mech__shape--r"></span>
       </div>
-    </section>
 
-    <!-- ===================== 7. 導入事例（case.html の既存事例から課題・業種の異なる3件。数値は各事例ページと同一） ===================== -->
-    <section class="rx-home-sec rx-home-cases" aria-labelledby="casesHeading">
-      <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">CASE</p>
-        <h2 class="rx-home-h2" id="casesHeading">導入事例</h2>
-        <ul class="rx-home-cases__list">
-          <li class="rx-anim rx-home-cases__item--lead">
-            <a class="rx-home-case rx-home-case--lead" href="case/tram/">
-              <figure class="rx-home-case__media">
-                <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/tram-main-1024x1024.webp" alt="株式会社トラム様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
-              </figure>
-              <div class="rx-home-case__body">
-                <p class="rx-home-case__cat">正社員採用 / 飲食</p>
-                <h3 class="rx-home-case__company">株式会社トラム様</h3>
-                <p class="rx-home-case__desc">6か月で2名だった採用が1か月で14名に。採用単価は150万円から12万円へ（92%減）。</p>
-              </div>
-            </a>
+      <div class="rx-home__inner rx-home-mech__inner">
+        <p class="rx-home-mech__eyebrow">05 仕組み</p>
+        <h2 class="rx-home-mech__title" id="mechHeading">求人票だけの採用を、<span class="rx-home-accent">理解される採用</span>へ。</h2>
+        <p class="rx-home-mech__lead">ただ募集するだけでは、違いは伝わりません。<br>ビズ採用は、会社のリアルを整理し、応募前の理解につながる情報設計に変えます。</p>
+
+        <div class="rx-home-mech__flow">
+          <!-- 左: 従来の採用（彩度を落として「問題のある状態」を示す） -->
+          <div class="rx-home-mech__col rx-home-mech__col--before">
+            <p class="rx-home-mech__col-head">従来の採用</p>
+            <ul class="rx-home-mech__list">
+              <li class="rx-home-mech__item rx-anim">
+                <svg class="rx-home-mech__item-icon" aria-hidden="true"><use href="#i-mech-job"/></svg>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name">求人票だけ</span>
+                  <span class="rx-home-mech__item-desc">仕事内容や条件だけの情報になりがち。</span>
+                </span>
+              </li>
+              <li class="rx-home-mech__item rx-anim">
+                <svg class="rx-home-mech__item-icon" aria-hidden="true"><use href="#i-mech-thin"/></svg>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name">情報が薄い</span>
+                  <span class="rx-home-mech__item-desc">会社のリアルな魅力が伝わらない。</span>
+                </span>
+              </li>
+              <li class="rx-home-mech__item rx-anim">
+                <svg class="rx-home-mech__item-icon" aria-hidden="true"><use href="#i-mech-stack"/></svg>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name">比較で埋もれる</span>
+                  <span class="rx-home-mech__item-desc">他社との違いが見えず、候補者の印象に残りにくい。</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <span class="rx-home-mech__arrow" aria-hidden="true"></span>
+
+          <!-- 中央: ビズ採用の仕組み（このセクションの主役） -->
+          <div class="rx-home-mech__col rx-home-mech__col--core">
+            <p class="rx-home-mech__col-head rx-home-mech__col-head--core">ビズ採用の仕組み</p>
+            <ol class="rx-home-mech__steps">
+              <li class="rx-home-mech__step rx-anim">
+                <span class="rx-home-mech__step-no">01</span>
+                <span class="rx-home-mech__step-icon"><svg aria-hidden="true"><use href="#i-mech-talk"/></svg></span>
+                <span class="rx-home-mech__step-name">取材</span>
+                <span class="rx-home-mech__step-desc">経営者・社員に取材し、現場のリアルな声を集めます。</span>
+              </li>
+              <li class="rx-home-mech__step rx-anim">
+                <span class="rx-home-mech__step-no">02</span>
+                <span class="rx-home-mech__step-icon"><svg aria-hidden="true"><use href="#i-mech-plan"/></svg></span>
+                <span class="rx-home-mech__step-name">設計</span>
+                <span class="rx-home-mech__step-desc">集めた情報を整理し、応募前の理解につながるストーリーを設計します。</span>
+              </li>
+              <li class="rx-home-mech__step rx-anim">
+                <span class="rx-home-mech__step-no">03</span>
+                <span class="rx-home-mech__step-icon"><svg aria-hidden="true"><use href="#i-page"/></svg></span>
+                <span class="rx-home-mech__step-name">制作</span>
+                <span class="rx-home-mech__step-desc">インタビューや写真をもとに、魅力が伝わる採用コンテンツを制作します。</span>
+              </li>
+              <li class="rx-home-mech__step rx-anim">
+                <span class="rx-home-mech__step-no">04</span>
+                <span class="rx-home-mech__step-icon"><svg aria-hidden="true"><use href="#i-mech-growth"/></svg></span>
+                <span class="rx-home-mech__step-name">露出最適化</span>
+                <span class="rx-home-mech__step-desc">作ったコンテンツを最適なメディアで届け、見つかりやすさを高めます。</span>
+              </li>
+            </ol>
+          </div>
+
+          <span class="rx-home-mech__arrow" aria-hidden="true"></span>
+
+          <!-- 右: 応募前に伝わる採用（改善後の状態） -->
+          <div class="rx-home-mech__col rx-home-mech__col--after">
+            <p class="rx-home-mech__col-head rx-home-mech__col-head--after">応募前に伝わる採用</p>
+            <ul class="rx-home-mech__list">
+              <li class="rx-home-mech__item rx-anim">
+                <span class="rx-home-mech__thumb"><svg aria-hidden="true"><use href="#i-page"/></svg></span>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name rx-home-mech__item-name--accent">仕事の中身が見える</span>
+                  <span class="rx-home-mech__item-desc">具体的な業務や1日の流れがわかる。</span>
+                </span>
+              </li>
+              <li class="rx-home-mech__item rx-anim">
+                <span class="rx-home-mech__thumb"><svg aria-hidden="true"><use href="#i-users"/></svg></span>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name rx-home-mech__item-name--accent">人や空気が伝わる</span>
+                  <span class="rx-home-mech__item-desc">一緒に働く人や職場の雰囲気がイメージできる。</span>
+                </span>
+              </li>
+              <li class="rx-home-mech__item rx-anim">
+                <span class="rx-home-mech__thumb"><svg aria-hidden="true"><use href="#i-mech-agree"/></svg></span>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name rx-home-mech__item-name--accent">応募の納得度が上がる</span>
+                  <span class="rx-home-mech__item-desc">入社後のミスマッチが減り、前向きな応募が集まりやすくなります。</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 下部: 3つの変化 -->
+        <ul class="rx-home-mech__results">
+          <li class="rx-home-mech__result rx-anim">
+            <span class="rx-home-mech__result-icon"><svg aria-hidden="true"><use href="#i-search"/></svg></span>
+            <span class="rx-home-mech__result-body">
+              <span class="rx-home-mech__result-name">見つかる</span>
+              <span class="rx-home-mech__result-desc">検索で見つけてもらえる</span>
+            </span>
           </li>
-          <li class="rx-anim">
-            <a class="rx-home-case" href="case/r-associates/">
-              <figure class="rx-home-case__media">
-                <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/r-associates-main-1-1024x1024.webp" alt="株式会社アール・アソシエイツ様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
-              </figure>
-              <div class="rx-home-case__body">
-                <p class="rx-home-case__cat">スタッフ採用 / 家事代行</p>
-                <h3 class="rx-home-case__company">株式会社アール・アソシエイツ様</h3>
-                <p class="rx-home-case__desc">月10名だった応募が54名に5.4倍増。採用単価は15,000〜30,000円から11,158円へ大幅削減。給与条件を変えずに達成。</p>
-              </div>
-            </a>
+          <li class="rx-home-mech__result rx-anim">
+            <span class="rx-home-mech__result-icon"><svg aria-hidden="true"><use href="#i-mech-talk"/></svg></span>
+            <span class="rx-home-mech__result-body">
+              <span class="rx-home-mech__result-name">伝わる</span>
+              <span class="rx-home-mech__result-desc">会社の魅力がしっかり伝わる</span>
+            </span>
           </li>
-          <li class="rx-anim">
-            <a class="rx-home-case" href="case/kanedai-ohashi/">
-              <figure class="rx-home-case__media">
-                <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/kanedai-ohashi-main-1-1024x1024.webp" alt="株式会社カネダイ大橋牧場様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
-              </figure>
-              <div class="rx-home-case__body">
-                <p class="rx-home-case__cat">正社員採用 / 牧場・畜産</p>
-                <h3 class="rx-home-case__company">株式会社カネダイ大橋牧場様</h3>
-                <p class="rx-home-case__desc">1年間応募0名だった牧場が3か月で63名応募。牧場経験者2名を含む3名を採用単価22万円で採用。</p>
-              </div>
-            </a>
+          <li class="rx-home-mech__result rx-anim">
+            <span class="rx-home-mech__result-icon"><svg aria-hidden="true"><use href="#i-users"/></svg></span>
+            <span class="rx-home-mech__result-body">
+              <span class="rx-home-mech__result-name">選ばれる</span>
+              <span class="rx-home-mech__result-desc">納得した人からの応募が集まる</span>
+            </span>
           </li>
         </ul>
-        <p class="rx-home-more"><a class="rx-home-textlink" href="case.html">事例一覧を見る</a></p>
       </div>
     </section>
 
-    <!-- ===================== 8. 料金（資料 p27・p28） ===================== -->
-    <section class="rx-home-sec rx-home-sec--alt rx-home-plans" id="plans" aria-labelledby="plansHeading">
-      <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">PLAN</p>
-        <h2 class="rx-home-h2" id="plansHeading">制作と配給の月額プラン</h2>
-        <p class="rx-home-lead">費用は、制作・配給費と広告費を分けて考えます。</p>
+    <!-- ===================== 6. 3つの改善ルート（2026-09-27 デザイン案準拠）
+         ページ内で意図的に「弱い」セクション。文字＋細い罫線だけで見せ、
+         カード・アイコン・写真は使わない（03 課題ナビとの見せ方の重複を避ける）。
+         各行の id は 03 課題ナビのカードのリンク先なので変えない。
+         ルート詳細ページができたら <li> を <a class="rx-home-route" href="…"> に変えるだけで
+         hover（背景・矢印・ルート名）が効くようにしてある ===================== -->
+    <section class="rx-home-routes" id="routes" aria-labelledby="routesHeading">
+      <div class="rx-home-routes__deco" aria-hidden="true">
+        <span class="rx-home-routes__shape"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-routes__inner">
+        <p class="rx-home-routes__eyebrow">06 3つの改善ルート</p>
+        <h2 class="rx-home-routes__title" id="routesHeading">3つのルートから、<br><span class="rx-home-accent">いま必要な一手を選ぶ。</span></h2>
+        <p class="rx-home-routes__lead">課題の違いに合わせて、<br>改善の入口を分けています。</p>
+
+        <ul class="rx-home-routes__list">
+          <li class="rx-home-route rx-anim" id="route-a">
+            <span class="rx-home-route__no">01</span>
+            <span class="rx-home-route__mark">A</span>
+            <h3 class="rx-home-route__name">求人広告改善</h3>
+            <p class="rx-home-route__desc">見つけてもらい、惹きつける。</p>
+            <ul class="rx-home-route__issues">
+              <li>クリックはあるが応募につながらない</li>
+              <li>求人票だけでは仕事内容が伝わらない</li>
+            </ul>
+            <span class="rx-home-route__arrow" aria-hidden="true"></span>
+          </li>
+
+          <li class="rx-home-route rx-anim" id="route-b">
+            <span class="rx-home-route__no">02</span>
+            <span class="rx-home-route__mark">B</span>
+            <h3 class="rx-home-route__name">応募課金型改善</h3>
+            <p class="rx-home-route__desc">費用を見直し、応募の質を整える。</p>
+            <ul class="rx-home-route__issues">
+              <li>採用コストが重い</li>
+              <li>応募の質にばらつきがある</li>
+            </ul>
+            <span class="rx-home-route__arrow" aria-hidden="true"></span>
+          </li>
+
+          <li class="rx-home-route rx-anim" id="route-ai">
+            <span class="rx-home-route__no">03</span>
+            <span class="rx-home-route__mark">AI</span>
+            <h3 class="rx-home-route__name">検索対策</h3>
+            <p class="rx-home-route__desc">検索・AIで見つかる情報設計へ。</p>
+            <ul class="rx-home-route__issues">
+              <li>社名検索で情報が少ない</li>
+              <li>会社の魅力が伝わらない</li>
+            </ul>
+            <span class="rx-home-route__arrow" aria-hidden="true"></span>
+          </li>
+        </ul>
+
+        <p class="rx-home-routes__note">※検索順位や、生成AIに推薦されることを保証するものではありません。</p>
+      </div>
+    </section>
+
+    <!-- ===================== 7. 導入事例（2026-09-27 デザイン案準拠）
+         ⚠️ カードは **tools/data/home-cases.json ＋ tools/build-home-cases.py で生成**する。
+            このファイルを直接編集せず、JSONを直して `python3 tools/build-home-cases.py` を実行する。
+            事例の会社名・課題・施策・数値は **case/{slug}/index.html（原典）からの転記のみ**。
+            数値を別の企業へ割り当てたり、推測で書き足したりしない。
+            タグは「業種」＋「採用区分」＝case.html の既存分類。改善ルート（A/B/AI）は
+            正式な対応関係が確定したときだけ JSON の route に入れる（null なら出ない）
+         ===================== -->
+    <section class="rx-home-cases" id="cases" aria-labelledby="casesHeading">
+      <div class="rx-home-cases__deco" aria-hidden="true">
+        <span class="rx-home-cases__shape"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-cases__inner">
+        <p class="rx-home-cases__eyebrow">07 導入事例</p>
+        <h2 class="rx-home-cases__title" id="casesHeading"><span class="rx-home-accent">成果</span>につながった企業の変化を、<br><span class="rx-home-accent">導入事例</span>で紹介。</h2>
+        <p class="rx-home-cases__lead">実際にご利用いただいた企業の事例から、採用課題の解決プロセスと成果をご紹介します。</p>
+
+        <!-- 事例カードは tools/data/home-cases.json ＋ tools/build-home-cases.py で生成する（直接編集しない） -->
+        <!-- BUILD:HOME_CASES -->
+          <a class="rx-home-case rx-home-case--lead rx-anim" href="case/tram/">
+            <figure class="rx-home-case__media">
+              <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/tram-main-1024x1024.webp"
+                   alt="株式会社トラム様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
+            </figure>
+            <div class="rx-home-case__body">
+              <p class="rx-home-case__tags">
+                <span class="rx-home-case__tag">飲食</span>
+                <span class="rx-home-case__tag rx-home-case__tag--sub">正社員採用</span>
+              </p>
+              <h3 class="rx-home-case__company">株式会社トラム様</h3>
+              <p class="rx-home-case__desc">12店舗を展開する飲食企業。広告費をかけても応募・採用につながらず、採用単価が150万円まで上がっていました。</p>
+
+              <div class="rx-home-case__flow">
+                <div class="rx-home-case__step">
+                  <span class="rx-home-case__label">課題</span>
+                  <p class="rx-home-case__step-name">応募が集まらない<br>採用単価が高い</p>
+                  <p class="rx-home-case__step-text">求人票が機能しておらず、広告費が採用に結びついていなかった。</p>
+                </div>
+                <span class="rx-home-case__arrow" aria-hidden="true"></span>
+                <div class="rx-home-case__step">
+                  <span class="rx-home-case__label rx-home-case__label--act">施策</span>
+                  <p class="rx-home-case__step-name">求人票の全面改訂</p>
+                  <p class="rx-home-case__step-text">KPI調査・競合調査をもとに求人票を作り直し、週次で運用を管理。</p>
+                </div>
+                <span class="rx-home-case__arrow" aria-hidden="true"></span>
+                <div class="rx-home-case__result">
+                  <span class="rx-home-case__label rx-home-case__label--res">成果</span>
+                  <div class="rx-home-case__kpis">
+                    <p class="rx-home-case__kpi">
+                      <span class="rx-home-case__kpi-label">月間応募数</span>
+                      <span class="rx-home-case__kpi-value"><b>約52</b><small>倍</small></span>
+                    </p>
+                    <p class="rx-home-case__kpi">
+                      <span class="rx-home-case__kpi-label">採用単価</span>
+                      <span class="rx-home-case__kpi-value"><b>92</b><small>%減</small></span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <span class="rx-home-case__more">導入事例を見る<span class="rx-home-case__more-arrow" aria-hidden="true"></span></span>
+            </div>
+          </a>
+
+          <div class="rx-home-cases__sub">
+            <a class="rx-home-case rx-home-case--sub rx-anim" href="case/r-associates/">
+              <figure class="rx-home-case__media">
+                <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/r-associates-main-1-1024x1024.webp"
+                     alt="株式会社アール・アソシエイツ様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
+              </figure>
+              <div class="rx-home-case__body">
+                <p class="rx-home-case__tags">
+                  <span class="rx-home-case__tag">家事代行</span>
+                  <span class="rx-home-case__tag rx-home-case__tag--sub">スタッフ採用</span>
+                </p>
+                <h3 class="rx-home-case__company">株式会社アール・アソシエイツ様</h3>
+                <p class="rx-home-case__desc">給与条件を変えずに、応募数と単価の両方を改善。</p>
+
+                <div class="rx-home-case__flow">
+                  <div class="rx-home-case__step">
+                    <span class="rx-home-case__label">課題</span>
+                    <p class="rx-home-case__step-name">応募が月10名</p>
+                  </div>
+                  <div class="rx-home-case__step">
+                    <span class="rx-home-case__label rx-home-case__label--act">施策</span>
+                    <p class="rx-home-case__step-name">求人票の全面改訂</p>
+                  </div>
+                  <div class="rx-home-case__result">
+                    <span class="rx-home-case__label rx-home-case__label--res">成果</span>
+                    <p class="rx-home-case__kpi">
+                      <span class="rx-home-case__kpi-label">応募数</span>
+                      <span class="rx-home-case__kpi-value"><b>5.4</b><small>倍</small></span>
+                    </p>
+                  </div>
+                </div>
+
+                <span class="rx-home-case__more">導入事例を見る<span class="rx-home-case__more-arrow" aria-hidden="true"></span></span>
+              </div>
+            </a>
+
+            <a class="rx-home-case rx-home-case--sub rx-anim" href="case/kanedai-ohashi/">
+              <figure class="rx-home-case__media">
+                <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/kanedai-ohashi-main-1-1024x1024.webp"
+                     alt="株式会社カネダイ大橋牧場様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
+              </figure>
+              <div class="rx-home-case__body">
+                <p class="rx-home-case__tags">
+                  <span class="rx-home-case__tag">牧場・畜産</span>
+                  <span class="rx-home-case__tag rx-home-case__tag--sub">正社員採用</span>
+                </p>
+                <h3 class="rx-home-case__company">株式会社カネダイ大橋牧場様</h3>
+                <p class="rx-home-case__desc">1年間応募0名から、3か月で63名の応募に。</p>
+
+                <div class="rx-home-case__flow">
+                  <div class="rx-home-case__step">
+                    <span class="rx-home-case__label">課題</span>
+                    <p class="rx-home-case__step-name">1年間、応募0名</p>
+                  </div>
+                  <div class="rx-home-case__step">
+                    <span class="rx-home-case__label rx-home-case__label--act">施策</span>
+                    <p class="rx-home-case__step-name">求人票の全面改訂</p>
+                  </div>
+                  <div class="rx-home-case__result">
+                    <span class="rx-home-case__label rx-home-case__label--res">成果</span>
+                    <p class="rx-home-case__kpi">
+                      <span class="rx-home-case__kpi-label">応募数</span>
+                      <span class="rx-home-case__kpi-value"><b>63</b><small>名</small></span>
+                    </p>
+                  </div>
+                </div>
+
+                <span class="rx-home-case__more">導入事例を見る<span class="rx-home-case__more-arrow" aria-hidden="true"></span></span>
+              </div>
+            </a>
+          </div>
+          <!-- /BUILD:HOME_CASES -->
+
+        <p class="rx-home-cases__note">※各社の支援当時の実績です。成果を保証するものではありません。</p>
+
+        <!-- 導入企業に共通する3つの変化 -->
+        <div class="rx-home-cases__changes">
+          <p class="rx-home-cases__changes-head">導入企業に共通する<br><b>3つの変化</b></p>
+          <ul class="rx-home-cases__changes-list">
+            <li>
+              <span class="rx-home-cases__change-icon"><svg aria-hidden="true"><use href="#i-search"/></svg></span>
+              <span class="rx-home-cases__change-body">
+                <span class="rx-home-cases__change-name">見つかる</span>
+                <span class="rx-home-cases__change-desc">求める人材に、きちんと見つけてもらえる。</span>
+              </span>
+            </li>
+            <li>
+              <span class="rx-home-cases__change-icon"><svg aria-hidden="true"><use href="#i-doc"/></svg></span>
+              <span class="rx-home-cases__change-body">
+                <span class="rx-home-cases__change-name">伝わる</span>
+                <span class="rx-home-cases__change-desc">仕事内容や魅力が、正しく伝わる。</span>
+              </span>
+            </li>
+            <li>
+              <span class="rx-home-cases__change-icon"><svg aria-hidden="true"><use href="#i-users"/></svg></span>
+              <span class="rx-home-cases__change-body">
+                <span class="rx-home-cases__change-name">応募につながる</span>
+                <span class="rx-home-cases__change-desc">共感した人からの応募が増える。</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 8. 料金（2026-09-27 デザイン案準拠）
+         ページ内で意図的に「弱い」セクション。写真・人物・大きなアイコン・グラフは置かず、
+         金額と文字だけで比較できるようにする。
+         構成は営業資料 p38 どおりの制作パッケージ別（スターター／ベーシック／プレミアム）。
+         ⚠️ カードは tools/data/home-plans.json ＋ tools/build-home-plans.py で生成する（直接編集しない）。
+         ⚠️ 金額・本数・注記は資料 p38 からの転記のみ。デザイン案の 30万/40万/15万、
+            price.html の旧価格は使わない。
+         TODO: price.html は旧料金体系のまま。正式料金の決定後に、ホーム／price.html／
+               その他の料金表記をまとめて統一する ===================== -->
+    <section class="rx-home-plans" id="plans" aria-labelledby="plansHeading">
+      <div class="rx-home-plans__deco" aria-hidden="true">
+        <span class="rx-home-plans__shape rx-home-plans__shape--tr"></span>
+        <span class="rx-home-plans__shape rx-home-plans__shape--bl"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-plans__inner">
+        <p class="rx-home-plans__eyebrow">08 料金</p>
+        <h2 class="rx-home-plans__title" id="plansHeading">課題に合わせて選べる、<br><span class="rx-home-accent">シンプルな料金</span>設計。</h2>
+        <p class="rx-home-plans__lead">貴社の課題や目指す採用規模に合わせて、<br>最適なプランをご提案します。</p>
+
+        <!-- BUILD:HOME_PLANS -->
         <ul class="rx-home-plans__list">
           <li class="rx-home-plan rx-anim">
+            <p class="rx-home-plan__label">PLAN 01</p>
             <h3 class="rx-home-plan__name">ライト</h3>
-            <p class="rx-home-plan__price"><b class="rx-stat-num">19.8</b><small>万円</small><span>/月</span></p>
-            <p class="rx-home-plan__outputs"><span class="rx-home-plan__cap">成果物</span>漫画1本</p>
+            <p class="rx-home-plan__price"><span class="rx-home-plan__price-prefix">月額</span><b>19.8</b><small>万円</small></p>
+            <ul class="rx-home-plan__items">
+              <li>漫画 1本</li>
+            </ul>
+            <p class="rx-home-plan__extra">＋ 制作・配給・レポート</p>
           </li>
           <li class="rx-home-plan rx-home-plan--featured rx-anim">
             <p class="rx-home-plan__badge">おすすめ</p>
+            <p class="rx-home-plan__label">PLAN 02</p>
             <h3 class="rx-home-plan__name">スタンダード</h3>
-            <p class="rx-home-plan__price"><b class="rx-stat-num">34.8</b><small>万円</small><span>/月</span></p>
-            <p class="rx-home-plan__outputs"><span class="rx-home-plan__cap">成果物</span>漫画1話＋アニメ1本</p>
+            <p class="rx-home-plan__price"><span class="rx-home-plan__price-prefix">月額</span><b>34.8</b><small>万円</small></p>
+            <ul class="rx-home-plan__items">
+              <li>漫画 1話</li>
+              <li>アニメ 1本</li>
+            </ul>
+            <p class="rx-home-plan__extra">＋ 制作・配給・レポート</p>
           </li>
           <li class="rx-home-plan rx-anim">
+            <p class="rx-home-plan__label">PLAN 03</p>
             <h3 class="rx-home-plan__name">フル</h3>
-            <p class="rx-home-plan__price"><b class="rx-stat-num">58.9</b><small>万円</small><span>/月</span></p>
-            <p class="rx-home-plan__outputs"><span class="rx-home-plan__cap">成果物</span>漫画1話＋アニメ1本、記事増量</p>
+            <p class="rx-home-plan__price"><span class="rx-home-plan__price-prefix">月額</span><b>58.9</b><small>万円</small></p>
+            <ul class="rx-home-plan__items">
+              <li>漫画 1話</li>
+              <li>アニメ 1本</li>
+              <li>記事 増量</li>
+            </ul>
+            <p class="rx-home-plan__extra">＋ 制作・配給・レポート</p>
           </li>
         </ul>
-        <p class="rx-home-note rx-home-note--center">すべてのプランに、制作・配給・レポートが含まれます。<br class="rx-br-sp">求人広告の改善・応募課金での求人広告は任意オプションで、広告費・応募課金は別建てです。</p>
-        <div class="rx-home-actions">
-          <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
+
+        <p class="rx-home-plans__note">※広告費・応募課金は別建てです。</p>
+
+        <p class="rx-home-plans__cta-wrap"><a class="rx-home-plans__cta" href="contact.html?source=plan-estimate">プランのご相談はこちら<span class="rx-home-plans__cta-arrow" aria-hidden="true"></span></a></p>
+        <!-- /BUILD:HOME_PLANS -->
       </div>
     </section>
 
-    <!-- ===================== 9. 導入の流れ（資料 p24・p29） ===================== -->
-    <section class="rx-home-sec rx-home-steps" aria-labelledby="stepsHeading">
-      <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">FLOW</p>
-        <h2 class="rx-home-h2" id="stepsHeading">無料診断から<br class="rx-br-sp">運用開始までの流れ</h2>
-        <p class="rx-home-lead">ヒアリングから制作、掲載後の運用まで、ワンストップでサポートします。</p>
-        <ol class="rx-home-steps__list">
-          <li class="rx-home-step rx-anim">
-            <span class="rx-home-step__num">01</span>
-            <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-search"/></svg>
-            <h3 class="rx-home-step__title">無料診断</h3>
-            <p class="rx-home-step__desc">現状の課題や目的をヒアリングし、最適なプランや進め方をご提案します。</p>
+    <!-- ===================== 9. 導入の流れ（2026-09-27 デザイン案準拠）
+         強さは「中」。小さな写真・線画アイコン・矢印で情報を少し増やすが、写真は主役にしない。
+         ⚠️ ステップは tools/data/home-flow.json ＋ tools/build-home-flow.py で生成する（直接編集しない）。
+         ⚠️ 各工程の所要期間は資料に記載が無いため出していない（JSONの duration が空なら非表示）。
+            セクション下の目安は資料 p40「ご契約から1本目の納品まで3週間〜1ヶ月」のみ ===================== -->
+    <section class="rx-home-flow" id="flow" aria-labelledby="flowHeading">
+      <div class="rx-home-flow__deco" aria-hidden="true">
+        <span class="rx-home-flow__shape rx-home-flow__shape--tr"></span>
+        <span class="rx-home-flow__shape rx-home-flow__shape--bl"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-flow__inner">
+        <p class="rx-home-flow__eyebrow">09 導入の流れ</p>
+        <h2 class="rx-home-flow__title-main" id="flowHeading">最短3週間で、<br>応募前に見える<span class="rx-home-accent">採用をスタート。</span></h2>
+        <p class="rx-home-flow__lead">ヒアリングから公開まで、専任のチームが一貫してサポートします。<br>はじめての方でも安心してご利用いただけます。</p>
+
+        <!-- BUILD:HOME_FLOW -->
+        <ol class="rx-home-flow__list">
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">01</span><span class="rx-home-flow__title">ヒアリング・企画設計</span></p>
+              <figure class="rx-home-flow__media">
+                <img src="images/home/flow-01-hearing.webp" alt="採用課題や求める人物像について打ち合わせをしている様子"
+                     width="1448" height="1086" loading="lazy" decoding="async">
+              </figure>
+              <p class="rx-home-flow__text">貴社の採用課題や目的、求める人物像などをヒアリングし、最適な企画をご提案します。</p>
+            </div>
           </li>
-          <li class="rx-home-step rx-anim">
-            <span class="rx-home-step__num">02</span>
-            <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-mic"/></svg>
-            <h3 class="rx-home-step__title">テーマ設計・取材</h3>
-            <p class="rx-home-step__desc">ターゲットや目的に合わせてテーマを設計し、取材を通じて情報を整理します。</p>
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">02</span><span class="rx-home-flow__title">取材・撮影</span></p>
+              <figure class="rx-home-flow__media">
+                <img src="images/home/interview.webp" alt="社員インタビューを撮影している取材の様子"
+                     width="1400" height="1050" loading="lazy" decoding="async">
+              </figure>
+              <p class="rx-home-flow__text">社員インタビューや職場の様子を取材・撮影し、会社のリアルな魅力を収集します。</p>
+            </div>
           </li>
-          <li class="rx-home-step rx-anim">
-            <span class="rx-home-step__num">03</span>
-            <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-laptop"/></svg>
-            <h3 class="rx-home-step__title">制作・確認</h3>
-            <p class="rx-home-step__desc">構成・原稿・デザインを制作し、ご確認・修正を経て完成形へ仕上げます。</p>
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">03</span><span class="rx-home-flow__title">制作</span></p>
+              <figure class="rx-home-flow__media">
+                <img src="images/home/flow-03-production.webp" alt="モニターで採用コンテンツの動画を編集している様子"
+                     width="1448" height="1086" loading="lazy" decoding="async">
+              </figure>
+              <p class="rx-home-flow__text">取材内容をもとに、動画・記事・デザインなど採用コンテンツを制作します。</p>
+            </div>
           </li>
-          <li class="rx-home-step rx-anim">
-            <span class="rx-home-step__num">04</span>
-            <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-launch"/></svg>
-            <h3 class="rx-home-step__title">掲載・運用開始</h3>
-            <p class="rx-home-step__desc">掲載後、効果測定や改善提案を行い、継続的な運用をサポートします。</p>
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">04</span><span class="rx-home-flow__title">公開・運用サポート</span></p>
+              <figure class="rx-home-flow__media">
+                <img src="images/service/service-step-02-sns.webp" alt="スマートフォンに表示された採用コンテンツと制作スケジュール"
+                     width="1400" height="1050" loading="lazy" decoding="async">
+              </figure>
+              <p class="rx-home-flow__text">完成したコンテンツを最適なメディアで公開し、応募につながる導線を整えます。</p>
+            </div>
+          </li>
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">05</span><span class="rx-home-flow__title">効果検証・改善</span></p>
+              <figure class="rx-home-flow__media">
+                <img src="images/home/flow-05-analytics.webp" alt="ノートPCと資料でアクセスや応募状況の推移を分析している様子"
+                     width="1448" height="1086" loading="lazy" decoding="async">
+              </figure>
+              <p class="rx-home-flow__text">公開後のアクセスや応募状況を分析し、継続的な改善で成果を最大化します。</p>
+            </div>
           </li>
         </ol>
 
-        <div class="rx-home-team rx-anim">
-          <h3 class="rx-home-team__title">既存施策を止めずに、チームで進める</h3>
-          <ul class="rx-home-team__list">
+        <p class="rx-home-flow__note">※ご契約から1本目の納品まで3週間〜1ヶ月が目安です。</p>
+
+        <div class="rx-home-flow__supports">
+          <p class="rx-home-flow__support-head">はじめての方でも<br><b>安心のサポート体制</b></p>
+          <ul class="rx-home-flow__support-list">
             <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-cycle"/></svg>
-              <div><p class="rx-home-team__name">既存施策との並行稼働</p><p>既存の取り組みを止めずに、新しい施策を並行して推進します。</p></div>
+              <span class="rx-home-flow__support-icon"><svg aria-hidden="true"><use href="#i-mech-talk"/></svg></span>
+              <span class="rx-home-flow__support-body">
+                <span class="rx-home-flow__support-title">専任担当が伴走</span>
+                <span class="rx-home-flow__support-text">企画から運用まで一貫サポート</span>
+              </span>
             </li>
             <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-users"/></svg>
-              <div><p class="rx-home-team__name">顧客側と提供側の役割分担</p><p>要件定義・意思決定・情報提供は御社、施策設計・実行・改善提案は私たちが担います。</p></div>
+              <span class="rx-home-flow__support-icon"><svg aria-hidden="true"><use href="#i-flow-shield"/></svg></span>
+              <span class="rx-home-flow__support-body">
+                <span class="rx-home-flow__support-title">初めてでも安心</span>
+                <span class="rx-home-flow__support-text">丁寧な説明で不安を解消</span>
+              </span>
             </li>
             <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-hand"/></svg>
-              <div><p class="rx-home-team__name">現場の負担を最小限に</p><p>既存の業務フローに配慮し、現場の負担を最小限に設計します。</p></div>
+              <span class="rx-home-flow__support-icon"><svg aria-hidden="true"><use href="#i-hand"/></svg></span>
+              <span class="rx-home-flow__support-body">
+                <span class="rx-home-flow__support-title">公開後も継続支援</span>
+                <span class="rx-home-flow__support-text">改善提案で成果を最大化</span>
+              </span>
             </li>
           </ul>
         </div>
+        <!-- /BUILD:HOME_FLOW -->
       </div>
     </section>
 
-    <!-- ===================== 10. 最終CTA（資料 p31・p32） ===================== -->
-    <section class="rx-home-sec rx-home-sec--alt rx-home-cta" aria-labelledby="ctaHeading">
-      <div class="rx-home__inner">
-        <div class="rx-home-cta__panel rx-anim">
-          <h2 class="rx-home-h2" id="ctaHeading">まずは、<span class="rx-home-accent">無料診断</span>から</h2>
-          <p class="rx-home-lead">診断結果をもとに、最適なコンテンツ活用をご提案します。</p>
-          <ul class="rx-home-cta__list">
-            <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-clip"/></svg>
-              <p class="rx-home-cta__name">採用課題の整理</p>
-              <p>現状の課題を明確にし、優先すべきテーマを整理します。</p>
-            </li>
-            <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-chart"/></svg>
-              <p class="rx-home-cta__name">既存施策の確認</p>
-              <p>現在の施策を棚卸しし、効果や改善点を明らかにします。</p>
-            </li>
-            <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-target"/></svg>
-              <p class="rx-home-cta__name">候補者へ伝えたいテーマの選定</p>
-              <p>自社の魅力や価値を、候補者に響く形で言語化します。</p>
-            </li>
-          </ul>
-          <a class="rx-btn rx-btn--primary rx-btn--xl" href="contact.html?source=free-diagnosis">今すぐ無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <!-- ===================== 10. 最後のCTA（2026-09-27 デザイン案準拠）
+         ページ最後。写真・人物は置かず、余白とCTAだけで締める（強さは「弱〜中」）。
+         ⚠️ 資料ダウンロードに関するCTA・文言は**置かない**（資料と配布用URLが未用意のため。
+            2026-09-27 ユーザー判断。資料が用意できた段階で改めて追加する）。
+            主CTAはサイトで確定している「無料診断を申し込む」（contact.html?source=free-diagnosis）。
+         ⚠️ 安心訴求は contact.html に記載のある「ご相談は無料です」のみ。
+            デザイン案の「無理な営業は行いません」は資料・リポジトリに記載が無いため載せない ===================== -->
+    <section class="rx-home-cta" id="cta" aria-labelledby="ctaHeading">
+      <div class="rx-home-cta__deco" aria-hidden="true">
+        <span class="rx-home-cta__shape rx-home-cta__shape--tr"></span>
+        <span class="rx-home-cta__shape rx-home-cta__shape--bl"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-cta__inner">
+        <p class="rx-home-cta__eyebrow">10 最後のCTA</p>
+        <h2 class="rx-home-cta__title" id="ctaHeading">採用の悩み、<br class="rx-br-sp">まずは話してみませんか。</h2>
+        <p class="rx-home-cta__lead">まだ課題が整理できていなくても大丈夫です。<br class="rx-br-sp">貴社に合った進め方をご提案します。</p>
+
+        <ul class="rx-home-cta__list">
+          <li class="rx-anim">
+            <span class="rx-home-cta__icon"><svg aria-hidden="true"><use href="#i-mech-talk"/></svg></span>
+            <span class="rx-home-cta__body">
+              <span class="rx-home-cta__name">まずは相談</span>
+              <span class="rx-home-cta__text">採用課題をヒアリング</span>
+            </span>
+          </li>
+          <li class="rx-anim">
+            <span class="rx-home-cta__icon"><svg aria-hidden="true"><use href="#i-cta-calendar"/></svg></span>
+            <span class="rx-home-cta__body">
+              <span class="rx-home-cta__name">個別にご提案</span>
+              <span class="rx-home-cta__text">課題に合わせて進め方をご案内</span>
+            </span>
+          </li>
+        </ul>
+
+        <div class="rx-home-cta__actions rx-anim">
+          <a class="rx-btn rx-btn--primary rx-home-cta__btn" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="rx-btn rx-home-cta__btn rx-home-cta__btn--line" href="contact.html">お問い合わせ<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
+
+        <p class="rx-home-cta__note">ご相談は無料です。</p>
       </div>
     </section>
 
