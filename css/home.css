@@ -379,7 +379,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: clamp(5px, .7vw, 10px);
-  font-family: 'Yuji Boku', var(--hm-sans);       /* 筆ペン風（可読性優先） */
+  font-family: 'Yuji Syuku', var(--hm-sans);      /* 筆ペン風（参考デザインの筆致に最も近く、可読性も高い） */
   font-weight: 400;
   font-size: clamp(1rem, .6rem + 2.7vw, 3.25rem);   /* 参考デザイン相当の大きさ（1440pxで約48px） */
   line-height: 1.45;
