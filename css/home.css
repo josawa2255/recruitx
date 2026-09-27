@@ -275,7 +275,8 @@
 .rx-home-hero__eyebrow,
 .rx-home-stats__eyebrow,
 .rx-home-issues__eyebrow,
-.rx-home-market__eyebrow {                      /* 各セクションのラベルは同じ表現にそろえる */
+.rx-home-market__eyebrow,
+.rx-home-mech__eyebrow {                        /* 各セクションのラベルは同じ表現にそろえる */
   display: flex;
   align-items: center;
   gap: .9em;
@@ -289,7 +290,9 @@
 .rx-home-hero__eyebrow::after,
 .rx-home-stats__eyebrow::after,
 .rx-home-issues__eyebrow::after,
-.rx-home-market__eyebrow::after {               /* デザイン案の横罫 */
+.rx-home-market__eyebrow::after,
+.rx-home-mech__eyebrow::after,
+.rx-home-mech__eyebrow::before {                /* デザイン案の横罫（仕組みは中央寄せなので両側） */
   content: "";
   flex: 0 0 auto;
   width: clamp(28px, 5vw, 72px);
@@ -1094,171 +1097,286 @@
 }
 
 /* =========================================================================
-   5. 仕組み（取材 → 4コンテンツ → 5接点）
+   5. 仕組み（従来の採用 → ビズ採用の仕組み01〜04 → 応募前に伝わる採用）
+   - ページ内の強さは「強」。ただし主役は**図解そのもの**で、大きな人物写真は置かない
+   - 左は彩度を落として「問題」、中央はピンクで最も強く、右は明るく「改善後」
    ========================================================================= */
-/* 仕組み: 右に取材写真、左に見出し・リード（4=左写真 と鏡写し）。
-   画面端までのブリードは被写体が切れるため行わない */
-.rx-home-mech__band {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  align-items: center;
-  gap: clamp(28px, 4vw, 64px);
-  width: min(100%, 1200px);
-  margin: 0 auto clamp(40px, 5vw, 72px);
-  padding: 0 clamp(16px, 4vw, 40px);
+.rx-home-mech {
+  position: relative;
+  overflow: clip;
+  background: #fff;
+  padding: clamp(76px, 9vw, 140px) 0;
 }
-@media (min-width: 1440px) { .rx-home-mech__band { max-width: 1280px; } }
-@media (min-width: 1920px) { .rx-home-mech__band { max-width: 1400px; } }
-.rx-home-mech__photo { margin: 0; }
-.rx-home-mech__photo { order: 2; max-width: 620px; justify-self: end; width: 100%; }
-.rx-home-mech__photo img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  object-position: 62% 50%;      /* 話し手（右側）が切れないよう右寄りを見せる */
-  border-radius: clamp(20px, 2.4vw, 32px);
+.rx-home-mech__deco { position: absolute; inset: 0; z-index: var(--z-base); pointer-events: none; }
+.rx-home-mech__shape { position: absolute; background: rgba(var(--rx-accent-rgb), .03); }  /* 図解が主役なので控えめ */
+.rx-home-mech__shape--l { left: -12%; top: -14%; width: 46%; height: 52%; clip-path: polygon(22% 0, 100% 0, 78% 100%, 0 100%); }
+.rx-home-mech__shape--r { right: -14%; bottom: -16%; width: 52%; height: 48%; clip-path: polygon(0 34%, 100% 0, 100% 68%, 18% 100%); }
+
+.rx-home-mech__inner {
+  position: relative;
+  z-index: var(--z-elevated);
+  --mech-cw: 1200px;
+  width: min(100%, var(--mech-cw));
 }
-.rx-home-mech__intro { min-width: 0; }
-.rx-home-mech__intro .rx-home-eyebrow,
-.rx-home-mech__intro .rx-home-h2 { text-align: left; }
-.rx-home-mech__intro .rx-home-lead { margin-left: 0; text-align: left; }
+@media (min-width: 1440px) { .rx-home-mech__inner { --mech-cw: 1280px; } }
+@media (min-width: 1920px) { .rx-home-mech__inner { --mech-cw: 1400px; } }
 
-
-@media (max-width: 1024px) {
-  .rx-home-mech__band { grid-template-columns: 1fr; }
-  .rx-home-mech__photo { order: 0; justify-self: center; }
-  .rx-home-mech__photo img { aspect-ratio: 16 / 10; }
-  .rx-home-mech__intro .rx-home-eyebrow,
-  .rx-home-mech__intro .rx-home-h2,
-  .rx-home-mech__intro .rx-home-lead { text-align: center; }
-  .rx-home-mech__intro .rx-home-lead { margin-inline: auto; }
+/* --- 見出し（中央寄せ） --- */
+.rx-home-mech__eyebrow { justify-content: center; }
+.rx-home .rx-home-mech__title {
+  margin-top: clamp(14px, 1.6vw, 22px);
+  font-family: var(--hm-sans);
+  font-weight: 900;
+  font-size: clamp(1.5rem, .78rem + 2.5vw, 3.375rem);   /* 24 → 54px */
+  line-height: 1.32;
+  letter-spacing: .01em;
+  text-align: center;
+  text-wrap: wrap;
+  color: var(--hm-ink);
+}
+.rx-home-mech__lead {
+  margin-top: clamp(14px, 1.8vw, 24px);
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 2;
+  text-align: center;
+  color: var(--rx-text-muted);
 }
 
+/* --- 図解本体 --- */
 .rx-home-mech__flow {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: grid;
-  grid-template-columns: minmax(0, .55fr) minmax(0, 1.5fr) minmax(0, 1.5fr);
-  gap: clamp(28px, 3.4vw, 48px);
+  gap: clamp(14px, 1.6vw, 24px);
+  margin-top: clamp(36px, 4.4vw, 64px);
   align-items: stretch;
 }
-.rx-home-mech__stage { position: relative; display: flex; flex-direction: column; min-width: 0; }
-/* ステージ間の矢印（PC: 右向き / SP: 下向き） */
-.rx-home-mech__stage + .rx-home-mech__stage::before {
-  content: "";
-  position: absolute;
-  left: calc(clamp(28px, 3.4vw, 48px) / -2 - 7px);
-  top: calc(50% + 14px);
-  width: 14px; height: 14px;
-  border-top: 2px solid var(--rx-accent);
-  border-right: 2px solid var(--rx-accent);
-  transform: translateY(-50%) rotate(45deg);
-}
-.rx-home-mech__cap {
-  margin-bottom: 12px;
-  font-size: .8125rem;
+.rx-home-mech__col { display: flex; flex-direction: column; min-width: 0; }
+.rx-home-mech__col-head {
+  padding: .7em 1em;
+  border-radius: 12px;
+  background: #8f97a8;                            /* 従来の採用＝彩度を落としたグレー */
+  color: #fff;
   font-weight: 700;
-  letter-spacing: .08em;
-  color: var(--rx-accent);
+  font-size: clamp(.8125rem, .78rem + .2vw, .9375rem);
+  line-height: 1.4;
+  letter-spacing: .03em;
   text-align: center;
 }
-.rx-home-mech__source,
-.rx-home-mech__items {
+.rx-home-mech__col-head--core { background: linear-gradient(90deg, #f76fae 0%, var(--rx-accent) 55%, var(--rx-accent-hover) 100%); }
+.rx-home-mech__col-head--after { background: var(--rx-accent); }
+
+/* 左右のカード列 */
+.rx-home-mech__list {
+  display: grid;
+  gap: clamp(8px, 1vw, 14px);
+  margin-top: clamp(10px, 1.2vw, 16px);
+  align-content: start;
   flex: 1;
-  border: 1px solid rgba(var(--rx-accent-rgb), .28);
-  border-radius: var(--rx-radius-lg);
-  background: #fff;
 }
-.rx-home-mech__source {
+.rx-home-mech__item {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 24px 12px;
-  font-weight: 700;
-  font-size: .9375rem;
-  text-align: center;
-  background: var(--hm-pink-soft);
-  border-color: transparent;
+  align-items: flex-start;
+  gap: clamp(10px, 1.2vw, 14px);
+  padding: clamp(12px, 1.4vw, 18px) clamp(12px, 1.4vw, 18px);
+  background: #fff;
+  border: 1px solid var(--hm-line);
+  border-radius: var(--rx-radius);
 }
-.rx-home-mech__source .rx-home-icon { color: var(--rx-accent); }
-.rx-home-mech__items {
+.rx-home-mech__item-icon {
+  flex: 0 0 auto;
+  width: clamp(26px, 2.4vw, 34px);
+  aspect-ratio: 1;
+  fill: none;
+  stroke: #aab1c0;                                /* 左のアイコンは目立たせない */
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.rx-home-mech__item-body { display: grid; gap: .3em; min-width: 0; }
+.rx-home-mech__item-name {
+  font-weight: 700;
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 1.5;
+  color: var(--hm-ink);
+}
+.rx-home-mech__item-name--accent { color: var(--rx-accent-hover); }
+.rx-home-mech__item-desc {
+  font-size: clamp(.75rem, .72rem + .15vw, .8125rem);
+  line-height: 1.75;
+  color: var(--rx-text-muted);
+}
+/* 右列: 小さなアイコンタイル（写真ではなく図解の一部として扱う） */
+.rx-home-mech__thumb {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: clamp(40px, 3.8vw, 54px);
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  background: rgba(var(--rx-accent-rgb), .08);
+}
+.rx-home-mech__thumb svg {
+  width: 56%; height: 56%;
+  fill: none; stroke: var(--rx-accent); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.rx-home-mech__col--after .rx-home-mech__item { border-color: rgba(var(--rx-accent-rgb), .22); }
+
+/* 中央: 4ステップ */
+.rx-home-mech__col--core .rx-home-mech__col-head { position: relative; z-index: 1; }
+.rx-home-mech__steps {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-  padding: clamp(18px, 2vw, 24px) clamp(10px, 1.2vw, 16px);
+  gap: clamp(16px, 1.8vw, 26px);
+  margin-top: clamp(10px, 1.2vw, 16px);
+  padding: clamp(18px, 2vw, 28px) clamp(12px, 1.4vw, 20px);
+  background: rgba(var(--rx-accent-rgb), .045);
+  border: 1px solid rgba(var(--rx-accent-rgb), .16);
+  border-radius: var(--rx-radius-lg);
+  flex: 1;
 }
-.rx-home-mech__items--points { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.rx-home-mech__items li {
+.rx-home-mech__step {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
   text-align: center;
   min-width: 0;
 }
-.rx-home-mech__items li span { font-weight: 700; font-size: .9375rem; line-height: 1.4; }
-.rx-home-mech__items li small { font-size: .75rem; line-height: 1.6; color: var(--hm-muted); }
-.rx-home-mech__summary {
-  margin-top: clamp(28px, 3.4vw, 40px);
-  text-align: center;
-  font-size: clamp(1rem, .95rem + .3vw, 1.1875rem);
-  font-weight: 500;
+/* ステップ間の小さな矢印 */
+.rx-home-mech__step + .rx-home-mech__step::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * clamp(16px, 1.8vw, 26px) / 2 - 4px);
+  top: clamp(34px, 3.4vw, 48px);
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid rgba(var(--rx-accent-rgb), .55);
+  border-right: 2px solid rgba(var(--rx-accent-rgb), .55);
+  transform: rotate(45deg);
 }
-.rx-home-mech__summary strong { color: var(--rx-accent); font-weight: 700; }
-
-@media (max-width: 1024px) {
-  /* 仕組み: 右に取材写真、左に見出し・リード（4=左写真 と鏡写し）。
-   画面端までのブリードは被写体が切れるため行わない */
-.rx-home-mech__band {
+.rx-home-mech__step-no {
+  font-family: var(--hm-num);
+  font-weight: 700;
+  font-size: clamp(.75rem, .72rem + .2vw, .875rem);
+  color: var(--rx-accent);
+  letter-spacing: .04em;
+}
+.rx-home-mech__step-icon {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  place-items: center;
+  width: clamp(52px, 5vw, 72px);
+  height: clamp(52px, 5vw, 72px);
+  flex: 0 0 auto;
+  margin: clamp(6px, .8vw, 10px) 0 clamp(10px, 1.2vw, 16px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, #fff 35%, rgba(var(--rx-accent-rgb), .1) 100%);
+  border: 1px solid rgba(var(--rx-accent-rgb), .18);
+}
+.rx-home-mech__step-icon svg {
+  width: 48%; height: 48%;
+  fill: none; stroke: var(--rx-accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.rx-home-mech__step-name {
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: clamp(.9375rem, .86rem + .4vw, 1.25rem);
+  line-height: 1.4;
+  color: var(--hm-ink);
+}
+.rx-home-mech__step-desc {
+  margin-top: clamp(8px, 1vw, 12px);
+  font-size: clamp(.75rem, .72rem + .15vw, .8125rem);
+  line-height: 1.8;
+  color: var(--rx-text-muted);
+}
+
+/* 列と列をつなぐ矢印 */
+.rx-home-mech__arrow {
+  align-self: center;
+  width: clamp(16px, 1.6vw, 24px);
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(180deg, rgba(var(--rx-accent-rgb), .85), rgba(var(--rx-accent-rgb), .55));
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* --- 下部: 3つの変化 --- */
+.rx-home-mech__results {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.4vw, 20px);
+  margin-top: clamp(28px, 3.4vw, 48px);
+}
+.rx-home-mech__result {
+  display: flex;
   align-items: center;
-  gap: clamp(28px, 4vw, 64px);
-  width: min(100%, 1200px);
-  margin: 0 auto clamp(40px, 5vw, 72px);
-  padding-right: clamp(16px, 4vw, 40px);
+  gap: clamp(10px, 1.2vw, 16px);
+  padding: clamp(12px, 1.4vw, 18px) clamp(16px, 1.8vw, 26px);
+  background: rgba(var(--rx-accent-rgb), .05);
+  border: 1px solid rgba(var(--rx-accent-rgb), .16);
+  border-radius: var(--rx-radius-pill);
+  min-width: 0;
 }
-@media (min-width: 1440px) { .rx-home-mech__band { max-width: 1280px; } }
-@media (min-width: 1920px) { .rx-home-mech__band { max-width: 1400px; } }
-.rx-home-mech__photo { margin: 0; }
-.rx-home-mech__photo { order: 2; max-width: 620px; justify-self: end; width: 100%; }
-.rx-home-mech__photo img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  object-position: 62% 50%;      /* 話し手（右側）が切れないよう右寄りを見せる */
-  border-radius: clamp(20px, 2.4vw, 32px);
+.rx-home-mech__result-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: clamp(34px, 3.2vw, 44px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--rx-accent);
 }
-.rx-home-mech__intro { min-width: 0; }
-.rx-home-mech__intro .rx-home-eyebrow,
-.rx-home-mech__intro .rx-home-h2 { text-align: left; }
-.rx-home-mech__intro .rx-home-lead { margin-left: 0; text-align: left; }
-
-
-@media (max-width: 1024px) {
-  .rx-home-mech__band { grid-template-columns: 1fr; }
-  .rx-home-mech__photo { order: 0; justify-self: center; }
-  .rx-home-mech__photo img { aspect-ratio: 16 / 10; }
-  .rx-home-mech__intro .rx-home-eyebrow,
-  .rx-home-mech__intro .rx-home-h2,
-  .rx-home-mech__intro .rx-home-lead { text-align: center; }
-  .rx-home-mech__intro .rx-home-lead { margin-inline: auto; }
+.rx-home-mech__result-icon svg {
+  width: 52%; height: 52%;
+  fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.rx-home-mech__result-body { display: grid; gap: .15em; min-width: 0; }
+.rx-home-mech__result-name {
+  font-weight: 900;
+  font-size: clamp(.9375rem, .88rem + .3vw, 1.125rem);
+  line-height: 1.4;
+  color: var(--rx-accent);
+}
+.rx-home-mech__result-desc {
+  font-size: clamp(.75rem, .72rem + .15vw, .8125rem);
+  line-height: 1.6;
+  color: var(--rx-text-muted);
 }
 
-.rx-home-mech__flow { grid-template-columns: 1fr; max-width: 640px; margin-inline: auto; }
-  .rx-home-mech__stage + .rx-home-mech__stage::before {
-    left: 50%;
-    top: calc(clamp(28px, 3.4vw, 48px) / -2 - 9px);
-    transform: translateX(-50%) rotate(135deg);
+/* =========================== PC（横一本の図解） =========================== */
+@media (min-width: 1025px) {
+  .rx-home-mech__flow {
+    grid-template-columns: minmax(0, 22%) auto minmax(0, 1fr) auto minmax(0, 22%);
   }
-  .rx-home-mech__source { flex-direction: row; padding: 18px; }
 }
-@media (max-width: 768px) {
-  .rx-home-mech__items { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
-  .rx-home-mech__items--points { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* =========================== タブレット・スマホ（縦の流れ） =========================== */
+@media (max-width: 1024px) {
+  .rx-home-mech__flow { grid-template-columns: minmax(0, 1fr); }
+  .rx-home-mech__arrow {
+    justify-self: center;
+    width: clamp(18px, 3vw, 26px);
+    aspect-ratio: 4 / 3;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);     /* 縦の流れでは下向き */
+  }
+  .rx-home-mech__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 3vw, 28px); }
+  .rx-home-mech__step:nth-child(3)::before { display: none; }   /* 段が変わる位置の矢印は消す */
+  .rx-home-mech__inner { max-width: 880px; margin-inline: auto; }
+}
+@media (max-width: 700px) {
+  .rx-home-mech__steps { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  /* SP: 左にアイコン、右に 01 → タイトル → 説明 を積む */
+  .rx-home-mech__step {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: center;
+    text-align: left;
+  }
+  .rx-home-mech__step::before { display: none; }
+  .rx-home-mech__step-icon { grid-column: 1; grid-row: 1 / 4; margin: 0; width: 56px; height: 56px; }
+  .rx-home-mech__step-no,
+  .rx-home-mech__step-name,
+  .rx-home-mech__step-desc { grid-column: 2; }
+  .rx-home-mech__step-desc { margin-top: 4px; }
+  .rx-home-mech__results { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* =========================================================================

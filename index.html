@@ -48,6 +48,14 @@
     <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4.5" y="5" width="15" height="10.5" rx="1.5"/><path d="M2.5 19h19M9 10.5l2 2 4-4"/></symbol>
     <symbol id="i-launch" viewBox="0 0 24 24"><path d="M14.5 4.5c2.5-1.2 4.6-1.4 5-1 .4.4.2 2.5-1 5L13 14l-3-3z"/><path d="M10 11 6.5 10.5 4 13l4 1M13 14l.5 3.5L11 20l-1-4M5.5 18.5 7 17"/></symbol>
     <symbol id="i-cycle" viewBox="0 0 24 24"><path d="M19.5 9A8 8 0 0 0 5 7.2M4.5 15A8 8 0 0 0 19 16.8"/><path d="M19.8 4.5V9h-4.5M4.2 19.5V15h4.5"/></symbol>
+    <!-- 仕組み（05）用 -->
+    <symbol id="i-mech-job" viewBox="0 0 24 24"><path d="M6 2.8h8L18.5 7v14.2H6z"/><path d="M14 2.8V7h4.5"/><path d="M8.6 11.2h7M8.6 14.2h7M8.6 17.2h4"/></symbol>
+    <symbol id="i-mech-thin" viewBox="0 0 24 24"><rect x="4.5" y="4" width="15" height="16" rx="2"/><path d="M8 9h8M8 12.5h5"/></symbol>
+    <symbol id="i-mech-stack" viewBox="0 0 24 24"><rect x="3.2" y="6.5" width="11" height="14" rx="1.6"/><path d="M7 3.5h10a1.6 1.6 0 0 1 1.6 1.6v12"/><path d="M6 11h5.5M6 14.5h5.5"/></symbol>
+    <symbol id="i-mech-talk" viewBox="0 0 24 24"><path d="M3.2 9.6c0-2.4 2.2-4.4 5-4.4h3.6c2.8 0 5 2 5 4.4s-2.2 4.4-5 4.4H8l-3.4 2.6.5-3.1a4.2 4.2 0 0 1-1.9-3.9z"/><path d="M17.6 10.2c2 .5 3.4 2 3.4 3.8 0 1.5-1 2.9-2.5 3.5l.4 2.6-2.9-2.2h-2.6"/></symbol>
+    <symbol id="i-mech-plan" viewBox="0 0 24 24"><path d="M5.5 3.5h9L19 8v12.5H5.5z"/><path d="M14.5 3.5V8H19"/><path d="M8.4 12.4h4M8.4 15.6h3"/><path d="m16.8 12.6 2.6 2.6-4 4-2.8.3.3-2.8z"/></symbol>
+    <symbol id="i-mech-growth" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7.5 20v-5M12 20v-8.5M16.5 20v-4"/><path d="m5.5 10.5 4.5-4 3 2.5 5.5-5.5"/><path d="M15 3.5h4v4"/></symbol>
+    <symbol id="i-mech-agree" viewBox="0 0 24 24"><path d="M3.5 10c0-3.3 3.3-6 7.4-6h2.2c4.1 0 7.4 2.7 7.4 6s-3.3 6-7.4 6h-3.2l-4.4 3.2.7-3.9A6 6 0 0 1 3.5 10z"/><path d="m8.6 10.2 2.2 2.2 4.4-4.4"/></symbol>
     <!-- 市場の変化（04）のバッジ用 -->
     <symbol id="i-mk-sns" viewBox="0 0 24 24"><path d="M20.5 12.2c0 4.1-3.8 7.4-8.5 7.4-1 0-2-.15-2.9-.42L4 20.8l1.7-3.6C4.6 15.9 3.5 14.2 3.5 12.2c0-4.1 3.8-7.4 8.5-7.4s8.5 3.3 8.5 7.4z"/><path d="M9.4 9.6h5.6M8.8 13h6.4M10.6 8.2l-.7 6.6M13.9 8.2l-.7 6.6"/></symbol>
     <symbol id="i-mk-review" viewBox="0 0 24 24"><path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.3-4.8-2.5-4.8 2.5.9-5.3L4.2 9.7l5.4-.8z"/></symbol>
@@ -301,54 +309,138 @@
       </div>
     </section>
 
-    <!-- ===================== 5. 仕組み（資料 p8・p13・p15・p17）。#service はナビ/他ページの index.html#service の着地点 ===================== -->
-    <section class="rx-home-sec rx-home-mech" id="service" aria-labelledby="mechHeading">
-      <div class="rx-home-mech__band">
-        <figure class="rx-home-mech__photo" data-reveal="right">
-          <img src="images/home/interview.webp"
-               alt="社員インタビューを撮影する取材の現場"
-               width="1400" height="1050" loading="lazy" decoding="async">
-        </figure>
-        <div class="rx-home-mech__intro" data-reveal="up">
-          <p class="rx-home-eyebrow">HOW IT WORKS</p>
-          <h2 class="rx-home-h2" id="mechHeading">1回の取材から、5つの接点へ</h2>
-          <p class="rx-home-lead">条件で選ばれ、条件で去る応募ではなく、魅力を理解した応募へ。取材を起点に採用コンテンツを一貫制作し、主要な採用接点で使い分けます。</p>
-        </div>
+    <!-- ===================== 5. 仕組み（2026-09-27 デザイン案準拠）
+         「従来の採用 → ビズ採用の仕組み（01〜04） → 応募前に伝わる採用」の横一本の図解。
+         このセクションの主役は図解そのもの。大きな人物写真は置かない。
+         #service はナビ/他ページの index.html#service の着地点なので id は変えない ===================== -->
+    <section class="rx-home-mech" id="service" aria-labelledby="mechHeading">
+      <div class="rx-home-mech__deco" aria-hidden="true">
+        <span class="rx-home-mech__shape rx-home-mech__shape--l"></span>
+        <span class="rx-home-mech__shape rx-home-mech__shape--r"></span>
       </div>
-      <div class="rx-home__inner">
 
-        <ol class="rx-home-mech__flow">
-          <li class="rx-home-mech__stage rx-home-mech__stage--source rx-anim">
-            <p class="rx-home-mech__cap">起点</p>
-            <div class="rx-home-mech__source">
-              <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-mic"/></svg>
-              <span>取材（インタビュー）</span>
-            </div>
-          </li>
-          <li class="rx-home-mech__stage rx-anim">
-            <p class="rx-home-mech__cap">4つのコンテンツ</p>
-            <ul class="rx-home-mech__items">
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-manga"/></svg><span>漫画</span><small>ストーリーでわかりやすく</small></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-play"/></svg><span>アニメ</span><small>映像で印象的に</small></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-doc"/></svg><span>記事</span><small>情報を深掘りし信頼性を高める</small></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-page"/></svg><span>掲載ページ</span><small>魅力を網羅的に発信</small></li>
+      <div class="rx-home__inner rx-home-mech__inner">
+        <p class="rx-home-mech__eyebrow">05 仕組み</p>
+        <h2 class="rx-home-mech__title" id="mechHeading">求人票だけの採用を、<span class="rx-home-accent">理解される採用</span>へ。</h2>
+        <p class="rx-home-mech__lead">ただ募集するだけでは、違いは伝わりません。<br>ビズ採用は、会社のリアルを整理し、応募前の理解につながる情報設計に変えます。</p>
+
+        <div class="rx-home-mech__flow">
+          <!-- 左: 従来の採用（彩度を落として「問題のある状態」を示す） -->
+          <div class="rx-home-mech__col rx-home-mech__col--before">
+            <p class="rx-home-mech__col-head">従来の採用</p>
+            <ul class="rx-home-mech__list">
+              <li class="rx-home-mech__item rx-anim">
+                <svg class="rx-home-mech__item-icon" aria-hidden="true"><use href="#i-mech-job"/></svg>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name">求人票だけ</span>
+                  <span class="rx-home-mech__item-desc">仕事内容や条件だけの情報になりがち。</span>
+                </span>
+              </li>
+              <li class="rx-home-mech__item rx-anim">
+                <svg class="rx-home-mech__item-icon" aria-hidden="true"><use href="#i-mech-thin"/></svg>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name">情報が薄い</span>
+                  <span class="rx-home-mech__item-desc">会社のリアルな魅力が伝わらない。</span>
+                </span>
+              </li>
+              <li class="rx-home-mech__item rx-anim">
+                <svg class="rx-home-mech__item-icon" aria-hidden="true"><use href="#i-mech-stack"/></svg>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name">比較で埋もれる</span>
+                  <span class="rx-home-mech__item-desc">他社との違いが見えず、候補者の印象に残りにくい。</span>
+                </span>
+              </li>
             </ul>
-          </li>
-          <li class="rx-home-mech__stage rx-anim">
-            <p class="rx-home-mech__cap">5つの接点</p>
-            <ul class="rx-home-mech__items rx-home-mech__items--points">
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-ad"/></svg><span>求人広告</span></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-mail"/></svg><span>応募前</span></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-users"/></svg><span>選考中</span></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-interview"/></svg><span>面接前</span></li>
-              <li><svg class="rx-home-icon" aria-hidden="true"><use href="#i-ai"/></svg><span>AI検索</span></li>
+          </div>
+
+          <span class="rx-home-mech__arrow" aria-hidden="true"></span>
+
+          <!-- 中央: ビズ採用の仕組み（このセクションの主役） -->
+          <div class="rx-home-mech__col rx-home-mech__col--core">
+            <p class="rx-home-mech__col-head rx-home-mech__col-head--core">ビズ採用の仕組み</p>
+            <ol class="rx-home-mech__steps">
+              <li class="rx-home-mech__step rx-anim">
+                <span class="rx-home-mech__step-no">01</span>
+                <span class="rx-home-mech__step-icon"><svg aria-hidden="true"><use href="#i-mech-talk"/></svg></span>
+                <span class="rx-home-mech__step-name">取材</span>
+                <span class="rx-home-mech__step-desc">経営者・社員に取材し、現場のリアルな声を集めます。</span>
+              </li>
+              <li class="rx-home-mech__step rx-anim">
+                <span class="rx-home-mech__step-no">02</span>
+                <span class="rx-home-mech__step-icon"><svg aria-hidden="true"><use href="#i-mech-plan"/></svg></span>
+                <span class="rx-home-mech__step-name">設計</span>
+                <span class="rx-home-mech__step-desc">集めた情報を整理し、応募前の理解につながるストーリーを設計します。</span>
+              </li>
+              <li class="rx-home-mech__step rx-anim">
+                <span class="rx-home-mech__step-no">03</span>
+                <span class="rx-home-mech__step-icon"><svg aria-hidden="true"><use href="#i-page"/></svg></span>
+                <span class="rx-home-mech__step-name">制作</span>
+                <span class="rx-home-mech__step-desc">インタビューや写真をもとに、魅力が伝わる採用コンテンツを制作します。</span>
+              </li>
+              <li class="rx-home-mech__step rx-anim">
+                <span class="rx-home-mech__step-no">04</span>
+                <span class="rx-home-mech__step-icon"><svg aria-hidden="true"><use href="#i-mech-growth"/></svg></span>
+                <span class="rx-home-mech__step-name">露出最適化</span>
+                <span class="rx-home-mech__step-desc">作ったコンテンツを最適なメディアで届け、見つかりやすさを高めます。</span>
+              </li>
+            </ol>
+          </div>
+
+          <span class="rx-home-mech__arrow" aria-hidden="true"></span>
+
+          <!-- 右: 応募前に伝わる採用（改善後の状態） -->
+          <div class="rx-home-mech__col rx-home-mech__col--after">
+            <p class="rx-home-mech__col-head rx-home-mech__col-head--after">応募前に伝わる採用</p>
+            <ul class="rx-home-mech__list">
+              <li class="rx-home-mech__item rx-anim">
+                <span class="rx-home-mech__thumb"><svg aria-hidden="true"><use href="#i-page"/></svg></span>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name rx-home-mech__item-name--accent">仕事の中身が見える</span>
+                  <span class="rx-home-mech__item-desc">具体的な業務や1日の流れがわかる。</span>
+                </span>
+              </li>
+              <li class="rx-home-mech__item rx-anim">
+                <span class="rx-home-mech__thumb"><svg aria-hidden="true"><use href="#i-users"/></svg></span>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name rx-home-mech__item-name--accent">人や空気が伝わる</span>
+                  <span class="rx-home-mech__item-desc">一緒に働く人や職場の雰囲気がイメージできる。</span>
+                </span>
+              </li>
+              <li class="rx-home-mech__item rx-anim">
+                <span class="rx-home-mech__thumb"><svg aria-hidden="true"><use href="#i-mech-agree"/></svg></span>
+                <span class="rx-home-mech__item-body">
+                  <span class="rx-home-mech__item-name rx-home-mech__item-name--accent">応募の納得度が上がる</span>
+                  <span class="rx-home-mech__item-desc">入社後のミスマッチが減り、前向きな応募が集まりやすくなります。</span>
+                </span>
+              </li>
             </ul>
-          </li>
-        </ol>
-        <p class="rx-home-mech__summary">制作の手数は<strong>1回</strong>。届け先が<strong>5か所</strong>あるから、中長期で回収できます。</p>
-        <div class="rx-home-actions">
-          <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
         </div>
+
+        <!-- 下部: 3つの変化 -->
+        <ul class="rx-home-mech__results">
+          <li class="rx-home-mech__result rx-anim">
+            <span class="rx-home-mech__result-icon"><svg aria-hidden="true"><use href="#i-search"/></svg></span>
+            <span class="rx-home-mech__result-body">
+              <span class="rx-home-mech__result-name">見つかる</span>
+              <span class="rx-home-mech__result-desc">検索で見つけてもらえる</span>
+            </span>
+          </li>
+          <li class="rx-home-mech__result rx-anim">
+            <span class="rx-home-mech__result-icon"><svg aria-hidden="true"><use href="#i-mech-talk"/></svg></span>
+            <span class="rx-home-mech__result-body">
+              <span class="rx-home-mech__result-name">伝わる</span>
+              <span class="rx-home-mech__result-desc">会社の魅力がしっかり伝わる</span>
+            </span>
+          </li>
+          <li class="rx-home-mech__result rx-anim">
+            <span class="rx-home-mech__result-icon"><svg aria-hidden="true"><use href="#i-users"/></svg></span>
+            <span class="rx-home-mech__result-body">
+              <span class="rx-home-mech__result-name">選ばれる</span>
+              <span class="rx-home-mech__result-desc">納得した人からの応募が集まる</span>
+            </span>
+          </li>
+        </ul>
       </div>
     </section>
 
