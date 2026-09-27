@@ -204,10 +204,11 @@
    - 少しスクロールしたら表示し、以後ずっと追従（.is-visible をトグル）
    - DOM生成のみ（innerHTML不使用・ユーザー入力なし）
    - 文言・遷移先は <body data-fab-label="…" data-fab-href="…"> で上書き可
-     （ホームは「無料診断を申し込む」→ contact.html?source=free-diagnosis） */
+   - <body data-fab="off"> のページには出さない（ホームはHEROのCTA2つに絞るため off） */
 (function () {
   'use strict';
 
+  if (document.body.getAttribute('data-fab') === 'off') return; // ページ側で無効化
   if (document.getElementById('rx-contact-form')) return; // お問い合わせページ自身では出さない
   if (document.querySelector('.rx-fab')) return;          // 二重挿入ガード
 
