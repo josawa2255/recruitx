@@ -48,6 +48,8 @@
     <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4.5" y="5" width="15" height="10.5" rx="1.5"/><path d="M2.5 19h19M9 10.5l2 2 4-4"/></symbol>
     <symbol id="i-launch" viewBox="0 0 24 24"><path d="M14.5 4.5c2.5-1.2 4.6-1.4 5-1 .4.4.2 2.5-1 5L13 14l-3-3z"/><path d="M10 11 6.5 10.5 4 13l4 1M13 14l.5 3.5L11 20l-1-4M5.5 18.5 7 17"/></symbol>
     <symbol id="i-cycle" viewBox="0 0 24 24"><path d="M19.5 9A8 8 0 0 0 5 7.2M4.5 15A8 8 0 0 0 19 16.8"/><path d="M19.8 4.5V9h-4.5M4.2 19.5V15h4.5"/></symbol>
+    <!-- 最後のCTA（10）用 -->
+    <symbol id="i-cta-calendar" viewBox="0 0 24 24"><rect x="3.3" y="5.2" width="17.4" height="15.5" rx="2.2"/><path d="M3.3 9.8h17.4M8 3v4.2M16 3v4.2"/><path d="m9.6 14.6 1.7 1.7 3.4-3.4"/></symbol>
     <!-- 導入の流れ（09）用 -->
     <symbol id="i-flow-camera" viewBox="0 0 24 24"><path d="M3.5 7.5h3l1.4-2h6.2l1.4 2h3a1.6 1.6 0 0 1 1.6 1.6v8.3a1.6 1.6 0 0 1-1.6 1.6H3.5a1.6 1.6 0 0 1-1.6-1.6V9.1A1.6 1.6 0 0 1 3.5 7.5z"/><circle cx="12" cy="13.2" r="3.6"/></symbol>
     <symbol id="i-flow-shield" viewBox="0 0 24 24"><path d="M12 2.8 20 5.6v6.1c0 4.6-3.2 8.2-8 9.5-4.8-1.3-8-4.9-8-9.5V5.6z"/><path d="m8.6 11.8 2.4 2.4 4.4-4.5"/></symbol>
@@ -849,31 +851,54 @@
       </div>
     </section>
 
-    <!-- ===================== 10. 最終CTA（資料 p31・p32） ===================== -->
-    <section class="rx-home-sec rx-home-sec--alt rx-home-cta" aria-labelledby="ctaHeading">
-      <div class="rx-home__inner">
-        <div class="rx-home-cta__panel rx-anim">
-          <h2 class="rx-home-h2" id="ctaHeading">まずは、<span class="rx-home-accent">無料診断</span>から</h2>
-          <p class="rx-home-lead">診断結果をもとに、最適なコンテンツ活用をご提案します。</p>
-          <ul class="rx-home-cta__list">
-            <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-clip"/></svg>
-              <p class="rx-home-cta__name">採用課題の整理</p>
-              <p>現状の課題を明確にし、優先すべきテーマを整理します。</p>
-            </li>
-            <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-chart"/></svg>
-              <p class="rx-home-cta__name">既存施策の確認</p>
-              <p>現在の施策を棚卸しし、効果や改善点を明らかにします。</p>
-            </li>
-            <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-target"/></svg>
-              <p class="rx-home-cta__name">候補者へ伝えたいテーマの選定</p>
-              <p>自社の魅力や価値を、候補者に響く形で言語化します。</p>
-            </li>
-          </ul>
-          <a class="rx-btn rx-btn--primary rx-btn--xl" href="contact.html?source=free-diagnosis">今すぐ無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <!-- ===================== 10. 最後のCTA（2026-09-27 デザイン案準拠）
+         ページ最後。写真・人物は置かず、余白とCTAだけで締める（強さは「弱〜中」）。
+         ⚠️ メインCTAはデザイン案では「資料をダウンロード」だが、**資料と正式なURLが未用意**のため、
+            サイトで確定している「無料診断を申し込む」（contact.html?source=free-diagnosis）を使う。
+            資料が用意できたら文言と href を差し替える（ヘッダーの扱いと同じ）。
+         ⚠️ 安心訴求は contact.html に記載のある「ご相談は無料です」のみ。
+            デザイン案の「無理な営業は行いません」は資料・リポジトリに記載が無いため載せない ===================== -->
+    <section class="rx-home-cta" id="cta" aria-labelledby="ctaHeading">
+      <div class="rx-home-cta__deco" aria-hidden="true">
+        <span class="rx-home-cta__shape rx-home-cta__shape--tr"></span>
+        <span class="rx-home-cta__shape rx-home-cta__shape--bl"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-cta__inner">
+        <p class="rx-home-cta__eyebrow">10 最後のCTA</p>
+        <h2 class="rx-home-cta__title" id="ctaHeading">採用の悩み、<br>まずは話してみませんか。</h2>
+        <p class="rx-home-cta__lead">まだ課題が整理できていなくても大丈夫です。<br>貴社に合った進め方をご提案します。</p>
+
+        <ul class="rx-home-cta__list">
+          <li class="rx-anim">
+            <span class="rx-home-cta__icon"><svg aria-hidden="true"><use href="#i-mech-talk"/></svg></span>
+            <span class="rx-home-cta__body">
+              <span class="rx-home-cta__name">まずは相談</span>
+              <span class="rx-home-cta__text">採用課題をヒアリング</span>
+            </span>
+          </li>
+          <li class="rx-anim">
+            <span class="rx-home-cta__icon"><svg aria-hidden="true"><use href="#i-doc"/></svg></span>
+            <span class="rx-home-cta__body">
+              <span class="rx-home-cta__name">資料で確認</span>
+              <span class="rx-home-cta__text">サービス・事例をまとめて確認</span>
+            </span>
+          </li>
+          <li class="rx-anim">
+            <span class="rx-home-cta__icon"><svg aria-hidden="true"><use href="#i-cta-calendar"/></svg></span>
+            <span class="rx-home-cta__body">
+              <span class="rx-home-cta__name">個別にご提案</span>
+              <span class="rx-home-cta__text">課題に合わせて進め方をご案内</span>
+            </span>
+          </li>
+        </ul>
+
+        <div class="rx-home-cta__actions rx-anim">
+          <a class="rx-btn rx-btn--primary rx-home-cta__btn" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="rx-btn rx-home-cta__btn rx-home-cta__btn--line" href="contact.html">お問い合わせ<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
+
+        <p class="rx-home-cta__note">ご相談は無料です。</p>
       </div>
     </section>
 
