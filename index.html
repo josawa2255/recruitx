@@ -48,6 +48,9 @@
     <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4.5" y="5" width="15" height="10.5" rx="1.5"/><path d="M2.5 19h19M9 10.5l2 2 4-4"/></symbol>
     <symbol id="i-launch" viewBox="0 0 24 24"><path d="M14.5 4.5c2.5-1.2 4.6-1.4 5-1 .4.4.2 2.5-1 5L13 14l-3-3z"/><path d="M10 11 6.5 10.5 4 13l4 1M13 14l.5 3.5L11 20l-1-4M5.5 18.5 7 17"/></symbol>
     <symbol id="i-cycle" viewBox="0 0 24 24"><path d="M19.5 9A8 8 0 0 0 5 7.2M4.5 15A8 8 0 0 0 19 16.8"/><path d="M19.8 4.5V9h-4.5M4.2 19.5V15h4.5"/></symbol>
+    <!-- 導入の流れ（09）用 -->
+    <symbol id="i-flow-camera" viewBox="0 0 24 24"><path d="M3.5 7.5h3l1.4-2h6.2l1.4 2h3a1.6 1.6 0 0 1 1.6 1.6v8.3a1.6 1.6 0 0 1-1.6 1.6H3.5a1.6 1.6 0 0 1-1.6-1.6V9.1A1.6 1.6 0 0 1 3.5 7.5z"/><circle cx="12" cy="13.2" r="3.6"/></symbol>
+    <symbol id="i-flow-shield" viewBox="0 0 24 24"><path d="M12 2.8 20 5.6v6.1c0 4.6-3.2 8.2-8 9.5-4.8-1.3-8-4.9-8-9.5V5.6z"/><path d="m8.6 11.8 2.4 2.4 4.4-4.5"/></symbol>
     <!-- 仕組み（05）用 -->
     <symbol id="i-mech-job" viewBox="0 0 24 24"><path d="M6 2.8h8L18.5 7v14.2H6z"/><path d="M14 2.8V7h4.5"/><path d="M8.6 11.2h7M8.6 14.2h7M8.6 17.2h4"/></symbol>
     <symbol id="i-mech-thin" viewBox="0 0 24 24"><rect x="4.5" y="4" width="15" height="16" rx="2"/><path d="M8 9h8M8 12.5h5"/></symbol>
@@ -744,56 +747,102 @@
       </div>
     </section>
 
-    <!-- ===================== 9. 導入の流れ（資料 p24・p29） ===================== -->
-    <section class="rx-home-sec rx-home-steps" aria-labelledby="stepsHeading">
-      <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">FLOW</p>
-        <h2 class="rx-home-h2" id="stepsHeading">無料診断から<br class="rx-br-sp">運用開始までの流れ</h2>
-        <p class="rx-home-lead">ヒアリングから制作、掲載後の運用まで、ワンストップでサポートします。</p>
-        <ol class="rx-home-steps__list">
-          <li class="rx-home-step rx-anim">
-            <span class="rx-home-step__num">01</span>
-            <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-search"/></svg>
-            <h3 class="rx-home-step__title">無料診断</h3>
-            <p class="rx-home-step__desc">現状の課題や目的をヒアリングし、最適なプランや進め方をご提案します。</p>
+    <!-- ===================== 9. 導入の流れ（2026-09-27 デザイン案準拠）
+         強さは「中」。小さな写真・線画アイコン・矢印で情報を少し増やすが、写真は主役にしない。
+         ⚠️ ステップは tools/data/home-flow.json ＋ tools/build-home-flow.py で生成する（直接編集しない）。
+         ⚠️ 各工程の所要期間は資料に記載が無いため出していない（JSONの duration が空なら非表示）。
+            セクション下の目安は資料 p40「ご契約から1本目の納品まで3週間〜1ヶ月」のみ ===================== -->
+    <section class="rx-home-flow" id="flow" aria-labelledby="flowHeading">
+      <div class="rx-home-flow__deco" aria-hidden="true">
+        <span class="rx-home-flow__shape rx-home-flow__shape--tr"></span>
+        <span class="rx-home-flow__shape rx-home-flow__shape--bl"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-flow__inner">
+        <p class="rx-home-flow__eyebrow">09 導入の流れ</p>
+        <h2 class="rx-home-flow__title-main" id="flowHeading">最短3週間で、<br>応募前に見える<span class="rx-home-accent">採用をスタート。</span></h2>
+        <p class="rx-home-flow__lead">ヒアリングから公開まで、専任のチームが一貫してサポートします。<br>はじめての方でも安心してご利用いただけます。</p>
+
+        <!-- BUILD:HOME_FLOW -->
+        <ol class="rx-home-flow__list">
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">01</span><span class="rx-home-flow__title">ヒアリング・企画設計</span></p>
+              <p class="rx-home-flow__media rx-home-flow__media--icon" aria-hidden="true">
+                <svg><use href="#i-mech-talk"/></svg>
+              </p>
+              <p class="rx-home-flow__text">貴社の採用課題や目的、求める人物像などをヒアリングし、最適な企画をご提案します。</p>
+            </div>
           </li>
-          <li class="rx-home-step rx-anim">
-            <span class="rx-home-step__num">02</span>
-            <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-mic"/></svg>
-            <h3 class="rx-home-step__title">テーマ設計・取材</h3>
-            <p class="rx-home-step__desc">ターゲットや目的に合わせてテーマを設計し、取材を通じて情報を整理します。</p>
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">02</span><span class="rx-home-flow__title">取材・撮影</span></p>
+              <figure class="rx-home-flow__media">
+                <img src="images/home/interview.webp" alt="社員インタビューを撮影している取材の様子"
+                     width="1400" height="1050" loading="lazy" decoding="async">
+              </figure>
+              <p class="rx-home-flow__text">社員インタビューや職場の様子を取材・撮影し、会社のリアルな魅力を収集します。</p>
+            </div>
           </li>
-          <li class="rx-home-step rx-anim">
-            <span class="rx-home-step__num">03</span>
-            <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-laptop"/></svg>
-            <h3 class="rx-home-step__title">制作・確認</h3>
-            <p class="rx-home-step__desc">構成・原稿・デザインを制作し、ご確認・修正を経て完成形へ仕上げます。</p>
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">03</span><span class="rx-home-flow__title">制作</span></p>
+              <p class="rx-home-flow__media rx-home-flow__media--icon" aria-hidden="true">
+                <svg><use href="#i-laptop"/></svg>
+              </p>
+              <p class="rx-home-flow__text">取材内容をもとに、動画・記事・デザインなど採用コンテンツを制作します。</p>
+            </div>
           </li>
-          <li class="rx-home-step rx-anim">
-            <span class="rx-home-step__num">04</span>
-            <svg class="rx-home-icon rx-home-icon--lg" aria-hidden="true"><use href="#i-launch"/></svg>
-            <h3 class="rx-home-step__title">掲載・運用開始</h3>
-            <p class="rx-home-step__desc">掲載後、効果測定や改善提案を行い、継続的な運用をサポートします。</p>
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">04</span><span class="rx-home-flow__title">公開・運用サポート</span></p>
+              <figure class="rx-home-flow__media">
+                <img src="images/service/service-step-02-sns.webp" alt="スマートフォンに表示された採用コンテンツと制作スケジュール"
+                     width="1400" height="1050" loading="lazy" decoding="async">
+              </figure>
+              <p class="rx-home-flow__text">完成したコンテンツを最適なメディアで公開し、応募につながる導線を整えます。</p>
+            </div>
+          </li>
+          <li class="rx-home-flow__step rx-anim">
+            <div class="rx-home-flow__card">
+              <p class="rx-home-flow__head"><span class="rx-home-flow__no">05</span><span class="rx-home-flow__title">効果検証・改善</span></p>
+              <p class="rx-home-flow__media rx-home-flow__media--icon" aria-hidden="true">
+                <svg><use href="#i-chart"/></svg>
+              </p>
+              <p class="rx-home-flow__text">公開後のアクセスや応募状況を分析し、継続的な改善で成果を最大化します。</p>
+            </div>
           </li>
         </ol>
 
-        <div class="rx-home-team rx-anim">
-          <h3 class="rx-home-team__title">既存施策を止めずに、チームで進める</h3>
-          <ul class="rx-home-team__list">
+        <p class="rx-home-flow__note">※ご契約から1本目の納品まで3週間〜1ヶ月が目安です。</p>
+
+        <div class="rx-home-flow__supports">
+          <p class="rx-home-flow__support-head">はじめての方でも<br><b>安心のサポート体制</b></p>
+          <ul class="rx-home-flow__support-list">
             <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-cycle"/></svg>
-              <div><p class="rx-home-team__name">既存施策との並行稼働</p><p>既存の取り組みを止めずに、新しい施策を並行して推進します。</p></div>
+              <span class="rx-home-flow__support-icon"><svg aria-hidden="true"><use href="#i-mech-talk"/></svg></span>
+              <span class="rx-home-flow__support-body">
+                <span class="rx-home-flow__support-title">専任担当が伴走</span>
+                <span class="rx-home-flow__support-text">企画から運用まで一貫サポート</span>
+              </span>
             </li>
             <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-users"/></svg>
-              <div><p class="rx-home-team__name">顧客側と提供側の役割分担</p><p>要件定義・意思決定・情報提供は御社、施策設計・実行・改善提案は私たちが担います。</p></div>
+              <span class="rx-home-flow__support-icon"><svg aria-hidden="true"><use href="#i-flow-shield"/></svg></span>
+              <span class="rx-home-flow__support-body">
+                <span class="rx-home-flow__support-title">初めてでも安心</span>
+                <span class="rx-home-flow__support-text">丁寧な説明で不安を解消</span>
+              </span>
             </li>
             <li>
-              <svg class="rx-home-icon" aria-hidden="true"><use href="#i-hand"/></svg>
-              <div><p class="rx-home-team__name">現場の負担を最小限に</p><p>既存の業務フローに配慮し、現場の負担を最小限に設計します。</p></div>
+              <span class="rx-home-flow__support-icon"><svg aria-hidden="true"><use href="#i-hand"/></svg></span>
+              <span class="rx-home-flow__support-body">
+                <span class="rx-home-flow__support-title">公開後も継続支援</span>
+                <span class="rx-home-flow__support-text">改善提案で成果を最大化</span>
+              </span>
             </li>
           </ul>
         </div>
+        <!-- /BUILD:HOME_FLOW -->
       </div>
     </section>
 
