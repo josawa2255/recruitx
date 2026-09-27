@@ -273,7 +273,8 @@
 
 /* --- コピー --- */
 .rx-home-hero__eyebrow,
-.rx-home-stats__eyebrow {                       /* 実績セクションのラベルも同じ表現にそろえる */
+.rx-home-stats__eyebrow,
+.rx-home-issues__eyebrow {                      /* 各セクションのラベルは同じ表現にそろえる */
   display: flex;
   align-items: center;
   gap: .9em;
@@ -285,7 +286,8 @@
   color: var(--rx-accent-hover);
 }
 .rx-home-hero__eyebrow::after,
-.rx-home-stats__eyebrow::after {                /* デザイン案の横罫 */
+.rx-home-stats__eyebrow::after,
+.rx-home-issues__eyebrow::after {               /* デザイン案の横罫 */
   content: "";
   flex: 0 0 auto;
   width: clamp(28px, 5vw, 72px);
@@ -731,72 +733,166 @@
 }
 
 /* =========================================================================
-   3. 課題ナビ
+   3. 課題ナビ（左＝見出し / 右＝A・B・AI の3カード）
+   - 強さは「中」。人物・写真・大きな図解は置かず、線画アイコンは補助に留める
+   - 次の「市場の変化」で写真を強く見せるため、ここは静かに保つ
    ========================================================================= */
+.rx-home-issues {
+  position: relative;
+  overflow: clip;
+  background: #fff;
+  padding: clamp(76px, 9vw, 140px) 0;
+}
+/* 背景の斜め面（実績セクションと同じ濃さ・違う配置） */
+.rx-home-issues__deco { position: absolute; inset: 0; z-index: var(--z-base); pointer-events: none; }
+.rx-home-issues__shape { position: absolute; background: rgba(var(--rx-accent-rgb), .035); }
+.rx-home-issues__shape--r { right: -14%; top: -12%; width: 58%; height: 76%; clip-path: polygon(24% 0, 100% 0, 100% 78%, 0 100%); }
+.rx-home-issues__shape--l { left: -18%; bottom: -18%; width: 42%; height: 46%; clip-path: polygon(0 28%, 100% 0, 100% 70%, 0 100%); }
+
+.rx-home-issues__inner {
+  position: relative;
+  z-index: var(--z-elevated);
+  --issues-cw: 1200px;                           /* 左右の基準位置はHERO・実績と同じ */
+  width: min(100%, var(--issues-cw));
+  display: grid;
+  gap: clamp(32px, 4vw, 56px);
+}
+@media (min-width: 1440px) { .rx-home-issues__inner { --issues-cw: 1280px; } }
+@media (min-width: 1920px) { .rx-home-issues__inner { --issues-cw: 1400px; } }
+
+/* --- 左: 見出し --- */
+.rx-home-issues__title {
+  margin-top: clamp(14px, 1.6vw, 22px);
+  font-family: var(--hm-sans);
+  font-weight: 900;
+  font-size: clamp(1.5rem, .85rem + 2.6vw, 3.375rem);   /* 24 → 54px */
+  line-height: 1.32;
+  letter-spacing: .01em;
+  color: var(--hm-ink);
+}
+.rx-home-issues__lead {
+  margin-top: clamp(16px, 2vw, 28px);
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 2.05;
+  color: var(--rx-text-muted);
+}
+
+/* --- 右: 3カード --- */
 .rx-home-issues__list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
-  margin-top: clamp(32px, 4vw, 52px);
+  gap: clamp(10px, 1.4vw, 22px);
 }
+.rx-home-issues__list > li { display: flex; }     /* カードの高さをそろえる */
 .rx-home-issues__card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  height: 100%;
-  padding: clamp(24px, 2.8vw, 36px) clamp(20px, 2.2vw, 28px) clamp(18px, 2vw, 24px);
-  background: #fff;
-  border: 1px solid var(--hm-line);
+  width: 100%;
+  min-width: 0;
+  padding: clamp(20px, 2.2vw, 30px) clamp(12px, 1.5vw, 22px) clamp(18px, 2vw, 26px);
+  background: linear-gradient(180deg, #fff 0%, #fff6fa 100%);
+  border: 1px solid rgba(var(--rx-accent-rgb), .22);
   border-radius: var(--rx-radius-lg);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 28px rgba(15, 23, 42, .06);
   text-align: center;
-  transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  transition: border-color .2s ease, transform .2s ease, background-color .2s ease;
 }
-.rx-home-issues__card:hover,
+.rx-home-issues__card:hover {
+  border-color: rgba(var(--rx-accent-rgb), .5);
+  background: linear-gradient(180deg, #fff 0%, #fff1f7 100%);
+  transform: translateY(-2px);
+}
 .rx-home-issues__card:focus-visible {
-  border-color: rgba(var(--rx-accent-rgb), .45);
-  transform: translateY(-3px);
-  box-shadow: 0 14px 34px rgba(var(--rx-accent-rgb), .12);
+  outline: 3px solid rgba(var(--rx-accent-rgb), .45);
+  outline-offset: 3px;
 }
-.rx-home-issues__card .rx-home-icon { width: 40px; height: 40px; stroke-width: 1.4; }
-.rx-home-issues__text {
+
+/* A / B / AI のラベル（両脇に細い罫） */
+.rx-home-issues__badge-row { display: flex; align-items: center; gap: clamp(8px, 1vw, 14px); width: 100%; }
+.rx-home-issues__badge-row::before,
+.rx-home-issues__badge-row::after {
+  content: "";
   flex: 1;
-  font-weight: 700;
-  font-size: clamp(1rem, .95rem + .25vw, 1.125rem);
-  line-height: 1.7;
+  height: 1px;
+  background: rgba(var(--rx-accent-rgb), .3);
 }
-.rx-home-issues__route {
-  display: inline-flex;
-  align-items: center;
-  gap: .5em;
-  align-self: stretch;
-  justify-content: flex-end;
-  padding-top: 14px;
-  border-top: 1px solid var(--hm-line);
-  font-size: .875rem;
+.rx-home-issues__badge {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: clamp(34px, 3.2vw, 44px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--rx-accent);
+  color: #fff;
+  font-family: var(--hm-num);
   font-weight: 700;
+  font-size: clamp(.875rem, .82rem + .3vw, 1.0625rem);
+  letter-spacing: .02em;
+}
+
+/* 線画アイコン（3枚とも同じ線幅・色・大きさ） */
+.rx-home-issues__icon {
+  width: clamp(62px, 6.4vw, 92px);
+  aspect-ratio: 1;
+  height: auto;
+  margin: clamp(16px, 2vw, 28px) 0 clamp(12px, 1.6vw, 22px);
   color: var(--rx-accent);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.rx-home-issues__route svg {
-  width: 18px; height: 18px;
-  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-  transition: transform .2s ease;
+.rx-home-issues__name {
+  font-weight: 900;
+  font-size: clamp(1rem, .9rem + .5vw, 1.375rem);
+  line-height: 1.4;
+  letter-spacing: .02em;
+  color: var(--hm-ink);
 }
-.rx-home-issues__card:hover .rx-home-issues__route svg { transform: translateX(3px); }
-@media (max-width: 768px) {
-  .rx-home-issues__list { grid-template-columns: 1fr; }
-  /* SP: アイコン＋文章を横並び、ルート名は下段に全幅 */
-  .rx-home-issues__card {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: 16px;
-    row-gap: 14px;
+.rx-home-issues__desc {
+  margin-top: clamp(10px, 1.2vw, 16px);
+  font-size: clamp(.8125rem, .78rem + .2vw, .9375rem);
+  line-height: 1.8;
+  color: var(--rx-text-muted);
+}
+.rx-home-issues__tags {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;                               /* タグは常にカード下端にそろえる */
+  padding-top: clamp(16px, 2vw, 28px);
+}
+.rx-home-issues__tag {
+  display: block;
+  padding: .55em .7em;
+  border-radius: var(--rx-radius-pill);
+  background: rgba(var(--rx-accent-rgb), .09);
+  color: var(--rx-accent-hover);
+  font-weight: 700;
+  font-size: clamp(.75rem, .72rem + .15vw, .8125rem);
+  line-height: 1.5;
+}
+
+/* =========================== PC（左テキスト＋右3カード） =========================== */
+@media (min-width: 1025px) {
+  .rx-home-issues__inner {
+    grid-template-columns: minmax(0, 36%) minmax(0, 1fr);
     align-items: center;
-    text-align: left;
+    column-gap: clamp(32px, 4vw, 72px);
   }
-  .rx-home-issues__route { grid-column: 1 / -1; }
-  .rx-home-issues__text br { display: none; }
+}
+/* =========================== タブレット（見出し→3カード） =========================== */
+@media (min-width: 701px) and (max-width: 1024px) {
+  .rx-home-issues__inner { max-width: 880px; margin-inline: auto; }
+}
+/* =========================== スマートフォン（縦積み） =========================== */
+@media (max-width: 700px) {
+  .rx-home-issues__list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .rx-home-issues__card { padding: clamp(20px, 5vw, 26px) clamp(16px, 4vw, 24px); }
+  .rx-home-issues__icon { width: clamp(52px, 14vw, 64px); margin: 14px 0 10px; }
+  .rx-home-issues__tags { padding-top: 16px; }
 }
 
 /* =========================================================================
