@@ -274,7 +274,8 @@
 /* --- コピー --- */
 .rx-home-hero__eyebrow,
 .rx-home-stats__eyebrow,
-.rx-home-issues__eyebrow {                      /* 各セクションのラベルは同じ表現にそろえる */
+.rx-home-issues__eyebrow,
+.rx-home-market__eyebrow {                      /* 各セクションのラベルは同じ表現にそろえる */
   display: flex;
   align-items: center;
   gap: .9em;
@@ -287,7 +288,8 @@
 }
 .rx-home-hero__eyebrow::after,
 .rx-home-stats__eyebrow::after,
-.rx-home-issues__eyebrow::after {               /* デザイン案の横罫 */
+.rx-home-issues__eyebrow::after,
+.rx-home-market__eyebrow::after {               /* デザイン案の横罫 */
   content: "";
   flex: 0 0 auto;
   width: clamp(28px, 5vw, 72px);
@@ -896,78 +898,214 @@
 }
 
 /* =========================================================================
-   4. 市場の変化
+   4. 市場の変化（左＝人物ビジュアル＋情報収集UI / 右＝見出し・説明・3つの数値）
+   - ページ内の強さは「強」（HEROの次）。課題ナビとの差を人物ビジュアルでつける
+   - UIカードはすべてHTML/CSS。実在サービスのUI・ロゴは使わない
+   - 数値と出典は資料・既存原稿で確認できたものだけを書く（勝手に作らない）
    ========================================================================= */
-.rx-home-market__body {
-  display: grid;
-  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-  align-items: center;
-  gap: clamp(32px, 5vw, 80px);
-  margin-top: clamp(36px, 4.5vw, 60px);
-}
-.rx-home-market__visual {
+.rx-home-market {
   position: relative;
+  overflow: clip;
+  background: #fff;
+  padding: clamp(80px, 9.5vw, 148px) 0;
+}
+.rx-home-market__deco { position: absolute; inset: 0; z-index: var(--z-base); pointer-events: none; }
+.rx-home-market__shape { position: absolute; background: rgba(var(--rx-accent-rgb), .055); }  /* 「強」なので少しだけ濃く */
+.rx-home-market__shape--tr { right: -10%; top: -20%; width: 62%; height: 66%; clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 62%); }
+.rx-home-market__shape--br { right: -6%; bottom: -24%; width: 48%; height: 54%; clip-path: polygon(0 40%, 100% 0, 100% 72%, 24% 100%); }
+
+.rx-home-market__inner {
+  position: relative;
+  z-index: var(--z-elevated);
+  --market-cw: 1200px;                           /* 左右の基準位置は他セクションと同じ */
+  width: min(100%, var(--market-cw));
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+@media (min-width: 1440px) { .rx-home-market__inner { --market-cw: 1280px; } }
+@media (min-width: 1920px) { .rx-home-market__inner { --market-cw: 1400px; } }
+
+/* --- 左: 人物ビジュアル（差し替えは images/home/market-research.webp を置き換えるだけ） --- */
+.rx-home-market__visual {
+  position: relative;                            /* UIカードの位置基準（§10: 親に比率をロック） */
   margin: 0;
-  width: 100%;
-  justify-self: stretch;
+  aspect-ratio: 16 / 13;
+  border-radius: clamp(18px, 2.4vw, 28px);
+  overflow: hidden;
 }
-.rx-home-market__visual img {
+.rx-home-market__photo {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   object-fit: cover;
-  object-position: 50% 42%;
-  border-radius: clamp(20px, 2.4vw, 32px);
+  object-position: 42% 38%;                      /* 顔とスマートフォンを残す */
+  background: var(--hm-pink-soft);
 }
-.rx-home-market__dot {
+/* 右端を白へ溶かして、右側のテキストと地続きに見せる */
+.rx-home-market__visual::after {
+  content: "";
   position: absolute;
-  right: clamp(-18px, -1.4vw, -10px);
-  top: 14%;
-  width: clamp(40px, 5vw, 72px);
+  inset: 0;
+  background: linear-gradient(95deg, rgba(255, 255, 255, 0) 58%, rgba(255, 246, 250, .72) 82%, #fff 100%);
+  pointer-events: none;
+}
+
+/* --- 情報収集のUIカード（人物の上に重ねる） --- */
+.rx-home-market__ui {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  gap: .35em;
+  width: clamp(122px, 27%, 236px);
+  padding: .7em .85em;
+  background: rgba(255, 255, 255, .96);
+  border: 1px solid rgba(15, 23, 42, .07);
+  border-radius: 10px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, .12);
+  font-size: clamp(.5rem, .42rem + .38vw, .6875rem);
+  line-height: 1.55;
+  color: var(--hm-ink);
+  text-align: left;
+}
+.rx-home-market__ui--sns    { left: 4%;  top: 6%; }
+.rx-home-market__ui--search { left: 30%; top: 2%;  width: clamp(140px, 32%, 280px); }
+.rx-home-market__ui--review { left: 8%;  bottom: 12%; }
+.rx-home-market__ui--ai     { left: 44%; bottom: 6%; }
+.rx-home-market__ui-head { display: flex; align-items: center; gap: .5em; }
+.rx-home-market__ui-avatar {
+  width: 1.7em; height: 1.7em; border-radius: 50%;
+  background: linear-gradient(135deg, #fbd3e1, #f8a8c8);
+}
+.rx-home-market__ui-name { font-weight: 700; letter-spacing: .02em; }
+.rx-home-market__ui-icon { width: 1.1em; height: 1.1em; fill: var(--rx-accent); }
+.rx-home-market__ui-body { color: #4a5164; }
+.rx-home-market__ui-tags { color: var(--rx-accent-hover); font-weight: 700; }
+.rx-home-market__ui-stars { color: #f5a623; letter-spacing: .08em; }
+.rx-home-market__ui-bar {
+  padding: .4em .7em;
+  border: 1px solid rgba(15, 23, 42, .12);
+  border-radius: var(--rx-radius-pill);
+  color: #4a5164;
+}
+.rx-home-market__ui-result { display: grid; gap: .1em; }
+.rx-home-market__ui-result b { color: #1b5fd0; font-weight: 700; }
+.rx-home-market__ui-result i { font-style: normal; color: #6f7687; font-size: .92em; }
+
+/* --- 右: コピー --- */
+.rx-home .rx-home-market__title {                /* 共通の text-wrap: balance より強く当てる */
+  margin-top: clamp(14px, 1.6vw, 22px);
+  font-family: var(--hm-sans);
+  font-weight: 900;
+  font-size: clamp(1.625rem, .9rem + 2.2vw, 3rem);        /* 26 → 48px（HEROより小さく・2行目が折れない幅） */
+  /* 指定の2行（会う前に、／すでに調べられている。）を保つ。
+     共通の text-wrap: balance が効くと2行目がさらに割れてしまうため戻す */
+  text-wrap: wrap;
+  line-height: 1.3;
+  letter-spacing: .01em;
+  color: var(--hm-ink);
+}
+.rx-home-market__lead {
+  margin-top: clamp(16px, 2vw, 26px);
+  max-width: 34em;
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 2.1;
+  color: var(--rx-text-muted);
+}
+
+/* --- 3つの数値 --- */
+.rx-home-market__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px, 1.2vw, 20px);
+  margin-top: clamp(26px, 3.2vw, 44px);
+}
+.rx-home-market__stat { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0; }
+.rx-home-market__ring {
+  display: grid;
+  place-items: center;
+  gap: .1em;
+  width: 100%;
+  max-width: 190px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: rgba(var(--rx-accent-rgb), .22);
+  background: radial-gradient(circle at 50% 42%, #fff 38%, rgba(var(--rx-accent-rgb), .08) 100%);
+  border: 1px solid rgba(var(--rx-accent-rgb), .18);
 }
-.rx-home-market__visual { max-width: 460px; justify-self: center; }
-.rx-home-market__stats { margin: 0; display: grid; gap: clamp(20px, 2.4vw, 28px); }
-.rx-home-market__stat {
+.rx-home-market__badge {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  column-gap: 20px;
-  padding-bottom: clamp(18px, 2vw, 24px);
-  border-bottom: 1px solid var(--hm-line);
+  place-items: center;
+  width: clamp(26px, 2.6vw, 38px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--rx-accent);
 }
-.rx-home-market__stat dt {
-  font-weight: 700;
-  font-size: clamp(.9375rem, .9rem + .25vw, 1.125rem);
-  line-height: 1.6;
+.rx-home-market__badge svg {
+  width: 58%; height: 58%;
+  fill: none; stroke: #fff; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round;
 }
-.rx-home-market__stat dd { margin: 0; }
-.rx-home-market__stat dd:not(.rx-home-market__src) {
-  grid-row: 1 / span 2;
-  grid-column: 2;
-  align-self: center;
-  color: var(--rx-accent);
-  white-space: nowrap;
-  line-height: 1;
-}
-.rx-home-market__stat b {
+.rx-home-market__value { color: var(--rx-accent); line-height: 1; white-space: nowrap; }
+.rx-home-market__num {
   font-family: var(--hm-num);
   font-weight: 700;
-  font-size: clamp(2.25rem, 1.7rem + 2vw, 3.25rem);
-  letter-spacing: -.02em;
+  font-size: clamp(1.75rem, .85rem + 3vw, 3.5rem);        /* 28 → 56px */
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
 }
-.rx-home-market__stat small { font-weight: 700; font-size: 1.125rem; margin-left: .1em; }
-.rx-home-market__src {
-  grid-column: 1;
-  margin-top: 6px !important;
-  font-size: .75rem;
+.rx-home-market__value small {
+  font-family: var(--hm-sans);
+  font-weight: 700;
+  font-size: clamp(.875rem, .55rem + 1.1vw, 1.375rem);
+  margin-left: .04em;
+}
+.rx-home-market__label {
+  margin-top: clamp(8px, 1vw, 14px);
+  font-weight: 700;
+  font-size: clamp(.75rem, .7rem + .25vw, .9375rem);
   line-height: 1.6;
-  color: var(--hm-muted);
+  color: var(--hm-ink);
 }
+.rx-home-market__src {
+  margin-top: clamp(20px, 2.4vw, 32px);
+  padding-top: clamp(12px, 1.4vw, 18px);
+  border-top: 1px solid var(--hm-line);
+  font-size: clamp(.6875rem, .66rem + .12vw, .75rem);
+  line-height: 1.8;
+  color: var(--rx-text-muted);
+}
+
+/* =========================== PC（左ビジュアル＋右コピー） =========================== */
+@media (min-width: 1025px) {
+  .rx-home-market__inner {
+    grid-template-columns: minmax(0, 50%) minmax(0, 1fr);
+    column-gap: clamp(28px, 3.4vw, 60px);
+  }
+  .rx-home-market__visual { aspect-ratio: 4 / 5; }
+}
+/* =========== タブレット・スマホ: 見出し → ビジュアル → 数値 → 出典 の縦並び =========== */
 @media (max-width: 1024px) {
-  .rx-home-market__body { grid-template-columns: 1fr; }
-  .rx-home-market__visual { max-width: 420px; }
+  .rx-home-market__copy   { display: contents; }  /* 並び替えのため、コピーの箱を畳む */
+  .rx-home-market__head   { order: 1; }
+  .rx-home-market__visual { order: 2; aspect-ratio: 16 / 10; }
+  .rx-home-market__stats  { order: 3; margin-top: 0; }
+  .rx-home-market__src    { order: 4; margin-top: 0; }
+  .rx-home-market__inner  { gap: clamp(24px, 3.4vw, 40px); }
+  .rx-home-market__lead   { max-width: none; }
+}
+@media (min-width: 701px) and (max-width: 1024px) {
+  .rx-home-market__inner { max-width: 880px; margin-inline: auto; }
+}
+/* =========================== スマートフォン =========================== */
+@media (max-width: 700px) {
+  .rx-home-market__visual { aspect-ratio: 4 / 3.2; }
+  .rx-home-market__stats  { gap: 6px; }
+  .rx-home-market__ui--search,
+  .rx-home-market__ui--review { display: none; } /* 小さすぎて読めなくなるため2枚に絞る */
+  .rx-home-market__ui--sns { left: 3%; top: 5%; width: 46%; font-size: .5625rem; }
+  .rx-home-market__ui--ai  { left: 40%; bottom: 5%; width: 55%; font-size: .5625rem; }
+  .rx-home-market__ring { max-width: 132px; }
+  .rx-home-market__num { font-size: clamp(1.75rem, 1.2rem + 2.6vw, 2.25rem); }   /* スマホでも読める大きさを保つ */
+  .rx-home-market__value small { font-size: .9375rem; }
+  .rx-home-market__badge { width: 24px; }
 }
 
 /* =========================================================================
