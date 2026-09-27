@@ -1,0 +1,48 @@
+{
+  "_comment": [
+    "ホーム『08 料金』のプランデータ。tools/build-home-plans.py が index.html の",
+    "<!-- BUILD:HOME_PLANS --> … <!-- /BUILD:HOME_PLANS --> を差し替える。",
+    "⚠️ 金額・本数・注記は営業資料（source）に書かれている内容だけを転記する。",
+    "   税区分・契約期間・追加費用などを資料に無い形で補足しない。",
+    "   正式金額が未確定のプランは price を空にし、provisional: true で仮表記の注意書きを出す。"
+  ],
+  "source": "docs/private/ビズ採用｜人にもAIにも届く採用提案（44ページ完全版） (1).pdf p38（2026-09-27 確認）",
+  "note": "※いずれも1年間のご契約です。金額は税別です。",
+  "subNote": "一括でのお支払いは、月額の合計より割安になります。",
+  "provisionalNote": "※料金はデザイン確認用の仮表記です。正式価格に差し替えてから公開してください。",
+  "plans": [
+    {
+      "label": "PLAN 01",
+      "name": "スターター",
+      "desc": "",
+      "price": { "prefix": "月", "value": "12", "unit": "万円" },
+      "priceSub": "年間144万円／一括128万円",
+      "items": ["漫画 2本", "アニメ 2本", "会社紹介 1本", "コラム 12本"],
+      "extra": "月次レポート",
+      "recommended": false,
+      "provisional": false
+    },
+    {
+      "label": "PLAN 02",
+      "name": "ベーシック",
+      "desc": "",
+      "price": { "prefix": "月", "value": "19", "unit": "万円" },
+      "priceSub": "年間228万円／一括200万円",
+      "items": ["漫画 3本", "アニメ 3本", "会社紹介 1本", "コラム 24本"],
+      "extra": "掲載・運用サポート",
+      "recommended": true,
+      "provisional": false
+    },
+    {
+      "label": "PLAN 03",
+      "name": "プレミアム",
+      "desc": "",
+      "price": { "prefix": "月", "value": "35", "unit": "万円" },
+      "priceSub": "年間420万円／一括370万円",
+      "items": ["漫画 6本", "アニメ 6本", "会社紹介 1本", "コラム 48本"],
+      "extra": "掲載・運用＋求人広告運用",
+      "recommended": false,
+      "provisional": false
+    }
+  ]
+}

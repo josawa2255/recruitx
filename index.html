@@ -672,34 +672,69 @@
       </div>
     </section>
 
-    <!-- ===================== 8. 料金（資料 p27・p28） ===================== -->
-    <section class="rx-home-sec rx-home-sec--alt rx-home-plans" id="plans" aria-labelledby="plansHeading">
-      <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">PLAN</p>
-        <h2 class="rx-home-h2" id="plansHeading">制作と配給の月額プラン</h2>
-        <p class="rx-home-lead">費用は、制作・配給費と広告費を分けて考えます。</p>
+    <!-- ===================== 8. 料金（2026-09-27 デザイン案準拠）
+         ページ内で意図的に「弱い」セクション。写真・人物・大きなアイコン・グラフは置かず、
+         金額と文字だけで比較できるようにする。
+         ⚠️ カードは tools/data/home-plans.json ＋ tools/build-home-plans.py で生成する
+            （直接編集しない）。金額・本数・注記は営業資料 p38 からの転記のみ ===================== -->
+    <section class="rx-home-plans" id="plans" aria-labelledby="plansHeading">
+      <div class="rx-home-plans__deco" aria-hidden="true">
+        <span class="rx-home-plans__shape rx-home-plans__shape--tr"></span>
+        <span class="rx-home-plans__shape rx-home-plans__shape--bl"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-plans__inner">
+        <p class="rx-home-plans__eyebrow">08 料金</p>
+        <h2 class="rx-home-plans__title" id="plansHeading">課題に合わせて選べる、<br><span class="rx-home-accent">シンプルな料金</span>設計。</h2>
+        <p class="rx-home-plans__lead">貴社の課題や目指す採用規模に合わせて、<br>最適なプランをご提案します。</p>
+
+        <!-- BUILD:HOME_PLANS -->
         <ul class="rx-home-plans__list">
           <li class="rx-home-plan rx-anim">
-            <h3 class="rx-home-plan__name">ライト</h3>
-            <p class="rx-home-plan__price"><b class="rx-stat-num">19.8</b><small>万円</small><span>/月</span></p>
-            <p class="rx-home-plan__outputs"><span class="rx-home-plan__cap">成果物</span>漫画1本</p>
+            <p class="rx-home-plan__label">PLAN 01</p>
+            <h3 class="rx-home-plan__name">スターター</h3>
+            <p class="rx-home-plan__price"><span class="rx-home-plan__price-prefix">月</span><b>12</b><small>万円</small></p>
+            <p class="rx-home-plan__price-sub">年間144万円／一括128万円</p>
+            <ul class="rx-home-plan__items">
+              <li>漫画 2本</li>
+              <li>アニメ 2本</li>
+              <li>会社紹介 1本</li>
+              <li>コラム 12本</li>
+            </ul>
+            <p class="rx-home-plan__extra">＋ 月次レポート</p>
           </li>
           <li class="rx-home-plan rx-home-plan--featured rx-anim">
             <p class="rx-home-plan__badge">おすすめ</p>
-            <h3 class="rx-home-plan__name">スタンダード</h3>
-            <p class="rx-home-plan__price"><b class="rx-stat-num">34.8</b><small>万円</small><span>/月</span></p>
-            <p class="rx-home-plan__outputs"><span class="rx-home-plan__cap">成果物</span>漫画1話＋アニメ1本</p>
+            <p class="rx-home-plan__label">PLAN 02</p>
+            <h3 class="rx-home-plan__name">ベーシック</h3>
+            <p class="rx-home-plan__price"><span class="rx-home-plan__price-prefix">月</span><b>19</b><small>万円</small></p>
+            <p class="rx-home-plan__price-sub">年間228万円／一括200万円</p>
+            <ul class="rx-home-plan__items">
+              <li>漫画 3本</li>
+              <li>アニメ 3本</li>
+              <li>会社紹介 1本</li>
+              <li>コラム 24本</li>
+            </ul>
+            <p class="rx-home-plan__extra">＋ 掲載・運用サポート</p>
           </li>
           <li class="rx-home-plan rx-anim">
-            <h3 class="rx-home-plan__name">フル</h3>
-            <p class="rx-home-plan__price"><b class="rx-stat-num">58.9</b><small>万円</small><span>/月</span></p>
-            <p class="rx-home-plan__outputs"><span class="rx-home-plan__cap">成果物</span>漫画1話＋アニメ1本、記事増量</p>
+            <p class="rx-home-plan__label">PLAN 03</p>
+            <h3 class="rx-home-plan__name">プレミアム</h3>
+            <p class="rx-home-plan__price"><span class="rx-home-plan__price-prefix">月</span><b>35</b><small>万円</small></p>
+            <p class="rx-home-plan__price-sub">年間420万円／一括370万円</p>
+            <ul class="rx-home-plan__items">
+              <li>漫画 6本</li>
+              <li>アニメ 6本</li>
+              <li>会社紹介 1本</li>
+              <li>コラム 48本</li>
+            </ul>
+            <p class="rx-home-plan__extra">＋ 掲載・運用＋求人広告運用</p>
           </li>
         </ul>
-        <p class="rx-home-note rx-home-note--center">すべてのプランに、制作・配給・レポートが含まれます。<br class="rx-br-sp">求人広告の改善・応募課金での求人広告は任意オプションで、広告費・応募課金は別建てです。</p>
-        <div class="rx-home-actions">
-          <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
+
+        <p class="rx-home-plans__note">※いずれも1年間のご契約です。金額は税別です。</p>
+        <p class="rx-home-plans__note">一括でのお支払いは、月額の合計より割安になります。</p>
+        <!-- /BUILD:HOME_PLANS -->
       </div>
     </section>
 
