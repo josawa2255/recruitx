@@ -2353,8 +2353,10 @@ a.rx-home-route:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .4
 
 /* --- 3つの案内カード（CTAより明確に弱く） --- */
 .rx-home-cta__list {
+  /* カードの枚数が変わっても中央に並ぶようにする（現在は2枚。資料ダウンロードの案内は未掲載） */
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 360px));
+  justify-content: center;
   gap: clamp(12px, 1.6vw, 24px);
   margin-top: clamp(34px, 4.2vw, 56px);
 }
@@ -2442,6 +2444,9 @@ a.rx-home-route:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .4
 }
 @media (min-width: 701px) and (max-width: 820px) {
   .rx-home-cta__list { grid-template-columns: minmax(0, 1fr); max-width: 520px; margin-inline: auto; }
+}
+@media (max-width: 700px) {
+  .rx-home-cta__list { grid-template-columns: minmax(0, 1fr); }
 }
 /* =========================== スマートフォン =========================== */
 @media (max-width: 700px) {
