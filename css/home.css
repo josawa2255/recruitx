@@ -605,8 +605,13 @@
   position: absolute;
   background: rgba(var(--rx-accent-rgb), .038);  /* 文字の可読性を絶対に邪魔しない濃さ */
 }
-.rx-home-stats__shape--tr { right: -8%; top: -18%; width: 34%; height: 52%; clip-path: polygon(42% 0, 100% 0, 100% 100%, 0 100%); }
-.rx-home-stats__shape--bl { left: -12%; bottom: -22%; width: 46%; height: 42%; clip-path: polygon(0 46%, 100% 0, 100% 62%, 0 100%); }
+.rx-home-stats__shape--tr { right: -10%; top: -26%; width: 52%; height: 74%; clip-path: polygon(38% 0, 100% 0, 100% 100%, 0 100%); }
+.rx-home-stats__shape--bl { left: -14%; bottom: -26%; width: 62%; height: 52%; clip-path: polygon(0 44%, 100% 0, 100% 62%, 0 100%); }
+.rx-home-stats__shape--band {                    /* セクションを横切る帯 */
+  left: -6%; right: -6%; top: 12%; height: 46%; width: auto;
+  background: rgba(var(--rx-accent-rgb), .028);
+  clip-path: polygon(0 34%, 100% 0, 100% 66%, 0 100%);
+}
 
 /* 左右の基準位置をHEROに合わせる（共通コンテナは width:min(100%,1200px) が
    max-width の拡張を打ち消してしまい、ワイド画面でHEROより40px内側に入るため） */
@@ -624,8 +629,8 @@
   margin-top: clamp(14px, 1.6vw, 22px);
   font-family: var(--hm-sans);
   font-weight: 900;
-  font-size: clamp(1.5rem, 1.05rem + 1.6vw, 2.75rem);   /* 24 → 44px（HEROの約6割） */
-  line-height: 1.35;
+  font-size: clamp(1.625rem, .95rem + 2.6vw, 3.5rem);   /* 26 → 56px（HEROの約8割） */
+  line-height: 1.3;
   letter-spacing: .01em;
   color: var(--hm-ink);
 }
@@ -646,27 +651,28 @@
 .rx-home-stats__item {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;                           /* 中身は中央ぞろえ */
+  text-align: center;
   min-width: 0;
-  padding: clamp(20px, 2.2vw, 32px) clamp(16px, 1.8vw, 28px) clamp(18px, 2vw, 28px);
-  background: linear-gradient(180deg, #fff 0%, #fff8fb 100%);
+  padding: clamp(22px, 2.6vw, 38px) clamp(14px, 1.6vw, 26px) clamp(18px, 2.2vw, 30px);
+  background: linear-gradient(180deg, #fff 0%, #fff6fa 100%);
   border: 1px solid rgba(var(--rx-accent-rgb), .22);
   border-radius: var(--rx-radius-lg);
 }
 .rx-home-stats__label {
   font-weight: 700;
-  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  font-size: clamp(.9375rem, .86rem + .3vw, 1.0625rem);
   line-height: 1.6;
   letter-spacing: .02em;
   color: var(--hm-ink);
 }
 .rx-home-stats__bar {                            /* 項目名の下の短いピンクの線 */
   display: block;
-  width: clamp(24px, 2.4vw, 34px);
-  height: 3px;
-  border-radius: 3px;
-  background: var(--rx-accent);
-  margin: clamp(12px, 1.4vw, 18px) 0 clamp(10px, 1.2vw, 16px);
+  width: clamp(28px, 2.8vw, 40px);
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(var(--rx-accent-rgb), .55);
+  margin: clamp(10px, 1.2vw, 16px) 0 clamp(14px, 1.8vw, 26px);
 }
 .rx-home-stats__value {
   color: var(--rx-accent);
@@ -676,18 +682,23 @@
 .rx-home-stats__num {
   font-family: var(--hm-num);
   font-weight: 700;
-  font-size: clamp(2.25rem, 1.5rem + 2.9vw, 4.125rem);   /* 36 → 66px */
-  letter-spacing: -.02em;
+  font-size: clamp(2.5rem, 1.2rem + 4.4vw, 5.25rem);     /* 40 → 84px */
+  letter-spacing: -.03em;
   font-variant-numeric: tabular-nums;
 }
 .rx-home-stats__value small {
   font-family: var(--hm-sans);
   font-weight: 700;
-  font-size: clamp(1rem, .85rem + .6vw, 1.5rem);
-  margin: 0 .08em;
+  /* 数字のちょうど半分。単位として一体で読ませる（em だと value の文字サイズ基準に
+     なってしまうため、数字と同じ式を1/2にして指定する） */
+  font-size: clamp(1.25rem, .6rem + 2.2vw, 2.625rem);
+  margin: 0 .04em;
 }
 .rx-home-stats__note {
-  margin-top: clamp(8px, 1vw, 14px);
+  width: 100%;
+  margin-top: clamp(14px, 1.8vw, 24px);
+  padding-top: clamp(12px, 1.4vw, 18px);
+  border-top: 1px solid rgba(var(--rx-accent-rgb), .16);  /* 補足の上に細い罫 */
   font-size: clamp(.75rem, .72rem + .15vw, .8125rem);
   line-height: 1.7;
   color: var(--rx-text-muted);
@@ -701,6 +712,11 @@
   font-size: clamp(.75rem, .73rem + .12vw, .8125rem);
   line-height: 1.9;
   color: var(--rx-text-muted);
+  text-align: center;
+}
+.rx-home-stats__source-sub { margin-left: .6em; }
+@media (max-width: 680px) {                      /* 狭い画面では注記を改行して読ませる */
+  .rx-home-stats__source-sub { display: block; margin-left: 0; }
 }
 
 /* タブレット・スマホ: 2列×2段（4列に押し込まない） */
@@ -711,7 +727,7 @@
 @media (max-width: 420px) {
   .rx-home-stats__list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .rx-home-stats__num  { font-size: clamp(2.75rem, 2rem + 4vw, 3.5rem); }
-  .rx-home-stats__value small { font-size: 1.125rem; }
+  .rx-home-stats__value small { font-size: clamp(1.375rem, 1rem + 2vw, 1.75rem); }
 }
 
 /* =========================================================================
