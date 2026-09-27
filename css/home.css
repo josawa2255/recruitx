@@ -1967,6 +1967,24 @@ a.rx-home-route:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .4
   font-size: clamp(1rem, .85rem + .6vw, 1.5rem);
   margin-left: .08em;
 }
+/* ルート記号（A / B / AI）。03 課題ナビ・06 改善ルートと同じ呼び方 */
+.rx-home-plan__route {
+  flex: 0 0 auto;
+  font-family: var(--hm-num);
+  font-weight: 700;
+  font-size: clamp(.8125rem, .76rem + .25vw, 1rem);
+  letter-spacing: .06em;
+  color: var(--rx-accent);
+}
+/* 正式価格が未確定のあいだの表示（個別お見積り）。数字ではないがカード内で最も強く見せる */
+.rx-home-plan__price--text {
+  font-family: var(--hm-sans);
+  font-weight: 900;
+  font-size: clamp(1.25rem, 1rem + .85vw, 1.875rem);
+  line-height: 1.4;
+  letter-spacing: .02em;
+  white-space: normal;
+}
 .rx-home-plan__price-sub {
   margin-top: .7em;
   font-size: clamp(.6875rem, .66rem + .15vw, .8125rem);
@@ -2009,6 +2027,35 @@ a.rx-home-route:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .4
   color: var(--rx-text-muted);
 }
 .rx-home-plans__note + .rx-home-plans__note { margin-top: .3em; }
+
+/* 料金が未確定のあいだは price.html ではなく相談窓口へ送る */
+.rx-home-plans__cta-wrap { margin-top: clamp(22px, 2.8vw, 36px); }
+.rx-home-plans__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .7em;
+  min-height: 48px;
+  padding: .8em 1.8em;
+  border-radius: var(--rx-radius-pill);
+  background: #fff;
+  border: 1.5px solid rgba(var(--rx-accent-rgb), .5);
+  color: var(--rx-accent-hover);
+  font-family: var(--hm-sans);
+  font-weight: 700;
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  transition: background-color .2s ease, border-color .2s ease;
+}
+.rx-home-plans__cta:hover,
+.rx-home-plans__cta:focus-visible { background: rgba(var(--rx-accent-rgb), .06); border-color: var(--rx-accent); }
+.rx-home-plans__cta-arrow {
+  width: .4em; height: .4em;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(45deg);
+  font-size: 1rem;
+  transition: translate .2s ease;
+}
+.rx-home-plans__cta:hover .rx-home-plans__cta-arrow { translate: 3px 0; }
 
 /* =========================== タブレット =========================== */
 @media (min-width: 701px) and (max-width: 1024px) {
