@@ -477,6 +477,15 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(var(--rx-header-h
 /* --- ブランド（ロゴは明朝・ナビと同書体） --- */
 .rx-footer__brand { min-width: 0; max-width: 30em; }
 .rx-footer__logo { display: inline-block; text-decoration: none; }
+.rx-footer__logo-text {         /* 支給ロゴが透過なしのため、フッターは白のロゴタイプで表示 */
+  display: block;
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.1rem + .6vw, 1.625rem);
+  letter-spacing: .06em;
+  line-height: 1.2;
+  color: #fff;
+}
 .rx-footer__logo-img {          /* 企業ロゴ画像（濃紺フッター用・白抜き化） */
   display: block;
   height: clamp(40px, 1.9rem + 1.3vw, 52px);
