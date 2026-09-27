@@ -444,43 +444,61 @@
       </div>
     </section>
 
-    <!-- ===================== 6. 3つの改善ルート（資料 p11・p12・p18〜p23。B にSNS運用・Meta広告・求人広告運用代行を含む） ===================== -->
-    <section class="rx-home-sec rx-home-sec--alt rx-home-routes" id="routes" aria-labelledby="routesHeading">
-      <div class="rx-home__inner">
-        <p class="rx-home-eyebrow">ROUTES</p>
-        <h2 class="rx-home-h2" id="routesHeading">3つの改善ルートは、<br class="rx-br-sp">採用課題から選ぶ</h2>
-        <p class="rx-home-lead">コンテンツ制作の土台の上に、課題に合ったルートを選ぶことで、施策の効果を最大化します。</p>
-        <div class="rx-home-routes__list">
-          <article class="rx-home-route rx-anim" id="route-a" aria-labelledby="routeAHeading">
-            <h3 class="rx-home-route__title" id="routeAHeading"><span class="rx-home-route__mark">A</span>求人広告の改善</h3>
-            <dl class="rx-home-route__rows">
-              <div><dt>課題</dt><dd>表示は出ているのに、クリックや応募が少ない</dd></div>
-              <div><dt>行うこと</dt><dd><ul><li>タイトル・画像・原稿の見直し</li><li>ターゲット・訴求の再設計</li><li>配信設定・掲載プランの最適化</li></ul></dd></div>
-              <div><dt>向く状態</dt><dd><ul><li>認知はあるが反応が弱い</li><li>クリック率や応募率が低い</li><li>競合と比較して埋もれている</li></ul></dd></div>
-            </dl>
-          </article>
-          <article class="rx-home-route rx-anim" id="route-b" aria-labelledby="routeBHeading">
-            <h3 class="rx-home-route__title" id="routeBHeading"><span class="rx-home-route__mark">B</span>応募課金型の改善</h3>
-            <dl class="rx-home-route__rows">
-              <div><dt>課題</dt><dd>応募は来るが、コストが高く効率が悪い</dd></div>
-              <div><dt>行うこと</dt><dd><ul><li>ターゲットの絞り込み強化</li><li>スクリーニング・設問の最適化</li><li>媒体・運用ルールの見直し</li></ul></dd></div>
-              <div><dt>向く状態</dt><dd><ul><li>応募単価が高騰している</li><li>ミスマッチ応募が多い</li><li>採用人数に対しコスト過多</li></ul></dd></div>
-            </dl>
-            <p class="rx-home-route__extra">SNS運用、Meta広告の運用、Indeedなどの求人広告の運用代行にも対応します。</p>
-          </article>
-          <article class="rx-home-route rx-anim" id="route-ai" aria-labelledby="routeAiHeading">
-            <h3 class="rx-home-route__title" id="routeAiHeading"><span class="rx-home-route__mark rx-home-route__mark--ai">AI</span>検索対策</h3>
-            <dl class="rx-home-route__rows">
-              <div><dt>課題</dt><dd>検索しても求人が見つからず、そもそも候補に入らない</dd></div>
-              <div><dt>行うこと</dt><dd><ul><li>キーワード設計・原稿の最適化</li><li>構造化データ・表示の最適化</li><li>AI検索・求人エンジン対策の強化</li></ul></dd></div>
-              <div><dt>向く状態</dt><dd><ul><li>検索流入が少ない／見られない</li><li>求人が検索結果に出てこない</li><li>指名検索・サイト流入が弱い</li></ul></dd></div>
-            </dl>
-            <p class="rx-home-route__extra">※順位や推薦を保証するものではありません。</p>
-          </article>
-        </div>
-        <div class="rx-home-actions">
-          <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
+    <!-- ===================== 6. 3つの改善ルート（2026-09-27 デザイン案準拠）
+         ページ内で意図的に「弱い」セクション。文字＋細い罫線だけで見せ、
+         カード・アイコン・写真は使わない（03 課題ナビとの見せ方の重複を避ける）。
+         各行の id は 03 課題ナビのカードのリンク先なので変えない。
+         ルート詳細ページができたら <li> を <a class="rx-home-route" href="…"> に変えるだけで
+         hover（背景・矢印・ルート名）が効くようにしてある ===================== -->
+    <section class="rx-home-routes" id="routes" aria-labelledby="routesHeading">
+      <div class="rx-home-routes__deco" aria-hidden="true">
+        <span class="rx-home-routes__shape"></span>
+      </div>
+
+      <div class="rx-home__inner rx-home-routes__inner">
+        <p class="rx-home-routes__eyebrow">06 3つの改善ルート</p>
+        <h2 class="rx-home-routes__title" id="routesHeading">3つのルートから、<br><span class="rx-home-accent">いま必要な一手を選ぶ。</span></h2>
+        <p class="rx-home-routes__lead">課題の違いに合わせて、<br>改善の入口を分けています。</p>
+
+        <ul class="rx-home-routes__list">
+          <li class="rx-home-route rx-anim" id="route-a">
+            <span class="rx-home-route__no">01</span>
+            <span class="rx-home-route__mark">A</span>
+            <h3 class="rx-home-route__name">求人広告改善</h3>
+            <p class="rx-home-route__desc">見つけてもらい、惹きつける。</p>
+            <ul class="rx-home-route__issues">
+              <li>クリックはあるが応募につながらない</li>
+              <li>求人票だけでは仕事内容が伝わらない</li>
+            </ul>
+            <span class="rx-home-route__arrow" aria-hidden="true"></span>
+          </li>
+
+          <li class="rx-home-route rx-anim" id="route-b">
+            <span class="rx-home-route__no">02</span>
+            <span class="rx-home-route__mark">B</span>
+            <h3 class="rx-home-route__name">応募課金型改善</h3>
+            <p class="rx-home-route__desc">費用を見直し、応募の質を整える。</p>
+            <ul class="rx-home-route__issues">
+              <li>採用コストが重い</li>
+              <li>応募の質にばらつきがある</li>
+            </ul>
+            <span class="rx-home-route__arrow" aria-hidden="true"></span>
+          </li>
+
+          <li class="rx-home-route rx-anim" id="route-ai">
+            <span class="rx-home-route__no">03</span>
+            <span class="rx-home-route__mark">AI</span>
+            <h3 class="rx-home-route__name">検索対策</h3>
+            <p class="rx-home-route__desc">検索・AIで見つかる情報設計へ。</p>
+            <ul class="rx-home-route__issues">
+              <li>社名検索で情報が少ない</li>
+              <li>会社の魅力が伝わらない</li>
+            </ul>
+            <span class="rx-home-route__arrow" aria-hidden="true"></span>
+          </li>
+        </ul>
+
+        <p class="rx-home-routes__note">※検索順位や、生成AIに推薦されることを保証するものではありません。</p>
       </div>
     </section>
 

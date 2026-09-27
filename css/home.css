@@ -276,7 +276,8 @@
 .rx-home-stats__eyebrow,
 .rx-home-issues__eyebrow,
 .rx-home-market__eyebrow,
-.rx-home-mech__eyebrow {                        /* 各セクションのラベルは同じ表現にそろえる */
+.rx-home-mech__eyebrow,
+.rx-home-routes__eyebrow {                      /* 各セクションのラベルは同じ表現にそろえる */
   display: flex;
   align-items: center;
   gap: .9em;
@@ -291,6 +292,7 @@
 .rx-home-stats__eyebrow::after,
 .rx-home-issues__eyebrow::after,
 .rx-home-market__eyebrow::after,
+.rx-home-routes__eyebrow::after,
 .rx-home-mech__eyebrow::after,
 .rx-home-mech__eyebrow::before {                /* デザイン案の横罫（仕組みは中央寄せなので両側） */
   content: "";
@@ -1381,78 +1383,160 @@
 
 /* =========================================================================
    6. 3つの改善ルート
+   - ページ内で意図的に「弱い」セクション。前後（05 仕組み・07 導入事例）の
+     強いビジュアルの間で視線を休ませる
+   - **カード・アイコン・写真・グラフは使わない**。文字＋細い罫線＋余白だけで見せる
    ========================================================================= */
+.rx-home-routes {
+  position: relative;
+  overflow: clip;
+  background: #fff;
+  padding: clamp(84px, 10vw, 156px) 0;            /* 余白は他セクションより広く取る */
+}
+.rx-home-routes__deco { position: absolute; inset: 0; z-index: var(--z-base); pointer-events: none; }
+.rx-home-routes__shape {                          /* 画面下部から入る淡いピンクの斜め面 */
+  position: absolute;
+  left: -10%; right: -10%; bottom: -26%;
+  height: 62%;
+  background: rgba(var(--rx-accent-rgb), .035);
+  clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 100%);
+}
+.rx-home-routes__inner {
+  position: relative;
+  z-index: var(--z-elevated);
+  --routes-cw: 1200px;
+  width: min(100%, var(--routes-cw));
+}
+@media (min-width: 1440px) { .rx-home-routes__inner { --routes-cw: 1280px; } }
+@media (min-width: 1920px) { .rx-home-routes__inner { --routes-cw: 1400px; } }
+
+/* --- 見出し（左寄せ・一段落ち着いたサイズ） --- */
+.rx-home .rx-home-routes__title {
+  margin-top: clamp(14px, 1.6vw, 22px);
+  font-family: var(--hm-sans);
+  font-weight: 900;
+  font-size: clamp(1.375rem, .85rem + 1.9vw, 2.5rem);   /* 22 → 40px */
+  line-height: 1.38;
+  letter-spacing: .01em;
+  text-wrap: wrap;
+  color: var(--hm-ink);
+}
+.rx-home-routes__lead {
+  margin-top: clamp(14px, 1.8vw, 22px);
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 2.1;
+  color: var(--rx-text-muted);
+}
+
+/* --- 3ルート（カードではなく、細い罫線で区切った一覧） --- */
 .rx-home-routes__list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
-  margin-top: clamp(36px, 4.5vw, 56px);
+  margin-top: clamp(32px, 4vw, 56px);
+  border-top: 1px solid rgba(var(--rx-accent-rgb), .18);
 }
 .rx-home-route {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(24px, 2.6vw, 36px) clamp(20px, 2.2vw, 32px);
-  background: #fff;
-  border: 1px solid var(--hm-line);
-  border-radius: var(--rx-radius-lg);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 8px 28px rgba(15, 23, 42, .06);
-}
-.rx-home-route:target { border-color: rgba(var(--rx-accent-rgb), .55); }
-.rx-home-route__title {
-  display: flex;
+  display: grid;
   align-items: center;
-  gap: 14px;
-  font-family: var(--hm-serif);
-  font-weight: 600;
-  font-size: clamp(1.1875rem, 1.1rem + .4vw, 1.4375rem);
-  line-height: 1.4;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--hm-line);
+  gap: clamp(14px, 1.8vw, 30px);
+  padding: clamp(22px, 2.6vw, 38px) clamp(4px, .6vw, 10px);
+  border-bottom: 1px solid rgba(var(--rx-accent-rgb), .18);
+  transition: background-color .2s ease;
 }
-.rx-home-route__mark {
-  display: inline-grid;
-  place-items: center;
-  flex-shrink: 0;
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: var(--rx-accent);
-  color: #fff;
+.rx-home-route__no {
   font-family: var(--hm-num);
   font-weight: 700;
-  font-size: 1.375rem;
-}
-.rx-home-route__mark--ai { font-size: 1.0625rem; }
-.rx-home-route__rows { margin: 0; flex: 1; }
-.rx-home-route__rows > div { padding: 16px 0; border-bottom: 1px dashed var(--hm-line); }
-.rx-home-route__rows > div:last-child { border-bottom: 0; }
-.rx-home-route__rows dt {
-  font-size: .8125rem;
-  font-weight: 700;
+  font-size: clamp(.75rem, .72rem + .2vw, .875rem);
   letter-spacing: .06em;
-  color: var(--rx-accent);
+  color: rgba(var(--rx-accent-rgb), .45);          /* 一番弱い情報 */
 }
-.rx-home-route__rows dd { margin: 6px 0 0; font-size: .9375rem; line-height: 1.75; }
-.rx-home-route__rows dd li { position: relative; padding-left: 1em; }
-.rx-home-route__rows dd li::before {
+.rx-home-route__mark {
+  font-family: var(--hm-num);
+  font-weight: 700;
+  font-size: clamp(.9375rem, .88rem + .35vw, 1.25rem);
+  letter-spacing: .04em;
+  color: var(--rx-accent);
+  text-align: center;
+}
+.rx-home-route__name {
+  font-family: var(--hm-sans);
+  font-weight: 900;
+  font-size: clamp(1.0625rem, .95rem + .55vw, 1.5rem);   /* 一番読ませる */
+  line-height: 1.45;
+  letter-spacing: .02em;
+  color: var(--hm-ink);
+  transition: color .2s ease;
+}
+.rx-home-route__desc {
+  font-weight: 700;
+  font-size: clamp(.8125rem, .78rem + .25vw, .9375rem);
+  line-height: 1.75;
+  color: #4d5871;
+}
+.rx-home-route__issues {
+  display: grid;
+  gap: .35em;
+  font-size: clamp(.75rem, .72rem + .15vw, .8125rem);
+  line-height: 1.75;
+  color: var(--rx-text-muted);
+}
+.rx-home-route__issues li { position: relative; padding-left: 1.2em; }
+.rx-home-route__issues li::before {               /* アイコンではなく細い罫で列挙を示す */
   content: "";
   position: absolute;
-  left: 0; top: .78em;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--hm-ink);
-  opacity: .5;
+  left: 0;
+  top: .82em;
+  width: .7em;
+  height: 1px;
+  background: rgba(var(--rx-accent-rgb), .45);
 }
-.rx-home-route__extra {
-  margin-top: 8px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: var(--hm-alt);
-  font-size: .8125rem;
-  line-height: 1.7;
-  color: var(--hm-muted);
+.rx-home-route__arrow {
+  justify-self: end;
+  width: .5em;
+  height: .5em;
+  border-top: 2px solid var(--rx-accent);
+  border-right: 2px solid var(--rx-accent);
+  transform: rotate(45deg);
+  font-size: clamp(1rem, .9rem + .5vw, 1.375rem);
+  transition: translate .2s ease;
 }
+/* ルート詳細ページができて <a> にしたときだけ効く控えめなhover */
+a.rx-home-route { text-decoration: none; }
+a.rx-home-route:hover { background: rgba(var(--rx-accent-rgb), .04); }
+a.rx-home-route:hover .rx-home-route__name { color: var(--rx-accent); }
+a.rx-home-route:hover .rx-home-route__arrow { translate: 3px 0; }
+a.rx-home-route:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .45); outline-offset: 2px; }
+
+.rx-home-routes__note {
+  margin-top: clamp(18px, 2.2vw, 28px);
+  font-size: clamp(.6875rem, .66rem + .12vw, .75rem);
+  line-height: 1.8;
+  color: var(--rx-text-muted);
+}
+
+/* =========================== PC（横一列の比較） =========================== */
+@media (min-width: 1025px) {
+  .rx-home-route {
+    grid-template-columns: auto minmax(2.2em, auto) minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 1.5fr) auto;
+  }
+}
+/* =========================== タブレット・スマホ（縦に組み替え・罫線は維持） =========================== */
 @media (max-width: 1024px) {
-  .rx-home-routes__list { grid-template-columns: 1fr; max-width: 640px; margin-inline: auto; }
+  .rx-home-route {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "no   mark   arrow"
+      "name name   name"
+      "desc desc   desc"
+      "iss  iss    iss";
+    justify-items: start;
+    align-items: center;
+    gap: clamp(6px, 1vw, 12px) clamp(10px, 1.6vw, 18px);
+  }
+  .rx-home-route__no     { grid-area: no; }
+  .rx-home-route__mark   { grid-area: mark; justify-self: start; }
+  .rx-home-route__name   { grid-area: name; margin-top: .2em; }
+  .rx-home-route__desc   { grid-area: desc; }
+  .rx-home-route__issues { grid-area: iss; margin-top: .3em; }
+  .rx-home-route__arrow  { grid-area: arrow; align-self: center; }
 }
 
 /* =========================================================================
