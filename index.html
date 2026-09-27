@@ -17,8 +17,8 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="images/home/hero-reading.webp" fetchpriority="high">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700&family=Inter:wght@500;700&display=swap">
+  <link rel="preload" as="image" href="images/home/hero-creator.webp" fetchpriority="high">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700;900&family=Klee+One:wght@600&family=Inter:wght@500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/home.css">
@@ -75,33 +75,41 @@
 
   <main class="rx-home">
 
-    <!-- ===================== 1. HERO（資料 p1・p13・p15） ===================== -->
+    <!-- ===================== 1. HERO（2026-09 リデザイン案準拠）
+         左=コピー / 右=クリエイターのビジュアル（右端まで到達）。
+         背景の薄ピンクの斜め面は装飾のみ（aria-hidden）。
+         写真は images/home/hero-creator.webp を差し替えるだけで更新できる
+         （現物は生成待ちのプレースホルダー。1600x1400・人物は右寄り） ===================== -->
     <section class="rx-home-hero" id="hero" aria-labelledby="heroHeading">
-      <div class="rx-home-hero__stage">
-      <div class="rx-home__inner rx-home-hero__inner">
+      <div class="rx-home-hero__deco" aria-hidden="true">
+        <span class="rx-home-hero__wedge"></span>
+        <span class="rx-home-hero__band"></span>
+      </div>
+
+      <div class="rx-home-hero__inner">
         <div class="rx-home-hero__copy">
-          <p class="rx-home-eyebrow">コンテンツ採用</p>
-          <h1 class="rx-home-hero__title" id="heroHeading"><span class="rx-home-hero__title-line">会社の魅力を、</span><span class="rx-home-hero__title-line"><span class="rx-home-hero__word rx-home-accent">人</span><span class="rx-home-hero__word">にも</span><span class="rx-home-hero__word rx-home-accent">AI</span><span class="rx-home-hero__word">にも</span></span><span class="rx-home-hero__title-line">届ける採用へ</span></h1>
-          <p class="rx-home-hero__lead">1回の取材から、採用漫画・アニメ・記事・掲載ページを制作。求人広告から面接前、AI検索まで、候補者が会社を理解できる接点をつくります。</p>
-          <div class="rx-home-hero__actions">
-            <a class="rx-btn rx-btn--primary" href="contact.html?source=free-diagnosis">無料診断を申し込む<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            <a class="rx-home-textlink" href="#service">仕組みを見る</a>
-          </div>
+          <p class="rx-home-hero__eyebrow">マンガ・アニメ・ゲーム業界の採用に</p>
+          <h1 class="rx-home-hero__title" id="heroHeading"><span class="rx-home-hero__title-line">採用に、</span><span class="rx-home-hero__title-line"><span class="rx-home-hero__mark">応募前の職場体験</span>を。</span></h1>
+          <p class="rx-home-hero__sub">「ここで働く」が、応募前に見える。</p>
+          <p class="rx-home-hero__lead">求人票だけでは伝わらない、仕事の中身、人、職場の空気、入社後の姿まで。ビズ採用は、会社のリアルをコンテンツに変え、応募する前から「働く自分」を想像できる採用をつくります。</p>
         </div>
 
-        <figure class="rx-home-hero__visual rx-anim">
-          <img class="rx-home-hero__photo" src="images/home/hero-reading.webp"
-               alt="電車の中でスマートフォンの採用漫画を読む女性"
-               width="1448" height="1086" loading="eager" fetchpriority="high" decoding="async">
-          <img class="rx-home-hero__photo-sub" src="images/home/interview.webp"
-               alt="社員インタビューを撮影する取材の様子"
-               width="1400" height="1050" loading="eager" decoding="async">
-          <span class="rx-home-hero__dot rx-home-hero__dot--lg" aria-hidden="true"></span>
-          <span class="rx-home-hero__dot rx-home-hero__dot--sm" aria-hidden="true"></span>
-          <span class="rx-home-hero__ring" aria-hidden="true"></span>
+        <!-- CTAは grid-template-areas で配置する（PC=コピーの下 / SP=ビジュアルの下） -->
+        <div class="rx-home-hero__actions">
+          <a class="rx-btn rx-btn--primary rx-home-hero__btn" href="contact.html?source=document-download">資料をダウンロードする<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="rx-btn rx-home-hero__btn rx-home-hero__btn--line" href="contact.html">お問い合わせ<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+
+        <figure class="rx-home-hero__visual">
+          <img class="rx-home-hero__photo" src="images/home/hero-creator.webp"
+               alt="液晶タブレットでキャラクターを描くクリエイターと、制作中のイラストが並ぶ明るいスタジオ"
+               width="1600" height="1400" loading="eager" fetchpriority="high" decoding="async">
+          <figcaption class="rx-home-hero__memo"><span>好きな仕事で、</span><span>未来をつくる。</span></figcaption>
         </figure>
       </div>
-      </div>
+
+      <!-- 左下は全ページ共通の追従CTA（.rx-fab）が占有するため、デザイン案の「SCROLL」は置かない -->
+      <p class="rx-home-hero__pager" aria-hidden="true"><span class="rx-home-hero__pager-now">01</span><span class="rx-home-hero__pager-rule"></span><span>02</span><span>03</span></p>
     </section>
 
     <!-- ===================== 2. 実績（資料 p26） ===================== -->

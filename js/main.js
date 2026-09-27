@@ -4,7 +4,7 @@
    - IntersectionObserver による軽い入場アニメ（.rx-anim → .is-in）
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
    - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
-   - ホームの動き: ヒーローの進行度(--rx-hero-p)・見出しの文字分割・出現・数字のカウントアップ
+   - ホームの動き: 見出しの文字分割・出現・数字のカウントアップ
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
    ========================================================================= */
@@ -61,8 +61,7 @@
   }
 })();
 
-/* ホームの動き（ヒーロー / 見出し / 出現 / 数字）
-   - ヒーロー: スクロール進行度を --rx-hero-p(0〜1) としてCSSへ渡す（動きの実体は home.css）
+/* ホームの動き（見出し / 出現 / 数字）
    - 見出し: .rx-home-h2 を1文字ずつ <span class="rx-home-char"> に分け、順に出す
    - 出現: [data-reveal] とカード類を IntersectionObserver で表示
    - 数字: 実績・調査データの数値をカウントアップ
@@ -72,34 +71,6 @@
 
   if (!document.querySelector('.rx-home')) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  /* ---- ヒーロー: スクロール進行度 ---- */
-  var hero = document.querySelector('.rx-home-hero');
-  if (hero) {
-    var ticking = false;
-    var span = 1;
-
-    var measure = function () {
-      span = Math.max(hero.offsetHeight - window.innerHeight, hero.offsetHeight * 0.5);
-    };
-    var update = function () {
-      ticking = false;
-      var p = -hero.getBoundingClientRect().top / span;
-      if (p < 0) p = 0; else if (p > 1) p = 1;
-      hero.style.setProperty('--rx-hero-p', p.toFixed(3));
-      hero.style.setProperty('--rx-hero-shift', p.toFixed(3));
-    };
-    var onScroll = function () {
-      if (ticking) return;
-      ticking = true;
-      window.requestAnimationFrame(update);
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', function () { measure(); onScroll(); }, { passive: true });
-    measure();
-    update();
-  }
 
   /* ---- 見出しを1文字ずつに分ける（改行・色付きspanは保持） ---- */
   function splitChars(el) {

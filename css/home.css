@@ -152,99 +152,298 @@
 .rx-ill__ai { fill: var(--rx-accent); stroke: none; font-family: var(--hm-num); font-weight: 700; font-size: 20px; }
 
 /* =========================================================================
-   1. ヒーロー
+   1. ヒーロー（2026-09 デザイン案: 左=コピー / 右=クリエイターのビジュアル）
+   - 白ベース＋ごく薄いピンクの斜め面。装飾は .rx-home-hero__deco に集約（aria-hidden）
+   - PCは写真を画面の右端・上下端まで到達させ、左端をマスクで白へ溶かしてコピーと地続きに見せる
+   - 並びは grid-template-areas で切り替える（PC: コピー→CTA / SP: コピー→ビジュアル→CTA）
+   - 動きは「少し下から出る」だけ。視差・追従は使わない（prefers-reduced-motion: reduce で静止）
    ========================================================================= */
 .rx-home-hero {
+  --hero-cw:  1200px;                        /* .rx-home__inner と同じコンテナ幅 */
+  --hero-pad: clamp(16px, 4vw, 40px);        /* .rx-home__inner と同じ左右余白 */
+  --hero-pt:  calc(var(--rx-header-h) + clamp(24px, 4vw, 64px));   /* 固定ヘッダー分（§13） */
+  --hero-pb:  clamp(48px, 6vw, 96px);
   position: relative;
-  /* ⚠️ ここに overflow: clip を付けると内側の position: sticky が効かなくなる。
-     はみ出しの切り取りは sticky 側（.rx-home-hero__stage）で行う */
-  padding: calc(var(--rx-header-h) + clamp(32px, 6vw, 88px)) 0 clamp(56px, 7vw, 104px);
-  background:
-    radial-gradient(60% 70% at 88% 30%, rgba(var(--rx-accent-rgb), .07), transparent 70%),
-    #fff;
+  overflow: clip;                            /* 斜め装飾・写真のはみ出しを切る（横スクロール防止・§8） */
+  background: #fff;
+  padding: var(--hero-pt) 0 var(--hero-pb);
 }
-/* スクロール連動の拡大を有効にするステージ（画面に固定し、ヒーローの高さぶん粘る） */
-@media (prefers-reduced-motion: no-preference) and (min-width: 601px) {
-  .rx-home-hero { height: 240svh; padding: 0; }
-  .rx-home-hero__stage {
-    position: sticky;
-    top: 0;
-    overflow: clip;                                 /* 拡大した写真を画面内で切り取る */
-    min-height: 100svh;
-    display: grid;
-    align-items: center;
-    padding: calc(var(--rx-header-h) + clamp(16px, 3vw, 48px)) 0 clamp(32px, 5vw, 72px);
-  }
+@media (min-width: 1440px) { .rx-home-hero { --hero-cw: 1280px; } }
+@media (min-width: 1920px) { .rx-home-hero { --hero-cw: 1400px; } }
+
+/* --- 背景の斜め装飾（文字の下。可読性を落とさない濃さに留める） --- */
+.rx-home-hero__deco {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-base);
+  pointer-events: none;
 }
+.rx-home-hero__wedge {
+  position: absolute;
+  right: -8%; top: -20%;
+  width: 72%; height: 96%;
+  background: rgba(var(--rx-accent-rgb), .06);
+  clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+}
+.rx-home-hero__band {
+  position: absolute;
+  left: -12%; bottom: -14%;
+  width: 82%; height: 38%;
+  background: rgba(var(--rx-accent-rgb), .05);
+  clip-path: polygon(0 44%, 100% 0, 100% 60%, 0 100%);
+}
+
+/* --- レイアウト（既定=縦積み。左余白だけ .rx-home__inner と揃える） --- */
 .rx-home-hero__inner {
+  position: relative;
+  z-index: var(--z-elevated);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  align-items: center;
-  gap: clamp(32px, 5vw, 72px);
+  grid-template-areas: "copy" "visual" "actions";
+  gap: clamp(24px, 4vw, 40px);
+  padding-left: calc(max((100% - var(--hero-cw)) / 2, 0px) + var(--hero-pad));
+  padding-right: var(--hero-pad);
 }
-.rx-home-hero__copy { min-width: 0; }
-.rx-home-hero .rx-home-eyebrow { text-align: left; font-family: var(--hm-sans); letter-spacing: .12em; }
+.rx-home-hero__copy    { grid-area: copy; min-width: 0; }
+.rx-home-hero__actions { grid-area: actions; }
+.rx-home-hero__visual  { grid-area: visual; }
+
+/* --- コピー --- */
+.rx-home-hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .9em;
+  font-weight: 700;
+  font-size: clamp(.8125rem, .78rem + .2vw, .9375rem);
+  letter-spacing: .08em;
+  line-height: 1.6;
+  /* 小さいピンク文字は #ec2d87 だと白背景で 3.97:1 しか出ないため、同系の濃いピンク（4.9:1）を使う */
+  color: var(--rx-accent-hover);
+}
+.rx-home-hero__eyebrow::after {                 /* デザイン案の横罫 */
+  content: "";
+  flex: 0 0 auto;
+  width: clamp(28px, 5vw, 72px);
+  height: 1px;
+  background: currentColor;
+  opacity: .55;
+}
 .rx-home-hero__title {
-  font-family: var(--hm-serif);
-  font-weight: 600;
-  font-size: clamp(2rem, 1.2rem + 3vw, 3.75rem);
-  line-height: 1.35;
+  margin-top: clamp(14px, 1.6vw, 22px);
+  font-family: var(--hm-sans);
+  font-weight: 900;
+  /* 2行目「応募前の職場体験を。」= 10文字。PC〜SPのどの幅でも1行に収まる係数にしている
+     （横幅が足りずに折れると強調の意図が崩れるため、係数を変えるときは 320/375/1025/1920 で確認） */
+  font-size: clamp(2rem, 1.55rem + 1.8vw, 3.75rem);       /* 32 → 60px */
+  line-height: 1.26;
+  letter-spacing: 0;
+}
+.rx-home-hero__title-line { display: block; }
+.rx-home-hero__mark { color: var(--rx-accent); }
+.rx-home-hero__sub {
+  margin-top: clamp(14px, 1.8vw, 24px);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, .86rem + .9vw, 1.625rem);   /* 17 → 26px */
+  line-height: 1.6;
   letter-spacing: .02em;
 }
 .rx-home-hero__lead {
-  margin-top: clamp(20px, 2.4vw, 32px);
-  max-width: 34em;
-  font-size: clamp(.9375rem, .88rem + .3vw, 1.125rem);
-  line-height: 1.95;
-  color: var(--hm-muted);
+  margin-top: clamp(12px, 1.4vw, 18px);
+  max-width: 32em;
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 2;
+  color: var(--rx-text-muted);                  /* 白背景でコントラスト比 5:1 超 */
 }
+
+/* --- CTA（既存 .rx-btn を土台に、ヒーロー用の大きさと配色だけ足す） --- */
 .rx-home-hero__actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 28px;
-  margin-top: clamp(28px, 3.4vw, 44px);
+  gap: clamp(12px, 1.4vw, 18px);
 }
-/* ヒーローの写真: メイン（漫画を読む候補者）＋サブ（取材現場）を重ね、淡いピンクの円を添える */
+.rx-home-hero__btn {
+  gap: 1.2em;
+  padding: clamp(.95rem, .8rem + .6vw, 1.15rem) clamp(1.5rem, 1.15rem + 1.4vw, 2.4rem);
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
+}
+.rx-home .rx-home-hero__btn .rx-btn__chevron {
+  width: 1.05em;
+  height: 1.05em;
+  opacity: 1;
+  transition: transform .25s ease;
+}
+.rx-home-hero__btn--line {
+  background: #fff;
+  color: var(--rx-accent-hover);                /* 白背景でのコントラスト確保（上と同じ理由） */
+  border: 1.5px solid rgba(var(--rx-accent-rgb), .5);
+}
+/* hover は跳ねさせず、矢印・境界・背景だけを静かに動かす */
+.rx-home-hero .rx-btn:hover,
+.rx-home-hero .rx-btn:active { transform: none; }
+.rx-home-hero__btn:hover  .rx-btn__chevron,
+.rx-home-hero__btn:focus-visible .rx-btn__chevron { transform: translateX(4px); }
+.rx-home-hero__btn--line:hover,
+.rx-home-hero__btn--line:focus-visible {
+  background: rgba(var(--rx-accent-rgb), .06);
+  border-color: var(--rx-accent);
+}
+
+/* --- ビジュアル（差し替えは images/home/hero-creator.webp を置き換えるだけ） --- */
 .rx-home-hero__visual {
   position: relative;
   margin: 0;
   min-width: 0;
-  padding: 0 0 clamp(36px, 5vw, 64px) clamp(36px, 5vw, 72px);
+  border-radius: clamp(18px, 3vw, 28px);
+  overflow: hidden;
 }
 .rx-home-hero__photo {
+  display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: auto;
+  aspect-ratio: 16 / 12;                        /* 面積を先に確保してCLSを防ぐ */
   object-fit: cover;
-  border-radius: clamp(20px, 2.4vw, 32px);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, .14);
+  object-position: 62% center;                  /* 人物（右寄り）を残す */
+  background: var(--hm-pink-soft);              /* 読み込み前の下地 */
 }
-.rx-home-hero__photo-sub {
+/* 付箋のような白いメモ（実テキスト。画像化しない） */
+.rx-home-hero__memo {
   position: absolute;
-  left: 0;
-  bottom: 0;
-  width: clamp(150px, 26%, 260px);
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: clamp(14px, 1.6vw, 22px);
-  border: 5px solid #fff;
-  box-shadow: 0 18px 40px rgba(15, 23, 42, .16);
+  left: clamp(12px, 8%, 90px);
+  bottom: clamp(14px, 8%, 72px);
+  max-width: min(76%, 340px);
+  padding: clamp(11px, 1.2vw, 17px) clamp(15px, 1.8vw, 25px);
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, .16);
+  transform: rotate(-2.2deg);
+  font-family: 'Klee One', var(--hm-sans);
+  font-weight: 600;
+  font-size: clamp(.875rem, .78rem + .55vw, 1.3125rem);
+  line-height: 1.55;
+  letter-spacing: .02em;
+  color: var(--hm-ink);
 }
-.rx-home-hero__dot {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(var(--rx-accent-rgb), .14);
-}
-.rx-home-hero__dot--lg { width: clamp(90px, 12vw, 150px); aspect-ratio: 1; left: 2%; top: 6%; }
-.rx-home-hero__dot--sm { width: clamp(28px, 3.4vw, 44px); aspect-ratio: 1; right: -2%; bottom: 22%; background: rgba(var(--rx-accent-rgb), .28); }
+.rx-home-hero__memo span { display: block; }
+.rx-home-hero__memo span + span { margin-left: 1.1em; }
 
-@media (max-width: 1024px) {
-  .rx-home-hero__inner { grid-template-columns: 1fr; }
-  .rx-home-hero__visual { max-width: 640px; width: 100%; margin: 0 auto; }
+/* --- 補助装飾（PCのみ。意味を持たないため aria-hidden） --- */
+.rx-home-hero__pager { display: none; }
+
+/* =========================== PC（2カラム） =========================== */
+@media (min-width: 1025px) {
+  .rx-home-hero {
+    display: grid;
+    align-items: stretch;
+    min-height: min(100svh, 940px);
+  }
+  .rx-home-hero__inner {
+    /* 上下の 1fr でコピー＋CTAを中央に寄せつつ、写真の列だけヒーローの高さいっぱいに伸ばす */
+    grid-template-areas: ".       visual"
+                         "copy    visual"
+                         "actions visual"
+                         ".       visual";
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+    grid-template-rows: 1fr auto auto 1fr;
+    column-gap: clamp(24px, 3vw, 56px);
+    row-gap: clamp(28px, 3.2vw, 44px);
+    padding-right: 0;                            /* 写真を画面の右端まで届かせる */
+  }
+  .rx-home-hero__copy    { align-self: end; }
+  .rx-home-hero__actions { align-self: start; }
+
+  /* 写真はヒーローの上下端まで伸ばし、左端は白へ溶かしてコピーと地続きに見せる */
+  .rx-home-hero__visual {
+    align-self: stretch;
+    margin-top: calc(-1 * var(--hero-pt));
+    margin-bottom: calc(-1 * var(--hero-pb));
+    border-radius: 0;
+    overflow: visible;
+  }
+  .rx-home-hero__photo {
+    height: 100%;
+    aspect-ratio: auto;
+    object-position: 58% center;
+    -webkit-mask-image: linear-gradient(101deg, transparent 0, rgba(0, 0, 0, .35) 8%, #000 24%);
+            mask-image: linear-gradient(101deg, transparent 0, rgba(0, 0, 0, .35) 8%, #000 24%);
+  }
+  .rx-home-hero__memo { left: clamp(40px, 16%, 180px); bottom: clamp(56px, 13%, 150px); }
+
+  .rx-home-hero__pager {
+    position: absolute;
+    right: calc(max((100% - var(--hero-cw)) / 2, 0px) + var(--hero-pad));
+    bottom: clamp(20px, 2.6vw, 40px);
+    z-index: var(--z-elevated);
+    gap: 12px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-family: var(--hm-num);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    color: var(--rx-text-muted);
+    text-shadow: 0 1px 3px rgba(255, 255, 255, .8);
+  }
+  .rx-home-hero__pager-now { color: var(--rx-accent-hover); }
+  .rx-home-hero__pager-rule {
+    width: clamp(18px, 2vw, 32px);
+    height: 1px;
+    background: currentColor;
+    opacity: .5;
+  }
 }
+
+/* =========================== タブレット =========================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* CTAは写真の前（＝ファーストビュー内）に置く */
+  .rx-home-hero__inner { grid-template-areas: "copy" "actions" "visual"; max-width: 880px; margin-inline: auto; }
+  .rx-home-hero__photo { aspect-ratio: 16 / 9; object-position: 60% 38%; }
+  .rx-home-hero__lead  { max-width: 42em; }
+}
+
+/* =========================== スマートフォン =========================== */
 @media (max-width: 768px) {
-  .rx-home-hero__actions .rx-btn { width: 100%; }
-  .rx-home-hero__actions { justify-content: center; }
+  .rx-home-hero__photo { aspect-ratio: 16 / 11; object-position: 62% 32%; }  /* 顔が切れない位置 */
+  .rx-home-hero__title { line-height: 1.3; }
+  .rx-home-hero__actions { flex-direction: column; align-items: stretch; }
+  .rx-home-hero__btn { width: 100%; max-width: 420px; justify-content: center; }  /* 指で押しやすい幅に留める */
+  .rx-home-hero__lead { max-width: none; }
+}
+
+@media (max-width: 480px) {
+  /* 320px幅でも「応募前の職場体験を。」「ここで働く」…が1行に収まるところまで落とす */
+  .rx-home-hero__title { font-size: clamp(1.625rem, 1.15rem + 3.1vw, 2.125rem); }
+  .rx-home-hero__sub   { font-size: clamp(.9375rem, .8rem + 1.1vw, 1.125rem); letter-spacing: 0; }
+  .rx-home-hero__photo { aspect-ratio: 4 / 3.4; }
+  .rx-home-hero__memo  { left: 12px; bottom: 12px; max-width: 82%; }
+}
+
+/* --- 表示時の軽い立ち上がり（reduce では一切動かさない） --- */
+@media (prefers-reduced-motion: no-preference) {
+  .rx-home-hero__copy > *,
+  .rx-home-hero__actions,
+  .rx-home-hero__visual,
+  .rx-home-hero__pager {
+    opacity: 0;
+    animation: rx-hero-up .85s cubic-bezier(.22, 1, .36, 1) forwards;
+  }
+  .rx-home-hero__copy > *:nth-child(1) { animation-delay: .05s; }
+  .rx-home-hero__copy > *:nth-child(2) { animation-delay: .14s; }
+  .rx-home-hero__copy > *:nth-child(3) { animation-delay: .24s; }
+  .rx-home-hero__copy > *:nth-child(4) { animation-delay: .32s; }
+  .rx-home-hero__visual  { animation-delay: .22s; animation-duration: 1s; }
+  .rx-home-hero__actions { animation-delay: .46s; }                 /* CTAは最後 */
+  .rx-home-hero__pager   { animation-delay: .8s; }
+  .rx-home-hero__memo {
+    animation: rx-hero-memo .85s cubic-bezier(.22, 1, .36, 1) .62s both;
+  }
+}
+@keyframes rx-hero-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes rx-hero-memo {
+  from { opacity: 0; transform: translateY(16px) rotate(-2.2deg); }
+  to   { opacity: 1; transform: rotate(-2.2deg); }
 }
 
 /* =========================================================================
@@ -941,147 +1140,6 @@
 /* ヘッダーCTA: 狭いSPでは「無料診断」だけにしてハンバーガーを画面内に保つ（DEVICE-RULES §7） */
 @media (max-width: 480px) {
   .rx-nav__cta-more { display: none; }
-}
-
-/* =========================================================================
-   ヒーローの動き（読み込み時のカスケード＋写真のゆっくり寄り＋スクロール視差）
-   - prefers-reduced-motion: reduce では一切動かさない（DEVICE-RULES §6/§16の方針）
-   - 視差は js/main.js が --rx-hero-shift を更新（transform のみ・レイアウトを揺らさない）
-   ========================================================================= */
-@media (prefers-reduced-motion: no-preference) {
-  .rx-home-hero__copy > * {
-    opacity: 0;
-    animation: rx-hero-in .9s cubic-bezier(.22, 1, .36, 1) forwards;
-  }
-  .rx-home-hero__copy > *:nth-child(1) { animation-delay: .05s; }
-  .rx-home-hero__copy > *:nth-child(2) { animation-delay: .16s; }
-  .rx-home-hero__copy > *:nth-child(3) { animation-delay: .28s; }
-  .rx-home-hero__copy > *:nth-child(4) { animation-delay: .40s; }
-
-  /* 見出しは3行が下から順に立ち上がる */
-  .rx-home-hero__title { animation: none; opacity: 1; }
-  .rx-home-hero__title-line {
-    display: block;
-    opacity: 0;
-    animation: rx-hero-line .95s cubic-bezier(.22, 1, .36, 1) forwards;
-  }
-  .rx-home-hero__title-line:nth-child(1) { animation-delay: .12s; }
-  .rx-home-hero__title-line:nth-child(2) { animation-delay: .24s; }
-  .rx-home-hero__title-line:nth-child(3) { animation-delay: .36s; }
-
-  /* 写真は拭うように現れ、その後ゆっくり寄る（枠は動かさず中身だけ拡大） */
-  .rx-home-hero__photo {
-    animation: rx-hero-reveal 1.1s cubic-bezier(.22, 1, .36, 1) .25s both,
-               rx-hero-zoom 12s ease-out 1.2s forwards;
-  }
-  .rx-home-hero__visual { animation: rx-hero-in 1.05s cubic-bezier(.22, 1, .36, 1) .25s both; }
-
-  /* スクロールで主役写真・副写真・装飾円が別の速さで動く（視差） */
-  .rx-home-hero__photo  { transform: translateY(calc(var(--rx-hero-shift, 0) * -60px)); }
-  .rx-home-hero__photo-sub { transform: translateY(calc(var(--rx-hero-shift, 0) * 90px)); }
-  .rx-home-hero__dot--lg {
-    transform: translateY(calc(var(--rx-hero-shift, 0) * -120px));
-    animation: rx-hero-float 7s ease-in-out 1.4s infinite;
-  }
-  .rx-home-hero__dot--sm {
-    transform: translateY(calc(var(--rx-hero-shift, 0) * 80px));
-    animation: rx-hero-float 5.5s ease-in-out 2s infinite reverse;
-  }
-}
-
-@keyframes rx-hero-in {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes rx-hero-line {
-  from { opacity: 0; transform: translateY(46px); }
-  to   { opacity: 1; transform: none; }
-}
-/* 写真は下から拭うように現れ、そのあとゆっくり寄る */
-@keyframes rx-hero-reveal {
-  from { opacity: 0; clip-path: inset(18% 0 0 0 round clamp(20px, 2.4vw, 32px)); }
-  to   { opacity: 1; clip-path: inset(0 0 0 0 round clamp(20px, 2.4vw, 32px)); }
-}
-@keyframes rx-hero-zoom {
-  from { scale: 1; }
-  to   { scale: 1.12; }
-}
-/* 装飾の円はゆっくり上下に漂う */
-@keyframes rx-hero-float {
-  0%, 100% { translate: 0 0; }
-  50%      { translate: 0 -14px; }
-}
-
-/* =========================================================================
-   ヒーローの動き 第2版（A スクロール連動の拡大 / C 見出しの語ごと / D 図形）
-   進行度は js/main.js が --rx-hero-p（0〜1）として渡す
-   ========================================================================= */
-@media (prefers-reduced-motion: no-preference) {
-  /* C: 見出しは行→語の順に遅れて出る */
-  .rx-home-hero__word {
-    display: inline-block;
-    opacity: 0;
-    animation: rx-hero-word 1s cubic-bezier(.22, 1, .36, 1) forwards;
-  }
-  .rx-home-hero__word:nth-child(1) { animation-delay: .30s; }
-  .rx-home-hero__word:nth-child(2) { animation-delay: .38s; }
-  .rx-home-hero__word:nth-child(3) { animation-delay: .46s; }
-  .rx-home-hero__word:nth-child(4) { animation-delay: .54s; }
-
-  /* A: スクロールに合わせて主役写真が拡大し、コピーは引いていく */
-  .rx-home-hero__photo {
-    transform:
-      translateY(calc(var(--rx-hero-p, 0) * -2%))
-      translateX(calc(var(--rx-hero-p, 0) * -28%))
-      scale(calc(1 + var(--rx-hero-p, 0) * 1.75));
-    border-radius: calc((1 - var(--rx-hero-p, 0)) * clamp(20px, 2.4vw, 32px));
-    will-change: transform;
-  }
-  .rx-home-hero__copy {
-    transform: translateY(calc(var(--rx-hero-p, 0) * -70px));
-    opacity: calc(1 - var(--rx-hero-p, 0) * 1.5);
-  }
-  .rx-home-hero__photo-sub {
-    transform:
-      translateY(calc(var(--rx-hero-p, 0) * 120px))
-      rotate(calc(var(--rx-hero-p, 0) * -6deg));
-    opacity: calc(1 - var(--rx-hero-p, 0) * 1.8);
-  }
-
-  /* D: 図形が回りながら動く */
-  .rx-home-hero__dot--lg {
-    transform: translateY(calc(var(--rx-hero-p, 0) * -180px)) scale(calc(1 + var(--rx-hero-p, 0) * .6));
-    opacity: calc(1 - var(--rx-hero-p, 0) * 1.6);
-  }
-  .rx-home-hero__dot--sm {
-    transform: translateY(calc(var(--rx-hero-p, 0) * 140px));
-    opacity: calc(1 - var(--rx-hero-p, 0) * 1.6);
-  }
-  .rx-home-hero__ring {
-    animation: rx-hero-spin 26s linear infinite;
-    rotate: calc(var(--rx-hero-p, 0) * 120deg);
-    opacity: calc(1 - var(--rx-hero-p, 0) * 1.8);
-  }
-}
-
-/* 回転するリング（装飾・D案） */
-.rx-home-hero__ring {
-  position: absolute;
-  right: 6%;
-  top: -6%;
-  width: clamp(80px, 11vw, 150px);
-  aspect-ratio: 1;
-  border: 2px dashed rgba(var(--rx-accent-rgb), .45);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-@keyframes rx-hero-word {
-  from { opacity: 0; transform: translateY(34px) rotate(4deg); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes rx-hero-spin {
-  to { rotate: 360deg; }
 }
 
 /* =========================================================================
