@@ -369,26 +369,37 @@
   object-position: 70% center;                  /* 素材は16:9・人物が右寄り。顔（横69%付近）を基準に切る */
   background: var(--hm-pink-soft);              /* 読み込み前の下地 */
 }
-/* 付箋のような白いメモ（実テキスト。画像化しない） */
+/* 手書きのひとこと（実テキスト。画像化しない）
+   1枚のカードにすると浮いて見えるため、2行を別々の紙片として少しずらして重ねる */
 .rx-home-hero__memo {
   position: absolute;
   left: clamp(12px, 8%, 90px);
   bottom: clamp(14px, 8%, 72px);
-  max-width: min(76%, 340px);
-  padding: clamp(11px, 1.2vw, 17px) clamp(15px, 1.8vw, 25px);
-  background: #fff;
-  border-radius: 5px;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, .16);
-  transform: rotate(-2.2deg);
-  font-family: 'Klee One', var(--hm-sans);
-  font-weight: 600;
-  font-size: clamp(.875rem, .78rem + .55vw, 1.3125rem);
-  line-height: 1.55;
-  letter-spacing: .02em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(5px, .7vw, 10px);
+  max-width: min(80%, 360px);
+  font-family: 'Yomogi', var(--hm-sans);          /* 手書き風（可読性優先） */
+  font-weight: 400;
+  font-size: clamp(.9375rem, .78rem + .82vw, 1.625rem);
+  line-height: 1.5;
+  letter-spacing: .03em;
   color: var(--hm-ink);
 }
-.rx-home-hero__memo span { display: block; }
-.rx-home-hero__memo span + span { margin-left: 1.1em; }
+.rx-home-hero__memo-line {
+  display: inline-block;
+  padding: .28em .8em .34em;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, .1);    /* 机に置いた紙くらいの影に留める */
+  transform: rotate(-2.4deg);
+  white-space: nowrap;
+}
+.rx-home-hero__memo-line:nth-child(2) {
+  margin-left: 1.5em;
+  transform: rotate(-1.2deg);
+}
+.rx-home-hero__memo-hl { color: var(--rx-accent); }
 
 /* --- 補助装飾（PCのみ。意味を持たないため aria-hidden） --- */
 .rx-home-hero__scroll,
@@ -553,16 +564,12 @@
   .rx-home-hero__actions { animation-delay: .46s; }                 /* CTAは最後 */
   .rx-home-hero__pager   { animation-delay: .8s; }
   .rx-home-hero__memo {
-    animation: rx-hero-memo .85s cubic-bezier(.22, 1, .36, 1) .62s both;
+    animation: rx-hero-up .85s cubic-bezier(.22, 1, .36, 1) .62s both;
   }
 }
 @keyframes rx-hero-up {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: none; }
-}
-@keyframes rx-hero-memo {
-  from { opacity: 0; transform: translateY(16px) rotate(-2.2deg); }
-  to   { opacity: 1; transform: rotate(-2.2deg); }
 }
 
 /* =========================================================================

@@ -69,7 +69,7 @@
 | 本文・ナビ・補足 | **Zen Kaku Gothic Antique** | 400 / 500 / 700 | 0 | 1.85 | 筑紫ゴシックの代替（上品な丸み） |
 | 英字・数字 | **Inter** | 500 / 700 | `-.01em` | 1.4 | Helvetica Now Display の代替 |
 | ホームのヒーロー見出し | **Zen Kaku Gothic Antique 900** | 900 | 0 | 1.26 | 2026-09-27 のデザイン案が太ゴシック基調のため、ホームのヒーロー（`.rx-home-hero__title`）だけ明朝ではなくゴシック900を使う |
-| 付箋・手書き風の一言 | **Klee One** | 600 | `.02em` | 1.55 | ホームのヒーローの付箋コピー（`.rx-home-hero__memo`）専用。多用しない |
+| 手書き風の一言 | **Yomogi** | 400 | `.03em` | 1.5 | ホームのヒーローの紙片コピー（`.rx-home-hero__memo`）専用。多用しない |
 
 ```css
 /* 見出し（明朝でモーメントを） */
@@ -82,7 +82,7 @@ font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 
 - 旧 `Zen Kaku Gothic New` `Noto Sans JP` は**廃止**。
 - 本番は自前ホスト(WOFF2)＋和文サブセット（[DEVICE-RULES.md](DEVICE-RULES.md) §16）。**明朝は字形が多いのでサブセット必須**（フル字形は数MB）。
-- 読込ウェイトを絞る — Shippori=500/600、Zen Kaku Gothic Antique=400/500/700（**index.html のみ 900 を追加**＝ヒーロー見出し用）、Inter=500/700。Klee One 600 は index.html のみ読み込む。
+- 読込ウェイトを絞る — Shippori=500/600、Zen Kaku Gothic Antique=400/500/700（**index.html のみ 900 を追加**＝ヒーロー見出し用）、Inter=500/700。Yomogi（400のみ）は index.html のみ読み込む。
 
 ## タイポスケール / ボタン / コンテナ幅
 
