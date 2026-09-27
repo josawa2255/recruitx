@@ -503,11 +503,12 @@
     </section>
 
     <!-- ===================== 7. 導入事例（2026-09-27 デザイン案準拠）
-         ⚠️ 事例の会社名・課題・施策・数値は **case/{slug}/index.html（原典）からの転記のみ**。
+         ⚠️ カードは **tools/data/home-cases.json ＋ tools/build-home-cases.py で生成**する。
+            このファイルを直接編集せず、JSONを直して `python3 tools/build-home-cases.py` を実行する。
+            事例の会社名・課題・施策・数値は **case/{slug}/index.html（原典）からの転記のみ**。
             数値を別の企業へ割り当てたり、推測で書き足したりしない。
-            タグは「業種」＋「採用区分」＝case.html の既存分類に合わせている
-            （デザイン案の「改善ルートタグ」は、どの事例がA/B/AIに当たるかの正式な情報が
-             無いため未実装。確定したら rx-home-case__tag--route を1つ足すだけでよい）
+            タグは「業種」＋「採用区分」＝case.html の既存分類。改善ルート（A/B/AI）は
+            正式な対応関係が確定したときだけ JSON の route に入れる（null なら出ない）
          ===================== -->
     <section class="rx-home-cases" id="cases" aria-labelledby="casesHeading">
       <div class="rx-home-cases__deco" aria-hidden="true">
@@ -519,120 +520,125 @@
         <h2 class="rx-home-cases__title" id="casesHeading"><span class="rx-home-accent">成果</span>につながった企業の変化を、<br><span class="rx-home-accent">導入事例</span>で紹介。</h2>
         <p class="rx-home-cases__lead">実際にご利用いただいた企業の事例から、採用課題の解決プロセスと成果をご紹介します。</p>
 
-        <!-- メイン事例 -->
-        <a class="rx-home-case rx-home-case--lead rx-anim" href="case/tram/">
-          <figure class="rx-home-case__media">
-            <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/tram-main-1024x1024.webp"
-                 alt="株式会社トラム様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
-          </figure>
-          <div class="rx-home-case__body">
-            <p class="rx-home-case__tags">
-              <span class="rx-home-case__tag">飲食</span>
-              <span class="rx-home-case__tag rx-home-case__tag--sub">正社員採用</span>
-            </p>
-            <h3 class="rx-home-case__company">株式会社トラム様</h3>
-            <p class="rx-home-case__desc">12店舗を展開する飲食企業。広告費をかけても応募・採用につながらず、採用単価が150万円まで上がっていました。</p>
-
-            <div class="rx-home-case__flow">
-              <div class="rx-home-case__step">
-                <span class="rx-home-case__label">課題</span>
-                <p class="rx-home-case__step-name">応募が集まらない<br>採用単価が高い</p>
-                <p class="rx-home-case__step-text">求人票が機能しておらず、広告費が採用に結びついていなかった。</p>
-              </div>
-              <span class="rx-home-case__arrow" aria-hidden="true"></span>
-              <div class="rx-home-case__step">
-                <span class="rx-home-case__label rx-home-case__label--act">施策</span>
-                <p class="rx-home-case__step-name">求人票の全面改訂</p>
-                <p class="rx-home-case__step-text">KPI調査・競合調査をもとに求人票を作り直し、週次で運用を管理。</p>
-              </div>
-              <span class="rx-home-case__arrow" aria-hidden="true"></span>
-              <div class="rx-home-case__result">
-                <span class="rx-home-case__label rx-home-case__label--res">成果</span>
-                <div class="rx-home-case__kpis">
-                  <p class="rx-home-case__kpi">
-                    <span class="rx-home-case__kpi-label">月間応募数</span>
-                    <span class="rx-home-case__kpi-value"><b>約52</b><small>倍</small></span>
-                  </p>
-                  <p class="rx-home-case__kpi">
-                    <span class="rx-home-case__kpi-label">採用単価</span>
-                    <span class="rx-home-case__kpi-value"><b>92</b><small>%減</small></span>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <span class="rx-home-case__more">導入事例を見る<span class="rx-home-case__more-arrow" aria-hidden="true"></span></span>
-          </div>
-        </a>
-
-        <!-- サブ事例2件 -->
-        <div class="rx-home-cases__sub">
-          <a class="rx-home-case rx-home-case--sub rx-anim" href="case/r-associates/">
+        <!-- 事例カードは tools/data/home-cases.json ＋ tools/build-home-cases.py で生成する（直接編集しない） -->
+        <!-- BUILD:HOME_CASES -->
+          <a class="rx-home-case rx-home-case--lead rx-anim" href="case/tram/">
             <figure class="rx-home-case__media">
-              <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/r-associates-main-1-1024x1024.webp"
-                   alt="株式会社アール・アソシエイツ様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
+              <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/tram-main-1024x1024.webp"
+                   alt="株式会社トラム様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
             </figure>
             <div class="rx-home-case__body">
               <p class="rx-home-case__tags">
-                <span class="rx-home-case__tag">家事代行</span>
-                <span class="rx-home-case__tag rx-home-case__tag--sub">スタッフ採用</span>
-              </p>
-              <h3 class="rx-home-case__company">株式会社アール・アソシエイツ様</h3>
-              <p class="rx-home-case__desc">給与条件を変えずに、応募数と単価の両方を改善。</p>
-              <div class="rx-home-case__flow">
-                <div class="rx-home-case__step">
-                  <span class="rx-home-case__label">課題</span>
-                  <p class="rx-home-case__step-name">応募が月10名</p>
-                </div>
-                <div class="rx-home-case__step">
-                  <span class="rx-home-case__label rx-home-case__label--act">施策</span>
-                  <p class="rx-home-case__step-name">求人票の全面改訂</p>
-                </div>
-                <div class="rx-home-case__result">
-                  <span class="rx-home-case__label rx-home-case__label--res">成果</span>
-                  <p class="rx-home-case__kpi">
-                    <span class="rx-home-case__kpi-label">応募数</span>
-                    <span class="rx-home-case__kpi-value"><b>5.4</b><small>倍</small></span>
-                  </p>
-                </div>
-              </div>
-              <span class="rx-home-case__more">導入事例を見る<span class="rx-home-case__more-arrow" aria-hidden="true"></span></span>
-            </div>
-          </a>
-
-          <a class="rx-home-case rx-home-case--sub rx-anim" href="case/kanedai-ohashi/">
-            <figure class="rx-home-case__media">
-              <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/kanedai-ohashi-main-1-1024x1024.webp"
-                   alt="株式会社カネダイ大橋牧場様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
-            </figure>
-            <div class="rx-home-case__body">
-              <p class="rx-home-case__tags">
-                <span class="rx-home-case__tag">牧場・畜産</span>
+                <span class="rx-home-case__tag">飲食</span>
                 <span class="rx-home-case__tag rx-home-case__tag--sub">正社員採用</span>
               </p>
-              <h3 class="rx-home-case__company">株式会社カネダイ大橋牧場様</h3>
-              <p class="rx-home-case__desc">1年間応募0名から、3か月で63名の応募に。</p>
+              <h3 class="rx-home-case__company">株式会社トラム様</h3>
+              <p class="rx-home-case__desc">12店舗を展開する飲食企業。広告費をかけても応募・採用につながらず、採用単価が150万円まで上がっていました。</p>
+
               <div class="rx-home-case__flow">
                 <div class="rx-home-case__step">
                   <span class="rx-home-case__label">課題</span>
-                  <p class="rx-home-case__step-name">1年間、応募0名</p>
+                  <p class="rx-home-case__step-name">応募が集まらない<br>採用単価が高い</p>
+                  <p class="rx-home-case__step-text">求人票が機能しておらず、広告費が採用に結びついていなかった。</p>
                 </div>
+                <span class="rx-home-case__arrow" aria-hidden="true"></span>
                 <div class="rx-home-case__step">
                   <span class="rx-home-case__label rx-home-case__label--act">施策</span>
                   <p class="rx-home-case__step-name">求人票の全面改訂</p>
+                  <p class="rx-home-case__step-text">KPI調査・競合調査をもとに求人票を作り直し、週次で運用を管理。</p>
                 </div>
+                <span class="rx-home-case__arrow" aria-hidden="true"></span>
                 <div class="rx-home-case__result">
                   <span class="rx-home-case__label rx-home-case__label--res">成果</span>
-                  <p class="rx-home-case__kpi">
-                    <span class="rx-home-case__kpi-label">応募数</span>
-                    <span class="rx-home-case__kpi-value"><b>63</b><small>名</small></span>
-                  </p>
+                  <div class="rx-home-case__kpis">
+                    <p class="rx-home-case__kpi">
+                      <span class="rx-home-case__kpi-label">月間応募数</span>
+                      <span class="rx-home-case__kpi-value"><b>約52</b><small>倍</small></span>
+                    </p>
+                    <p class="rx-home-case__kpi">
+                      <span class="rx-home-case__kpi-label">採用単価</span>
+                      <span class="rx-home-case__kpi-value"><b>92</b><small>%減</small></span>
+                    </p>
+                  </div>
                 </div>
               </div>
+
               <span class="rx-home-case__more">導入事例を見る<span class="rx-home-case__more-arrow" aria-hidden="true"></span></span>
             </div>
           </a>
-        </div>
+
+          <div class="rx-home-cases__sub">
+            <a class="rx-home-case rx-home-case--sub rx-anim" href="case/r-associates/">
+              <figure class="rx-home-case__media">
+                <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/r-associates-main-1-1024x1024.webp"
+                     alt="株式会社アール・アソシエイツ様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
+              </figure>
+              <div class="rx-home-case__body">
+                <p class="rx-home-case__tags">
+                  <span class="rx-home-case__tag">家事代行</span>
+                  <span class="rx-home-case__tag rx-home-case__tag--sub">スタッフ採用</span>
+                </p>
+                <h3 class="rx-home-case__company">株式会社アール・アソシエイツ様</h3>
+                <p class="rx-home-case__desc">給与条件を変えずに、応募数と単価の両方を改善。</p>
+
+                <div class="rx-home-case__flow">
+                  <div class="rx-home-case__step">
+                    <span class="rx-home-case__label">課題</span>
+                    <p class="rx-home-case__step-name">応募が月10名</p>
+                  </div>
+                  <div class="rx-home-case__step">
+                    <span class="rx-home-case__label rx-home-case__label--act">施策</span>
+                    <p class="rx-home-case__step-name">求人票の全面改訂</p>
+                  </div>
+                  <div class="rx-home-case__result">
+                    <span class="rx-home-case__label rx-home-case__label--res">成果</span>
+                    <p class="rx-home-case__kpi">
+                      <span class="rx-home-case__kpi-label">応募数</span>
+                      <span class="rx-home-case__kpi-value"><b>5.4</b><small>倍</small></span>
+                    </p>
+                  </div>
+                </div>
+
+                <span class="rx-home-case__more">導入事例を見る<span class="rx-home-case__more-arrow" aria-hidden="true"></span></span>
+              </div>
+            </a>
+
+            <a class="rx-home-case rx-home-case--sub rx-anim" href="case/kanedai-ohashi/">
+              <figure class="rx-home-case__media">
+                <img src="https://cms.contentsx.jp/wp-content/uploads/2026/06/kanedai-ohashi-main-1-1024x1024.webp"
+                     alt="株式会社カネダイ大橋牧場様の採用成功事例" width="1024" height="1024" loading="lazy" decoding="async">
+              </figure>
+              <div class="rx-home-case__body">
+                <p class="rx-home-case__tags">
+                  <span class="rx-home-case__tag">牧場・畜産</span>
+                  <span class="rx-home-case__tag rx-home-case__tag--sub">正社員採用</span>
+                </p>
+                <h3 class="rx-home-case__company">株式会社カネダイ大橋牧場様</h3>
+                <p class="rx-home-case__desc">1年間応募0名から、3か月で63名の応募に。</p>
+
+                <div class="rx-home-case__flow">
+                  <div class="rx-home-case__step">
+                    <span class="rx-home-case__label">課題</span>
+                    <p class="rx-home-case__step-name">1年間、応募0名</p>
+                  </div>
+                  <div class="rx-home-case__step">
+                    <span class="rx-home-case__label rx-home-case__label--act">施策</span>
+                    <p class="rx-home-case__step-name">求人票の全面改訂</p>
+                  </div>
+                  <div class="rx-home-case__result">
+                    <span class="rx-home-case__label rx-home-case__label--res">成果</span>
+                    <p class="rx-home-case__kpi">
+                      <span class="rx-home-case__kpi-label">応募数</span>
+                      <span class="rx-home-case__kpi-value"><b>63</b><small>名</small></span>
+                    </p>
+                  </div>
+                </div>
+
+                <span class="rx-home-case__more">導入事例を見る<span class="rx-home-case__more-arrow" aria-hidden="true"></span></span>
+              </div>
+            </a>
+          </div>
+          <!-- /BUILD:HOME_CASES -->
 
         <p class="rx-home-cases__note">※各社の支援当時の実績です。成果を保証するものではありません。</p>
 
