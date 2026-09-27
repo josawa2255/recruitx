@@ -379,26 +379,23 @@
   flex-direction: column;
   align-items: flex-start;
   gap: clamp(5px, .7vw, 10px);
-  max-width: min(80%, 360px);
-  font-family: 'Yomogi', var(--hm-sans);          /* 手書き風（可読性優先） */
+  font-family: 'Yuji Boku', var(--hm-sans);       /* 筆ペン風（可読性優先） */
   font-weight: 400;
-  font-size: clamp(.9375rem, .78rem + .82vw, 1.625rem);
-  line-height: 1.5;
-  letter-spacing: .03em;
+  font-size: clamp(1rem, .6rem + 2.7vw, 3.25rem);   /* 参考デザイン相当の大きさ（1440pxで約48px） */
+  line-height: 1.45;
+  letter-spacing: .04em;
   color: var(--hm-ink);
 }
+/* 紙を机に置いたように、2枚とも同じ角度で傾け、2枚目を右下へずらす */
 .rx-home-hero__memo-line {
   display: inline-block;
-  padding: .28em .8em .34em;
+  padding: .2em .55em .28em;
   background: #fff;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, .1);    /* 机に置いた紙くらいの影に留める */
-  transform: rotate(-2.4deg);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, .13);
+  transform: rotate(-9deg);
   white-space: nowrap;
 }
-.rx-home-hero__memo-line:nth-child(2) {
-  margin-left: 1.5em;
-  transform: rotate(-1.2deg);
-}
+.rx-home-hero__memo-line:nth-child(2) { margin-left: 2.2em; }
 .rx-home-hero__memo-hl { color: var(--rx-accent); }
 
 /* --- 補助装飾（PCのみ。意味を持たないため aria-hidden） --- */
@@ -477,9 +474,9 @@
     pointer-events: none;
   }
   .rx-home-hero__memo {
-    left: 57%;
-    bottom: clamp(120px, 21%, 240px);            /* 人物・机に自然に重なる高さ */
-    max-width: min(30%, 360px);
+    left: 51%;
+    bottom: clamp(100px, 17%, 210px);            /* 人物・机に自然に重なる高さ */
+    gap: 2px;
   }
 
   .rx-home-hero__scroll,
@@ -513,12 +510,20 @@
     gap: 12px;
     color: #b7bcc7;                              /* 02 / 03 は薄いグレー */
   }
-  .rx-home-hero__pager-now { color: var(--rx-accent); }
-  .rx-home-hero__pager-rule {
-    width: clamp(20px, 2vw, 34px);
+  .rx-home-hero__pager-now { position: relative; color: var(--rx-accent); }
+  .rx-home-hero__pager-now::after {              /* 01 の下に短いピンクのライン */
+    content: "";
+    position: absolute;
+    left: 0; right: .22em; bottom: -7px;
     height: 2px;
     border-radius: 2px;
-    background: var(--rx-accent);                /* 01 の横に短いピンクのライン */
+    background: var(--rx-accent);
+  }
+  .rx-home-hero__pager-rule {
+    width: clamp(22px, 2.2vw, 38px);
+    height: 1px;
+    background: currentColor;
+    opacity: .75;
   }
 }
 
@@ -537,6 +542,10 @@
   .rx-home-hero__actions { flex-direction: column; align-items: stretch; }
   .rx-home-hero__btn { width: 100%; max-width: 420px; justify-content: center; }  /* 指で押しやすい幅に留める */
   .rx-home-hero__lead { max-width: none; }
+}
+
+@media (max-width: 1024px) {
+  .rx-home-hero__memo { left: clamp(12px, 6%, 64px); bottom: clamp(14px, 7%, 56px); }
 }
 
 @media (max-width: 480px) {
