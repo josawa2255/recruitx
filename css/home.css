@@ -1015,6 +1015,15 @@
   line-height: 1.6;
   color: var(--hm-ink);
 }
+.rx-home-market__src a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  text-decoration-color: rgba(var(--rx-accent-rgb), .45);
+}
+.rx-home-market__src a:hover,
+.rx-home-market__src a:focus-visible { color: var(--rx-accent-hover); }
+.rx-home-market__src-note { display: block; margin-top: .3em; }
 .rx-home-market__src {
   margin-top: clamp(20px, 2.4vw, 32px);
   padding-top: clamp(12px, 1.4vw, 18px);
