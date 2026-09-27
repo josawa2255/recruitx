@@ -272,7 +272,8 @@
 .rx-home-hero__visual  { grid-area: visual; }
 
 /* --- コピー --- */
-.rx-home-hero__eyebrow {
+.rx-home-hero__eyebrow,
+.rx-home-stats__eyebrow {                       /* 実績セクションのラベルも同じ表現にそろえる */
   display: flex;
   align-items: center;
   gap: .9em;
@@ -283,7 +284,8 @@
   /* 小さいピンク文字は #ec2d87 だと白背景で 3.97:1 しか出ないため、同系の濃いピンク（4.9:1）を使う */
   color: var(--rx-accent-hover);
 }
-.rx-home-hero__eyebrow::after {                 /* デザイン案の横罫 */
+.rx-home-hero__eyebrow::after,
+.rx-home-stats__eyebrow::after {                /* デザイン案の横罫 */
   content: "";
   flex: 0 0 auto;
   width: clamp(28px, 5vw, 72px);
@@ -582,44 +584,134 @@
 }
 
 /* =========================================================================
-   2. 実績（ヒーロー直下の帯）
+   2. 実績の数字（HEROの次・強さは「中」）
+   - 人物・写真・イラスト・グラフは使わない。数字そのものがビジュアル
+   - 背景は白＋ごく薄いピンクの斜め面（気づくか気づかない程度）
+   - ラベル・角丸・ピンク・書体・コンテナ幅はHEROと共通
    ========================================================================= */
-.rx-home-stats { padding: clamp(36px, 4.5vw, 56px) 0 clamp(24px, 3vw, 36px); }
+.rx-home-stats {
+  position: relative;
+  overflow: clip;                                /* 斜め装飾のはみ出しを切る（§8） */
+  background: #fff;
+  padding: clamp(72px, 8.5vw, 132px) 0 clamp(64px, 7.5vw, 116px);
+}
+.rx-home-stats__deco {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-base);
+  pointer-events: none;
+}
+.rx-home-stats__shape {
+  position: absolute;
+  background: rgba(var(--rx-accent-rgb), .038);  /* 文字の可読性を絶対に邪魔しない濃さ */
+}
+.rx-home-stats__shape--tr { right: -8%; top: -18%; width: 34%; height: 52%; clip-path: polygon(42% 0, 100% 0, 100% 100%, 0 100%); }
+.rx-home-stats__shape--bl { left: -12%; bottom: -22%; width: 46%; height: 42%; clip-path: polygon(0 46%, 100% 0, 100% 62%, 0 100%); }
+
+/* 左右の基準位置をHEROに合わせる（共通コンテナは width:min(100%,1200px) が
+   max-width の拡張を打ち消してしまい、ワイド画面でHEROより40px内側に入るため） */
+.rx-home-stats .rx-home__inner {
+  position: relative;
+  z-index: var(--z-elevated);
+  --stats-cw: 1200px;
+  width: min(100%, var(--stats-cw));
+}
+@media (min-width: 1440px) { .rx-home-stats .rx-home__inner { --stats-cw: 1280px; } }
+@media (min-width: 1920px) { .rx-home-stats .rx-home__inner { --stats-cw: 1400px; } }
+
+/* --- 見出しまわり（HEROより一段落ち着かせる） --- */
+.rx-home-stats__title {
+  margin-top: clamp(14px, 1.6vw, 22px);
+  font-family: var(--hm-sans);
+  font-weight: 900;
+  font-size: clamp(1.5rem, 1.05rem + 1.6vw, 2.75rem);   /* 24 → 44px（HEROの約6割） */
+  line-height: 1.35;
+  letter-spacing: .01em;
+  color: var(--hm-ink);
+}
+.rx-home-stats__sub {
+  margin-top: clamp(10px, 1.2vw, 16px);
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 1.8;
+  color: var(--rx-text-muted);
+}
+
+/* --- 数値カード --- */
 .rx-home-stats__list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.5vw, 24px);
+  margin-top: clamp(36px, 4.5vw, 64px);
 }
 .rx-home-stats__item {
-  padding: 8px clamp(8px, 1.5vw, 20px);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: clamp(20px, 2.2vw, 32px) clamp(16px, 1.8vw, 28px) clamp(18px, 2vw, 28px);
+  background: linear-gradient(180deg, #fff 0%, #fff8fb 100%);
+  border: 1px solid rgba(var(--rx-accent-rgb), .22);
+  border-radius: var(--rx-radius-lg);
 }
-.rx-home-stats__item + .rx-home-stats__item { border-left: 1px solid var(--hm-line); }
 .rx-home-stats__label {
-  font-size: clamp(.8125rem, .78rem + .2vw, .9375rem);
-  font-weight: 500;
-  color: var(--hm-muted);
+  font-weight: 700;
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 1.6;
+  letter-spacing: .02em;
+  color: var(--hm-ink);
+}
+.rx-home-stats__bar {                            /* 項目名の下の短いピンクの線 */
+  display: block;
+  width: clamp(24px, 2.4vw, 34px);
+  height: 3px;
+  border-radius: 3px;
+  background: var(--rx-accent);
+  margin: clamp(12px, 1.4vw, 18px) 0 clamp(10px, 1.2vw, 16px);
 }
 .rx-home-stats__value {
-  margin-top: 4px;
   color: var(--rx-accent);
-  line-height: 1.1;
-  white-space: nowrap;
+  line-height: 1;
+  white-space: nowrap;                           /* 「1.8」と「倍」を離さない */
 }
-.rx-home-stats__value b {
+.rx-home-stats__num {
   font-family: var(--hm-num);
   font-weight: 700;
-  font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.75rem);
+  font-size: clamp(2.25rem, 1.5rem + 2.9vw, 4.125rem);   /* 36 → 66px */
   letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
 }
 .rx-home-stats__value small {
+  font-family: var(--hm-sans);
   font-weight: 700;
-  font-size: clamp(1rem, .9rem + .5vw, 1.375rem);
-  margin: 0 .1em;
+  font-size: clamp(1rem, .85rem + .6vw, 1.5rem);
+  margin: 0 .08em;
 }
-@media (max-width: 768px) {
-  .rx-home-stats__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 20px; }
-  .rx-home-stats__item:nth-child(3) { border-left: 0; }
-  .rx-home-note { text-align: center; }
+.rx-home-stats__note {
+  margin-top: clamp(8px, 1vw, 14px);
+  font-size: clamp(.75rem, .72rem + .15vw, .8125rem);
+  line-height: 1.7;
+  color: var(--rx-text-muted);
+}
+
+/* --- 出典・注記（数値の信頼性に関わるので必ず出す） --- */
+.rx-home-stats__source {
+  margin-top: clamp(26px, 3vw, 40px);
+  padding-top: clamp(14px, 1.6vw, 22px);
+  border-top: 1px solid var(--hm-line);
+  font-size: clamp(.75rem, .73rem + .12vw, .8125rem);
+  line-height: 1.9;
+  color: var(--rx-text-muted);
+}
+
+/* タブレット・スマホ: 2列×2段（4列に押し込まない） */
+@media (max-width: 1024px) {
+  .rx-home-stats__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* 狭いスマホ: 数字の読みやすさを優先して1列にし、数字を大きく見せる */
+@media (max-width: 420px) {
+  .rx-home-stats__list { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .rx-home-stats__num  { font-size: clamp(2.75rem, 2rem + 4vw, 3.5rem); }
+  .rx-home-stats__value small { font-size: 1.125rem; }
 }
 
 /* =========================================================================
