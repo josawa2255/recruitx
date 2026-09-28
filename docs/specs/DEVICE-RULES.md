@@ -80,7 +80,7 @@ h1,h2,h3,h4,[id]:not(html,body){ scroll-margin-top: calc(var(--rx-header-h) + 16
 現状の各ページ最初のセクション（いずれも `--rx-header-h`≈最大90px を満たす）:
 | ページ | セクション | 上余白（最小〜） |
 |---|---|---|
-| index.html | `.rx-hero` | 全画面sticky・中央寄せ（グラスヘッダーが浮く設計でOK） |
+| index.html | `.rx-home-hero` | `calc(var(--rx-header-h) + clamp(20→36px))`（PC `+clamp(8→14px)`）。高さは内容なり（`min-height` 指定なし・2026-09-28） |
 | case.html | `.rx-chero` | `calc(64px + clamp(40→80px))`＝104px〜 |
 | contact.html | `.rx-contact` | `clamp(80→200px)` |
 | price.html | `.rx-phero2` | PC `max(var(--rx-header-h), clamp(80→116px))` / SP `60+28px` |
