@@ -409,7 +409,22 @@
             <li><b>後押し</b>入社の意思決定を後押しする</li>
           </ul>
 
-        <p class="rx-hs__hand rx-phase__tag">伝え方を変えるだけで、出会える人が変わる。<svg class="rx-phase__tag-arrow" viewBox="0 0 400 24" aria-hidden="true"><path d="M2 12h386m-16-9 16 9-16 9"/></svg></p>
+        <!-- 手書き風の一言＋ロゴと同じ筆の矢印。矢印は画面に入ったとき（.rx-anim → .is-in）に左から描かれる。
+             筆の太さの変化は塗り形状（__brush）を、ストローク幅の太いマスク（__reveal）の dashoffset で左から見せて表現する -->
+        <p class="rx-hs__hand rx-phase__tag rx-anim">
+          <span class="rx-phase__tag-wrap">
+            <span class="rx-phase__tag-text">伝え方を変えるだけで、出会える人が変わる。</span>
+            <svg class="rx-phase__tag-arrow" viewBox="0 0 400 44" aria-hidden="true">
+              <defs>
+                <mask id="phaseArrowMask" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="44">
+                  <path class="rx-phase__tag-reveal" d="M6 36 C 110 34, 240 26, 352 14" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" pathLength="1"/>
+                </mask>
+              </defs>
+              <path class="rx-phase__tag-brush" mask="url(#phaseArrowMask)" d="M6 35 C 110 33, 240 26, 352 14 L 354 20 C 250 29, 120 37, 8 38 Z"/>
+              <path class="rx-phase__tag-head" d="M348 6 L392 14 L354 32 L359 19 Z"/>
+            </svg>
+          </span>
+        </p>
       </div>
     </section>
 
