@@ -228,7 +228,7 @@
 
   var HUBSPOT_PORTAL_ID = '48367061';
   var HUBSPOT_FORM_GUID = 'b6da14d0-d60d-4357-89fc-0015ed32b704';
-  var SERVICE_NAME      = 'ビズ採用';   // HubSpot / 社内CRM へ送るサービス名（2026-09-28 リクルートX から変更）
+  var SERVICE_NAME      = 'ビズ採用';   // HubSpot へ送るサービス名（2026-09-28 リクルートX から変更。CRM は公開キーで送信元を判別するので送らない）
 
   var form = document.getElementById('rx-contact-form');
   if (!form) return;
@@ -335,8 +335,14 @@
 
     // CRM の受信箱へも送る（失敗しても HubSpot の受付・完了表示には影響しない）。
     // 送信本体は contact.html で読み込む inbound-v1.js（data-auto="false"＝入力チェックを
-    // 通った送信だけをここで手動で送る）。項目は欄の名前・ラベルから自動判別される
-    if (window.BizcarteInbound) window.BizcarteInbound.sendForm(form);
+    // 通った送信だけをここで手動で送る）。項目は欄の名前・ラベルから自動判別される。
+    // 読み込めていない時は警告だけ残す（HubSpot は正常なまま CRM だけ空になる壊れ方に気づくため）
+    try {
+      if (window.BizcarteInbound) window.BizcarteInbound.sendForm(form);
+      else console.warn('CRM inbound skipped: inbound-v1.js が読み込まれていません');
+    } catch (err) {
+      console.warn('CRM inbound failed (ignored):', err);
+    }
 
     var url = 'https://api.hsforms.com/submissions/v3/integration/submit/'
       + HUBSPOT_PORTAL_ID + '/' + HUBSPOT_FORM_GUID;
