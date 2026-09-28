@@ -77,7 +77,7 @@ html { scroll-behavior: smooth; }
 h1,h2,h3,h4,[id]:not(html,body){ scroll-margin-top: calc(var(--rx-header-h) + 16px); }
 ```
 
-現状の各ページ最初のセクション（いずれも `--rx-header-h`≈最大90px を満たす）:
+現状の各ページ最初のセクション（いずれも `--rx-header-h`≈最大92px を満たす。共通ヘッダーの実高さは 58〜90px＝2026-09-28 統一時に padding を調整）:
 | ページ | セクション | 上余白（最小〜） |
 |---|---|---|
 | index.html | `.rx-home-hero` | `calc(var(--rx-header-h) + clamp(20→36px))`（PC `+clamp(8→14px)`）。高さは内容なり（`min-height` 指定なし・2026-09-28） |
