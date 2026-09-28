@@ -4,6 +4,7 @@
    - IntersectionObserver による軽い入場アニメ（.rx-anim → .is-in）
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
    - ホームのヒーロー: 採用AIO対策カードのタイピング演出
+   - ホームのヒーロー: 採用アニメーションカードの動画2本（再生マークの出し入れ・同時再生の抑止）
    - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
@@ -99,6 +100,28 @@
   });
   t += items.length * 180 + 120;
   setTimeout(function () { bot.classList.add('is-alert'); }, t);
+})();
+
+/* ホームのヒーロー: 採用アニメーションカードの動画2本
+   再生マーク（装飾）を JS が動く環境でだけ出し、再生中は消す。片方を再生したらもう片方は止める */
+(function () {
+  'use strict';
+
+  var wraps = document.querySelectorAll('.rx-home-hero__video');
+  if (!wraps.length) return;
+  var videos = [];
+  Array.prototype.forEach.call(wraps, function (wrap) {
+    var v = wrap.querySelector('video');
+    if (!v) return;
+    videos.push(v);
+    wrap.classList.add('has-js');
+    v.addEventListener('play', function () {
+      wrap.classList.add('is-playing');
+      videos.forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
+    });
+    v.addEventListener('pause', function () { wrap.classList.remove('is-playing'); });
+    v.addEventListener('ended', function () { wrap.classList.remove('is-playing'); });
+  });
 })();
 
 /* ヘッダーナビ: スクロールで背景を白くする + SPハンバーガー開閉 */

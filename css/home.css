@@ -278,6 +278,61 @@
   background: var(--hm-pink-soft);             /* 読み込み前の下地 */
 }
 
+/* 採用アニメーション: 動画2本（横長 640×360 ＋ 縦長 360×642）を高さを揃えて横並び。
+   列比は「同じ高さにしたときの幅」＝ 16/9 : 360/642 ≒ 1280 : 404。
+   再生マークは装飾（pointer-events: none）で、クリックは <video controls> 本体に届く。
+   JS が動く環境でだけ出し（.has-js）、再生中は消す（.is-playing）。JS 無効なら標準コントロールだけ */
+.rx-home-hero__videos {
+  margin-top: auto;                            /* 画像カードと同じく下端を揃える */
+  display: grid;
+  grid-template-columns: minmax(0, 1280fr) minmax(0, 404fr);
+  gap: clamp(8px, 1vw, 12px);
+  min-width: 0;
+}
+.rx-home-hero__video {
+  position: relative;
+  min-width: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--hero-navy);
+}
+.rx-home-hero__video--wide { aspect-ratio: 640 / 360; }
+.rx-home-hero__video--tall { aspect-ratio: 360 / 642; }
+.rx-home-hero__video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rx-home-hero__video-play {
+  display: none;
+  position: absolute;
+  inset: 0;
+  place-items: center;
+  pointer-events: none;
+}
+.rx-home-hero__video.has-js:not(.is-playing) .rx-home-hero__video-play { display: grid; }
+.rx-home-hero__video-play::before,
+.rx-home-hero__video-play::after { grid-area: 1 / 1; }   /* 円と三角を同じマスに重ねて中央に置く */
+.rx-home-hero__video-play::before {          /* 白い円 */
+  content: "";
+  width: clamp(36px, 4vw, 52px);
+  height: clamp(36px, 4vw, 52px);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+.rx-home-hero__video-play::after {           /* ピンクの三角（見た目の重心を合わせるため少し右へ） */
+  content: "";
+  width: clamp(14px, 1.5vw, 20px);
+  height: clamp(14px, 1.5vw, 20px);
+  transform: translateX(12%);
+  background: var(--rx-accent);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.rx-home-hero__video--tall .rx-home-hero__video-play::before { width: clamp(30px, 3vw, 40px); height: clamp(30px, 3vw, 40px); }
+.rx-home-hero__video--tall .rx-home-hero__video-play::after  { width: clamp(11px, 1.1vw, 15px); height: clamp(11px, 1.1vw, 15px); }
+
 /* 採用AIO対策: 検索窓 → 3項目の一覧（右下にロボット） */
 .rx-home-hero__aio {
   margin-top: auto;
