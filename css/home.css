@@ -280,8 +280,7 @@
 
 /* 採用アニメーション: 動画2本（横長 640×360 ＋ 縦長 360×642）を横並び。会社紹介動画: 横長1本（--single）。
    既定（横長が主役）: 列比は「同じ高さにしたときの幅」＝ 16/9 : 360/642 ≒ 1280 : 404 で高さが揃う。
-   縦長を再生すると .is-tall-active: 右の縦長が幅40%・実寸比に広がり（位置は右のまま）、左の横長はその高さいっぱいのサムネイル（中央を切り抜き）。
-   横長を再生すると既定に戻る。
+   再生しても大きさ・並びは変えない（ヒーロー全体の高さが変わらないように。縦長はその場・同じ大きさで再生し、大きく見たいときは全画面ボタン）。
    再生ボタンは JS が動く環境でだけ出し（.has-js）、再生中は消す（.is-playing）。JS 無効なら標準コントロールだけ */
 .rx-home-hero__videos {
   margin-top: auto;                            /* 画像カードと同じく下端を揃える */
@@ -305,13 +304,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-/* 縦長が主役のとき */
-.rx-home-hero__videos.is-tall-active { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
-.rx-home-hero__videos.is-tall-active .rx-home-hero__video--wide { aspect-ratio: auto; }   /* 高さは縦長に合わせて伸びる */
-.rx-home-hero__videos.is-tall-active .rx-home-hero__video--wide video { position: absolute; inset: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .rx-home-hero__videos { transition: grid-template-columns .4s cubic-bezier(.22, 1, .36, 1); }
 }
 /* 再生ボタン（白い円＋ピンクの三角）。中央の円だけを押せる大きさにして、下の標準コントロールは隠さない */
 .rx-home-hero__video-play {
@@ -341,9 +333,8 @@
 }
 .rx-home-hero__video-play:hover { background: #fff; }
 .rx-home-hero__video-play:focus-visible { outline: 3px solid var(--rx-accent); outline-offset: 2px; }
-/* 既定で小さい方（縦長）のボタンは一回り小さく。主役になったら通常サイズ */
-.rx-home-hero__videos:not(.is-tall-active) .rx-home-hero__video--tall .rx-home-hero__video-play,
-.rx-home-hero__videos.is-tall-active .rx-home-hero__video--wide .rx-home-hero__video-play { width: clamp(30px, 3vw, 40px); height: clamp(30px, 3vw, 40px); }
+/* 小さい方（縦長）のボタンは一回り小さく */
+.rx-home-hero__video--tall .rx-home-hero__video-play { width: clamp(30px, 3vw, 40px); height: clamp(30px, 3vw, 40px); }
 
 /* 採用AIO対策: 検索窓 → 3項目の一覧（右下にロボット） */
 .rx-home-hero__aio {
