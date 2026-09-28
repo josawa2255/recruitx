@@ -1,7 +1,7 @@
 /* =========================================================================
    style.css — イチオシ採用 全ページ共通
    依存: /css/tokens.css（先に読み込む）
-   reset / コンテナ / ボタン / 入場アニメ / ヘッダー / お問い合わせフォーム / フッター / FAB
+   reset / コンテナ / ボタン / 入場アニメ / ヘッダー（全ページ共通） / お問い合わせフォーム / フッター / FAB
    ホーム専用のスタイルは css/home.css（2026-09 リデザインで旧ホームの記述は削除）
    ブレークポイント（DEVICE-RULES §3）: SP ≤768 / TAB 769–1024 / PC ≥1025
    ========================================================================= */
@@ -88,44 +88,45 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(var(--rx-header-h
 }
 
 /* =====================================================================
-   ヘッダーナビゲーション（zetta-joule参考: sticky・透明→白・SPハンバーガー）
+   ヘッダーナビゲーション（全ページ共通・2026-09-28 にホームの見た目へ統一）
+   - 固定・白地（ロゴ画像が白背景・透過なしのため、半透明にすると事例詳細の暗いヒーローの上で
+     ロゴの白い四角が浮く。よって常に不透明の白）。スクロールで下罫線だけ出す
+   - ロゴ画像＋タグライン＋メニュー＋CTA2つ＋SPハンバーガー
+   - 実高さ ≈ ロゴ clamp(34→46px) ＋ 上下 padding clamp(12→22px)×2 ＝ 58〜90px
+     （tokens.css の --rx-header-h = clamp(68px, 4.2vw + 34px, 92px) の範囲内に収める。
+      padding やロゴの高さを変えるときは --rx-header-h も見直す）
    ===================================================================== */
 .rx-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: var(--z-header, 1000);
-  background: rgba(255, 255, 255, .72);
-  backdrop-filter: saturate(160%) blur(14px);
-  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  background: #fff;
   border-bottom: 1px solid transparent;
-  transition: background-color .25s ease, border-color .25s ease;
+  transition: border-color .25s ease;
 }
-.rx-nav.is-scrolled {
-  background: rgba(255, 255, 255, .94);
-  border-bottom-color: var(--rx-border, #e7e7eb);
-}
+.rx-nav.is-scrolled { border-bottom-color: var(--rx-border, #e7e7eb); }
 .rx-nav__inner {
   /* 全幅: ロゴは常に画面左端・メニューは右端（ワイド画面で中央に寄らない） */
   width: 100%;
-  padding: clamp(12px, 1.4vw, 18px) clamp(16px, 4vw, 40px);
+  padding: clamp(12px, 1.5vw, 22px) clamp(16px, 4vw, 40px);
   display: flex;
   align-items: center;
-  gap: clamp(16px, 3vw, 28px);
+  gap: clamp(12px, 2vw, 26px);
   min-height: 64px;
 }
-.rx-nav__brand {
-  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
-  font-weight: 600;
-  font-size: clamp(1.0625rem, .95rem + .4vw, 1.375rem);
-  color: var(--rx-text, #0a0a0c);
-  letter-spacing: .04em;
-  flex-shrink: 0;
-  text-decoration: none;
-}
-.rx-nav__brand-img {            /* 企業ロゴ画像（白背景ヘッダー用・原色のまま） */
+.rx-nav__brand { display: block; flex-shrink: 0; line-height: 0; }
+.rx-nav__logo {                 /* 支給ロゴ（白背景・540×191）。幅は比率で追従 */
   display: block;
-  height: clamp(42px, 2rem + 1.4vw, 54px);
+  height: clamp(34px, 2.6vw, 46px);
   width: auto;
+}
+.rx-nav__tag {                  /* タグライン。狭い幅では出さない */
+  margin: 0;
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-size: .8125rem;
+  letter-spacing: .04em;
+  color: var(--rx-text-muted, #5c6b85);
+  white-space: nowrap;
 }
 .rx-nav__menu {
   display: flex;
@@ -160,57 +161,42 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(var(--rx-header-h
 /* 現在ページ: ピンクで「現在地」を示す（全ページ共通のナビ仕様） */
 .rx-nav__link[aria-current="page"] { color: var(--rx-accent, #ec2d87); }
 
-/* 準備中の項目（料金プラン・お役立ち情報・コラム）: href無しのプレースホルダー。
-   薄く表示し、下線アニメ・ポインタを無効化して「まだ遷移しない」ことを示す */
+/* 準備中の項目: href無しのプレースホルダー。薄く表示し、下線アニメ・ポインタを無効化 */
 .rx-nav__link[aria-disabled="true"] { opacity: .5; cursor: default; }
 .rx-nav__link[aria-disabled="true"]::after { content: none; }
-@media (max-width: 768px) {
-  /* SP全画面メニューでも準備中項目は薄く */
-  .rx-nav__menu .rx-nav__link[aria-disabled="true"] { opacity: .45; }
-}
 
-/* お問い合わせCTA: contentsx.jp と同じテキストロールアップ
-   hover/focusで「お問い合わせ→」が上へ抜け、「Contact→」が下からロールイン
-   二層は grid 重ね置き（同セル）+ overflow: hidden でクリップ */
+/* CTA2つ（無料診断＝白地ピンク枠 / お問い合わせ＝ピンク地） */
+.rx-nav__ctas { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .rx-nav__cta {
-  display: inline-grid;
-  font-family: 'Inter', 'Zen Kaku Gothic Antique', sans-serif;
-  font-weight: 600;
-  font-size: .9375rem;
-  color: #0a0a0c;                              /* 黒文字 */
-  background: #fce7f3;                          /* 淡いピンク */
-  padding: .7em 1.4em;
-  border: 1px solid rgba(236, 45, 135, .18);
-  border-radius: 14px;                          /* 角丸長方形（pillではない） */
-  letter-spacing: .04em;
-  text-decoration: none;
-  min-height: 40px;
-  overflow: hidden;
-  transition: background-color .3s ease, transform .25s ease, box-shadow .3s ease;
-  flex-shrink: 0;
-}
-.rx-nav__cta:hover {
-  background: #fbd3e1;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(236, 38, 141, .14);
-}
-.rx-nav__cta-text,
-.rx-nav__cta-alt {
-  grid-area: 1 / 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .5em;
-  transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+  min-height: 44px;                               /* タップ領域（DEVICE-RULES §12） */
+  padding: .6em 1.45em;
+  border-radius: var(--rx-radius-pill, 999px);
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: .875rem;
+  letter-spacing: .03em;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.rx-nav__cta-alt  { transform: translateY(180%); }   /* paddingぶんも含め完全に隠す */
-.rx-nav__cta:hover .rx-nav__cta-text,
-.rx-nav__cta:focus-visible .rx-nav__cta-text { transform: translateY(-180%); }
-.rx-nav__cta:hover .rx-nav__cta-alt,
-.rx-nav__cta:focus-visible .rx-nav__cta-alt  { transform: translateY(0); }
-@media (prefers-reduced-motion: reduce) {
-  .rx-nav__cta-text, .rx-nav__cta-alt { transition: none; }
+.rx-nav__cta--line {
+  background: #fff;
+  color: var(--rx-accent-hover, #d61f76);         /* 白背景でのコントラスト確保（4.9:1） */
+  border: 1.5px solid rgba(var(--rx-accent-rgb, 236, 45, 135), .5);
 }
+.rx-nav__cta--line:hover,
+.rx-nav__cta--line:focus-visible { background: rgba(var(--rx-accent-rgb, 236, 45, 135), .06); border-color: var(--rx-accent, #ec2d87); }
+.rx-nav__cta--fill {
+  background: var(--rx-accent, #ec2d87);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(var(--rx-accent-rgb, 236, 45, 135), .28);
+}
+.rx-nav__cta--fill:hover,
+.rx-nav__cta--fill:focus-visible,
+.rx-nav__cta--fill[aria-current="page"] { background: var(--rx-accent-hover, #d61f76); box-shadow: 0 10px 24px rgba(var(--rx-accent-rgb, 236, 45, 135), .36); }
 
 /* ハンバーガー（SPのみ） */
 .rx-nav__hamburger {
@@ -233,6 +219,8 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(var(--rx-header-h
 .rx-nav__hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .rx-nav__hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+@media (max-width: 1180px) { .rx-nav__tag { display: none; } }
+@media (max-width: 1024px) { .rx-nav__cta--line { display: none; } }   /* 狭い幅は「お問い合わせ」だけ */
 @media (max-width: 768px) {
   .rx-nav__menu {
     position: fixed;
@@ -250,14 +238,17 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(var(--rx-header-h
   }
   .rx-nav__menu.is-open { transform: translateY(0); }
   .rx-nav__link { font-size: 1.25rem; }
+  .rx-nav__menu .rx-nav__link[aria-disabled="true"] { opacity: .45; }
   .rx-nav__hamburger { display: block; }
-  /* SPはメニューがオフキャンバスのため、CTA+ハンバーガーを右詰めにする */
-  .rx-nav__cta { padding: .55em 1em; font-size: .875rem; margin-left: auto; }
+  /* SPはメニューがオフキャンバスのため、CTA＋ハンバーガーを右詰めにする */
+  .rx-nav__ctas { margin-left: auto; }
+  .rx-nav__cta { padding: .5em 1.1em; font-size: .8125rem; min-height: 40px; }
 }
-/* 極小SP（〜360px）: ロゴ＋CTA＋ハンバーガーが収まらずハンバーガーが画面外に欠けていたため余白を詰める（DEVICE-RULES §7） */
+/* 極小SP（〜360px）: ロゴ＋CTA＋ハンバーガーが収まるように余白を詰める（DEVICE-RULES §7） */
 @media (max-width: 360px) {
   .rx-nav__inner { gap: 10px; }
-  .rx-nav__cta { padding: .5em .8em; }
+  .rx-nav__cta { padding: .5em .85em; }
+  .rx-nav__logo { height: 30px; }
   .rx-nav__hamburger { margin-left: 0; }
 }
 
