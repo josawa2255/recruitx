@@ -25,7 +25,7 @@
 | お問い合わせ | `contact.html` | `js/main.js`（HubSpot Forms API v3 直送 ＋ CRM受信箱へ並行POST。§7） | 実装済み（2026-08-04 再構築。**ファイルが0バイト＝本番も真っ白の状態だった**のを復元。詳細は [BUGS.md](../../BUGS.md)） |
 | 導入事例 | `case.html` | `js/main.js` + `js/case.js`（業種フィルタ） | 実装済み |
 | 料金プラン | `price.html` | `js/main.js`（入場アニメのみ） | 実装済み |
-| 会社概要 | `company.html` | `js/main.js`（ナビ/FAB） | 実装済み（2026-09-28 新設。レイアウトは bizform.contentsx.jp/company/ を参考、**会社情報の値は contentsx.jp/company から転記**（社名は登記表記「Contents X 株式会社」・設立 2026-03-03・事業内容4項目。メールアドレスは公式サイトに無いため非掲載）。スタイルは `css/legal.css`。導線はフッターのみ） |
+| 会社概要 | `company.html` | `js/main.js`（ナビ/FAB） | 実装済み（2026-09-28 新設。レイアウトは bizform.contentsx.jp/company/ を参考、**会社情報の値は contentsx.jp/company から転記**（社名は登記表記「Contents X 株式会社」・設立 2026-03-03・事業内容4項目。メール `office@contentsx.jp`・電話 `03-6261-0764` はホーム最終CTAと同じ値）。スタイルは `css/legal.css`。導線はフッターのみ） |
 | プライバシーポリシー | `privacy.html` | `js/main.js`（ナビ/FAB） | 実装済み（2026-09-28 新設。bizform.contentsx.jp/policy/ の構成を採用向けに書き換え。スタイルは `css/legal.css`。導線はフッターのみ。**送信先・計測ツールを増減したら §6・§10 と最終更新日を更新**） |
 
 ## 3. URL構造・ナビゲーション
