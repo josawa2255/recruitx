@@ -105,37 +105,38 @@
         <h2 class="rx-svc-title" id="produceHeading">会社取材を起点に、<br><span class="rx-svc-accent">4つのかたち</span>へ広げる。</h2>
         <p class="rx-svc-lead">取材は1回。そこで聞いた話を、伝わり方の違う4つのコンテンツに組み直します。<br class="rx-br-pc">元が同じなので、どこから見ても同じ会社の姿になります。</p>
 
-        <!-- 取材 → 4つのコンテンツ -->
-        <div class="rx-svc-produce__flow">
-          <div class="rx-svc-produce__source">
-            <span class="rx-svc-produce__source-icon"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>
+        <!-- 取材 → 4つのコンテンツ。画像が入るまでは淡いピンクのアイコン面で代用する
+             （メディア面に <img> を足すだけで差し替えられる形にしてある） -->
+        <div class="rx-svc-produce__source">
+          <span class="rx-svc-produce__source-icon"><svg aria-hidden="true"><use href="#i-mic"/></svg></span>
+          <div>
             <p class="rx-svc-produce__source-name">会社取材</p>
             <p class="rx-svc-produce__source-desc">代表や社員の方に、テーマごとにお話をうかがいます。</p>
           </div>
-          <span class="rx-svc-produce__arrow" aria-hidden="true"></span>
-          <ul class="rx-svc-produce__outputs">
-            <li class="rx-anim">
-              <span class="rx-svc-produce__out-icon"><svg aria-hidden="true"><use href="#i-manga"/></svg></span>
-              <h3 class="rx-svc-produce__out-name">漫画</h3>
-              <p class="rx-svc-produce__out-desc">ストーリーでわかりやすく伝える</p>
-            </li>
-            <li class="rx-anim">
-              <span class="rx-svc-produce__out-icon"><svg aria-hidden="true"><use href="#i-play"/></svg></span>
-              <h3 class="rx-svc-produce__out-name">アニメ</h3>
-              <p class="rx-svc-produce__out-desc">映像で魅力を印象的に伝える</p>
-            </li>
-            <li class="rx-anim">
-              <span class="rx-svc-produce__out-icon"><svg aria-hidden="true"><use href="#i-doc"/></svg></span>
-              <h3 class="rx-svc-produce__out-name">記事</h3>
-              <p class="rx-svc-produce__out-desc">情報を深掘りし、信頼性を高める</p>
-            </li>
-            <li class="rx-anim">
-              <span class="rx-svc-produce__out-icon"><svg aria-hidden="true"><use href="#i-page"/></svg></span>
-              <h3 class="rx-svc-produce__out-name">掲載ページ</h3>
-              <p class="rx-svc-produce__out-desc">採用サイトで魅力を網羅的に発信</p>
-            </li>
-          </ul>
         </div>
+        <span class="rx-svc-produce__arrow" aria-hidden="true"></span>
+        <ul class="rx-svc-produce__outputs">
+          <li class="rx-anim">
+            <span class="rx-svc-produce__out-media"><svg aria-hidden="true"><use href="#i-manga"/></svg></span>
+            <h3 class="rx-svc-produce__out-name">漫画</h3>
+            <p class="rx-svc-produce__out-desc">ストーリーでわかりやすく伝える</p>
+          </li>
+          <li class="rx-anim">
+            <span class="rx-svc-produce__out-media"><svg aria-hidden="true"><use href="#i-play"/></svg></span>
+            <h3 class="rx-svc-produce__out-name">アニメ</h3>
+            <p class="rx-svc-produce__out-desc">映像で魅力を印象的に伝える</p>
+          </li>
+          <li class="rx-anim">
+            <span class="rx-svc-produce__out-media"><svg aria-hidden="true"><use href="#i-doc"/></svg></span>
+            <h3 class="rx-svc-produce__out-name">記事</h3>
+            <p class="rx-svc-produce__out-desc">情報を深掘りし、信頼性を高める</p>
+          </li>
+          <li class="rx-anim">
+            <span class="rx-svc-produce__out-media"><svg aria-hidden="true"><use href="#i-page"/></svg></span>
+            <h3 class="rx-svc-produce__out-name">掲載ページ</h3>
+            <p class="rx-svc-produce__out-desc">採用サイトで魅力を網羅的に発信</p>
+          </li>
+        </ul>
         <p class="rx-svc-produce__summary">メッセージの軸をブラさずにまとめて制作するので、現場の手間も制作の手数も1回分で済みます。</p>
 
         <!-- 看板コンテンツのテーマ（資料 p14） -->
@@ -301,17 +302,17 @@
               <div>
                 <p class="rx-svc-route__cap">写真枠・動画枠の活用</p>
                 <ul class="rx-svc-checks">
-                  <li><svg aria-hidden="true"><use href="#i-check"/></svg>職場の雰囲気や働く人の表情を視覚的に伝える</li>
-                  <li><svg aria-hidden="true"><use href="#i-check"/></svg>仕事内容や事業の魅力を動画で直感的に訴求する</li>
-                  <li><svg aria-hidden="true"><use href="#i-check"/></svg>テキストだけでは伝わらない魅力を補う</li>
+                  <li>職場の雰囲気や働く人の表情を視覚的に伝える</li>
+                  <li>仕事内容や事業の魅力を動画で直感的に訴求する</li>
+                  <li>テキストだけでは伝わらない魅力を補う</li>
                 </ul>
               </div>
               <div>
                 <p class="rx-svc-route__cap">遷移先での具体化</p>
                 <ul class="rx-svc-checks">
-                  <li><svg aria-hidden="true"><use href="#i-check"/></svg>より詳しい情報やストーリーを遷移先で深掘りする</li>
-                  <li><svg aria-hidden="true"><use href="#i-check"/></svg>社員インタビューや1日のスケジュールで理解を促す</li>
-                  <li><svg aria-hidden="true"><use href="#i-check"/></svg>応募・エントリーへスムーズにつなげる導線をつくる</li>
+                  <li>より詳しい情報やストーリーを遷移先で深掘りする</li>
+                  <li>社員インタビューや1日のスケジュールで理解を促す</li>
+                  <li>応募・エントリーへスムーズにつなげる導線をつくる</li>
                 </ul>
               </div>
             </div>
@@ -352,9 +353,9 @@
           <div class="rx-svc-route__detail">
             <h4 class="rx-svc-route__detail-title">応募の単位で、費用を管理する</h4>
             <ul class="rx-svc-checks rx-svc-checks--cols">
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>掲載課金と応募課金の違い</b>成果に直結する応募に対して課金する仕組みで、費用対効果を最大化します。</span></li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>応募単位で費用を管理</b>応募ごとにコストを可視化し、予算管理を最適化して無駄な出費を防ぎます。</span></li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>確度の高い応募を獲得</b>本当に興味のある応募者を集めることで、採用の質と効率を上げます。</span></li>
+              <li><span><b>掲載課金と応募課金の違い</b>成果に直結する応募に対して課金する仕組みで、費用対効果を最大化します。</span></li>
+              <li><span><b>応募単位で費用を管理</b>応募ごとにコストを可視化し、予算管理を最適化して無駄な出費を防ぎます。</span></li>
+              <li><span><b>確度の高い応募を獲得</b>本当に興味のある応募者を集めることで、採用の質と効率を上げます。</span></li>
             </ul>
             <p class="rx-svc-route__note">SNS運用、Meta広告の運用、Indeedなどの求人広告の運用代行にも対応します。</p>
           </div>
@@ -394,8 +395,8 @@
           <div class="rx-svc-route__detail">
             <h4 class="rx-svc-route__detail-title">AIと検索の両方から、見つかる状態をつくる</h4>
             <ul class="rx-svc-checks rx-svc-checks--cols">
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>会社情報を整える</b>AIや検索で読み取られる会社情報を整備し、正しく伝わる状態にします。</span></li>
-              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><b>一次情報を自社から出す</b>記事・掲載ページを通じて、正確な情報を会社側から発信します。</span></li>
+              <li><span><b>会社情報を整える</b>AIや検索で読み取られる会社情報を整備し、正しく伝わる状態にします。</span></li>
+              <li><span><b>一次情報を自社から出す</b>記事・掲載ページを通じて、正確な情報を会社側から発信します。</span></li>
             </ul>
             <p class="rx-svc-route__note rx-svc-route__note--caution">※検索順位や、生成AIに推薦されることを保証するものではありません。</p>
           </div>
