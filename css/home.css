@@ -278,10 +278,10 @@
   background: var(--hm-pink-soft);             /* 読み込み前の下地 */
 }
 
-/* 採用アニメーション: 動画2本（横長 640×360 ＋ 縦長 360×642）を横並び。
+/* 採用アニメーション: 動画2本（横長 640×360 ＋ 縦長 360×642）を横並び。会社紹介動画: 横長1本（--single）。
    既定（横長が主役）: 列比は「同じ高さにしたときの幅」＝ 16/9 : 360/642 ≒ 1280 : 404 で高さが揃う。
-   縦長を再生すると .is-tall-active: 縦長が左（幅40%・実寸比）、横長は右でその高さいっぱいのサムネイル（中央を切り抜き）。
-   横長を再生すると既定に戻る。並び替えは order で行い、DOM は動かさない（動かすと再生が止まるため）。
+   縦長を再生すると .is-tall-active: 右の縦長が幅40%・実寸比に広がり（位置は右のまま）、左の横長はその高さいっぱいのサムネイル（中央を切り抜き）。
+   横長を再生すると既定に戻る。
    再生ボタンは JS が動く環境でだけ出し（.has-js）、再生中は消す（.is-playing）。JS 無効なら標準コントロールだけ */
 .rx-home-hero__videos {
   margin-top: auto;                            /* 画像カードと同じく下端を揃える */
@@ -290,6 +290,7 @@
   gap: clamp(8px, 1vw, 12px);
   min-width: 0;
 }
+.rx-home-hero__videos--single { grid-template-columns: minmax(0, 1fr); }
 .rx-home-hero__video {
   position: relative;
   min-width: 0;
@@ -306,8 +307,7 @@
   object-fit: cover;
 }
 /* 縦長が主役のとき */
-.rx-home-hero__videos.is-tall-active { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
-.rx-home-hero__videos.is-tall-active .rx-home-hero__video--tall { order: -1; }
+.rx-home-hero__videos.is-tall-active { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
 .rx-home-hero__videos.is-tall-active .rx-home-hero__video--wide { aspect-ratio: auto; }   /* 高さは縦長に合わせて伸びる */
 .rx-home-hero__videos.is-tall-active .rx-home-hero__video--wide video { position: absolute; inset: 0; }
 @media (prefers-reduced-motion: no-preference) {
