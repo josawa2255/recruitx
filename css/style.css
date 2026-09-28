@@ -513,7 +513,9 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(var(--rx-header-h
 }
 .rx-footer__link:hover,
 .rx-footer__link:focus-visible { color: #fff; }
-/* 準備中（料金プラン・お役立ち情報・コラム）: href無し・非遷移（ナビと同方針） */
+/* 現在ページ（会社概要・プライバシーポリシーはフッターからしか辿れないため、ここで現在地を示す） */
+.rx-footer__link[aria-current="page"] { color: #fff; text-decoration: underline; text-underline-offset: .25em; }
+/* 準備中の項目: href無し・非遷移（ナビと同方針） */
 .rx-footer__link[aria-disabled="true"] {
   opacity: .4;
   cursor: default;

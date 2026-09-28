@@ -25,11 +25,13 @@
 | お問い合わせ | `contact.html` | `js/main.js`（HubSpot Forms API v3 直送 ＋ CRM受信箱へ並行POST。§7） | 実装済み（2026-08-04 再構築。**ファイルが0バイト＝本番も真っ白の状態だった**のを復元。詳細は [BUGS.md](../../BUGS.md)） |
 | 導入事例 | `case.html` | `js/main.js` + `js/case.js`（業種フィルタ） | 実装済み |
 | 料金プラン | `price.html` | `js/main.js`（入場アニメのみ） | 実装済み |
+| 会社概要 | `company.html` | `js/main.js`（ナビ/FAB） | 実装済み（2026-09-28 新設。bizform.contentsx.jp/company/ を参考。スタイルは `css/legal.css`。導線はフッターのみ） |
+| プライバシーポリシー | `privacy.html` | `js/main.js`（ナビ/FAB） | 実装済み（2026-09-28 新設。bizform.contentsx.jp/policy/ の構成を採用向けに書き換え。スタイルは `css/legal.css`。導線はフッターのみ。**送信先・計測ツールを増減したら §6・§10 と最終更新日を更新**） |
 
 ## 3. URL構造・ナビゲーション
 
-- **ヘッダーは全ページ同一（2026-09-28 にホームの見た目へ統一。旧「ホームだけ `.rx-nav--biz`」は廃止）**: ロゴ画像 `images/logo/biz-saiyo-logo.webp`（支給ロゴからタグライン部分を除いてトリミングした 540×191。タグライン入りの全体版は `biz-saiyo-logo-full.webp`。**どちらも白背景で透過なし**）→ タグライン「好きがはたらく、をつくる。」（≤1180px で非表示）→ メニュー **サービス / 事例 / 料金プラン / コラム** → CTA2つ **「無料診断を申し込む」**（白地・ピンク枠・`contact.html?source=free-diagnosis`・≤1024px で非表示）＋**「お問い合わせ」**（ピンク地・`contact.html`）→ SPハンバーガー。スタイルは `css/style.css` の `.rx-nav`（`__brand` / `__logo` / `__tag` / `__menu` / `__link` / `__ctas` / `__cta--line` / `__cta--fill` / `__hamburger`）、開閉は `js/main.js`。実高さは 58〜90px で `--rx-header-h` の範囲内。旧 `.rx-nav__brand-img` / `.rx-nav__cta-text` / `.rx-nav__cta-alt`（テキストロールアップ）は廃止。**共通コンポーネント化していないため、変更時は HTML 28ファイル＋ `tools/templates/*.tpl` 2つを同時に直す**（テンプレを直さないと `build-cases.py` / `build-columns.py` で巻き戻る）。ホームの追従CTAは `<body data-fab="off">` で出さない
-- **現在ページの表示**: 該当リンクに `aria-current="page"`（ピンク表示）。事例詳細・コラム詳細はテンプレ側で「事例」「コラム」に付与。お問い合わせページは「お問い合わせ」CTAに付与（濃いピンク）
+- **ヘッダーは全ページ同一（2026-09-28 にホームの見た目へ統一。旧「ホームだけ `.rx-nav--biz`」は廃止）**: ロゴ画像 `images/logo/biz-saiyo-logo.webp`（支給ロゴからタグライン部分を除いてトリミングした 540×191。タグライン入りの全体版は `biz-saiyo-logo-full.webp`。**どちらも白背景で透過なし**）→ タグライン「好きがはたらく、をつくる。」（≤1180px で非表示）→ メニュー **サービス / 料金プラン**（**事例・コラムは 2026-09-28 から非表示**。`case.html` / `column.html` と配下ページは残置しURL直打ち・本文内リンクからは到達可。再表示時は各HTML・テンプレのナビ内コメント位置に `<a>` を戻す）→ CTA2つ **「無料診断を申し込む」**（白地・ピンク枠・`contact.html?source=free-diagnosis`・≤1024px で非表示）＋**「お問い合わせ」**（ピンク地・`contact.html`）→ SPハンバーガー。スタイルは `css/style.css` の `.rx-nav`（`__brand` / `__logo` / `__tag` / `__menu` / `__link` / `__ctas` / `__cta--line` / `__cta--fill` / `__hamburger`）、開閉は `js/main.js`。実高さは 58〜90px で `--rx-header-h` の範囲内。旧 `.rx-nav__brand-img` / `.rx-nav__cta-text` / `.rx-nav__cta-alt`（テキストロールアップ）は廃止。**共通コンポーネント化していないため、変更時は HTML 28ファイル＋ `tools/templates/*.tpl` 2つを同時に直す**（テンプレを直さないと `build-cases.py` / `build-columns.py` で巻き戻る）。ホームの追従CTAは `<body data-fab="off">` で出さない
+- **現在ページの表示**: 該当リンクに `aria-current="page"`（ピンク表示）。お問い合わせページは「お問い合わせ」CTAに付与（濃いピンク）。事例・コラム系ページはナビに該当項目が無いため現在地表示なし（2026-09-28〜）。会社概要・プライバシーポリシーはフッターの該当リンクに付与（白＋下線）
   - 現在ページは `aria-current="page"` でピンク表示（事例ページの「事例」など）
   - 「料金プラン」は `price.html` へ遷移（2026-06-12 作成。全ページのヘッダー/フッターで `href` 有効化済み）。「お役立ち情報」「コラム」はページ未作成のため `href` 無し＋`aria-disabled="true"` のプレースホルダー（薄色・非遷移）。ページ作成時に `href` を付与
   - 「サービス」は **`service.html`**（事例詳細からは `../../service.html`）。2026-09-28 に `index.html#service` から差し替え。ナビ・フッターは共通コンポーネント化されていないため、ヘッダー/フッターを持つ **HTML 27ファイル＋生成元テンプレート2つ**（`tools/templates/case-detail.html.tpl` / `column-detail.html.tpl`）を同時に直す。テンプレートを直さないと次回 `build-cases.py` で巻き戻る
@@ -144,9 +146,9 @@
 
 - **共通フッター（全ページ複製・同一マークアップ `.rx-footer`）**: index / service / case / price / column / contact の6ページ＋事例詳細22ページ＋生成元テンプレート2つに**同一の`<footer>`ブロックを静的複製**（ヘッダー同様ビルドなし・`file://`で解決）。濃紺地（`--rx-text`）＋ブランドグラデの細い上線（`::before`）。
   - 構成: 上段＝ブランド（`Recruit X`明朝ロゴ＋タグライン）｜フッターナビ、下段＝会社情報＋著作権（罫線区切り）
-  - フッターナビはヘッダーと同期: サービス（`service.html`。事例詳細からは `../../service.html`）/ 事例（`case.html`）/ お問い合わせ（`contact.html`）/ 料金プラン（`price.html`）＋ お役立ち情報・コラムは `href`無し＋`aria-disabled="true"` の準備中プレースホルダー（薄表示・非遷移）
+  - フッターナビ（2026-09-28〜）: サービス（`service.html`）/ 料金プラン（`price.html`）/ お問い合わせ（`contact.html`）/ **会社概要（`company.html`）/ プライバシーポリシー（`privacy.html`）**。事例詳細・コラム詳細からは `../../` 付き。事例・コラムはヘッダー同様に非表示。会社概要・プライバシーポリシーはヘッダーには置かず、bizform.contentsx.jp と同じくフッターのみに置く
   - 会社情報: 「ビズ採用」＋「運営：コンテンツエックス株式会社 ／ Contents X Co., Ltd.」、著作権「© 2026 Contents X Co., Ltd.」
-  - SNS・法的リンク（プライバシーポリシー/特商法）・コーポレートサイトリンクは**未確定のため当面は非掲載**。URL確定後に追加（追加時はこの節を更新）
+  - プライバシーポリシーは 2026-09-28 に掲載開始（上記）。SNS・特商法・コーポレートサイトの直接リンクは引き続き非掲載（コーポレートサイトは会社概要ページ内から `contentsx.jp` へリンク）
   - SP（≤640px）は上段・下段とも縦積み
 - **フローティングお問い合わせボタン（`.rx-fab`・全ページ共通／お問い合わせページを除く）**: 画面左下に固定し**常時表示・スクロールで消えない**（上下どちらにスクロールしても追従。`contents-x.co.jp` の追従CTAに倣う）。入場フェードのみ初回1度再生。
   - `js/main.js` が `<body>` 直下へ**DOM生成で挿入**（innerHTML不使用）。`#rx-contact-form` がある `contact.html` では挿入しない（＝自ページでは出さない）ため、ページ追加時も自動で付与・除外される

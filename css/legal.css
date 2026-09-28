@@ -1,0 +1,209 @@
+/* =========================================================================
+   legal.css — ビズ採用 会社概要（company.html）／プライバシーポリシー（privacy.html）専用
+   依存: css/tokens.css → css/style.css の後に読み込む
+   参考: bizform.contentsx.jp の運営会社・ポリシーページ（ページヒーロー＋パンくず → 表／本文）
+   見た目はお問い合わせページ（.rx-contact）の書体設計に合わせる:
+     アイブロウ Inter / 見出し Shippori Mincho / 本文 Zen Kaku Gothic Antique
+   ブレークポイント（DEVICE-RULES §3）: SP ≤768 / TAB 769–1024 / PC ≥1025
+   ========================================================================= */
+
+/* =====================================================================
+   ページヒーロー（最初のセクション: 固定ヘッダー分の上余白を確保・§13）
+   ===================================================================== */
+.rx-lhero {
+  background: linear-gradient(120deg, #ffffff 0%, #fdf2f8 55%, #fbeaf3 100%);
+  padding: calc(var(--rx-header-h) + clamp(36px, 5vw, 64px)) 0 clamp(40px, 6vw, 72px);
+}
+.rx-lhero__inner,
+.rx-lbody__inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 40px);
+}
+
+/* パンくず */
+.rx-lbread ol {
+  list-style: none;
+  padding: 0;                          /* style.css の reset は ul のみ。ol は自前で潰す */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin: 0 0 clamp(20px, 3vw, 32px);
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-size: .8125rem;
+  letter-spacing: .03em;
+  color: var(--rx-text-muted, #6e7280);
+}
+.rx-lbread li { display: inline-flex; align-items: center; gap: 10px; }
+.rx-lbread li + li::before { content: "\203A"; opacity: .6; }
+.rx-lbread a { text-decoration: none; transition: color .2s ease; }
+.rx-lbread a:hover,
+.rx-lbread a:focus-visible { color: var(--rx-accent, #ec2d87); }
+.rx-lbread [aria-current="page"] { color: var(--rx-text, #0a0a0c); }
+
+.rx-lhero__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: .8125rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--rx-accent, #ec2d87);
+  margin: 0 0 clamp(10px, 1.5vw, 16px);
+}
+.rx-lhero__heading {
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  font-weight: 500;
+  font-size: clamp(1.875rem, 1.4rem + 1.8vw, 3rem);
+  line-height: 1.3;
+  letter-spacing: .02em;
+  color: #0a0a0c;
+  margin: 0 0 clamp(14px, 2vw, 22px);
+}
+.rx-lhero__lead {
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
+  line-height: 1.9;
+  color: #3f4651;
+  max-width: 40em;
+  margin: 0;
+  word-break: normal;                 /* 本文系は禁則を守ってブラウザ標準で折り返す */
+  overflow-wrap: break-word;
+}
+.rx-lhero__lead + .rx-lhero__lead { margin-top: .6em; }
+
+/* ヒーロー内の目次リンク（プライバシーポリシー） */
+.rx-lhero__toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 0;
+  margin: clamp(18px, 2.5vw, 28px) 0 0;
+  font-family: 'Zen Kaku Gothic Antique', sans-serif;
+  font-size: .9375rem;
+}
+.rx-lhero__toc li + li::before { content: "\FF0F"; margin: 0 .5em; color: var(--rx-text-muted, #6e7280); }
+.rx-lhero__toc a { color: var(--rx-accent-hover, #d61f76); text-decoration: underline; text-underline-offset: .2em; }
+.rx-lhero__toc a:hover,
+.rx-lhero__toc a:focus-visible { color: var(--rx-accent, #ec2d87); }
+
+/* =====================================================================
+   本文セクション
+   ===================================================================== */
+.rx-lbody {
+  padding: clamp(48px, 7vw, 96px) 0 clamp(24px, 4vw, 48px);
+}
+
+/* --- 会社概要の表（th 左・td 右。SP は縦積み） --- */
+.rx-ltable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  border-top: 1px solid var(--rx-border, #e7e7eb);
+}
+.rx-ltable th,
+.rx-ltable td {
+  padding: clamp(14px, 2vw, 20px) clamp(8px, 1.5vw, 16px);
+  border-bottom: 1px solid var(--rx-border, #e7e7eb);
+  text-align: left;
+  vertical-align: top;
+}
+.rx-ltable th {
+  width: 11em;
+  font-weight: 700;
+  color: #0a0a0c;
+  white-space: nowrap;
+}
+.rx-ltable td {
+  color: #3f4651;
+  word-break: normal;                  /* .rx-jp-body の keep-all だと長い語句が塊で折れる（DEVICE-RULES §16） */
+  overflow-wrap: break-word;
+}
+.rx-ltable a,
+.rx-lprose a {
+  color: var(--rx-accent-hover, #d61f76);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+  transition: color .2s ease;
+}
+.rx-ltable a:hover,
+.rx-ltable a:focus-visible,
+.rx-lprose a:hover,
+.rx-lprose a:focus-visible { color: var(--rx-accent, #ec2d87); }
+
+@media (max-width: 640px) {
+  .rx-ltable,
+  .rx-ltable tbody,
+  .rx-ltable tr,
+  .rx-ltable th,
+  .rx-ltable td { display: block; width: 100%; }
+  .rx-ltable th { padding-bottom: 4px; border-bottom: 0; white-space: normal; }
+  .rx-ltable td { padding-top: 0; }
+}
+
+/* --- プライバシーポリシー本文 --- */
+.rx-lprose {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: #3f4651;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.rx-lprose > * + * { margin-top: 1.1em; }
+.rx-lprose h2 {
+  font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  line-height: 1.35;
+  letter-spacing: .02em;
+  color: #0a0a0c;
+  margin-top: clamp(40px, 6vw, 72px);
+}
+.rx-lprose h2:first-child { margin-top: 0; }
+.rx-lprose h3 {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.125rem, 1.05rem + .35vw, 1.3125rem);
+  line-height: 1.5;
+  color: #0a0a0c;
+  margin-top: clamp(32px, 4.5vw, 52px);
+  padding-left: .8em;
+  border-left: 3px solid var(--rx-accent, #ec2d87);   /* 細いアクセントのみ（グラデは面で使わない） */
+}
+.rx-lprose h4 {
+  font-family: 'Zen Kaku Gothic Antique', 'Hiragino Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: #0a0a0c;
+  margin-top: 1.6em;
+}
+.rx-lprose ul {
+  padding-left: 1.4em;
+  list-style: disc;
+}
+.rx-lprose li + li { margin-top: .4em; }
+.rx-lprose li > strong { color: #0a0a0c; font-weight: 700; }
+.rx-lprose .rx-lprose__meta {
+  font-size: .875rem;
+  color: var(--rx-text-muted, #6e7280);
+}
+
+/* 定義リスト（事業者情報・窓口） */
+.rx-ldl {
+  margin: 1.1em 0 0;
+  border-top: 1px solid var(--rx-border, #e7e7eb);
+}
+.rx-ldl > div {
+  display: grid;
+  grid-template-columns: 9em minmax(0, 1fr);
+  gap: 6px 16px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--rx-border, #e7e7eb);
+}
+.rx-ldl dt { font-weight: 700; color: #0a0a0c; }
+.rx-ldl dd { margin: 0; word-break: normal; overflow-wrap: break-word; }
+@media (max-width: 640px) {
+  .rx-ldl > div { grid-template-columns: 1fr; gap: 2px; }
+}
