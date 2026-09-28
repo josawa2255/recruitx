@@ -919,7 +919,18 @@
   font-weight: 800;
   line-height: 1.4;
 }
-.rx-home-campaign__text span { display: inline-block; white-space: nowrap; }   /* 「Chatwork 広告限定の」「キャンペーン実施中！」の単位で折る */
+.rx-home-campaign__text span { display: inline-block; white-space: nowrap; vertical-align: middle; }   /* 「Chatwork｜広告限定の」「キャンペーン実施中！」の単位で折る */
+/* Chatwork ロゴ（images/home/chatwork-logo.webp・408×104・白地の支給素材）。白地が浮かないよう白いチップに載せる */
+.rx-home-campaign__brand {
+  display: inline-flex;
+  align-items: center;
+  margin-right: .45em;
+  padding: .3em .7em;
+  border-radius: 10px;
+  background: #fff;
+  line-height: 1;
+}
+.rx-home-campaign__brand img { display: block; width: auto; height: clamp(1.3em, 1.1em + .5vw, 1.55em); }
 .rx-home-campaign__cta {
   display: inline-flex;
   align-items: center;
