@@ -71,8 +71,7 @@
    - PCは 2カラム（コピー 34% / カード 2×2）。カードは白カード＋薄い影。帯は画面幅いっぱいの半透明白
    - 並びは grid-template-areas で切り替える（PC: コピー→CTA｜カード / SP: コピー→CTA→カード）
    - 採用AIO対策のカードだけ画像を使わず HTML/CSS/SVG で組む（文字がにじまない・幅に追従する）
-   - 動き: 登場（見出し1行ずつ→ピンク→マーカー線→カード→帯）、採用AIOカードのタイピング演出（JS）、
-     PCのカードホバー。視差・追従は使わない（prefers-reduced-motion: reduce で静止）
+   - 動きは「少し下から出る」だけ。視差・追従は使わない（prefers-reduced-motion: reduce で静止）
    ========================================================================= */
 .rx-home-hero {
   --hero-cw:   1560px;                       /* デザイン案は内容幅が画面の約92%（1672px中1532px）。他セクションより広い */
@@ -131,20 +130,6 @@
 .rx-home-hero__title-line { display: block; white-space: nowrap; }
 .rx-home-hero__title-line--sm { font-size: .7em; margin-bottom: .12em; }    /* 「採用に、」は小さめ（デザイン案は約0.69em） */
 .rx-home-hero__mark { color: var(--rx-accent); }
-/* 見出しのピンク部分の下に、筆のマーカー線（料金の「月額15万円〜」と同じ表現） */
-.rx-home-hero__title .rx-home-hero__mark { position: relative; display: inline-block; }
-.rx-home-hero__title .rx-home-hero__mark::after {
-  content: "";
-  position: absolute;
-  left: 2%; right: 0;
-  bottom: .02em;
-  height: .1em;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(var(--rx-accent-rgb), .05), rgba(var(--rx-accent-rgb), .45) 12%, rgba(var(--rx-accent-rgb), .45) 88%, rgba(var(--rx-accent-rgb), .05));
-  transform: rotate(-1.5deg);
-  transform-origin: left center;
-  pointer-events: none;
-}
 .rx-home-hero__sub {
   margin-top: clamp(8px, .8vw, 12px);
   font-weight: 900;
@@ -234,12 +219,6 @@
   border-radius: var(--hero-card-r);
   background: rgba(255, 255, 255, .94);
   box-shadow: 0 10px 30px rgba(28, 40, 74, .08);
-}
-@media (hover: hover) and (min-width: 1025px) {
-  .rx-home-hero__card { transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s ease; }
-  .rx-home-hero__card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(28, 40, 74, .14); }
-  .rx-home-hero__card-img { transition: transform .5s cubic-bezier(.22, 1, .36, 1); }
-  .rx-home-hero__card:hover .rx-home-hero__card-img { transform: scale(1.03); }
 }
 .rx-home-hero__card-head {
   display: flex;
@@ -375,21 +354,7 @@
   width: 1.3em; height: 1.3em;
   fill: none; stroke: var(--rx-accent-2); stroke-width: 2.4; stroke-linecap: round;
 }
-.rx-home-hero__aio-query { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-height: 1.3em; }
-/* タイピング演出（js/main.js。reduce-motion では走らない＝静止表示のまま） */
-.rx-home-hero__aio-query.is-typing::after { content: ""; display: inline-block; width: 2px; height: 1.05em; margin-left: 2px; vertical-align: -.15em; background: var(--hero-navy); animation: rx-aio-caret .8s steps(1) infinite; }
-.rx-home-hero__aio-go.is-hit { animation: rx-aio-hit .35s ease; }
-.rx-home-hero__aio-list.is-armed li { opacity: 0; translate: 0 8px; transition: opacity .35s ease, translate .35s cubic-bezier(.22, 1, .36, 1); }
-.rx-home-hero__aio-list.is-armed li.is-shown { opacity: 1; translate: 0 0; }
-.rx-home-hero__aio-bot.is-armed::before,
-.rx-home-hero__aio-bot.is-armed::after { opacity: 0; }
-.rx-home-hero__aio-bot.is-alert { animation: rx-aio-hop .5s cubic-bezier(.22, 1, .36, 1); }
-.rx-home-hero__aio-bot.is-alert::before { opacity: 1; animation: rx-aio-spark .45s ease .05s both; }
-.rx-home-hero__aio-bot.is-alert::after  { opacity: 1; animation: rx-aio-spark .45s ease .15s both; }
-@keyframes rx-aio-caret { 50% { opacity: 0; } }
-@keyframes rx-aio-hit { 50% { transform: scale(.85); } }
-@keyframes rx-aio-hop { 30% { translate: 0 -6px; } }
-@keyframes rx-aio-spark { from { opacity: 0; transform: rotate(28deg) scaleY(0); } to { opacity: 1; transform: rotate(28deg) scaleY(1); } }
+.rx-home-hero__aio-query { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rx-home-hero__aio-go {
   flex-shrink: 0;
   display: grid;
@@ -444,7 +409,6 @@
 .rx-home-hero__aio-bot::after {               /* 右上の「ハッ」と気づく2本のピンクの線 */
   content: "";
   position: absolute;
-  transform-origin: bottom center;
   top: -8px;
   width: 3px;
   height: 14px;
@@ -583,50 +547,28 @@
   .rx-home-hero__aio-body { --bot: 68px; }
 }
 
-/* --- 表示時の立ち上がり（2026-09-28 磨き込み。reduce では一切動かさない） ---
-   順番: 見出し1行ずつ（採用に、→応募前の→職場体験を。）→ ピンクが乗る → マーカー線 → サブ → 説明文 → CTA。
-   右のカードは左上→右下の順、最後に帯。全体で約1.3秒。
-   位置の移動は transform ではなく個別プロパティ translate で行う（forwards の transform がホバーの transform を
-   上書きしてしまうため）。 */
+/* --- 表示時の軽い立ち上がり（reduce では一切動かさない） --- */
 @media (prefers-reduced-motion: no-preference) {
-  .rx-home-hero__title-line,
-  .rx-home-hero__sub,
-  .rx-home-hero__lead,
+  .rx-home-hero__copy > *,
   .rx-home-hero__actions,
   .rx-home-hero__card,
   .rx-home-hero__band {
     opacity: 0;
-    animation: rx-hero-up .6s cubic-bezier(.22, 1, .36, 1) forwards;
+    animation: rx-hero-up .85s cubic-bezier(.22, 1, .36, 1) forwards;
   }
-  .rx-home-hero__title-line:nth-child(1) { animation-delay: .05s; }
-  .rx-home-hero__title-line:nth-child(2) { animation-delay: .17s; }
-  .rx-home-hero__title-line:nth-child(3) { animation-delay: .29s; }
-  .rx-home-hero__sub     { animation-delay: .48s; }
-  .rx-home-hero__lead    { animation-delay: .58s; }
-  .rx-home-hero__actions { animation-delay: .72s; }
-  .rx-home-hero__card:nth-child(1) { animation-delay: .22s; }
-  .rx-home-hero__card:nth-child(2) { animation-delay: .32s; }
-  .rx-home-hero__card:nth-child(3) { animation-delay: .42s; }
-  .rx-home-hero__card:nth-child(4) { animation-delay: .52s; }
-  .rx-home-hero__band { animation-delay: .68s; }
-  /* 見出しのピンクは、行が出そろってから最後に色が乗る */
-  .rx-home-hero__title .rx-home-hero__mark { animation: rx-hero-ink .45s ease .7s both; }
-  /* マーカー線は左から引かれる（2行目→3行目） */
-  .rx-home-hero__title .rx-home-hero__mark::after { transform: rotate(-1.5deg) scaleX(0); animation: rx-hero-line .45s cubic-bezier(.4, 0, .2, 1) forwards; }
-  .rx-home-hero__title-line:nth-child(2) .rx-home-hero__mark::after { animation-delay: .95s; }
-  .rx-home-hero__title-line:nth-child(3) .rx-home-hero__mark::after { animation-delay: 1.1s; }
+  .rx-home-hero__copy > *:nth-child(1) { animation-delay: .05s; }
+  .rx-home-hero__copy > *:nth-child(2) { animation-delay: .14s; }
+  .rx-home-hero__copy > *:nth-child(3) { animation-delay: .22s; }
+  .rx-home-hero__actions { animation-delay: .34s; }
+  .rx-home-hero__card:nth-child(1) { animation-delay: .18s; }
+  .rx-home-hero__card:nth-child(2) { animation-delay: .28s; }
+  .rx-home-hero__card:nth-child(3) { animation-delay: .38s; }
+  .rx-home-hero__card:nth-child(4) { animation-delay: .48s; }
+  .rx-home-hero__band { animation-delay: .6s; }
 }
 @keyframes rx-hero-up {
-  from { opacity: 0; translate: 0 24px; }
-  to   { opacity: 1; translate: 0 0; }
-}
-@keyframes rx-hero-ink {
-  from { color: var(--hero-navy); }
-  to   { color: var(--rx-accent); }
-}
-@keyframes rx-hero-line {
-  from { transform: rotate(-1.5deg) scaleX(0); }
-  to   { transform: rotate(-1.5deg) scaleX(1); }
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* =========================================================================
