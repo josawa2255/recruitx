@@ -293,21 +293,30 @@
   object-fit: cover;
   object-position: 50% 38%;      /* 4:3 素材を 16:10 で使うため上下が切れる。顔の位置に合わせて上を見せる */
 }
+/* 見出し → サブ → 説明文 の3段。強さの差はホームのヒーローに合わせる */
 .rx-svc-hero__title {
   margin-top: clamp(14px, 1.6vw, 22px);
   font-weight: 900;
-  /* 2行目「採用のすべての場面へ。」＝11文字。コピー列の幅で1行に収まる上限にしている
-     （係数を変えたら 375 / 768 / 1025 / 1920px で3行に折れないか確認する） */
-  font-size: clamp(1.75rem, 1.15rem + 2vw, 2.875rem);    /* 28 → 46px */
-  line-height: 1.26;
-  letter-spacing: .01em;
+  /* 2行目「採用のすべての場面へ。」＝11文字。PCは下の min() で上書きする */
+  font-size: clamp(2rem, 1.5rem + 1.9vw, 3.75rem);       /* 32 → 60px */
+  line-height: 1.24;
+  letter-spacing: 0;
   text-wrap: wrap;
 }
+.rx-svc-hero__title-line { display: block; }
+.rx-svc-hero__sub {
+  margin-top: clamp(14px, 1.8vw, 24px);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, .86rem + .9vw, 1.625rem);  /* 17 → 26px（PCは下の min() で上書き） */
+  line-height: 1.6;
+  letter-spacing: .02em;
+  color: var(--sv-ink);
+}
 .rx-svc-hero__lead {
-  max-width: 40em;
-  margin-top: clamp(16px, 2vw, 26px);
-  font-size: clamp(.9375rem, .88rem + .3vw, 1.0625rem);
-  line-height: 2.05;
+  max-width: 34em;
+  margin-top: clamp(12px, 1.4vw, 18px);
+  font-size: clamp(.9375rem, .9rem + .2vw, 1rem);
+  line-height: 2;
   color: var(--rx-text-muted);
 }
 
@@ -352,6 +361,11 @@
 @media (max-width: 768px) {
   .rx-svc-hero__shape { left: 24%; }
 }
+@media (max-width: 480px) {
+  /* 2行目「採用のすべての場面へ。」＝11文字。320〜480px でも1行に収まるところまで落とす
+     （折れると強調の意図が崩れる。ホームのヒーローと同じ扱い） */
+  .rx-svc-hero__title { font-size: clamp(1.5rem, 1.1rem + 2.1vw, 1.875rem); }
+}
 
 /* ============================ PC: 写真をヒーロー全面に敷く ============================
    素材（service-hero.webp）は左3割が白の余白・右に主題という構図なので、
@@ -364,7 +378,13 @@
       "copy"
       "toc";
   }
-  .rx-svc-hero__copy { max-width: 46%; }
+  /* 見出しは列幅ではなく画面幅で決める。写真側へ少しはみ出すが、
+     はみ出す先は下の ::after で白に溶けている帯なので読みにくくならない（ホームと同じ作法） */
+  .rx-svc-hero__title { font-size: min(4.4vw, 4.5rem); }       /* 53 → 72px */
+  .rx-svc-hero__title-line { white-space: nowrap; }
+  .rx-svc-hero__sub   { font-size: min(2.1vw, 1.875rem); }     /* 25 → 30px */
+  .rx-svc-hero__lead  { font-size: 1rem; max-width: 30em; }
+  .rx-svc-hero__copy { max-width: 52%; }
   .rx-svc-hero__copy,
   .rx-svc-toc { position: relative; z-index: var(--z-elevated); }
   .rx-svc-hero__shape { display: none; }        /* 写真が入るので斜め面は出さない */
@@ -400,10 +420,10 @@
         rgba(255, 255, 255, 0) 16%),
       /* 左: コピーの下地。素材側の白フェードだけだと画面幅によって文字に写真がかかる */
       linear-gradient(96deg,
-        #fff 0 38%,
-        rgba(255, 255, 255, .95) 48%,
-        rgba(255, 255, 255, .6) 58%,
-        rgba(255, 255, 255, 0) 72%);
+        #fff 0 44%,
+        rgba(255, 255, 255, .95) 54%,
+        rgba(255, 255, 255, .6) 64%,
+        rgba(255, 255, 255, 0) 78%);
     pointer-events: none;
   }
 }
