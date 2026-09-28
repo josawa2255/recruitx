@@ -19,7 +19,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="image" href="images/home/hero-bg.webp" fetchpriority="high">
   <link rel="preload" as="image" href="images/home/hero-card-manga.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="images/home/hero-card-anime.webp" fetchpriority="high">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600&family=Zen+Kaku+Gothic+Antique:wght@400;500;700;900&family=Zen+Kurenaido&family=Dancing+Script:wght@500&family=Inter:wght@500;700&display=swap">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/style.css">
@@ -186,9 +185,22 @@
                 <p class="rx-home-hero__card-sub">働くイメージが<br>動画で伝わる</p>
               </div>
             </div>
-            <img class="rx-home-hero__card-img" src="images/home/hero-card-anime.webp"
-                 alt="採用アニメーションの例。青空とビルを背に笑顔で歩く男性社員と「好きが、仕事になる。」の文字"
-                 width="442" height="256" loading="eager" fetchpriority="high" decoding="async">
+            <!-- 制作した採用アニメーション2本（video/）。サムネイル（poster）を見せ、押すとその場で再生。本体は preload="none" で初期表示を軽くする。
+                 再生した側が左（主役）に来る: 縦長を再生すると js/main.js が .is-tall-active を付け、縦長が左・横長が右のサムネイルになる -->
+            <div class="rx-home-hero__videos">
+              <div class="rx-home-hero__video rx-home-hero__video--wide">
+                <video controls preload="none" playsinline poster="video/asobisystem-recruit-poster.webp" width="640" height="360" aria-label="採用アニメーションの例: ASOBISYSTEM 採用動画">
+                  <source src="video/asobisystem-recruit.mp4" type="video/mp4">
+                </video>
+                <button type="button" class="rx-home-hero__video-play" aria-label="ASOBISYSTEM 採用動画を再生"></button>
+              </div>
+              <div class="rx-home-hero__video rx-home-hero__video--tall">
+                <video controls preload="none" playsinline poster="video/seko-anime-trailer-poster.webp" width="360" height="642" aria-label="採用アニメーションの例: アニメ予告編（縦型）">
+                  <source src="video/seko-anime-trailer.mp4" type="video/mp4">
+                </video>
+                <button type="button" class="rx-home-hero__video-play" aria-label="アニメ予告編を再生"></button>
+              </div>
+            </div>
           </li>
           <li class="rx-home-hero__card">
             <div class="rx-home-hero__card-head">
@@ -260,6 +272,17 @@
         </ul>
       </div>
     </section>
+
+    <!-- ===================== キャンペーン告知（bizform.contentsx.jp のホームと同型のバナー。ヒーロー直下・ホームのみ） ===================== -->
+    <aside class="rx-home-campaign" aria-label="キャンペーンのお知らせ">
+      <div class="rx-home__inner">
+        <a class="rx-home-campaign__link" href="contact.html?source=campaign">
+          <span class="rx-home-campaign__badge">キャンペーン</span>
+          <strong class="rx-home-campaign__text"><span>Chatwork 広告限定の</span><span>キャンペーン実施中！</span></strong>
+          <span class="rx-home-campaign__cta">お問い合わせはこちら<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+      </div>
+    </aside>
 
     <!-- ===================== 2. 悩み（デザイン案スライド②準拠）
          3つの悩みカード（イラストはスライドから切り出し）→ 下向き矢印 → 「その理由のひとつは」。

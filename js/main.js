@@ -3,6 +3,8 @@
    - CTA アンカーのスムーススクロール（scroll-margin-top は CSS §13 で担保）
    - IntersectionObserver による軽い入場アニメ（.rx-anim → .is-in）
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
+   - ホームのヒーロー: 採用AIO対策カードのタイピング演出
+   - ホームのヒーロー: 採用アニメーションカードの動画2本（再生マークの出し入れ・同時再生の抑止）
    - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
@@ -58,6 +60,73 @@
   } else {
     init();
   }
+})();
+
+/* ホームのヒーロー: 採用AIO対策カードのタイピング演出
+   検索窓に「○○株式会社 採用」が打たれる → 検索ボタンが押される → 3項目が順に出る → ロボットが「ハッ」と気づく。
+   装飾のみ（検索窓は aria-hidden）。prefers-reduced-motion: reduce では走らせず、静止表示のまま */
+(function () {
+  'use strict';
+
+  var card = document.querySelector('.rx-home-hero__card--aio');
+  if (!card) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var query = card.querySelector('.rx-home-hero__aio-query');
+  var go    = card.querySelector('.rx-home-hero__aio-go');
+  var list  = card.querySelector('.rx-home-hero__aio-list');
+  var bot   = card.querySelector('.rx-home-hero__aio-bot');
+  if (!query || !go || !list || !bot) return;
+
+  var text = query.textContent;
+  var items = Array.prototype.slice.call(list.children);
+
+  // 初期状態（JS が動く環境でだけ隠す＝JS 無効なら最初から全部見える）
+  query.textContent = '';
+  query.classList.add('is-typing');
+  list.classList.add('is-armed');
+  bot.classList.add('is-armed');
+
+  var t = 900;                                          // カードが出そろってから始める
+  var chars = text.split('');
+  chars.forEach(function (ch, i) {
+    setTimeout(function () { query.textContent += ch; }, t + i * 70);
+  });
+  t += chars.length * 70 + 250;
+  setTimeout(function () { query.classList.remove('is-typing'); go.classList.add('is-hit'); }, t);
+  t += 300;
+  items.forEach(function (li, i) {
+    setTimeout(function () { li.classList.add('is-shown'); }, t + i * 180);
+  });
+  t += items.length * 180 + 120;
+  setTimeout(function () { bot.classList.add('is-alert'); }, t);
+})();
+
+/* ホームのヒーロー: 採用アニメーションカードの動画2本
+   再生ボタンは JS が動く環境でだけ出し、押すと再生、再生中は消す。片方を再生したらもう片方は止める。
+   縦長を再生したら .is-tall-active（縦長が左の主役・横長が右のサムネイル）、横長を再生したら既定に戻す */
+(function () {
+  'use strict';
+
+  var box = document.querySelector('.rx-home-hero__videos');
+  if (!box) return;
+  var wraps = box.querySelectorAll('.rx-home-hero__video');
+  var videos = [];
+  Array.prototype.forEach.call(wraps, function (wrap) {
+    var v = wrap.querySelector('video');
+    var btn = wrap.querySelector('.rx-home-hero__video-play');
+    if (!v) return;
+    videos.push(v);
+    wrap.classList.add('has-js');
+    if (btn) btn.addEventListener('click', function () { v.play(); });
+    v.addEventListener('play', function () {
+      wrap.classList.add('is-playing');
+      box.classList.toggle('is-tall-active', wrap.classList.contains('rx-home-hero__video--tall'));
+      videos.forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
+    });
+    v.addEventListener('pause', function () { wrap.classList.remove('is-playing'); });
+    v.addEventListener('ended', function () { wrap.classList.remove('is-playing'); });
+  });
 })();
 
 /* ヘッダーナビ: スクロールで背景を白くする + SPハンバーガー開閉 */
