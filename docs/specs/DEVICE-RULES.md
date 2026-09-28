@@ -85,6 +85,7 @@ h1,h2,h3,h4,[id]:not(html,body){ scroll-margin-top: calc(var(--rx-header-h) + 16
 | contact.html | `.rx-contact` | `clamp(80→200px)` |
 | price.html | `.rx-phero2` | PC `max(var(--rx-header-h), clamp(80→116px))` / SP `60+28px` |
 | case/{slug}/ | `.rx-cdtl-hero` | `var(--rx-header-h)`（＋inner余白） |
+| company.html / privacy.html | `.rx-lhero`（`css/legal.css`） | `calc(var(--rx-header-h) + clamp(36→64px))` |
 
 ## 14. i18n: EN は日本語より約30%長い（多言語化する場合）
 ナビ/ボタンの最小幅はENを基準に。`html[lang="en"]` 専用にgap/font-sizeを詰める。翻訳は `data-ja`/`data-en` で明示。
