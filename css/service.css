@@ -289,7 +289,7 @@
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  object-position: 62% 50%;      /* 人物が右寄りの素材なので右側を見せる */
+  object-position: 50% 38%;      /* 4:3 素材を 16:10 で使うため上下が切れる。顔の位置に合わせて上を見せる */
 }
 .rx-svc-hero__title {
   margin-top: clamp(14px, 1.6vw, 22px);
