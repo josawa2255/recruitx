@@ -255,10 +255,12 @@
    ヒーロー
    ========================================================================= */
 .rx-svc-hero {
+  --svch-pt: calc(var(--rx-header-h) + clamp(36px, 5vw, 84px));
+  --svch-pb: clamp(48px, 6vw, 96px);
   position: relative;
   overflow: clip;
   background: #fff;
-  padding: calc(var(--rx-header-h) + clamp(36px, 5vw, 84px)) 0 clamp(48px, 6vw, 96px);
+  padding: var(--svch-pt) 0 var(--svch-pb);
 }
 .rx-svc-hero__shape {
   position: absolute;
@@ -267,15 +269,15 @@
   background: rgba(var(--rx-accent-rgb), .055);
   clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
 }
-/* 左＝コピー / 右＝ビジュアル。目次は下に全幅で敷く */
+/* 既定（≤1024px）は コピー → 写真 → 目次 の縦積み。PCは下の min-width:1025px で全面敷きに切り替える */
 .rx-svc-hero__inner {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
-    "copy visual"
-    "toc  toc";
-  align-items: center;
-  column-gap: clamp(28px, 4vw, 64px);
+    "copy"
+    "visual"
+    "toc";
+  row-gap: clamp(24px, 3.2vw, 40px);
 }
 .rx-svc-hero__copy { grid-area: copy; min-width: 0; }
 .rx-svc-hero__visual {
@@ -296,7 +298,7 @@
   font-weight: 900;
   /* 2行目「採用のすべての場面へ。」＝11文字。コピー列の幅で1行に収まる上限にしている
      （係数を変えたら 375 / 768 / 1025 / 1920px で3行に折れないか確認する） */
-  font-size: clamp(1.75rem, 1.15rem + 2.1vw, 3rem);      /* 28 → 48px */
+  font-size: clamp(1.75rem, 1.15rem + 2vw, 2.875rem);    /* 28 → 46px */
   line-height: 1.26;
   letter-spacing: .01em;
   text-wrap: wrap;
@@ -343,20 +345,67 @@
   border-color: rgba(var(--rx-accent-rgb), .5);
 }
 
-@media (max-width: 1024px) {
-  .rx-svc-hero__inner {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "copy"
-      "visual"
-      "toc";
-    row-gap: clamp(24px, 3.2vw, 40px);
-  }
-  .rx-svc-hero__visual img { aspect-ratio: 16 / 9; }
+@media (max-width: 1199px) {
+  .rx-svc-hero__visual img { aspect-ratio: 16 / 9; object-position: 62% 50%; }
   .rx-svc-toc { margin-top: clamp(8px, 1.2vw, 16px); }
 }
 @media (max-width: 768px) {
   .rx-svc-hero__shape { left: 24%; }
+}
+
+/* ============================ PC: 写真をヒーロー全面に敷く ============================
+   素材（service-hero.webp）は左3割が白の余白・右に主題という構図なので、
+   右カラムに押し込めると余白ぶん主題が小さくなる。ホームのヒーローと同じ扱いにする。
+   ⚠️ 1200px 未満では見出しが写真に重なって読めないため、この扱いは 1200px 以上だけ。
+      それ未満は コピー → 写真 → 目次 の縦積みに任せる */
+@media (min-width: 1200px) {
+  .rx-svc-hero__inner {
+    grid-template-areas:
+      "copy"
+      "toc";
+  }
+  .rx-svc-hero__copy { max-width: 46%; }
+  .rx-svc-hero__copy,
+  .rx-svc-toc { position: relative; z-index: var(--z-elevated); }
+  .rx-svc-hero__shape { display: none; }        /* 写真が入るので斜め面は出さない */
+
+  .rx-svc-hero__visual {
+    position: absolute;
+    top: calc(-1 * var(--svch-pt));
+    bottom: calc(-1 * var(--svch-pb));
+    /* 素材は16:9。箱が縦長だと左右が切れて右の4パネルが欠けるため、
+       コピーの下まで大きく回り込ませて箱の比率を素材に近づける（読みやすさは下の白グラデで確保） */
+    left: 16%;
+    /* コンテナの右端から画面の右端まで伸ばす（ヒーローの overflow: clip で切り取る） */
+    right: min(0px, calc((var(--svc-cw) - 100vw) / 2));
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+    z-index: var(--z-base);
+  }
+  .rx-svc-hero__photo {
+    height: 100%;
+    aspect-ratio: auto;
+    object-position: 50% center;
+  }
+  /* 白 → 透明。素材側の白フェードだけだと画面幅によって文字に写真がかかるため重ねる */
+  .rx-svc-hero__visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      /* 下端: 写真がここで切れるので、次のセクションの白へ溶かす */
+      linear-gradient(to top,
+        #fff 0 1%,
+        rgba(255, 255, 255, 0) 16%),
+      /* 左: コピーの下地。素材側の白フェードだけだと画面幅によって文字に写真がかかる */
+      linear-gradient(96deg,
+        #fff 0 38%,
+        rgba(255, 255, 255, .95) 48%,
+        rgba(255, 255, 255, .6) 58%,
+        rgba(255, 255, 255, 0) 72%);
+    pointer-events: none;
+  }
 }
 
 /* =========================================================================
