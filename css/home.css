@@ -278,10 +278,11 @@
   background: var(--hm-pink-soft);             /* 読み込み前の下地 */
 }
 
-/* 採用アニメーション: 動画2本（横長 640×360 ＋ 縦長 360×642）を高さを揃えて横並び。
-   列比は「同じ高さにしたときの幅」＝ 16/9 : 360/642 ≒ 1280 : 404。
-   再生マークは装飾（pointer-events: none）で、クリックは <video controls> 本体に届く。
-   JS が動く環境でだけ出し（.has-js）、再生中は消す（.is-playing）。JS 無効なら標準コントロールだけ */
+/* 採用アニメーション: 動画2本（横長 640×360 ＋ 縦長 360×642）を横並び。
+   既定（横長が主役）: 列比は「同じ高さにしたときの幅」＝ 16/9 : 360/642 ≒ 1280 : 404 で高さが揃う。
+   縦長を再生すると .is-tall-active: 縦長が左（幅40%・実寸比）、横長は右でその高さいっぱいのサムネイル（中央を切り抜き）。
+   横長を再生すると既定に戻る。並び替えは order で行い、DOM は動かさない（動かすと再生が止まるため）。
+   再生ボタンは JS が動く環境でだけ出し（.has-js）、再生中は消す（.is-playing）。JS 無効なら標準コントロールだけ */
 .rx-home-hero__videos {
   margin-top: auto;                            /* 画像カードと同じく下端を揃える */
   display: grid;
@@ -304,34 +305,45 @@
   height: 100%;
   object-fit: cover;
 }
+/* 縦長が主役のとき */
+.rx-home-hero__videos.is-tall-active { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+.rx-home-hero__videos.is-tall-active .rx-home-hero__video--tall { order: -1; }
+.rx-home-hero__videos.is-tall-active .rx-home-hero__video--wide { aspect-ratio: auto; }   /* 高さは縦長に合わせて伸びる */
+.rx-home-hero__videos.is-tall-active .rx-home-hero__video--wide video { position: absolute; inset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .rx-home-hero__videos { transition: grid-template-columns .4s cubic-bezier(.22, 1, .36, 1); }
+}
+/* 再生ボタン（白い円＋ピンクの三角）。中央の円だけを押せる大きさにして、下の標準コントロールは隠さない */
 .rx-home-hero__video-play {
   display: none;
   position: absolute;
-  inset: 0;
-  place-items: center;
-  pointer-events: none;
-}
-.rx-home-hero__video.has-js:not(.is-playing) .rx-home-hero__video-play { display: grid; }
-.rx-home-hero__video-play::before,
-.rx-home-hero__video-play::after { grid-area: 1 / 1; }   /* 円と三角を同じマスに重ねて中央に置く */
-.rx-home-hero__video-play::before {          /* 白い円 */
-  content: "";
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
   width: clamp(36px, 4vw, 52px);
   height: clamp(36px, 4vw, 52px);
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, .92);
   box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+  cursor: pointer;
+  place-items: center;
 }
+.rx-home-hero__video.has-js:not(.is-playing) .rx-home-hero__video-play { display: grid; }
 .rx-home-hero__video-play::after {           /* ピンクの三角（見た目の重心を合わせるため少し右へ） */
   content: "";
-  width: clamp(14px, 1.5vw, 20px);
-  height: clamp(14px, 1.5vw, 20px);
+  width: 38%;
+  height: 38%;
   transform: translateX(12%);
   background: var(--rx-accent);
   clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
-.rx-home-hero__video--tall .rx-home-hero__video-play::before { width: clamp(30px, 3vw, 40px); height: clamp(30px, 3vw, 40px); }
-.rx-home-hero__video--tall .rx-home-hero__video-play::after  { width: clamp(11px, 1.1vw, 15px); height: clamp(11px, 1.1vw, 15px); }
+.rx-home-hero__video-play:hover { background: #fff; }
+.rx-home-hero__video-play:focus-visible { outline: 3px solid var(--rx-accent); outline-offset: 2px; }
+/* 既定で小さい方（縦長）のボタンは一回り小さく。主役になったら通常サイズ */
+.rx-home-hero__videos:not(.is-tall-active) .rx-home-hero__video--tall .rx-home-hero__video-play,
+.rx-home-hero__videos.is-tall-active .rx-home-hero__video--wide .rx-home-hero__video-play { width: clamp(30px, 3vw, 40px); height: clamp(30px, 3vw, 40px); }
 
 /* 採用AIO対策: 検索窓 → 3項目の一覧（右下にロボット） */
 .rx-home-hero__aio {

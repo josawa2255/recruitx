@@ -103,20 +103,25 @@
 })();
 
 /* ホームのヒーロー: 採用アニメーションカードの動画2本
-   再生マーク（装飾）を JS が動く環境でだけ出し、再生中は消す。片方を再生したらもう片方は止める */
+   再生ボタンは JS が動く環境でだけ出し、押すと再生、再生中は消す。片方を再生したらもう片方は止める。
+   縦長を再生したら .is-tall-active（縦長が左の主役・横長が右のサムネイル）、横長を再生したら既定に戻す */
 (function () {
   'use strict';
 
-  var wraps = document.querySelectorAll('.rx-home-hero__video');
-  if (!wraps.length) return;
+  var box = document.querySelector('.rx-home-hero__videos');
+  if (!box) return;
+  var wraps = box.querySelectorAll('.rx-home-hero__video');
   var videos = [];
   Array.prototype.forEach.call(wraps, function (wrap) {
     var v = wrap.querySelector('video');
+    var btn = wrap.querySelector('.rx-home-hero__video-play');
     if (!v) return;
     videos.push(v);
     wrap.classList.add('has-js');
+    if (btn) btn.addEventListener('click', function () { v.play(); });
     v.addEventListener('play', function () {
       wrap.classList.add('is-playing');
+      box.classList.toggle('is-tall-active', wrap.classList.contains('rx-home-hero__video--tall'));
       videos.forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
     });
     v.addEventListener('pause', function () { wrap.classList.remove('is-playing'); });

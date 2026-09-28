@@ -185,19 +185,20 @@
                 <p class="rx-home-hero__card-sub">働くイメージが<br>動画で伝わる</p>
               </div>
             </div>
-            <!-- 制作した採用アニメーション2本（video/）。サムネイル（poster）を見せ、押すとその場で再生。本体は preload="none" で初期表示を軽くする -->
+            <!-- 制作した採用アニメーション2本（video/）。サムネイル（poster）を見せ、押すとその場で再生。本体は preload="none" で初期表示を軽くする。
+                 再生した側が左（主役）に来る: 縦長を再生すると js/main.js が .is-tall-active を付け、縦長が左・横長が右のサムネイルになる -->
             <div class="rx-home-hero__videos">
               <div class="rx-home-hero__video rx-home-hero__video--wide">
                 <video controls preload="none" playsinline poster="video/asobisystem-recruit-poster.webp" width="640" height="360" aria-label="採用アニメーションの例: ASOBISYSTEM 採用動画">
                   <source src="video/asobisystem-recruit.mp4" type="video/mp4">
                 </video>
-                <span class="rx-home-hero__video-play" aria-hidden="true"></span>
+                <button type="button" class="rx-home-hero__video-play" aria-label="ASOBISYSTEM 採用動画を再生"></button>
               </div>
               <div class="rx-home-hero__video rx-home-hero__video--tall">
                 <video controls preload="none" playsinline poster="video/seko-anime-trailer-poster.webp" width="360" height="642" aria-label="採用アニメーションの例: アニメ予告編（縦型）">
                   <source src="video/seko-anime-trailer.mp4" type="video/mp4">
                 </video>
-                <span class="rx-home-hero__video-play" aria-hidden="true"></span>
+                <button type="button" class="rx-home-hero__video-play" aria-label="アニメ予告編を再生"></button>
               </div>
             </div>
           </li>
