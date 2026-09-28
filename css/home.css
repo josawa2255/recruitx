@@ -2296,7 +2296,9 @@ a.rx-home-route:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .4
 }
 /* =========================== スマートフォン（縦並び） =========================== */
 @media (max-width: 700px) {
-  .rx-home-flow__list { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  /* <ol> はリセット対象外（style.css は ul のみ）でブラウザ標準の左余白40pxが残り、
+     カードだけ右にずれて見えるため打ち消す */
+  .rx-home-flow__list { grid-template-columns: minmax(0, 1fr); gap: 26px; padding-inline-start: 0; }
   .rx-home-flow__step + .rx-home-flow__step::before {    /* 矢印は下向きに */
     left: 50%;
     top: -19px;
@@ -2516,4 +2518,7 @@ a.rx-home-route:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .4
 
   /* 入場は少し大きめに動かす */
   .rx-home .rx-anim { transform: translateY(28px); }
+  /* style.css の .rx-anim.is-in と同詳細度のため、後勝ちで戻し切れるよう明示する
+     （これが無いと表示後も28px下にズレたままになり、直下の注記に重なる） */
+  .rx-home .rx-anim.is-in { transform: none; }
 }
