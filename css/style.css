@@ -557,9 +557,9 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(var(--rx-header-h
 }
 
 /* =====================================================================
-   固定CTA（画面下に追従する3ボタンバー・全ページ共通・お問い合わせページを除く）
-   - 電話で相談（白地・ピンク文字）／資料をダウンロード（白地・濃紺文字）／無料で相談（ブランドグラデ）
-   - PC: 中央寄せの帯（pill）。SP(≤640px): 全幅・アイコンを上に置いた3等分
+   固定CTA（画面下に追従する2ボタンバー・全ページ共通・お問い合わせページを除く）
+   - 電話で相談（白地・ピンク文字）／無料で相談（ブランドグラデ）
+   - PC: 中央寄せの帯（pill）。SP(≤640px): 全幅・アイコンを上に置いた2等分
    - JS（main.js）が <body> 直下に動的挿入し、実高さを --rx-fixcta-h に書く。
      body.has-fixcta の下余白でフッターが隠れない
    - z-index は階層変数（DEVICE-RULES §11）。FAB 層
@@ -585,10 +585,10 @@ body.has-fixcta { padding-bottom: calc(var(--rx-fixcta-h) + env(safe-area-inset-
 
 .rx-fixcta__inner {
   pointer-events: auto;
-  width: min(100%, 760px);
+  width: min(100%, 560px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 6px;
   padding: 6px;
   border-radius: var(--rx-radius-pill);
@@ -626,9 +626,6 @@ body.has-fixcta { padding-bottom: calc(var(--rx-fixcta-h) + env(safe-area-inset-
 /* 電話: 白地・ピンク文字（PCは番号を副文言に出す） */
 .rx-fixcta__item--tel { background: #fff; color: var(--rx-accent); }
 .rx-fixcta__item--tel:hover { background: rgba(var(--rx-accent-rgb), .06); }
-/* 資料: 白地・濃紺文字 */
-.rx-fixcta__item--doc { background: #fff; color: var(--rx-text); }
-.rx-fixcta__item--doc:hover { background: var(--rx-bg-light); }
 /* 無料相談: ブランドグラデ（主CTA） */
 .rx-fixcta__item--consult {
   background: var(--rx-grad);
@@ -666,7 +663,7 @@ body.has-fixcta { padding-bottom: calc(var(--rx-fixcta-h) + env(safe-area-inset-
   .rx-fixcta__item--tel .rx-fixcta__sub { display: block; font-size: .62rem; }
   .rx-fixcta__item--consult { box-shadow: none; }
 }
-/* 極小幅（≤360px）は副文言も落として3列を守る */
+/* 極小幅（≤360px）は副文言も落として2列を守る */
 @media (max-width: 360px) {
   .rx-fixcta__item--tel .rx-fixcta__sub { display: none; }
   .rx-fixcta__label { font-size: .72rem; }
