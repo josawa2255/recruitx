@@ -138,6 +138,38 @@
 
 .rx-svc-more { margin-top: clamp(28px, 3.4vw, 44px); }
 
+/* セクション頭の「コピー＋写真」2カラム。
+   ホームと同じ作法で写真の左右を交互にする（01=右 / 02=左）＝セクションの切れ目を出すため */
+.rx-svc-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .92fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+}
+.rx-svc-head__copy { min-width: 0; }
+.rx-svc-head__copy .rx-svc-lead { max-width: 34em; }
+.rx-svc-head__visual {
+  margin: 0;
+  overflow: hidden;
+  border-radius: clamp(20px, 2.4vw, 32px);
+}
+.rx-svc-head__visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+/* 02 届ける は写真を左に置く */
+.rx-svc-head--reverse .rx-svc-head__copy { order: 2; }
+.rx-svc-head--reverse .rx-svc-head__visual { order: 1; }
+
+@media (max-width: 1024px) {
+  .rx-svc-head { grid-template-columns: 1fr; }
+  .rx-svc-head__copy { order: 1; }
+  .rx-svc-head__visual { order: 2; }
+  .rx-svc-head__visual img { aspect-ratio: 16 / 10; }
+}
+
 .rx-svc-textlink {
   display: inline-flex;
   align-items: center;
