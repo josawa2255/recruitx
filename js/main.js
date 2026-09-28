@@ -4,7 +4,6 @@
    - IntersectionObserver による軽い入場アニメ（.rx-anim → .is-in）
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
    - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
-   - ホームの動き: 実績の数字のカウントアップ
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
    ========================================================================= */
@@ -59,48 +58,6 @@
   } else {
     init();
   }
-})();
-
-/* ホームの動き（実績の数字のカウントアップ）
-   - .rx-home-stats__list 内の .rx-home-stats__num を、表示されたときに 0 から数える
-   - 「1/3」のように数値でないものは触らない
-   - 見出しの1文字ずつの出現・data-reveal は 2026-09-28 のリデザインで廃止
-   - prefers-reduced-motion: reduce では実行しない（静的表示のまま） */
-(function () {
-  'use strict';
-
-  if (!document.querySelector('.rx-home')) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!('IntersectionObserver' in window)) return;
-
-  function countUp(el) {
-    var raw = el.textContent.trim();
-    if (!/^[0-9]+(\.[0-9]+)?$/.test(raw)) return;
-    var target = parseFloat(raw);
-    var decimals = (raw.split('.')[1] || '').length;
-    var start = null;
-    var dur = 1100;
-    el.textContent = (0).toFixed(decimals);
-    function step(ts) {
-      if (start === null) start = ts;
-      var t = Math.min((ts - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = (target * eased).toFixed(decimals);
-      if (t < 1) window.requestAnimationFrame(step);
-      else el.textContent = raw;
-    }
-    window.requestAnimationFrame(step);
-  }
-
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      io.unobserve(entry.target);
-      Array.prototype.forEach.call(entry.target.querySelectorAll('.rx-home-stats__num'), countUp);
-    });
-  }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
-
-  Array.prototype.forEach.call(document.querySelectorAll('.rx-home-stats__list'), function (el) { io.observe(el); });
 })();
 
 /* ヘッダーナビ: スクロールで背景を白くする + SPハンバーガー開閉 */
