@@ -186,8 +186,9 @@
               </div>
             </div>
             <!-- 制作した採用アニメーション2本（video/）。サムネイル（poster）を見せ、押すとその場で再生。本体は preload="none" で初期表示を軽くする。
-                 再生しても大きさ・並びは変えない（ヒーロー全体の高さを動かさないため。大きく見るときは全画面ボタン） -->
-            <div class="rx-home-hero__videos">
+                 動画エリアの高さは隣の採用漫画の画像と同じ比率で固定し（ヒーロー全体の高さは動かない）、その中で再生した側を実寸比・もう片方を同じ高さのサムネイルにする。
+                 縦長を再生すると js/main.js が .is-tall-active を付け、右の縦長が広がり左の横長が縮む（位置は変えない） -->
+            <div class="rx-home-hero__videos rx-home-hero__videos--pair">
               <div class="rx-home-hero__video rx-home-hero__video--wide">
                 <video controls preload="none" playsinline poster="video/asobisystem-recruit-poster.webp" width="640" height="360" aria-label="採用アニメーションの例: ASOBISYSTEM 採用動画">
                   <source src="video/asobisystem-recruit.mp4" type="video/mp4">
