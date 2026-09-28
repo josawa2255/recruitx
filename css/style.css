@@ -557,47 +557,127 @@ h1, h2, h3, h4, [id]:not(html, body) { scroll-margin-top: calc(var(--rx-header-h
 }
 
 /* =====================================================================
-   フローティングお問い合わせボタン（全ページ共通・お問い合わせページを除く）
-   - 画面左下に固定。少しスクロールしたら表示し、以後ずっと追従
-   - JS（main.js）が <body> 直下に動的挿入。お問い合わせページ(#rx-contact-form)では挿入しない
+   固定CTA（画面下に追従する3ボタンバー・全ページ共通・お問い合わせページを除く）
+   - 電話で相談（白地・ピンク文字）／資料をダウンロード（白地・濃紺文字）／無料で相談（ブランドグラデ）
+   - PC: 中央寄せの帯（pill）。SP(≤640px): 全幅・アイコンを上に置いた3等分
+   - JS（main.js）が <body> 直下に動的挿入し、実高さを --rx-fixcta-h に書く。
+     body.has-fixcta の下余白でフッターが隠れない
    - z-index は階層変数（DEVICE-RULES §11）。FAB 層
    ===================================================================== */
-.rx-fab {
+:root { --rx-fixcta-h: 72px; }
+body.has-fixcta { padding-bottom: calc(var(--rx-fixcta-h) + env(safe-area-inset-bottom, 0px)); }
+
+.rx-fixcta {
   position: fixed;
-  left: clamp(16px, 2vw, 28px);
-  bottom: max(clamp(16px, 2.4vw, 28px), env(safe-area-inset-bottom, 0px));
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: var(--z-fab);
-  display: inline-flex;
-  align-items: center;
-  gap: .5em;
-  padding: clamp(.72rem, .62rem + .3vw, .95rem) clamp(1.1rem, .9rem + .7vw, 1.6rem);
-  border-radius: var(--rx-radius-pill);
-  background: var(--rx-grad);
-  color: #fff;
-  font-family: var(--rx-font-head);
-  font-weight: 700;
-  font-size: clamp(.875rem, .84rem + .2vw, 1rem);
-  line-height: 1;
-  white-space: nowrap;
-  box-shadow: 0 10px 30px rgba(var(--rx-accent-rgb), .4);
+  padding: 0 clamp(12px, 2vw, 24px) max(clamp(12px, 1.6vw, 20px), env(safe-area-inset-bottom, 0px));
+  pointer-events: none;                    /* 帯の外側（余白）はクリックを通す */
   /* 初期は隠す → is-visible で表示 */
   opacity: 0;
   visibility: hidden;
-  transform: translateY(14px);
-  transition: opacity .32s ease, transform .32s ease, box-shadow .2s ease, visibility .32s;
+  transform: translateY(16px);
+  transition: opacity .32s ease, transform .32s ease, visibility .32s;
 }
-.rx-fab.is-visible { opacity: 1; visibility: visible; transform: none; }
-.rx-fab:hover  { transform: translateY(-3px); box-shadow: 0 14px 38px rgba(var(--rx-accent-rgb), .52); }
-.rx-fab:active { transform: translateY(-1px); }
-.rx-fab:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .45); outline-offset: 3px; }
-.rx-fab__icon { width: 1.25em; height: 1.25em; flex-shrink: 0; }
+.rx-fixcta.is-visible { opacity: 1; visibility: visible; transform: none; }
 
+.rx-fixcta__inner {
+  pointer-events: auto;
+  width: min(100%, 760px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 6px;
+  border-radius: var(--rx-radius-pill);
+  background: rgba(255, 255, 255, .96);
+  border: 1px solid var(--rx-border);
+  box-shadow: 0 12px 36px rgba(28, 40, 74, .18);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.rx-fixcta__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55em;
+  min-height: 52px;                        /* タップ44px超（DEVICE-RULES §12） */
+  padding: .5rem clamp(.75rem, .5rem + .8vw, 1.25rem);
+  border-radius: var(--rx-radius-pill);
+  font-family: var(--rx-font-head);
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease;
+}
+.rx-fixcta__item:hover  { transform: translateY(-2px); }
+.rx-fixcta__item:active { transform: translateY(0); }
+.rx-fixcta__item:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .45); outline-offset: 2px; }
+
+.rx-fixcta__icon  { flex-shrink: 0; width: 1.35em; height: 1.35em; }
+.rx-fixcta__body  { display: flex; flex-direction: column; align-items: flex-start; gap: .1em; min-width: 0; }
+.rx-fixcta__label { font-size: clamp(.9rem, .85rem + .2vw, 1rem); }
+.rx-fixcta__sub   { font-family: var(--rx-font-body); font-weight: 500; font-size: .72rem; opacity: .8; letter-spacing: .01em; }
+
+/* 電話: 白地・ピンク文字（PCは番号を副文言に出す） */
+.rx-fixcta__item--tel { background: #fff; color: var(--rx-accent); }
+.rx-fixcta__item--tel:hover { background: rgba(var(--rx-accent-rgb), .06); }
+/* 資料: 白地・濃紺文字 */
+.rx-fixcta__item--doc { background: #fff; color: var(--rx-text); }
+.rx-fixcta__item--doc:hover { background: var(--rx-bg-light); }
+/* 無料相談: ブランドグラデ（主CTA） */
+.rx-fixcta__item--consult {
+  background: var(--rx-grad);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(var(--rx-accent-rgb), .35);
+}
+.rx-fixcta__item--consult:hover { box-shadow: 0 12px 28px rgba(var(--rx-accent-rgb), .45); }
+.rx-fixcta__item--consult .rx-fixcta__sub { opacity: .9; }
+
+/* SP: 全幅バー。アイコンを上・文言を下の縦積み。副文言は電話番号だけ残す */
 @media (max-width: 640px) {
-  .rx-fab { font-size: .875rem; padding: .72rem 1.1rem; }
+  .rx-fixcta { padding: 0 0 env(safe-area-inset-bottom, 0px); }
+  .rx-fixcta__inner {
+    width: 100%;
+    gap: 4px;
+    padding: 6px 8px;
+    border-radius: 0;
+    border-width: 1px 0 0;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: #fff;
+    box-shadow: 0 -6px 24px rgba(28, 40, 74, .12);
+  }
+  .rx-fixcta__item {
+    flex-direction: column;
+    gap: .25em;
+    min-height: 56px;
+    padding: .45rem .25rem;
+    border-radius: 12px;
+  }
+  .rx-fixcta__icon  { width: 1.3rem; height: 1.3rem; }
+  .rx-fixcta__body  { align-items: center; gap: 0; }
+  .rx-fixcta__label { font-size: .78rem; }
+  .rx-fixcta__sub   { display: none; }
+  .rx-fixcta__item--tel .rx-fixcta__sub { display: block; font-size: .62rem; }
+  .rx-fixcta__item--consult { box-shadow: none; }
 }
+/* 極小幅（≤360px）は副文言も落として3列を守る */
+@media (max-width: 360px) {
+  .rx-fixcta__item--tel .rx-fixcta__sub { display: none; }
+  .rx-fixcta__label { font-size: .72rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .rx-fab { transition: opacity .2s ease, visibility .2s; transform: none; }
-  .rx-fab.is-visible { transform: none; }
-  .rx-fab:hover, .rx-fab:active { transform: none; }
+  .rx-fixcta { transition: opacity .2s ease, visibility .2s; transform: none; }
+  .rx-fixcta.is-visible { transform: none; }
+  .rx-fixcta__item:hover, .rx-fixcta__item:active { transform: none; }
 }
-@media print { .rx-fab { display: none !important; } }
+@media print {
+  .rx-fixcta { display: none !important; }
+  body.has-fixcta { padding-bottom: 0; }
+}
