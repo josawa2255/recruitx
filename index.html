@@ -101,7 +101,7 @@
       </a>
       <p class="rx-navb__tag">好きがはたらく、をつくる。</p>
       <nav class="rx-nav__menu" id="navMenu" aria-label="メインナビゲーション">
-        <a class="rx-nav__link" href="#service">サービス</a>
+        <a class="rx-nav__link" href="service.html">サービス</a>
         <a class="rx-nav__link" href="case.html">事例</a>
         <a class="rx-nav__link" href="price.html">料金プラン</a>
         <a class="rx-nav__link" href="column.html">コラム</a>
@@ -453,8 +453,8 @@
          ページ内で意図的に「弱い」セクション。文字＋細い罫線だけで見せ、
          カード・アイコン・写真は使わない（03 課題ナビとの見せ方の重複を避ける）。
          各行の id は 03 課題ナビのカードのリンク先なので変えない。
-         ルート詳細ページができたら <li> を <a class="rx-home-route" href="…"> に変えるだけで
-         hover（背景・矢印・ルート名）が効くようにしてある ===================== -->
+         2026-09-28: ルート詳細ページ（service.html）ができたので、各行を a.rx-home-route へリンク化した。
+         ul の直下に a は置けないため、一覧は ul から div に変えてある ===================== -->
     <section class="rx-home-routes" id="routes" aria-labelledby="routesHeading">
       <div class="rx-home-routes__deco" aria-hidden="true">
         <span class="rx-home-routes__shape"></span>
@@ -465,8 +465,8 @@
         <h2 class="rx-home-routes__title" id="routesHeading">3つのルートから、<br><span class="rx-home-accent">いま必要な一手を選ぶ。</span></h2>
         <p class="rx-home-routes__lead">課題の違いに合わせて、<br>改善の入口を分けています。</p>
 
-        <ul class="rx-home-routes__list">
-          <li class="rx-home-route rx-anim" id="route-a">
+        <div class="rx-home-routes__list">
+          <a class="rx-home-route rx-anim" id="route-a" href="service.html#route-a">
             <span class="rx-home-route__no">01</span>
             <span class="rx-home-route__mark">A</span>
             <h3 class="rx-home-route__name">求人広告改善</h3>
@@ -476,9 +476,9 @@
               <li>求人票だけでは仕事内容が伝わらない</li>
             </ul>
             <span class="rx-home-route__arrow" aria-hidden="true"></span>
-          </li>
+          </a>
 
-          <li class="rx-home-route rx-anim" id="route-b">
+          <a class="rx-home-route rx-anim" id="route-b" href="service.html#route-b">
             <span class="rx-home-route__no">02</span>
             <span class="rx-home-route__mark">B</span>
             <h3 class="rx-home-route__name">応募課金型改善</h3>
@@ -488,9 +488,9 @@
               <li>応募の質にばらつきがある</li>
             </ul>
             <span class="rx-home-route__arrow" aria-hidden="true"></span>
-          </li>
+          </a>
 
-          <li class="rx-home-route rx-anim" id="route-ai">
+          <a class="rx-home-route rx-anim" id="route-ai" href="service.html#route-ai">
             <span class="rx-home-route__no">03</span>
             <span class="rx-home-route__mark">AI</span>
             <h3 class="rx-home-route__name">検索対策</h3>
@@ -500,8 +500,8 @@
               <li>会社の魅力が伝わらない</li>
             </ul>
             <span class="rx-home-route__arrow" aria-hidden="true"></span>
-          </li>
-        </ul>
+          </a>
+        </div>
 
         <p class="rx-home-routes__note">※検索順位や、生成AIに推薦されることを保証するものではありません。</p>
       </div>
@@ -899,7 +899,7 @@
         </div>
         <nav class="rx-footer__nav" aria-label="フッターナビゲーション">
           <ul class="rx-footer__links">
-            <li><a class="rx-footer__link" href="index.html#service">サービス</a></li>
+            <li><a class="rx-footer__link" href="service.html">サービス</a></li>
             <li><a class="rx-footer__link" href="case.html">事例</a></li>
             <li><a class="rx-footer__link" href="contact.html">お問い合わせ</a></li>
             <li><a class="rx-footer__link" href="price.html">料金プラン</a></li>

@@ -1,0 +1,979 @@
+/* =========================================================================
+   service.css — ビズ採用 サービス（service.html 専用）
+   依存: tokens.css → style.css（reset / .rx-btn / ヘッダー / フッター / FAB / .rx-anim）の後に読み込む
+   構成（2026-09 新設・営業資料32ページ版準拠）:
+     ヒーロー / 01 つくる(#produce p13・p14) / 02 届ける(#deliver p15・p17・p23) /
+     03 3つの改善ルート(#routes p12・p18〜p22・p20) / 04 進め方(#flow p24・p30) / 最終CTA
+   見た目は 2026-09-27 デザイン案のホームに合わせる:
+     見出し＝Zen Kaku Gothic Antique 900（明朝は使わない）／
+     ラベル＝「01 つくる」＋横罫（`--rx-accent-hover`。白背景での小さいピンクのコントラスト確保）／
+     セクション背景＝白と `--sv-alt` の交互＋淡いピンクの斜め面（clip-path）
+   ブレークポイント（DEVICE-RULES §3）: SP ≤768 / TAB 769–1024 / PC ≥1025
+   ========================================================================= */
+
+.rx-svc {
+  --sv-sans:  'Zen Kaku Gothic Antique', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif;
+  --sv-num:   'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --sv-ink:   #0a0a0c;
+  --sv-muted: #6e7280;
+  --sv-line:  #e7e7eb;
+  --sv-alt:   #fafafa;
+  --sv-pink-soft: #fdf0f6;
+  --sv-pink-line: rgba(var(--rx-accent-rgb), .22);
+  font-family: var(--sv-sans);
+  color: var(--sv-ink);
+  /* 全体の .rx-jp-body は keep-all だが、句読点のない和文が1語扱いになり
+     不自然な改行が出るため、本文は通常改行に戻す（home.css と同じ扱い） */
+  word-break: normal;
+}
+@supports (word-break: auto-phrase) {
+  .rx-svc :is(h1, h2, h3, h4) { word-break: auto-phrase; text-wrap: balance; }
+}
+
+/* ボタン内の矢印（スプライトは線画のため塗りを消して線で描く） */
+.rx-svc .rx-btn__chevron {
+  width: 1.1em; height: 1.1em;
+  fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* アイコンスプライト本体は描画しない（<use> の参照元） */
+.rx-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ページ内アンカーは固定ヘッダーのぶんだけ手前で止める（tokens.css --rx-header-h・§13） */
+.rx-svc [id] { scroll-margin-top: calc(var(--rx-header-h) + 16px); }
+
+/* 線画アイコンの共通指定（このページのアイコンはすべて currentColor の線画） */
+.rx-svc svg:not(.rx-btn__chevron) {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------------------------------------------------------------- 共通 */
+.rx-svc__inner {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+@media (min-width: 1440px) { .rx-svc__inner { max-width: 1280px; } }
+@media (min-width: 1920px) { .rx-svc__inner { max-width: 1400px; } }
+
+.rx-svc-sec {
+  position: relative;
+  overflow: clip;
+  background: #fff;
+  padding: clamp(84px, 10vw, 156px) 0;
+}
+.rx-svc-sec--alt { background: var(--sv-alt); }
+
+/* 背景の淡いピンクの斜め面（ホームと同じ作法・不透明度3.5%） */
+.rx-svc-sec__deco,
+.rx-svc-hero__deco { position: absolute; inset: 0; z-index: var(--z-base); pointer-events: none; }
+.rx-svc-sec__shape {
+  position: absolute;
+  left: -10%; right: -10%; bottom: -26%;
+  height: 62%;
+  background: rgba(var(--rx-accent-rgb), .035);
+  clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 100%);
+}
+/* 「強」のセクションは斜め面を濃くする（ホームの強＝5.5% に合わせる） */
+.rx-svc-produce .rx-svc-sec__shape { background: rgba(var(--rx-accent-rgb), .055); }
+.rx-svc-sec__inner,
+.rx-svc-hero__inner,
+.rx-svc-cta__inner {
+  position: relative;
+  z-index: var(--z-elevated);
+  --svc-cw: 1200px;
+  width: min(100%, var(--svc-cw));
+}
+@media (min-width: 1440px) { .rx-svc-sec__inner, .rx-svc-hero__inner, .rx-svc-cta__inner { --svc-cw: 1280px; } }
+@media (min-width: 1920px) { .rx-svc-sec__inner, .rx-svc-hero__inner, .rx-svc-cta__inner { --svc-cw: 1400px; } }
+
+/* ラベル（ホームの `__eyebrow` と同じ表現。小さいピンク文字はコントラスト確保のため accent-hover） */
+.rx-svc-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .9em;
+  font-weight: 700;
+  font-size: clamp(.8125rem, .78rem + .2vw, .9375rem);
+  letter-spacing: .08em;
+  line-height: 1.6;
+  color: var(--rx-accent-hover);
+}
+.rx-svc-eyebrow::after {
+  content: "";
+  flex: 0 0 auto;
+  width: clamp(28px, 5vw, 72px);
+  height: 1px;
+  background: currentColor;
+  opacity: .55;
+}
+
+.rx-svc-title {
+  margin-top: clamp(14px, 1.6vw, 22px);
+  font-weight: 900;
+  font-size: clamp(1.5rem, .9rem + 2.1vw, 2.875rem);     /* 24 → 46px */
+  line-height: 1.34;
+  letter-spacing: .01em;
+  text-wrap: wrap;
+  color: var(--sv-ink);
+}
+.rx-svc-subtitle {
+  font-weight: 900;
+  font-size: clamp(1.1875rem, .95rem + 1vw, 1.75rem);    /* 19 → 28px */
+  line-height: 1.45;
+  letter-spacing: .01em;
+  text-wrap: wrap;
+  color: var(--sv-ink);
+}
+.rx-svc-accent { color: var(--rx-accent); }
+
+.rx-svc-lead {
+  margin-top: clamp(14px, 1.8vw, 22px);
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 2.1;
+  color: var(--rx-text-muted);
+}
+.rx-svc-lead--left { max-width: 44em; }
+
+.rx-svc-more { margin-top: clamp(28px, 3.4vw, 44px); }
+
+/* セクション頭の「コピー＋写真」2カラム。
+   ホームと同じ作法で写真の左右を交互にする（01=右 / 02=左）＝セクションの切れ目を出すため */
+.rx-svc-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .92fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 64px);
+}
+.rx-svc-head__copy { min-width: 0; }
+.rx-svc-head__copy .rx-svc-lead { max-width: 34em; }
+.rx-svc-head__visual {
+  margin: 0;
+  overflow: hidden;
+  border-radius: clamp(20px, 2.4vw, 32px);
+}
+.rx-svc-head__visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+/* 02 届ける は写真を左に置く */
+.rx-svc-head--reverse .rx-svc-head__copy { order: 2; }
+.rx-svc-head--reverse .rx-svc-head__visual { order: 1; }
+
+@media (max-width: 1024px) {
+  .rx-svc-head { grid-template-columns: 1fr; }
+  .rx-svc-head__copy { order: 1; }
+  .rx-svc-head__visual { order: 2; }
+  .rx-svc-head__visual img { aspect-ratio: 16 / 10; }
+}
+
+.rx-svc-textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+  min-height: 44px;                                      /* タップ領域（§12） */
+  font-weight: 700;
+  font-size: .9375rem;
+  color: var(--sv-ink);
+  transition: color .2s ease, gap .2s ease;
+}
+.rx-svc-textlink::after {
+  content: "";
+  width: .42em;
+  height: .42em;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+.rx-svc-textlink:hover,
+.rx-svc-textlink:focus-visible { color: var(--rx-accent); gap: .8em; }
+
+/* 指定改行: PCだけ / SPだけ有効 */
+.rx-svc .rx-br-pc { display: none; }
+@media (min-width: 769px) {
+  .rx-svc .rx-br-pc { display: inline; }
+  .rx-svc .rx-br-sp { display: none; }
+}
+
+/* 共通の円アイコン面（淡いピンクの円＋ピンクの線画） */
+.rx-svc-produce__source-icon,
+.rx-svc-points__icon,
+.rx-svc-improve__icon,
+.rx-svc-cycle__icon,
+.rx-svc-team__icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--sv-pink-soft);
+  color: var(--rx-accent);
+}
+.rx-svc-improve__icon,
+.rx-svc-cycle__icon,
+.rx-svc-team__icon { width: 56px; height: 56px; }
+.rx-svc-improve__icon svg,
+.rx-svc-cycle__icon svg,
+.rx-svc-team__icon svg { width: 27px; height: 27px; }
+.rx-svc-points__icon { width: 52px; height: 52px; }
+.rx-svc-points__icon svg { width: 25px; height: 25px; }
+
+/* =========================================================================
+   ヒーロー
+   ========================================================================= */
+.rx-svc-hero {
+  --svch-pt: calc(var(--rx-header-h) + clamp(36px, 5vw, 84px));
+  --svch-pb: clamp(48px, 6vw, 96px);
+  position: relative;
+  overflow: clip;
+  background: #fff;
+  padding: var(--svch-pt) 0 var(--svch-pb);
+}
+.rx-svc-hero__shape {
+  position: absolute;
+  left: 52%; right: -14%; top: -34%;
+  height: 104%;
+  background: rgba(var(--rx-accent-rgb), .055);
+  clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+}
+/* 既定（≤1024px）は コピー → 写真 → 目次 の縦積み。PCは下の min-width:1025px で全面敷きに切り替える */
+.rx-svc-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "copy"
+    "visual"
+    "toc";
+  row-gap: clamp(24px, 3.2vw, 40px);
+}
+.rx-svc-hero__copy { grid-area: copy; min-width: 0; }
+.rx-svc-hero__visual {
+  grid-area: visual;
+  margin: 0;
+  overflow: hidden;
+  border-radius: clamp(20px, 2.4vw, 32px);
+}
+.rx-svc-hero__visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: 50% 38%;      /* 4:3 素材を 16:10 で使うため上下が切れる。顔の位置に合わせて上を見せる */
+}
+/* 見出し → サブ → 説明文 の3段。強さの差はホームのヒーローに合わせる */
+.rx-svc-hero__title {
+  margin-top: clamp(14px, 1.6vw, 22px);
+  font-weight: 900;
+  /* 2行目「採用のすべての場面へ。」＝11文字。PCは下の min() で上書きする */
+  font-size: clamp(2rem, 1.5rem + 1.9vw, 3.75rem);       /* 32 → 60px */
+  line-height: 1.24;
+  letter-spacing: 0;
+  text-wrap: wrap;
+}
+.rx-svc-hero__title-line { display: block; }
+.rx-svc-hero__sub {
+  margin-top: clamp(14px, 1.8vw, 24px);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, .86rem + .9vw, 1.625rem);  /* 17 → 26px（PCは下の min() で上書き） */
+  line-height: 1.6;
+  letter-spacing: .02em;
+  color: var(--sv-ink);
+}
+.rx-svc-hero__lead {
+  max-width: 34em;
+  margin-top: clamp(12px, 1.4vw, 18px);
+  font-size: clamp(.9375rem, .9rem + .2vw, 1rem);
+  line-height: 2;
+  color: var(--rx-text-muted);
+}
+
+/* ページ内目次 */
+.rx-svc-toc { grid-area: toc; margin-top: clamp(30px, 3.6vw, 48px); }
+.rx-svc-toc__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.rx-svc-toc__list a {
+  display: inline-flex;
+  align-items: center;
+  gap: .6em;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--sv-pink-line);
+  border-radius: var(--rx-radius-pill);
+  background: #fff;
+  font-size: .875rem;
+  font-weight: 700;
+  color: var(--sv-ink);
+  transition: background .2s ease, border-color .2s ease;
+}
+.rx-svc-toc__no {
+  font-family: var(--sv-num);
+  font-weight: 700;
+  font-size: .75rem;
+  letter-spacing: .06em;
+  color: var(--rx-accent);
+}
+.rx-svc-toc__list a:hover,
+.rx-svc-toc__list a:focus-visible {
+  background: var(--sv-pink-soft);
+  border-color: rgba(var(--rx-accent-rgb), .5);
+}
+
+@media (max-width: 1199px) {
+  .rx-svc-hero__visual img { aspect-ratio: 16 / 9; object-position: 62% 50%; }
+  .rx-svc-toc { margin-top: clamp(8px, 1.2vw, 16px); }
+}
+@media (max-width: 768px) {
+  .rx-svc-hero__shape { left: 24%; }
+}
+@media (max-width: 480px) {
+  /* 2行目「採用のすべての場面へ。」＝11文字。320〜480px でも1行に収まるところまで落とす
+     （折れると強調の意図が崩れる。ホームのヒーローと同じ扱い） */
+  .rx-svc-hero__title { font-size: clamp(1.5rem, 1.1rem + 2.1vw, 1.875rem); }
+}
+
+/* ============================ PC: 写真をヒーロー全面に敷く ============================
+   素材（service-hero.webp）は左3割が白の余白・右に主題という構図なので、
+   右カラムに押し込めると余白ぶん主題が小さくなる。ホームのヒーローと同じ扱いにする。
+   ⚠️ 1200px 未満では見出しが写真に重なって読めないため、この扱いは 1200px 以上だけ。
+      それ未満は コピー → 写真 → 目次 の縦積みに任せる */
+@media (min-width: 1200px) {
+  .rx-svc-hero__inner {
+    grid-template-areas:
+      "copy"
+      "toc";
+  }
+  /* 見出しは列幅ではなく画面幅で決める。写真側へ少しはみ出すが、
+     はみ出す先は下の ::after で白に溶けている帯なので読みにくくならない（ホームと同じ作法） */
+  .rx-svc-hero__title { font-size: min(4.4vw, 4.5rem); }       /* 53 → 72px */
+  .rx-svc-hero__title-line { white-space: nowrap; }
+  .rx-svc-hero__sub   { font-size: min(2.1vw, 1.875rem); }     /* 25 → 30px */
+  .rx-svc-hero__lead  { font-size: 1rem; max-width: 30em; }
+  .rx-svc-hero__copy { max-width: 52%; }
+  .rx-svc-hero__copy,
+  .rx-svc-toc { position: relative; z-index: var(--z-elevated); }
+  .rx-svc-hero__shape { display: none; }        /* 写真が入るので斜め面は出さない */
+
+  .rx-svc-hero__visual {
+    position: absolute;
+    top: calc(-1 * var(--svch-pt));
+    bottom: calc(-1 * var(--svch-pb));
+    /* 素材は16:9。箱が縦長だと左右が切れて右の4パネルが欠けるため、
+       コピーの下まで大きく回り込ませて箱の比率を素材に近づける（読みやすさは下の白グラデで確保） */
+    left: 16%;
+    /* コンテナの右端から画面の右端まで伸ばす（ヒーローの overflow: clip で切り取る） */
+    right: min(0px, calc((var(--svc-cw) - 100vw) / 2));
+    margin: 0;
+    border-radius: 0;
+    overflow: hidden;
+    z-index: var(--z-base);
+  }
+  .rx-svc-hero__photo {
+    height: 100%;
+    aspect-ratio: auto;
+    object-position: 50% center;
+  }
+  /* 白 → 透明。素材側の白フェードだけだと画面幅によって文字に写真がかかるため重ねる */
+  .rx-svc-hero__visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      /* 下端: 写真がここで切れるので、次のセクションの白へ溶かす */
+      linear-gradient(to top,
+        #fff 0 1%,
+        rgba(255, 255, 255, 0) 16%),
+      /* 左: コピーの下地。素材自体が左4割を白で抜いてあるので、ここは薄く重ねるだけでよい。
+         濃く広げると素材の4パネル（漫画・動画・記事・掲載ページ）まで白で消えてしまう */
+      linear-gradient(96deg,
+        #fff 0 18%,
+        rgba(255, 255, 255, .88) 28%,
+        rgba(255, 255, 255, .45) 38%,
+        rgba(255, 255, 255, 0) 50%);
+    pointer-events: none;
+  }
+}
+
+/* =========================================================================
+   01 つくる（資料 p13・p14）— ページ内で「強」。取材からの4つの成果物を一番大きく見せる
+   ========================================================================= */
+/* 起点（会社取材）は横長の帯 */
+.rx-svc-produce__source {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(16px, 2vw, 26px);
+  margin-top: clamp(36px, 4.4vw, 60px);
+  padding: clamp(22px, 2.6vw, 34px) clamp(22px, 2.8vw, 40px);
+  border: 1px solid var(--sv-pink-line);
+  border-radius: var(--rx-radius-lg);
+  background: var(--sv-pink-soft);
+}
+.rx-svc-produce__source-icon { width: 64px; height: 64px; background: #fff; }
+.rx-svc-produce__source-icon svg { width: 30px; height: 30px; }
+.rx-svc-produce__source-name { font-weight: 900; font-size: clamp(1.0625rem, 1rem + .4vw, 1.25rem); line-height: 1.5; }
+.rx-svc-produce__source-desc { margin-top: 6px; font-size: .875rem; line-height: 1.85; color: var(--rx-text-muted); }
+
+/* 取材 → 成果物 の下向き矢印 */
+.rx-svc-produce__arrow {
+  display: block;
+  width: 0; height: 0;
+  margin: clamp(14px, 1.8vw, 22px) auto;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 15px solid var(--rx-accent);
+}
+
+/* 4つの成果物。メディア面は 4:3。<img> を入れるとそのまま写真に差し替わる */
+.rx-svc-produce__outputs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 24px);
+}
+.rx-svc-produce__outputs li {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(14px, 1.6vw, 20px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: var(--rx-radius-lg);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 10px 30px rgba(15, 23, 42, .05);
+}
+.rx-svc-produce__out-media {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--rx-radius);
+  background: var(--sv-pink-soft);
+  color: var(--rx-accent);
+  overflow: hidden;
+}
+.rx-svc-produce__out-media svg { width: 42px; height: 42px; stroke-width: 1.3; }
+.rx-svc-produce__out-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rx-svc-produce__out-name {
+  margin-top: clamp(12px, 1.4vw, 16px);
+  font-weight: 900;
+  font-size: clamp(1rem, .95rem + .35vw, 1.1875rem);
+  line-height: 1.4;
+}
+.rx-svc-produce__out-desc { margin-top: 7px; font-size: .8125rem; line-height: 1.8; color: var(--rx-text-muted); }
+.rx-svc-produce__summary {
+  margin-top: clamp(24px, 3vw, 36px);
+  padding: clamp(16px, 2vw, 22px) clamp(18px, 2.2vw, 28px);
+  border-radius: var(--rx-radius);
+  background: var(--sv-pink-soft);
+  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
+  font-weight: 700;
+  line-height: 1.9;
+}
+
+/* 看板コンテンツのテーマ（資料 p14） */
+.rx-svc-themes {
+  margin-top: clamp(64px, 7.5vw, 112px);
+  padding-top: clamp(48px, 5.6vw, 80px);
+  border-top: 1px solid var(--sv-line);
+}
+.rx-svc-themes__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 24px);
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+.rx-svc-themes__list li {
+  padding: clamp(20px, 2.2vw, 28px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: var(--rx-radius-lg);
+}
+.rx-svc-themes__tag {
+  display: inline-block;
+  padding: 4px 13px;
+  border-radius: var(--rx-radius-pill);
+  background: var(--sv-pink-soft);
+  color: var(--rx-accent-hover);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.rx-svc-themes__name { margin-top: 13px; font-weight: 900; font-size: 1.0625rem; line-height: 1.5; }
+.rx-svc-themes__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
+
+@media (max-width: 1024px) {
+  .rx-svc-produce__outputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rx-svc-themes__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .rx-svc-produce__source { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+  .rx-svc-themes__list { grid-template-columns: 1fr; }
+}
+
+/* =========================================================================
+   02 届ける（資料 p15・p17・p23）
+   ========================================================================= */
+.rx-svc-points {
+  list-style: none;                                      /* 番号は __no で描く */
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 20px);
+  margin-top: clamp(36px, 4.4vw, 60px);
+}
+.rx-svc-points li {
+  display: grid;
+  justify-items: center;
+  padding: clamp(22px, 2.4vw, 32px) clamp(12px, 1.4vw, 20px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: var(--rx-radius-lg);
+  text-align: center;
+}
+.rx-svc-points__no {
+  font-family: var(--sv-num);
+  font-weight: 700;
+  font-size: .8125rem;
+  letter-spacing: .08em;
+  color: rgba(var(--rx-accent-rgb), .55);
+}
+.rx-svc-points__icon { margin-top: 12px; }
+.rx-svc-points__name { margin-top: 13px; font-weight: 900; font-size: 1rem; line-height: 1.45; }
+.rx-svc-points__desc { margin-top: 9px; font-size: .78125rem; line-height: 1.85; color: var(--rx-text-muted); }
+
+.rx-svc-usage {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 24px);
+  margin: clamp(28px, 3.2vw, 40px) 0 0;
+}
+.rx-svc-usage > div {
+  padding: clamp(20px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px);
+  border: 1px solid var(--sv-pink-line);
+  border-radius: var(--rx-radius-lg);
+  background: #fff;
+}
+.rx-svc-usage dt {
+  font-size: .8125rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--rx-accent-hover);
+}
+.rx-svc-usage dd {
+  margin: 10px 0 0;
+  font-size: clamp(1rem, .94rem + .3vw, 1.1875rem);
+  font-weight: 900;
+  line-height: 1.7;
+}
+
+/* 応募直後から面接前まで（資料 p23） */
+.rx-svc-nurture {
+  margin-top: clamp(64px, 7.5vw, 112px);
+  padding-top: clamp(48px, 5.6vw, 80px);
+  border-top: 1px solid var(--sv-line);
+}
+.rx-svc-nurture__list {
+  list-style: none;                                      /* 段階名は __step で描く */
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+.rx-svc-nurture__list li {
+  position: relative;
+  padding: clamp(22px, 2.4vw, 32px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: var(--rx-radius-lg);
+}
+.rx-svc-nurture__step {
+  display: inline-block;
+  padding: 4px 13px;
+  border-radius: var(--rx-radius-pill);
+  background: var(--sv-ink);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.rx-svc-nurture__name { margin-top: 14px; font-weight: 900; font-size: 1.125rem; line-height: 1.5; }
+.rx-svc-nurture__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
+/* 応募直後 → 選考中 → 面接前 のつなぎ（PCのみ・装飾） */
+@media (min-width: 1025px) {
+  .rx-svc-nurture__list li + li::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(clamp(16px, 2vw, 28px) / -2 - 5px);
+    width: 10px; height: 10px;
+    border-top: 2px solid rgba(var(--rx-accent-rgb), .5);
+    border-right: 2px solid rgba(var(--rx-accent-rgb), .5);
+    transform: translateY(-50%) rotate(45deg);
+  }
+}
+
+@media (max-width: 1024px) {
+  .rx-svc-points { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .rx-svc-nurture__list { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .rx-svc-points { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rx-svc-usage { grid-template-columns: 1fr; }
+}
+
+/* 「弱」なので見出しも一段小さくする */
+.rx-svc-routes .rx-svc-title { font-size: clamp(1.375rem, .9rem + 1.7vw, 2.5rem); }   /* 22 → 40px */
+
+/* =========================================================================
+   03 3つの改善ルート（資料 p12・p18〜p22）
+   ホーム §6 は「弱い」一覧なので、こちらは中身を読ませる詳細として厚く組む
+   ========================================================================= */
+/* ページ内で意図的に「弱い」セクション。前後（02 届ける・04 進め方）の間で視線を休ませる。
+   **カード・アイコン・写真・影は使わない**。文字＋細い罫線＋余白だけで見せる（ホーム 06 と同じ扱い） */
+.rx-svc-route {
+  padding: clamp(30px, 3.4vw, 52px) 0;
+  border-top: 1px solid rgba(var(--rx-accent-rgb), .18);
+}
+.rx-svc-route:first-of-type { margin-top: clamp(30px, 3.6vw, 48px); }
+.rx-svc-route:last-of-type { border-bottom: 1px solid rgba(var(--rx-accent-rgb), .18); }
+.rx-svc-route:target .rx-svc-route__name { color: var(--rx-accent); }
+.rx-svc-route__head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: clamp(12px, 1.6vw, 20px);
+}
+/* 丸バッジをやめ、記号だけにする（カードをやめたので塗りも不要） */
+.rx-svc-route__mark {
+  font-family: var(--sv-num);
+  font-weight: 700;
+  font-size: clamp(1.125rem, 1rem + .5vw, 1.5rem);
+  letter-spacing: .04em;
+  color: var(--rx-accent);
+}
+.rx-svc-route__name {
+  font-weight: 900;
+  font-size: clamp(1.25rem, 1.05rem + .8vw, 1.75rem);
+  line-height: 1.4;
+}
+.rx-svc-route__tagline {
+  margin-top: 7px;
+  font-weight: 700;
+  font-size: .9375rem;
+  line-height: 1.7;
+  color: #4d5871;
+}
+
+.rx-svc-route__rows {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 clamp(20px, 2.4vw, 40px);
+  margin-top: clamp(18px, 2vw, 26px);
+}
+.rx-svc-route__row { padding: 0; }
+.rx-svc-route__label {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--rx-accent-hover);
+}
+.rx-svc-route__issue { margin-top: 10px; font-size: .9375rem; line-height: 1.9; }
+.rx-svc-route__list { margin-top: 10px; }
+.rx-svc-route__list li {
+  position: relative;
+  padding-left: 1.05em;
+  font-size: .875rem;
+  line-height: 1.95;
+  color: var(--rx-text-muted);
+}
+.rx-svc-route__list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .88em;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--rx-accent);
+  opacity: .5;
+}
+
+/* --- ルートの図解 ---
+   「弱い」セクションなので写真は使わず、線画アイコン＋細い罫線の図で仕組みだけ示す。
+   詳細の文章（資料 p19・p21・p22）をこの図に置き換えて、読む量を減らしている */
+.rx-svc-fig {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(10px, 1.4vw, 18px);
+  margin-top: clamp(22px, 2.6vw, 34px);
+}
+.rx-svc-fig__step,
+.rx-svc-fig__side {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  padding: clamp(18px, 2vw, 26px) clamp(12px, 1.4vw, 18px);
+  border: 1px solid rgba(var(--rx-accent-rgb), .22);
+  border-radius: var(--rx-radius);
+  text-align: center;
+}
+/* 着地点だけ淡いピンクで塗って「ここに行き着く」を示す */
+.rx-svc-fig__step--goal,
+.rx-svc-fig__side--after { background: var(--sv-pink-soft); }
+.rx-svc-fig__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--rx-accent);
+}
+.rx-svc-fig__icon svg { width: 23px; height: 23px; }
+.rx-svc-fig__name {
+  margin-top: 11px;
+  font-weight: 900;
+  font-size: .9375rem;
+  line-height: 1.5;
+}
+.rx-svc-fig__desc {
+  margin-top: 7px;
+  font-size: .78125rem;
+  line-height: 1.8;
+  color: var(--rx-text-muted);
+}
+.rx-svc-fig__arrow {
+  align-self: center;
+  width: 0; height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 10px solid var(--rx-accent);
+}
+
+/* B ルートは3段ではなく2つの対比 */
+.rx-svc-fig--compare { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+.rx-svc-fig__side--before { border-style: dashed; border-color: var(--sv-line); }
+.rx-svc-fig__side--before .rx-svc-fig__icon { color: var(--sv-muted); background: var(--sv-alt); }
+.rx-svc-fig__cap {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--rx-accent-hover);
+  margin-bottom: 11px;
+}
+.rx-svc-fig__side--before .rx-svc-fig__cap { color: var(--sv-muted); }
+.rx-svc-fig__vs {
+  align-self: center;
+  width: 1px;
+  height: 100%;
+  background: rgba(var(--rx-accent-rgb), .22);
+}
+
+.rx-svc-route__note {
+  margin-top: clamp(16px, 2vw, 24px);
+  font-size: .8125rem;
+  line-height: 1.85;
+  color: var(--rx-text-muted);
+}
+/* AI・検索対策の注記（資料 p22）。移設・改修時に落とさない */
+.rx-svc-route__note--caution { color: var(--sv-ink); font-weight: 700; }
+
+/* 運用しながら改善（資料 p20・3ルート共通） */
+.rx-svc-improve {
+  margin-top: clamp(64px, 7.5vw, 112px);
+  padding-top: clamp(48px, 5.6vw, 80px);
+  border-top: 1px solid var(--sv-line);
+}
+.rx-svc-improve__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+.rx-svc-improve__list li {
+  display: grid;
+  justify-items: center;
+  padding: clamp(24px, 2.6vw, 36px) clamp(18px, 2vw, 28px);
+  background: var(--sv-alt);
+  border-radius: var(--rx-radius-lg);
+  text-align: center;
+}
+.rx-svc-sec--alt .rx-svc-improve__list li { background: #fff; }
+.rx-svc-improve__name { margin-top: 14px; font-weight: 900; font-size: 1.0625rem; line-height: 1.5; }
+.rx-svc-improve__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
+
+@media (max-width: 860px) {
+  .rx-svc-fig,
+  .rx-svc-fig--compare { grid-template-columns: 1fr; }
+  .rx-svc-fig__arrow {
+    justify-self: center;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 10px solid var(--rx-accent);
+    border-bottom: 0;
+  }
+  .rx-svc-fig__vs { justify-self: center; width: 40%; height: 1px; }
+}
+@media (max-width: 1024px) {
+  .rx-svc-route__rows { grid-template-columns: 1fr; gap: 0; }
+  .rx-svc-route__row + .rx-svc-route__row { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--sv-line); }
+  .rx-svc-improve__list { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .rx-svc-route__head { grid-template-columns: 1fr; }
+}
+
+/* =========================================================================
+   04 進め方（資料 p24・p30）
+   ========================================================================= */
+.rx-svc-cycle {
+  list-style: none;                                      /* 番号は __no で描く */
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(36px, 4.4vw, 60px);
+}
+.rx-svc-cycle li {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  padding: clamp(24px, 2.6vw, 36px) clamp(18px, 2vw, 28px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: var(--rx-radius-lg);
+  text-align: center;
+}
+.rx-svc-cycle__no {
+  font-family: var(--sv-num);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: .08em;
+  color: var(--rx-accent);
+}
+.rx-svc-cycle__icon { margin-top: 12px; }
+.rx-svc-cycle__name { margin-top: 14px; font-weight: 900; font-size: 1.125rem; line-height: 1.5; }
+.rx-svc-cycle__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
+/* 01 → 02 → 03 → 04 のつなぎ（PCのみ・装飾） */
+@media (min-width: 1025px) {
+  .rx-svc-cycle li + li::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(clamp(16px, 2vw, 28px) / -2 - 5px);
+    width: 10px; height: 10px;
+    border-top: 2px solid rgba(var(--rx-accent-rgb), .5);
+    border-right: 2px solid rgba(var(--rx-accent-rgb), .5);
+    transform: translateY(-50%) rotate(45deg);
+  }
+}
+.rx-svc-cycle__loop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: clamp(22px, 2.6vw, 32px);
+  font-size: .875rem;
+  line-height: 1.9;
+  color: var(--rx-text-muted);
+  text-align: center;
+}
+.rx-svc-cycle__loop svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--rx-accent); }
+
+.rx-svc-team {
+  margin-top: clamp(64px, 7.5vw, 112px);
+  padding-top: clamp(48px, 5.6vw, 80px);
+  border-top: 1px solid var(--sv-line);
+}
+.rx-svc-team__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin-top: clamp(28px, 3.4vw, 44px);
+}
+.rx-svc-team__list li {
+  display: grid;
+  justify-items: center;
+  padding: clamp(24px, 2.6vw, 36px) clamp(18px, 2vw, 28px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: var(--rx-radius-lg);
+  text-align: center;
+}
+.rx-svc-team__name { margin-top: 14px; font-weight: 900; font-size: 1.0625rem; line-height: 1.5; }
+.rx-svc-team__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
+
+@media (max-width: 1024px) {
+  .rx-svc-cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rx-svc-team__list { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .rx-svc-cycle { grid-template-columns: 1fr; }
+}
+
+/* =========================================================================
+   最終CTA
+   ========================================================================= */
+/* 締めの帯＝「強」。ページで唯一、面全体に色を入れて終わりを作る。
+   他セクションのような斜め面にすると境目が中央寄せの見出しを横切るため、ここだけ縦のグラデーション */
+.rx-svc-cta {
+  position: relative;
+  overflow: clip;
+  background: linear-gradient(180deg, #fff 0%, var(--sv-pink-soft) 42%, #fce3ef 100%);
+  padding: clamp(96px, 11.5vw, 184px) 0;
+}
+.rx-svc-cta__inner { text-align: center; }
+.rx-svc-cta__eyebrow { justify-content: center; }
+.rx-svc-cta__eyebrow::before {                           /* 中央寄せなので横罫は両側に出す */
+  content: "";
+  flex: 0 0 auto;
+  width: clamp(28px, 5vw, 72px);
+  height: 1px;
+  background: currentColor;
+  opacity: .55;
+}
+.rx-svc-cta__title {
+  text-align: center;
+  font-size: clamp(1.75rem, 1.05rem + 2.6vw, 3.5rem);    /* 28 → 56px。ページで2番目に大きい */
+}
+.rx-svc-cta__lead {
+  margin-inline: auto;
+  max-width: 42em;
+  font-size: clamp(.9375rem, .9rem + .3vw, 1.125rem);
+}
+.rx-svc-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 24px);
+  margin-top: clamp(30px, 3.6vw, 48px);
+}
+.rx-svc-cta__btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
+  padding: 0 clamp(24px, 2.6vw, 38px);
+  border: 1.5px solid var(--rx-accent);
+  border-radius: var(--rx-radius-pill);
+  background: #fff;
+  color: var(--rx-accent-hover);
+  font-weight: 700;
+  font-size: .9375rem;
+  transition: background .2s ease, border-color .2s ease;
+}
+.rx-svc-cta__btn-line:hover,
+.rx-svc-cta__btn-line:focus-visible { background: var(--sv-pink-soft); border-color: var(--rx-accent-hover); }
+.rx-svc-cta__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(16px, 2.4vw, 32px);
+  margin-top: clamp(18px, 2.2vw, 26px);
+}
+
+/* フッター上余白はCTA帯と連続させる（home.css と同じ扱い） */
+.rx-svc + .rx-footer { margin-top: 0; }
