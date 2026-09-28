@@ -1252,17 +1252,27 @@
 .rx-phase__yes svg { width: 18px; height: 18px; }
 .rx-phase__no  { width: 14px; height: 14px; border-radius: 50%; background: #d3d6e0; }
 
+/* 手書き風の一言＋筆の矢印（ロゴの下の矢印と同じ形。文字の真下に、文字と同じ幅で置く） */
 .rx-phase__tag { position: relative; display: block; }
+.rx-phase__tag-wrap { display: inline-block; max-width: 100%; }
+.rx-phase__tag-text { display: block; }
 .rx-phase__tag-arrow {
   display: block;
-  width: min(60%, 420px);
+  width: 100%;
   height: auto;
-  margin: 6px 0 0 auto;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  margin: -.15em 0 0;                          /* 文字の真下に寄せる */
+  overflow: visible;
+  color: var(--rx-accent);
+}
+.rx-phase__tag-brush,
+.rx-phase__tag-head { fill: currentColor; }
+.rx-phase__tag-head { transform-origin: 360px 19px; }
+/* 描画アニメーション: マスクの線を左から伸ばし、最後に矢じりが出る（reduce では最初から表示） */
+@media (prefers-reduced-motion: no-preference) {
+  .rx-phase__tag-reveal { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .rx-phase__tag-head   { opacity: 0; transform: scale(.4); }
+  .rx-phase__tag.is-in .rx-phase__tag-reveal { stroke-dashoffset: 0; transition: stroke-dashoffset .9s cubic-bezier(.4, 0, .2, 1) .45s; }
+  .rx-phase__tag.is-in .rx-phase__tag-head   { opacity: 1; transform: none; transition: opacity .25s ease 1.2s, transform .35s cubic-bezier(.22, 1, .36, 1) 1.2s; }
 }
 
 /* =========================================================================
