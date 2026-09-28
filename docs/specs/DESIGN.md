@@ -68,8 +68,8 @@
 | 見出し（h1〜h3）・リード | **Shippori Mincho** | 500 / 600 | `.02em` | 1.3 | 筑紫明朝の代替（最も近い） |
 | 本文・ナビ・補足 | **Zen Kaku Gothic Antique** | 400 / 500 / 700 | 0 | 1.85 | 筑紫ゴシックの代替（上品な丸み） |
 | 英字・数字 | **Inter** | 500 / 700 | `-.01em` | 1.4 | Helvetica Now Display の代替 |
-| ホームのヒーロー見出し | **Zen Kaku Gothic Antique 900** | 900 | 0 | 1.26 | 2026-09-27 のデザイン案が太ゴシック基調のため、ホームのヒーロー（`.rx-home-hero__title`）だけ明朝ではなくゴシック900を使う |
-| 手書き風の一言 | **Yuji Syuku** | 400 | `.04em` | 1.45 | ホームのヒーローの紙片コピー（`.rx-home-hero__memo`）専用。筆ペン風（参考デザインの筆致に最も近い）。多用しない |
+| ホームのヒーロー見出し・カード見出し・帯の見出し | **Zen Kaku Gothic Antique 900** | 900 | `.01em` | 1.12（カード見出し 1.25） | デザイン案が太ゴシック基調のため、ホームのヒーロー（`.rx-home-hero__title` / `__card-title` / `__feature-title`）だけ明朝ではなくゴシック900を使う（2026-09-28 更新） |
+| ~~手書き風の一言~~ | ~~Yuji Syuku~~ | — | — | — | **2026-09-28 廃止**。ヒーロー刷新で紙片コピー（`.rx-home-hero__memo`）を外し、index.html の Google Fonts 読み込みからも削除。復活させるときは `family=Yuji+Syuku` を戻す |
 
 ```css
 /* 見出し（明朝でモーメントを） */
@@ -82,7 +82,7 @@ font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
 
 - 旧 `Zen Kaku Gothic New` `Noto Sans JP` は**廃止**。
 - 本番は自前ホスト(WOFF2)＋和文サブセット（[DEVICE-RULES.md](DEVICE-RULES.md) §16）。**明朝は字形が多いのでサブセット必須**（フル字形は数MB）。
-- 読込ウェイトを絞る — Shippori=500/600、Zen Kaku Gothic Antique=400/500/700（**index.html のみ 900 を追加**＝ヒーロー見出し用）、Inter=500/700。Yuji Syuku（400のみ）は index.html のみ読み込む。
+- 読込ウェイトを絞る — Shippori=500/600、Zen Kaku Gothic Antique=400/500/700（**index.html のみ 900 を追加**＝ヒーロー見出し用）、Inter=500/700。Yuji Syuku は 2026-09-28 に読み込みを廃止。
 
 ## タイポスケール / ボタン / コンテナ幅
 
