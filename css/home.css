@@ -552,12 +552,16 @@
     grid-template-areas: "copy    cards"
                          "actions cards";
     grid-template-columns: minmax(0, 35%) minmax(0, 1fr);   /* デザイン案の比率（コピー34%・隙間2%・カード64%） */
-    grid-template-rows: minmax(0, 1fr) auto;                /* コピーは上に、CTAはカードの下端に揃える（デザイン案どおり） */
+    grid-template-rows: minmax(0, 1fr) auto;                /* コピーは上に、CTAはカードの下端側へ（下端より少し上に置く。.rx-home-hero__actions の margin-bottom） */
     align-items: start;
     column-gap: clamp(20px, 2vw, 32px);
     row-gap: clamp(20px, 2.2vw, 32px);
   }
-  .rx-home-hero__actions { align-self: end; max-width: min(100%, 440px); }
+  .rx-home-hero__actions {
+    align-self: end;
+    max-width: min(100%, 440px);
+    margin-bottom: clamp(28px, 2.6vw, 44px);   /* カード下端より少し上に置く（2026-09-29 ユーザー指示） */
+  }
   /* 見出しは列幅に合わせて画面幅で決める（6文字がコピー列に収まる係数） */
   .rx-home-hero__title { font-size: min(5vw, 4.75rem); }     /* 51 → 76px（1440pxで72px＝デザイン案と同等） */
   .rx-home-hero__sub   { font-size: min(1.85vw, 1.7rem); }   /* 19 → 27px（17文字が1行に収まる） */
