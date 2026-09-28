@@ -185,7 +185,7 @@
   padding: clamp(.95rem, .8rem + .6vw, 1.2rem) clamp(1.1rem, .7rem + .9vw, 2rem);
   font-family: var(--hm-sans);
   font-size: clamp(.9375rem, .88rem + .3vw, 1.125rem);
-  white-space: nowrap;                          /* 「サービス資料をダウンロード」を途中で折らない */
+  white-space: nowrap;                          /* ボタン文言を途中で折らない */
   letter-spacing: .02em;
 }
 .rx-home .rx-home-hero__btn .rx-btn__chevron {
@@ -1870,7 +1870,7 @@
 /* =========================================================================
    幅ごとの調整（02〜11）
    ========================================================================= */
-/* 11 最後のCTA: ボタン2つはヒーローと同じ見た目で縦に積み、幅はコピー幅に留める */
+/* 11 最後のCTA: ボタンはヒーローと同じ見た目で中央に置き、幅はコピー幅に留める（2026-09-29 資料DLを外し1つ） */
 .rx-home-cta__actions { flex-direction: column; align-items: center; gap: 12px; }
 .rx-home-cta .rx-home-cta__btn { width: min(100%, 440px); }
 

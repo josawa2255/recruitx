@@ -5,7 +5,7 @@
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
    - ホームのヒーロー: 採用AIO対策カードのタイピング演出
    - ホームのヒーロー: 採用アニメーション・会社紹介動画の埋め込み動画（再生ボタン・同時再生の抑止・縦長再生時の幅の入れ替え）
-   - 固定CTA（画面下の3ボタンバー: 電話で相談／資料をダウンロード／無料で相談。<body data-fixcta="off"> で非表示）
+   - 固定CTA（画面下の2ボタンバー: 電話で相談／無料で相談。<body data-fixcta="off"> で非表示）
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
    ========================================================================= */
@@ -170,13 +170,11 @@
 })();
 
 /* 固定CTA（画面下に追従するバー・全ページ共通）
-   - 「電話で相談」「資料をダウンロード」「無料で相談」の3ボタン。PCは中央寄せの帯、SPは全幅
+   - 「電話で相談」「無料で相談」の2ボタン。PCは中央寄せの帯、SPは全幅（資料ダウンロードは 2026-09-29 に取りやめ）
    - お問い合わせページ（#rx-contact-form あり）では出さない。<body data-fixcta="off"> でも出さない
    - DOM生成のみ（innerHTML不使用・ユーザー入力なし）
    - 遷移先は同階層相対パス。case/{slug}/ 等のサブディレクトリでは main.js の src（../../js/main.js）から
      ルートまでの相対プレフィックスを求めて付ける（ルート絶対パス禁止・CLAUDE.md）
-   - 「資料をダウンロード」の遷移先は暫定でお問い合わせフォーム（?source=document-download）。
-     資料の置き場所ができたら DOC_HREF を差し替える
    - バーの実高さを --rx-fixcta-h に書き、body の下余白でフッターが隠れないようにする */
 (function () {
   'use strict';
@@ -193,9 +191,8 @@
     if (m) { base = m[1]; break; }
   }
 
-  var TEL_NUMBER  = '03-6261-0764';
-  var TEL_HREF    = 'tel:0362610764';
-  var DOC_HREF    = base + 'contact.html?source=document-download'; // 暫定: 資料の置き場所ができたら差し替え
+  var TEL_NUMBER   = '03-6261-0764';
+  var TEL_HREF     = 'tel:0362610764';
   var CONSULT_HREF = base + 'contact.html?source=free-consultation';
 
   var SVGNS = 'http://www.w3.org/2000/svg';
@@ -236,7 +233,7 @@
 
   var bar = document.createElement('nav');
   bar.className = 'rx-fixcta';
-  bar.setAttribute('aria-label', 'ご相談・資料請求');
+  bar.setAttribute('aria-label', 'ご相談');
 
   var inner = document.createElement('div');
   inner.className = 'rx-fixcta__inner';
@@ -244,9 +241,6 @@
   inner.appendChild(item('tel', TEL_HREF,
     ['M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z'],
     '電話で相談', TEL_NUMBER, '電話で相談 ' + TEL_NUMBER + '（受付 平日10:00〜19:00）'));
-  inner.appendChild(item('doc', DOC_HREF,
-    ['M12 4v11', 'm7 11 5 5 5-5', 'M4 20h16'],
-    '資料をダウンロード', 'サービス資料（無料）'));
   inner.appendChild(item('consult', CONSULT_HREF,
     ['M4 5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H8l-4 3V6a1 1 0 0 1 1-1Z', 'M8 10h8', 'M8 14h5'],
     '無料で相談', 'フォームから受付'));
