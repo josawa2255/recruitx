@@ -5,7 +5,7 @@
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
    - ホームのヒーロー: 採用AIO対策カードのタイピング演出
    - ホームのヒーロー: 採用アニメーション・会社紹介動画の埋め込み動画（再生ボタン・同時再生の抑止・縦長再生時の幅の入れ替え）
-   - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
+   - 固定CTA（画面下の3ボタンバー: 電話で相談／資料をダウンロード／無料で相談。<body data-fixcta="off"> で非表示）
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
    ========================================================================= */
@@ -169,21 +169,34 @@
   }
 })();
 
-/* フローティングお問い合わせボタン（左下固定・スクロール追従）
-   - 全ページ共通。お問い合わせページ（#rx-contact-form あり）では出さない
-   - 少しスクロールしたら表示し、以後ずっと追従（.is-visible をトグル）
+/* 固定CTA（画面下に追従するバー・全ページ共通）
+   - 「電話で相談」「資料をダウンロード」「無料で相談」の3ボタン。PCは中央寄せの帯、SPは全幅
+   - お問い合わせページ（#rx-contact-form あり）では出さない。<body data-fixcta="off"> でも出さない
    - DOM生成のみ（innerHTML不使用・ユーザー入力なし）
-   - 文言・遷移先は <body data-fab-label="…" data-fab-href="…"> で上書き可
-   - <body data-fab="off"> のページには出さない（ホームはHEROのCTA2つに絞るため off） */
+   - 遷移先は同階層相対パス。case/{slug}/ 等のサブディレクトリでは main.js の src（../../js/main.js）から
+     ルートまでの相対プレフィックスを求めて付ける（ルート絶対パス禁止・CLAUDE.md）
+   - 「資料をダウンロード」の遷移先は暫定でお問い合わせフォーム（?source=document-download）。
+     資料の置き場所ができたら DOC_HREF を差し替える
+   - バーの実高さを --rx-fixcta-h に書き、body の下余白でフッターが隠れないようにする */
 (function () {
   'use strict';
 
-  if (document.body.getAttribute('data-fab') === 'off') return; // ページ側で無効化
+  if (document.body.getAttribute('data-fixcta') === 'off') return; // ページ側で無効化
   if (document.getElementById('rx-contact-form')) return; // お問い合わせページ自身では出さない
-  if (document.querySelector('.rx-fab')) return;          // 二重挿入ガード
+  if (document.querySelector('.rx-fixcta')) return;       // 二重挿入ガード
 
-  var fabLabel = document.body.getAttribute('data-fab-label') || 'お問い合わせ';
-  var fabHref  = document.body.getAttribute('data-fab-href')  || 'contact.html';
+  // ルートまでの相対プレフィックス（"" or "../../"）を main.js の src から求める
+  var base = '';
+  var scripts = document.querySelectorAll('script[src]');
+  for (var i = 0; i < scripts.length; i++) {
+    var m = /^(.*?)js\/main\.js(?:\?.*)?$/.exec(scripts[i].getAttribute('src'));
+    if (m) { base = m[1]; break; }
+  }
+
+  var TEL_NUMBER  = '03-6261-0764';
+  var TEL_HREF    = 'tel:0362610764';
+  var DOC_HREF    = base + 'contact.html?source=document-download'; // 暫定: 資料の置き場所ができたら差し替え
+  var CONSULT_HREF = base + 'contact.html?source=free-consultation';
 
   var SVGNS = 'http://www.w3.org/2000/svg';
   function svgEl(name, attrs) {
@@ -191,29 +204,66 @@
     for (var k in attrs) el.setAttribute(k, attrs[k]);
     return el;
   }
+  function icon(paths) {
+    var svg = svgEl('svg', {
+      'class': 'rx-fixcta__icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
+      'stroke-width': '1.9', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true'
+    });
+    for (var i = 0; i < paths.length; i++) svg.appendChild(svgEl('path', { d: paths[i] }));
+    return svg;
+  }
+  function item(mod, href, paths, label, sub, ariaLabel) {
+    var a = document.createElement('a');
+    a.className = 'rx-fixcta__item rx-fixcta__item--' + mod;
+    a.href = href;
+    if (ariaLabel) a.setAttribute('aria-label', ariaLabel);
+    a.appendChild(icon(paths));
+    var body = document.createElement('span');
+    body.className = 'rx-fixcta__body';
+    var t = document.createElement('span');
+    t.className = 'rx-fixcta__label';
+    t.textContent = label;
+    body.appendChild(t);
+    if (sub) {
+      var s = document.createElement('span');
+      s.className = 'rx-fixcta__sub';
+      s.textContent = sub;
+      body.appendChild(s);
+    }
+    a.appendChild(body);
+    return a;
+  }
 
-  var fab = document.createElement('a');
-  fab.className = 'rx-fab';
-  fab.href = fabHref;
-  fab.setAttribute('aria-label', fabLabel);
+  var bar = document.createElement('nav');
+  bar.className = 'rx-fixcta';
+  bar.setAttribute('aria-label', 'ご相談・資料請求');
 
-  var svg = svgEl('svg', {
-    'class': 'rx-fab__icon', viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor',
-    'stroke-width': '1.9', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true'
-  });
-  svg.appendChild(svgEl('path', { d: 'M4 5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H8l-4 3V6a1 1 0 0 1 1-1Z' }));
-  svg.appendChild(svgEl('path', { d: 'm5 7 7 5 7-5' }));
-  fab.appendChild(svg);
+  var inner = document.createElement('div');
+  inner.className = 'rx-fixcta__inner';
 
-  var label = document.createElement('span');
-  label.className = 'rx-fab__text';
-  label.textContent = fabLabel;
-  fab.appendChild(label);
+  inner.appendChild(item('tel', TEL_HREF,
+    ['M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z'],
+    '電話で相談', TEL_NUMBER, '電話で相談 ' + TEL_NUMBER + '（受付 平日10:00〜19:00）'));
+  inner.appendChild(item('doc', DOC_HREF,
+    ['M12 4v11', 'm7 11 5 5 5-5', 'M4 20h16'],
+    '資料をダウンロード', 'サービス資料（無料）'));
+  inner.appendChild(item('consult', CONSULT_HREF,
+    ['M4 5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H8l-4 3V6a1 1 0 0 1 1-1Z', 'M8 10h8', 'M8 14h5'],
+    '無料で相談', 'フォームから受付'));
 
-  document.body.appendChild(fab);
+  bar.appendChild(inner);
+  document.body.appendChild(bar);
+  document.body.classList.add('has-fixcta');
+
+  // バーの高さを CSS 変数へ（body の下余白に使う）。リサイズ時も追従
+  function setHeight() {
+    document.documentElement.style.setProperty('--rx-fixcta-h', bar.offsetHeight + 'px');
+  }
+  setHeight();
+  window.addEventListener('resize', setHeight, { passive: true });
 
   // 常時表示（最上部でも・上にスクロールしても消えない）。入場アニメだけ一度再生
-  window.requestAnimationFrame(function () { fab.classList.add('is-visible'); });
+  window.requestAnimationFrame(function () { bar.classList.add('is-visible'); });
 })();
 
 /* お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
