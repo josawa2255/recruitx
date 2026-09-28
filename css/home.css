@@ -2516,4 +2516,7 @@ a.rx-home-route:focus-visible { outline: 3px solid rgba(var(--rx-accent-rgb), .4
 
   /* 入場は少し大きめに動かす */
   .rx-home .rx-anim { transform: translateY(28px); }
+  /* style.css の .rx-anim.is-in と同詳細度のため、後勝ちで戻し切れるよう明示する
+     （これが無いと表示後も28px下にズレたままになり、直下の注記に重なる） */
+  .rx-home .rx-anim.is-in { transform: none; }
 }
