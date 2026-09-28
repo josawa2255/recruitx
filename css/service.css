@@ -262,15 +262,41 @@
 }
 .rx-svc-hero__shape {
   position: absolute;
-  left: 46%; right: -14%; top: -30%;
-  height: 128%;
+  left: 52%; right: -14%; top: -34%;
+  height: 104%;
   background: rgba(var(--rx-accent-rgb), .055);
-  clip-path: polygon(28% 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
+}
+/* 左＝コピー / 右＝ビジュアル。目次は下に全幅で敷く */
+.rx-svc-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);
+  grid-template-areas:
+    "copy visual"
+    "toc  toc";
+  align-items: center;
+  column-gap: clamp(28px, 4vw, 64px);
+}
+.rx-svc-hero__copy { grid-area: copy; min-width: 0; }
+.rx-svc-hero__visual {
+  grid-area: visual;
+  margin: 0;
+  overflow: hidden;
+  border-radius: clamp(20px, 2.4vw, 32px);
+}
+.rx-svc-hero__visual img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: 62% 50%;      /* 人物が右寄りの素材なので右側を見せる */
 }
 .rx-svc-hero__title {
   margin-top: clamp(14px, 1.6vw, 22px);
   font-weight: 900;
-  font-size: clamp(1.75rem, 1.05rem + 2.6vw, 3.5rem);    /* 28 → 56px */
+  /* 2行目「採用のすべての場面へ。」＝11文字。コピー列の幅で1行に収まる上限にしている
+     （係数を変えたら 375 / 768 / 1025 / 1920px で3行に折れないか確認する） */
+  font-size: clamp(1.75rem, 1.15rem + 2.1vw, 3rem);      /* 28 → 48px */
   line-height: 1.26;
   letter-spacing: .01em;
   text-wrap: wrap;
@@ -284,7 +310,7 @@
 }
 
 /* ページ内目次 */
-.rx-svc-toc { margin-top: clamp(30px, 3.6vw, 48px); }
+.rx-svc-toc { grid-area: toc; margin-top: clamp(30px, 3.6vw, 48px); }
 .rx-svc-toc__list {
   display: flex;
   flex-wrap: wrap;
@@ -317,6 +343,18 @@
   border-color: rgba(var(--rx-accent-rgb), .5);
 }
 
+@media (max-width: 1024px) {
+  .rx-svc-hero__inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "visual"
+      "toc";
+    row-gap: clamp(24px, 3.2vw, 40px);
+  }
+  .rx-svc-hero__visual img { aspect-ratio: 16 / 9; }
+  .rx-svc-toc { margin-top: clamp(8px, 1.2vw, 16px); }
+}
 @media (max-width: 768px) {
   .rx-svc-hero__shape { left: 24%; }
 }
