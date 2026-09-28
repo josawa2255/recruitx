@@ -4,7 +4,7 @@
    - IntersectionObserver による軽い入場アニメ（.rx-anim → .is-in）
    - ヘッダーナビ（スクロール背景 / ハンバーガー / Escで閉じる）
    - ホームのヒーロー: 採用AIO対策カードのタイピング演出
-   - ホームのヒーロー: 採用アニメーションカードの動画2本（再生マークの出し入れ・同時再生の抑止）
+   - ホームのヒーロー: 採用アニメーション・会社紹介動画の埋め込み動画（再生ボタン・同時再生の抑止）
    - フローティングCTA（文言・遷移先は <body data-fab-label / data-fab-href> で上書き可）
    - お問い合わせ → HubSpot Forms API v3 直送（XSS安全: createElement + textContent）
    - prefers-reduced-motion: reduce のときはアニメをスキップ
@@ -102,15 +102,14 @@
   setTimeout(function () { bot.classList.add('is-alert'); }, t);
 })();
 
-/* ホームのヒーロー: 採用アニメーションカードの動画2本
-   再生ボタンは JS が動く環境でだけ出し、押すと再生、再生中は消す。片方を再生したらもう片方は止める。
-   縦長を再生したら .is-tall-active（縦長が左の主役・横長が右のサムネイル）、横長を再生したら既定に戻す */
+/* ホームのヒーロー: 採用アニメーション（動画2本）・会社紹介動画（1本）
+   再生ボタンは JS が動く環境でだけ出し、押すと再生、再生中は消す。どれかを再生したら他は止める。
+   大きさ・並びは変えない（ヒーロー全体の高さが動かないように） */
 (function () {
   'use strict';
 
-  var box = document.querySelector('.rx-home-hero__videos');
-  if (!box) return;
-  var wraps = box.querySelectorAll('.rx-home-hero__video');
+  var wraps = document.querySelectorAll('.rx-home-hero__video');
+  if (!wraps.length) return;
   var videos = [];
   Array.prototype.forEach.call(wraps, function (wrap) {
     var v = wrap.querySelector('video');
@@ -121,7 +120,6 @@
     if (btn) btn.addEventListener('click', function () { v.play(); });
     v.addEventListener('play', function () {
       wrap.classList.add('is-playing');
-      box.classList.toggle('is-tall-active', wrap.classList.contains('rx-home-hero__video--tall'));
       videos.forEach(function (o) { if (o !== v && !o.paused) o.pause(); });
     });
     v.addEventListener('pause', function () { wrap.classList.remove('is-playing'); });

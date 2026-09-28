@@ -186,7 +186,7 @@
               </div>
             </div>
             <!-- 制作した採用アニメーション2本（video/）。サムネイル（poster）を見せ、押すとその場で再生。本体は preload="none" で初期表示を軽くする。
-                 再生した側が左（主役）に来る: 縦長を再生すると js/main.js が .is-tall-active を付け、縦長が左・横長が右のサムネイルになる -->
+                 再生しても大きさ・並びは変えない（ヒーロー全体の高さを動かさないため。大きく見るときは全画面ボタン） -->
             <div class="rx-home-hero__videos">
               <div class="rx-home-hero__video rx-home-hero__video--wide">
                 <video controls preload="none" playsinline poster="video/asobisystem-recruit-poster.webp" width="640" height="360" aria-label="採用アニメーションの例: ASOBISYSTEM 採用動画">
@@ -210,9 +210,15 @@
                 <p class="rx-home-hero__card-sub">会社の魅力を<br>わかりやすく伝える</p>
               </div>
             </div>
-            <img class="rx-home-hero__card-img" src="images/home/hero-card-movie.webp"
-                 alt="会社紹介動画の例。会議室で「Our Story」と題した映像を見る社員たち"
-                 width="432" height="213" loading="eager" decoding="async">
+            <!-- 制作した会社紹介動画（video/）。採用アニメーションと同じ方式（poster＋押して再生・preload="none"） -->
+            <div class="rx-home-hero__videos rx-home-hero__videos--single">
+              <div class="rx-home-hero__video rx-home-hero__video--wide">
+                <video controls preload="none" playsinline poster="video/contentsx-company-intro-poster.webp" width="640" height="360" aria-label="会社紹介動画の例: コンテンツエックス 会社案内">
+                  <source src="video/contentsx-company-intro.mp4" type="video/mp4">
+                </video>
+                <button type="button" class="rx-home-hero__video-play" aria-label="会社案内動画を再生"></button>
+              </div>
+            </div>
           </li>
           <li class="rx-home-hero__card rx-home-hero__card--aio">
             <div class="rx-home-hero__card-head">
@@ -278,7 +284,7 @@
       <div class="rx-home__inner">
         <a class="rx-home-campaign__link" href="contact.html?source=campaign">
           <span class="rx-home-campaign__badge">キャンペーン</span>
-          <strong class="rx-home-campaign__text"><span>Chatwork 広告限定の</span><span>キャンペーン実施中！</span></strong>
+          <strong class="rx-home-campaign__text"><span class="rx-home-campaign__brand"><img src="images/home/chatwork-logo.webp" width="408" height="104" alt="Chatwork" loading="lazy" decoding="async"></span><span>広告限定の</span><span>キャンペーン実施中！</span></strong>
           <span class="rx-home-campaign__cta">お問い合わせはこちら<svg class="rx-btn__chevron" aria-hidden="true"><use href="#i-arrow"/></svg></span>
         </a>
       </div>
