@@ -200,36 +200,6 @@
   .rx-svc .rx-br-sp { display: none; }
 }
 
-/* チェックリスト（資料の「✓ 箇条書き」を線画チェックで再現） */
-.rx-svc-checks { display: grid; gap: 12px; margin-top: 14px; }
-.rx-svc-checks li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: .875rem;
-  line-height: 1.9;
-  color: var(--rx-text-muted);
-}
-/* アイコンではなく細い罫で列挙を示す（03 は「弱」なのでアイコンを使わない） */
-.rx-svc-checks li::before {
-  content: "";
-  flex: 0 0 auto;
-  width: .85em;
-  height: 1px;
-  margin-top: .95em;
-  background: rgba(var(--rx-accent-rgb), .5);
-}
-.rx-svc-checks li b {
-  display: block;
-  font-weight: 700;
-  font-size: .9375rem;
-  color: var(--sv-ink);
-}
-.rx-svc-checks--cols {
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: clamp(16px, 2.2vw, 30px);
-}
-
 /* 共通の円アイコン面（淡いピンクの円＋ピンクの線画） */
 .rx-svc-produce__source-icon,
 .rx-svc-points__icon,
@@ -730,31 +700,79 @@
   opacity: .5;
 }
 
-/* 詳細は面ではなく、左の細い罫でぶら下げる */
-.rx-svc-route__detail {
+/* --- ルートの図解 ---
+   「弱い」セクションなので写真は使わず、線画アイコン＋細い罫線の図で仕組みだけ示す。
+   詳細の文章（資料 p19・p21・p22）をこの図に置き換えて、読む量を減らしている */
+.rx-svc-fig {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(10px, 1.4vw, 18px);
   margin-top: clamp(22px, 2.6vw, 34px);
-  padding-left: clamp(16px, 1.8vw, 26px);
-  border-left: 2px solid rgba(var(--rx-accent-rgb), .22);
 }
-.rx-svc-route__detail-title {
+.rx-svc-fig__step,
+.rx-svc-fig__side {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  padding: clamp(18px, 2vw, 26px) clamp(12px, 1.4vw, 18px);
+  border: 1px solid rgba(var(--rx-accent-rgb), .22);
+  border-radius: var(--rx-radius);
+  text-align: center;
+}
+/* 着地点だけ淡いピンクで塗って「ここに行き着く」を示す */
+.rx-svc-fig__step--goal,
+.rx-svc-fig__side--after { background: var(--sv-pink-soft); }
+.rx-svc-fig__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--rx-accent);
+}
+.rx-svc-fig__icon svg { width: 23px; height: 23px; }
+.rx-svc-fig__name {
+  margin-top: 11px;
   font-weight: 900;
-  font-size: clamp(1rem, .95rem + .35vw, 1.1875rem);
+  font-size: .9375rem;
   line-height: 1.5;
 }
-.rx-svc-route__cols {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(20px, 2.4vw, 40px);
-  margin-top: clamp(16px, 2vw, 24px);
+.rx-svc-fig__desc {
+  margin-top: 7px;
+  font-size: .78125rem;
+  line-height: 1.8;
+  color: var(--rx-text-muted);
 }
-.rx-svc-route__cap {
-  font-size: .8125rem;
+.rx-svc-fig__arrow {
+  align-self: center;
+  width: 0; height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 10px solid var(--rx-accent);
+}
+
+/* B ルートは3段ではなく2つの対比 */
+.rx-svc-fig--compare { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+.rx-svc-fig__side--before { border-style: dashed; border-color: var(--sv-line); }
+.rx-svc-fig__side--before .rx-svc-fig__icon { color: var(--sv-muted); background: var(--sv-alt); }
+.rx-svc-fig__cap {
+  font-size: .75rem;
   font-weight: 700;
-  letter-spacing: .04em;
-  color: var(--sv-ink);
+  letter-spacing: .06em;
+  color: var(--rx-accent-hover);
+  margin-bottom: 11px;
 }
+.rx-svc-fig__side--before .rx-svc-fig__cap { color: var(--sv-muted); }
+.rx-svc-fig__vs {
+  align-self: center;
+  width: 1px;
+  height: 100%;
+  background: rgba(var(--rx-accent-rgb), .22);
+}
+
 .rx-svc-route__note {
-  margin-top: clamp(14px, 1.8vw, 20px);
+  margin-top: clamp(16px, 2vw, 24px);
   font-size: .8125rem;
   line-height: 1.85;
   color: var(--rx-text-muted);
@@ -786,10 +804,21 @@
 .rx-svc-improve__name { margin-top: 14px; font-weight: 900; font-size: 1.0625rem; line-height: 1.5; }
 .rx-svc-improve__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
 
+@media (max-width: 860px) {
+  .rx-svc-fig,
+  .rx-svc-fig--compare { grid-template-columns: 1fr; }
+  .rx-svc-fig__arrow {
+    justify-self: center;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-top: 10px solid var(--rx-accent);
+    border-bottom: 0;
+  }
+  .rx-svc-fig__vs { justify-self: center; width: 40%; height: 1px; }
+}
 @media (max-width: 1024px) {
   .rx-svc-route__rows { grid-template-columns: 1fr; gap: 0; }
   .rx-svc-route__row + .rx-svc-route__row { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--sv-line); }
-  .rx-svc-route__cols { grid-template-columns: 1fr; }
   .rx-svc-improve__list { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
