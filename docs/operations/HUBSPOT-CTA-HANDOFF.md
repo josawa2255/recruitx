@@ -24,7 +24,7 @@ HubSpot Forms API v3 のサブミットエンドポイントに、`fetch()` で�
 | 画面入力 | HubSpot内部name | 備考 |
 |---|---|---|
 | 会社名 | `company` | |
-| 部署 | `busyo` | カスタムプロパティ。`department` でなく `busyo`（ローマ字）が正 |
+| 部署 | `busyo` | カスタムプロパティ。`department` でなく `busyo`（ローマ字）が正。**HubSpot 側で必須**（未送信も空文字も 400 `REQUIRED_FIELD` で拒否。2026-09-29 本番で確認）→ 画面でも必須にしている |
 | お名前 | `lastname` と `firstname` 両方に同じフルネーム | 画面1項目→HubSpot側は姓名2プロパティ |
 | メール | `email` | |
 | お問い合わせ内容 | `message` | 末尾に送信元トラッキング情報を付加 |
@@ -38,8 +38,8 @@ HubSpot Forms API v3 のサブミットエンドポイントに、`fetch()` で�
     <input type="text" name="company" required autocomplete="organization">
   </label>
   <label class="rx-form__field">
-    <span class="rx-form__label">部署</span>
-    <input type="text" name="department" autocomplete="organization-title">
+    <span class="rx-form__label">部署 <em>必須</em></span>
+    <input type="text" name="department" required autocomplete="organization-title">
   </label>
   <label class="rx-form__field">
     <span class="rx-form__label">お名前 <em>必須</em></span>

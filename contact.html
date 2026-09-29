@@ -64,7 +64,8 @@
            同時にフローティングCTAの出し分け判定にも使っている）
          - input の name は main.js の LIMITS / readField と対応。リネームする場合は
            main.js と HUBSPOT-CTA-HANDOFF.md のマッピング表も同時に直すこと
-           （画面の name=department は HubSpot 側では busyo に載せ替えている）
+           （画面の name=department は HubSpot 側では busyo に載せ替えている。busyo は HubSpot 側で必須＝
+            空欄だと 400 で拒否されるため、部署もこのフォームで必須にしている）
          - CRM の受信箱へは </body> 直前の貼り付けコード（inbound-v1.js）が送る。どの項目に入れるかは
            各欄の data-crm-field（company_name / department / full_name / email / message）で明示している。
            欄を足す・name を変えるときは data-crm-field も付け直す（無い欄は「その他の回答」に入る）。
@@ -88,8 +89,8 @@
                      autocomplete="organization" placeholder="コンテンツエックス株式会社">
             </label>
             <label class="rx-form__field">
-              <span class="rx-form__label">部署</span>
-              <input type="text" name="department" maxlength="100" data-crm-field="department"
+              <span class="rx-form__label">部署<em>必須</em></span>
+              <input type="text" name="department" maxlength="100" required data-crm-field="department"
                      autocomplete="organization-title" placeholder="人事部">
             </label>
           </div>
