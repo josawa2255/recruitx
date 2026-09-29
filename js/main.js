@@ -228,16 +228,7 @@
 
   var HUBSPOT_PORTAL_ID = '48367061';
   var HUBSPOT_FORM_GUID = 'b6da14d0-d60d-4357-89fc-0015ed32b704';
-  var SERVICE_NAME      = 'ビズ採用';   // HubSpot / 社内CRM へ送るサービス名（2026-09-28 リクルートX から変更）
-
-  // 社内CRMの問い合わせ受信箱（/inbox）へ並行送信する。仕様は
-  // ユーザーレベルスキル jou-crm-contact-web が正本。
-  // CRM_TOKEN は総当たり抑止の門番であり機密ではない（静的サイトのJSに埋まる＝
-  // ブラウザから読める前提の設計）。実質の防御はCRM側のIPレート制限とハニーポット。
-  // ⚠️ ローテーションする場合は CRM側Vercel + 全HPリポジトリを同時に更新すること
-  //    （1箇所ズレるとそのサイトだけ401になるが、HubSpotは正常なので気づきにくい）
-  var CRM_ENDPOINT = 'https://contentsx-crm.vercel.app/api/inbound/web';
-  var CRM_TOKEN    = 'ENoK7H4O60a8KdKlTal12exoV2rqSNlIb841sj3dSeo=';
+  var SERVICE_NAME      = 'ビズ採用';   // HubSpot へ送るサービス名（2026-09-28 リクルートX から変更。CRM は公開キーで送信元を判別するので送らない）
 
   var form = document.getElementById('rx-contact-form');
   if (!form) return;
@@ -268,6 +259,26 @@
     thanks.appendChild(s);
     form.parentNode.insertBefore(thanks, form.nextSibling);
     form.style.display = 'none';
+  }
+
+  // 社内CRM（ビズカルテ）の受信箱へ写しを送る。貼り付けコード方式（2026-09-29〜）:
+  // contact.html の </body> 直前で読み込む inbound-v1.js（公開キー・data-auto="false"）が送信本体。
+  // - 公開キーは秘密ではなく、トークンの管理・同期は不要（旧方式の CRM_TOKEN は廃止）
+  // - CRM のドメインを変えるときは contact.html の script の src と CSP（script-src）の2か所を直す
+  // - スクリプトは async なので、送信時に未読み込みなら読み込み完了を待って送る
+  // - 例外は外へ出さない（CRM 側が壊れていても HubSpot への送信とサンクス表示は止めない）
+  function copyToCrm(form) {
+    try {
+      if (window.BizcarteInbound && typeof window.BizcarteInbound.sendForm === 'function') {
+        window.BizcarteInbound.sendForm(form);
+        return;
+      }
+      var s = document.querySelector('script[src*="/embed/inbound-v1.js"]');
+      if (s) s.addEventListener('load', function () {
+        try { if (window.BizcarteInbound) window.BizcarteInbound.sendForm(form); }
+        catch (err) { console.warn('CRM inbound failed (ignored):', err); }
+      }, { once: true });
+    } catch (err) { console.warn('CRM inbound failed (ignored):', err); }
   }
 
   function showError(message) {
@@ -342,36 +353,8 @@
       }
     };
 
-    // CRM受信箱へも送る（HubSpotとは独立。失敗しても送信者には影響させない＝
-    // CRMが落ちていてもHubSpot側の受付とサンクス表示は従来どおり動く）。
-    // 受信データは承認されるまで web_inquiries に隔離される。
-    try {
-      fetch(CRM_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + CRM_TOKEN
-        },
-        body: JSON.stringify({
-          site: 'ichioshi',
-          company_name: company,
-          department: department,
-          full_name: fullName,
-          email: email,
-          message: message,
-          page_url: window.location.href,
-          utm_source: utmSource,
-          utm_medium: utmMedium,
-          utm_campaign: utmCampaign,
-          referrer: document.referrer || null,
-          hp: document.getElementById('website') ? document.getElementById('website').value : ''
-        })
-      }).catch(function (err) {
-        console.warn('CRM inbound failed (ignored):', err);
-      });
-    } catch (err) {
-      console.warn('CRM inbound skipped:', err);
-    }
+    // CRM の受信箱へも写しを送る（ハニーポットと入力チェックを通った送信だけ）
+    copyToCrm(form);
 
     var url = 'https://api.hsforms.com/submissions/v3/integration/submit/'
       + HUBSPOT_PORTAL_ID + '/' + HUBSPOT_FORM_GUID;

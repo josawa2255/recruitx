@@ -9,13 +9,15 @@
   <title>お問い合わせ｜ビズ採用</title>
   <meta name="description" content="ビズ採用へのお問い合わせ・ご相談はこちらから。現在の採用状況やお悩みをお聞かせください。3営業日以内に担当者よりご連絡いたします。ご相談は無料です。">
   <!-- CSP: GA4/Clarity等のタグを追加する際は script-src / connect-src への追記が必要。
-       このページは connect-src に送信先を明示する（他ページより2つ多い）:
-         - api.hsforms.com          … HubSpot Forms API v3（お問い合わせ受付の本線）
-         - contentsx-crm.vercel.app … 社内CRMの問い合わせ受信箱への並行POST
+       このページは送信先を明示する（他ページより多い）:
+         - api.hsforms.com          … connect-src。HubSpot Forms API v3（お問い合わせ受付の本線）
+         - contentsx-crm.vercel.app … 社内CRMの受信箱連携。script-src は /embed/inbound-v1.js の1ファイルだけに
+                                      絞り（CRM の他のスクリプトをこのページで動かさない）、
+                                      connect-src はそこからの送信先としてドメインごと許可
        ※ 送信先を増やすときは必ずここに追記する。漏れると fetch がCSPでブロックされ、
          「送信に失敗しました」だけが出て原因が分かりにくい
-       ※ CRMを独自ドメイン（crm.contentsx.jp）へ移すときはここも差し替える -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com; connect-src 'self' https://api.hsforms.com https://contentsx-crm.vercel.app https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+       ※ CRM のドメインを変えるとき（crm.contentsx.jp 等）は、この CSP と </body> 直前の script の src の2か所を直す -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://contentsx-crm.vercel.app/embed/inbound-v1.js; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com; connect-src 'self' https://api.hsforms.com https://contentsx-crm.vercel.app https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
   <!-- Google tag (gtag.js) — GA4 G-S2RDKPM1LE -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2RDKPM1LE"></script>
   <script src="js/ga4.js"></script>
@@ -62,7 +64,11 @@
            同時にフローティングCTAの出し分け判定にも使っている）
          - input の name は main.js の LIMITS / readField と対応。リネームする場合は
            main.js と HUBSPOT-CTA-HANDOFF.md のマッピング表も同時に直すこと
-           （画面の name=department は HubSpot 側では busyo に載せ替えている） -->
+           （画面の name=department は HubSpot 側では busyo に載せ替えている）
+         - CRM の受信箱へは </body> 直前の貼り付けコード（inbound-v1.js）が送る。どの項目に入れるかは
+           各欄の data-crm-field（company_name / department / full_name / email / message）で明示している。
+           欄を足す・name を変えるときは data-crm-field も付け直す（無い欄は「その他の回答」に入る）。
+           ハニーポット #website は script の data-honeypot で指定（詳細は docs/specs/SPEC.md §7） -->
     <section class="rx-contact" aria-labelledby="contactHeading">
       <div class="rx-contact__inner">
 
@@ -78,12 +84,12 @@
           <div class="rx-form__row">
             <label class="rx-form__field">
               <span class="rx-form__label">会社名<em>必須</em></span>
-              <input type="text" name="company" maxlength="200" required
+              <input type="text" name="company" maxlength="200" required data-crm-field="company_name"
                      autocomplete="organization" placeholder="コンテンツエックス株式会社">
             </label>
             <label class="rx-form__field">
               <span class="rx-form__label">部署</span>
-              <input type="text" name="department" maxlength="100"
+              <input type="text" name="department" maxlength="100" data-crm-field="department"
                      autocomplete="organization-title" placeholder="人事部">
             </label>
           </div>
@@ -91,19 +97,19 @@
           <div class="rx-form__row">
             <label class="rx-form__field">
               <span class="rx-form__label">お名前<em>必須</em></span>
-              <input type="text" name="fullName" maxlength="100" required
+              <input type="text" name="fullName" maxlength="100" required data-crm-field="full_name"
                      autocomplete="name" placeholder="採用 太郎">
             </label>
             <label class="rx-form__field">
               <span class="rx-form__label">メールアドレス<em>必須</em></span>
-              <input type="email" name="email" maxlength="254" required
+              <input type="email" name="email" maxlength="254" required data-crm-field="email"
                      autocomplete="email" placeholder="example@company.co.jp">
             </label>
           </div>
 
           <label class="rx-form__field">
             <span class="rx-form__label">お問い合わせ内容<em>必須</em></span>
-            <textarea name="message" rows="7" maxlength="4000" required
+            <textarea name="message" rows="7" maxlength="4000" required data-crm-field="message"
                       placeholder="現在の採用状況や、ご相談したい内容をご記入ください。"></textarea>
           </label>
 
@@ -157,5 +163,6 @@
   </footer>
 
   <script src="js/main.js" defer></script>
+  <script src="https://contentsx-crm.vercel.app/embed/inbound-v1.js" data-source-key="f773dd7b55e83f3e34d51fedeeaab80a" data-auto="false" data-honeypot="#website" async></script>
 </body>
 </html>
