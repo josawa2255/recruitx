@@ -261,6 +261,26 @@
     form.style.display = 'none';
   }
 
+  // 社内CRM（ビズカルテ）の受信箱へ写しを送る。貼り付けコード方式（2026-09-29〜）:
+  // contact.html の </body> 直前で読み込む inbound-v1.js（公開キー・data-auto="false"）が送信本体。
+  // - 公開キーは秘密ではなく、トークンの管理・同期は不要（旧方式の CRM_TOKEN は廃止）
+  // - CRM のドメインを変えるときは contact.html の script の src と CSP（script-src）の2か所を直す
+  // - スクリプトは async なので、送信時に未読み込みなら読み込み完了を待って送る
+  // - 例外は外へ出さない（CRM 側が壊れていても HubSpot への送信とサンクス表示は止めない）
+  function copyToCrm(form) {
+    try {
+      if (window.BizcarteInbound && typeof window.BizcarteInbound.sendForm === 'function') {
+        window.BizcarteInbound.sendForm(form);
+        return;
+      }
+      var s = document.querySelector('script[src*="/embed/inbound-v1.js"]');
+      if (s) s.addEventListener('load', function () {
+        try { if (window.BizcarteInbound) window.BizcarteInbound.sendForm(form); }
+        catch (err) { console.warn('CRM inbound failed (ignored):', err); }
+      }, { once: true });
+    } catch (err) { console.warn('CRM inbound failed (ignored):', err); }
+  }
+
   function showError(message) {
     var err = form.querySelector('.rx-form__error');
     if (!err) {
@@ -333,16 +353,8 @@
       }
     };
 
-    // CRM の受信箱へも送る（失敗しても HubSpot の受付・完了表示には影響しない）。
-    // 送信本体は contact.html で読み込む inbound-v1.js（data-auto="false"＝入力チェックを
-    // 通った送信だけをここで手動で送る）。項目は欄の名前・ラベルから自動判別される。
-    // 読み込めていない時は警告だけ残す（HubSpot は正常なまま CRM だけ空になる壊れ方に気づくため）
-    try {
-      if (window.BizcarteInbound) window.BizcarteInbound.sendForm(form);
-      else console.warn('CRM inbound skipped: inbound-v1.js が読み込まれていません');
-    } catch (err) {
-      console.warn('CRM inbound failed (ignored):', err);
-    }
+    // CRM の受信箱へも写しを送る（ハニーポットと入力チェックを通った送信だけ）
+    copyToCrm(form);
 
     var url = 'https://api.hsforms.com/submissions/v3/integration/submit/'
       + HUBSPOT_PORTAL_ID + '/' + HUBSPOT_FORM_GUID;
