@@ -306,13 +306,15 @@
       return;
     }
 
-    var company  = readField(fd, 'company');
-    var fullName = readField(fd, 'fullName');
-    var email    = readField(fd, 'email');
-    var message  = readField(fd, 'message');
+    var company    = readField(fd, 'company');
+    var department = readField(fd, 'department');
+    var fullName   = readField(fd, 'fullName');
+    var email      = readField(fd, 'email');
+    var message    = readField(fd, 'message');
 
-    // クライアント側の必須・形式チェック（サーバー側検証はHubSpotが実施）
-    if (!company || !fullName || !email || !message) {
+    // クライアント側の必須・形式チェック（サーバー側検証はHubSpotが実施）。
+    // 部署（HubSpot の busyo）は HubSpot 側で必須＝空欄・未送信だと 400 REQUIRED_FIELD で拒否されるため必須にする
+    if (!company || !department || !fullName || !email || !message) {
       showError('必須項目が未入力です。ご確認ください。');
       return;
     }
@@ -335,8 +337,6 @@
     if (source)      tracking.push('参照ページ: ' + source);
     tracking.push('ページ: ' + window.location.href.slice(0, 300));
     var trackingNote = '\n\n---\n' + tracking.join('\n');
-
-    var department = readField(fd, 'department');
 
     var payload = {
       fields: [
