@@ -2125,6 +2125,165 @@
 }
 .rx-works__link::after { content: ""; width: .4em; height: .4em; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); }
 
+/* 表紙ボタン（本編があるもの）。「読む」ラベルとホバーは js/works-viewer.js が .is-ready を付けたときだけ出す
+   （スマホはホバーが無いので、ラベルを常に出して押せることを伝える・DEVICE-RULES §6）。
+   li の .rx-anim が transform を使うため、動きはボタンの中の画像にだけ付ける */
+.rx-works__open {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: default;
+}
+.rx-works__open.is-ready { cursor: pointer; }
+.rx-works__open img { transition: transform .35s ease; }
+.rx-works__open:focus-visible { outline: 3px solid var(--rx-accent); outline-offset: -3px; }   /* li の overflow で外側の枠が切れるため内側に */
+.rx-works__read {
+  position: absolute;
+  right: clamp(6px, .8vw, 10px);
+  bottom: clamp(6px, .8vw, 10px);
+  display: none;
+  align-items: center;
+  gap: .3em;
+  padding: .4em .85em .4em .7em;
+  border-radius: var(--rx-radius-pill);
+  background: rgba(16, 28, 77, .84);
+  box-shadow: 0 4px 12px rgba(16, 28, 77, .25);
+  font-weight: 700;
+  font-size: clamp(.6875rem, .62rem + .25vw, .8125rem);
+  line-height: 1.2;
+  letter-spacing: .06em;
+  color: #fff;
+  transition: background-color .2s ease;
+}
+.rx-works__open.is-ready .rx-works__read { display: inline-flex; }
+.rx-works__read svg { width: 1.2em; height: 1.2em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rx-works__open.is-ready:focus-visible .rx-works__read { background: var(--rx-accent); }
+@media (hover: hover) {
+  .rx-works__open.is-ready:hover img { transform: scale(1.04); }
+  .rx-works__open.is-ready:hover .rx-works__read { background: var(--rx-accent); }
+}
+@media (prefers-reduced-motion: reduce) { .rx-works__open img { transition: none; } }
+
+/* 制作実績の読み画面（<dialog id="worksViewer">・js/works-viewer.js）。
+   showModal() の最前面表示（top layer）なので z-index は使わない（固定CTA・ヘッダーより必ず上に出る）。
+   上に題名と × の帯、その下を縦スクロールにして全ページを縦に並べる */
+html.is-mv-open { overflow: hidden; }            /* 開いている間は後ろのページをスクロールさせない */
+.rx-mv {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #090d20;                          /* 不透明（半透明だと後ろのヘッダーや表紙が透けて見える） */
+  color: #fff;
+  text-align: left;
+  overflow: hidden;
+}
+.rx-mv[open] { display: flex; flex-direction: column; }
+.rx-mv::backdrop { background: rgba(9, 13, 32, .6); }
+@keyframes rx-mv-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: no-preference) { .rx-mv[open] { animation: rx-mv-in .22s ease-out; } }
+
+.rx-mv__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: calc(8px + env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) 8px max(16px, env(safe-area-inset-left));
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+.rx-mv__title {                                  /* 長い題名は2行まで（ホームの見出しは text-wrap: balance で折り返すため、1行省略ではなく行数で止める） */
+  flex: 1;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  font-size: clamp(.875rem, .8rem + .35vw, 1.0625rem);
+  font-weight: 700;
+  line-height: 1.4;
+}
+.rx-mv__count { flex: none; font-size: .75rem; color: rgba(255, 255, 255, .7); }
+.rx-mv__close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+.rx-mv__close svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+
+.rx-mv__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;                 /* 端まで読んでも後ろのページへスクロールを渡さない */
+  padding-top: clamp(0px, 2vw, 24px);
+}
+.rx-mv__scroll:focus { outline: none; }
+.rx-mv__scroll:focus-visible { outline: 2px solid var(--rx-accent); outline-offset: -2px; }
+/* ページの幅: スマホは画面幅いっぱい。PCは1ページが画面の高さに収まる幅（4:5）で、480〜720px の範囲。
+   左右の暗い所を押すと閉じる（js）。<ol> は style.css のリセット対象外なので padding を自分で消す（BUGS.md 2026-09-28） */
+.rx-mv__pages {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: min(100%, max(calc((100vh - 96px) * .8), 480px), 720px);     /* 96px ＝ 題名の帯（約61px）＋上の余白（最大24px）＋ゆとり */
+  width: min(100%, max(calc((100dvh - 96px) * .8), 480px), 720px);
+  margin: 0 auto;
+  padding: 0;
+}
+.rx-mv__page { background: rgba(255, 255, 255, .06); }   /* 読み込み前の下地（width/height で高さは先に確保される） */
+.rx-mv__page img { width: 100%; height: auto; }
+
+.rx-mv__end {
+  display: flex;
+  justify-content: center;
+  padding: clamp(28px, 4vw, 48px) 16px calc(clamp(28px, 4vw, 48px) + env(safe-area-inset-bottom));
+}
+.rx-mv__end-close {
+  min-width: 200px;
+  min-height: 48px;
+  padding: 0 2em;
+  border: 1.5px solid rgba(255, 255, 255, .6);
+  border-radius: var(--rx-radius-pill);
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  font-size: .9375rem;
+  letter-spacing: .08em;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color .2s ease;
+}
+.rx-mv__close:focus-visible,
+.rx-mv__end-close:focus-visible { outline: 3px solid var(--rx-accent); outline-offset: 2px; }
+@media (hover: hover) {
+  .rx-mv__close:hover,
+  .rx-mv__end-close:hover { background: rgba(255, 255, 255, .22); }
+}
+
 /* =========================================================================
    11. 最後のCTA: 診断でわかること（3つ）・電話とメール（提案書 p26）
    ========================================================================= */
