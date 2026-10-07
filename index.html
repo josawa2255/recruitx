@@ -9,7 +9,7 @@
   <title>ビズ採用｜会社の魅力を、人にもAIにも届けるコンテンツ採用</title>
   <meta name="description" content="ビズ採用は、採用漫画・採用アニメーション・会社紹介動画・採用AIO対策で、会社のリアルを応募前に伝えるコンテンツ採用サービスです。求人票だけでは伝わらない働くイメージを、人にもAIにも届けます。まずは無料相談から。">
   <meta name="google-site-verification" content="9gQNO_j6ueh5R7LolT0iPXaZ_fBv8C0QbYoAwU4avk0" />
-  <!-- CSP: GA4/Clarity等のタグを追加する際は script-src / connect-src への追記が必要。事例サムネはWPメディア(cms.contentsx.jp) -->
+  <!-- CSP: GA4/Clarity等のタグを追加する際は script-src / connect-src への追記が必要。事例サムネと制作実績の漫画ページ（js/works-viewer.js）はWPメディア(cms.contentsx.jp) -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cms.contentsx.jp https://*.google-analytics.com; connect-src 'self' https://api.hsforms.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'">
   <!-- Google tag (gtag.js) — GA4 G-S2RDKPM1LE -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2RDKPM1LE"></script>
@@ -951,10 +951,12 @@
         <h2 class="rx-hs__title rx-works__title" id="worksHeading">導入事例・<span class="rx-home-accent">制作実績</span></h2>
         <p class="rx-hs__lead">採用漫画を中心に、さまざまな業界・職種のコンテンツを制作しています。</p>
 
+        <!-- 本編があるもの（data-manga）は押すと読み画面（下の #worksViewer）が開く。ページ画像の一覧は js/works-viewer.js の先頭。
+             4・5枚目は本編の画像が未受領のため表紙のみ（受領したら同じ形のボタンにして、js/works-viewer.js に1件足す） -->
         <ul class="rx-works__list">
-          <li class="rx-works__item rx-anim"><img src="images/home/works-1.webp" alt="漫画「HANA Intelligence 〜友だちの笑顔が、私を変えた〜」の表紙" width="295" height="374" loading="lazy" decoding="async"></li>
-          <li class="rx-works__item rx-anim"><img src="images/home/works-2.webp" alt="ガウディア様（国語・算数・英語 学習教室）のブランドストーリー漫画「もうすぐ入学のタクマくん」の表紙" width="295" height="374" loading="lazy" decoding="async"></li>
-          <li class="rx-works__item rx-anim"><img src="images/home/works-3.webp" alt="株式会社Birdman様の経営ストーリー漫画「不屈の翼」の表紙" width="295" height="374" loading="lazy" decoding="async"></li>
+          <li class="rx-works__item rx-anim"><button type="button" class="rx-works__open" data-manga="hana" aria-haspopup="dialog" aria-label="漫画「HANA Intelligence 〜友だちの笑顔が、私を変えた〜」を読む"><img src="images/home/works-1.webp" alt="漫画「HANA Intelligence 〜友だちの笑顔が、私を変えた〜」の表紙" width="295" height="374" loading="lazy" decoding="async"><span class="rx-works__read" aria-hidden="true"><svg><use href="#i-manga"/></svg>読む</span></button></li>
+          <li class="rx-works__item rx-anim"><button type="button" class="rx-works__open" data-manga="gaudia-3" aria-haspopup="dialog" aria-label="ガウディア様の漫画「もうすぐ入学のタクマくん」を読む"><img src="images/home/works-2.webp" alt="ガウディア様（国語・算数・英語 学習教室）のブランドストーリー漫画「もうすぐ入学のタクマくん」の表紙" width="295" height="374" loading="lazy" decoding="async"><span class="rx-works__read" aria-hidden="true"><svg><use href="#i-manga"/></svg>読む</span></button></li>
+          <li class="rx-works__item rx-anim"><button type="button" class="rx-works__open" data-manga="birdman" aria-haspopup="dialog" aria-label="株式会社Birdman様の漫画「不屈の翼」を読む"><img src="images/home/works-3.webp" alt="株式会社Birdman様の経営ストーリー漫画「不屈の翼」の表紙" width="295" height="374" loading="lazy" decoding="async"><span class="rx-works__read" aria-hidden="true"><svg><use href="#i-manga"/></svg>読む</span></button></li>
           <li class="rx-works__item rx-anim"><img src="images/home/works-4.webp" alt="漫画「ひとりにしない、それだけで。」の表紙" width="295" height="374" loading="lazy" decoding="async"></li>
           <li class="rx-works__item rx-anim"><img src="images/home/works-5.webp" alt="ビズ採用の採用漫画「採用に、ストーリーを。」の表紙" width="295" height="374" loading="lazy" decoding="async"></li>
         </ul>
@@ -965,6 +967,22 @@
         <p class="rx-works__note">※掲載しているのは一部の制作実績です。その他の実績については、お問い合わせください。</p>
         <p class="rx-works__more"><a class="rx-works__link" href="case.html">採用支援の導入事例を見る</a></p>
       </div>
+
+      <!-- 制作実績の読み画面（全画面・縦スクロール）。中身（題名・ページ画像）は js/works-viewer.js が開くたびに入れる。
+           閉じる: × / 最後の「閉じる」/ Esc / 左右の暗い所を押す / スマホの「戻る」 -->
+      <dialog class="rx-mv" id="worksViewer" aria-labelledby="worksViewerTitle">
+        <div class="rx-mv__bar">
+          <h2 class="rx-mv__title" id="worksViewerTitle"></h2>
+          <p class="rx-mv__count"></p>
+          <button type="button" class="rx-mv__close" aria-label="閉じる"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+        <div class="rx-mv__scroll" tabindex="0" role="region" aria-labelledby="worksViewerTitle">
+          <ol class="rx-mv__pages"></ol>
+          <div class="rx-mv__end">
+            <button type="button" class="rx-mv__end-close">閉じる</button>
+          </div>
+        </div>
+      </dialog>
     </section>
 
     <!-- ===================== 11. 最後のCTA（提案書 最終版 p26「まずは、無料の採用力診断から」準拠・2026-09-28）
@@ -1045,5 +1063,6 @@
   </footer>
 
   <script src="js/main.js" defer></script>
+  <script src="js/works-viewer.js" defer></script>
 </body>
 </html>

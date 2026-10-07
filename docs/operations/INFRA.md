@@ -61,6 +61,8 @@ GitHub Pages のプロジェクトページに `*.contentsx.jp` サブドメイ�
   - フィールド: 会社名（タイトル）/ タグ（`rx_case_tag`・チェックボックス選択）/ 成果概要 / メイン画像（アイキャッチ＋フォーカルポイント `focal.x/y` → フロントは `object-position: x% y%` で再現）/ 実績数値 `stats[{label,value,unit,arrow:up|down|none}]` 最大3個可変
   - 詳細ページURLは `/case/{slug}` 予定（サブディレクトリ化に伴い、該当ページはパス規約を絶対パスへ切替）
   - フロント実装（fetch JS・静的ビルド・日次cron）は未着手。WP側手順の正本は ContentX_HP 側 `docs/operations/WP-SERVICE-ONBOARDING.md`
+- **ホームの制作実績の読み画面（2026-10-06）はWPの制作事例 works のページ画像を直接表示している**（`js/works-viewer.js` の `MANGA`。対象 `hana` / `gaudia-3` / `birdman`。works はビズマンガ・ContentsX と共有の投稿タイプ）。⚠️ WPでこれらの作品のページ画像（メディア）を削除・差し替えると、ビズ採用のホームで画像が出なくなる／古いままになる。差し替えたら `MANGA` のURLも更新する
+  - 公開API `/contentsx/v1/*` の CORS は `ichioshi.contentsx.jp` のみ許可（`josawa2255.github.io` と `file://` は不可・2026-10-06 確認）。そのためフロントから実行時にAPIを読まず、URLを静的に持つ（`<img>` の読み込みは CORS の影響を受けない。`index.html` の CSP `img-src` は `https://cms.contentsx.jp` を許可済み）
 
 ## 4. 触ってはいけない領域 ⛔（既存資産を参照・流用する際の地雷）
 
