@@ -1,9 +1,9 @@
 /* =========================================================================
    service.css — ビズ採用 サービス（service.html 専用）
    依存: tokens.css → style.css（reset / .rx-btn / ヘッダー / フッター / FAB / .rx-anim）の後に読み込む
-   構成（2026-09 新設・営業資料32ページ版準拠）:
-     ヒーロー / 01 つくる(#produce p13・p14) / 02 届ける(#deliver p15・p17・p23) /
-     03 3つの改善ルート(#routes p12・p18〜p22・p20) / 04 進め方(#flow p24・p30) / 最終CTA
+   構成（2026-10-06 に提案書 最終版・26ページに合わせて組み直し）:
+     ヒーロー(p9) / 01 なぜ今(#why p4〜p6・中) / 02 4つの対策(#creative p2・p3・p10・p13・強) /
+     03 採用AIO(#aio p14・p16〜p18・弱・別サービス) / 04 体制と違い(#team p19・p20・p22・p23・中) / 最終CTA(p26・強)
    見た目は 2026-09-27 デザイン案のホームに合わせる:
      見出し＝Zen Kaku Gothic Antique 900（明朝は使わない）／
      ラベル＝「01 つくる」＋横罫（`--rx-accent-hover`。白背景での小さいピンクのコントラスト確保）／
@@ -20,6 +20,7 @@
   --sv-alt:   #fafafa;
   --sv-pink-soft: #fdf0f6;
   --sv-pink-line: rgba(var(--rx-accent-rgb), .22);
+  --sv-navy:  #101c4d;                                  /* ホーム（--hm-navy）と同じ濃紺。表の見出し・本文の強調に使う */
   font-family: var(--sv-sans);
   color: var(--sv-ink);
   /* 全体の .rx-jp-body は keep-all だが、句読点のない和文が1語扱いになり
@@ -79,7 +80,7 @@
   clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 100%);
 }
 /* 「強」のセクションは斜め面を濃くする（ホームの強＝5.5% に合わせる） */
-.rx-svc-produce .rx-svc-sec__shape { background: rgba(var(--rx-accent-rgb), .055); }
+.rx-svc-creative .rx-svc-sec__shape { background: rgba(var(--rx-accent-rgb), .055); }
 .rx-svc-sec__inner,
 .rx-svc-hero__inner,
 .rx-svc-cta__inner {
@@ -140,38 +141,6 @@
 
 .rx-svc-more { margin-top: clamp(28px, 3.4vw, 44px); }
 
-/* セクション頭の「コピー＋写真」2カラム。
-   ホームと同じ作法で写真の左右を交互にする（01=右 / 02=左）＝セクションの切れ目を出すため */
-.rx-svc-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, .92fr);
-  align-items: center;
-  gap: clamp(28px, 4vw, 64px);
-}
-.rx-svc-head__copy { min-width: 0; }
-.rx-svc-head__copy .rx-svc-lead { max-width: 34em; }
-.rx-svc-head__visual {
-  margin: 0;
-  overflow: hidden;
-  border-radius: clamp(20px, 2.4vw, 32px);
-}
-.rx-svc-head__visual img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-/* 02 届ける は写真を左に置く */
-.rx-svc-head--reverse .rx-svc-head__copy { order: 2; }
-.rx-svc-head--reverse .rx-svc-head__visual { order: 1; }
-
-@media (max-width: 1024px) {
-  .rx-svc-head { grid-template-columns: 1fr; }
-  .rx-svc-head__copy { order: 1; }
-  .rx-svc-head__visual { order: 2; }
-  .rx-svc-head__visual img { aspect-ratio: 16 / 10; }
-}
-
 .rx-svc-textlink {
   display: inline-flex;
   align-items: center;
@@ -199,28 +168,6 @@
   .rx-svc .rx-br-pc { display: inline; }
   .rx-svc .rx-br-sp { display: none; }
 }
-
-/* 共通の円アイコン面（淡いピンクの円＋ピンクの線画） */
-.rx-svc-produce__source-icon,
-.rx-svc-points__icon,
-.rx-svc-improve__icon,
-.rx-svc-cycle__icon,
-.rx-svc-team__icon {
-  display: inline-grid;
-  place-items: center;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: var(--sv-pink-soft);
-  color: var(--rx-accent);
-}
-.rx-svc-improve__icon,
-.rx-svc-cycle__icon,
-.rx-svc-team__icon { width: 56px; height: 56px; }
-.rx-svc-improve__icon svg,
-.rx-svc-cycle__icon svg,
-.rx-svc-team__icon svg { width: 27px; height: 27px; }
-.rx-svc-points__icon { width: 52px; height: 52px; }
-.rx-svc-points__icon svg { width: 25px; height: 25px; }
 
 /* =========================================================================
    ヒーロー
@@ -401,42 +348,308 @@
 }
 
 /* =========================================================================
-   01 つくる（資料 p13・p14）— ページ内で「強」。取材からの4つの成果物を一番大きく見せる
+   共通の部品（26ページ版で使う：タグ・バッジ・注記・まとめの帯・表）
    ========================================================================= */
-/* 起点（会社取材）は横長の帯 */
-.rx-svc-produce__source {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(16px, 2vw, 26px);
-  margin-top: clamp(36px, 4.4vw, 60px);
-  padding: clamp(22px, 2.6vw, 34px) clamp(22px, 2.8vw, 40px);
-  border: 1px solid var(--sv-pink-line);
-  border-radius: var(--rx-radius-lg);
+.rx-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 小見出しの頭に付ける区分（「採用動画」「漫画」） */
+.rx-svc-tag {
+  display: inline-block;
+  padding: 4px 13px;
+  border-radius: var(--rx-radius-pill);
   background: var(--sv-pink-soft);
+  color: var(--rx-accent-hover);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  vertical-align: middle;
 }
-.rx-svc-produce__source-icon { width: 64px; height: 64px; background: #fff; }
-.rx-svc-produce__source-icon svg { width: 30px; height: 30px; }
-.rx-svc-produce__source-name { font-weight: 900; font-size: clamp(1.0625rem, 1rem + .4vw, 1.25rem); line-height: 1.5; }
-.rx-svc-produce__source-desc { margin-top: 6px; font-size: .875rem; line-height: 1.85; color: var(--rx-text-muted); }
+/* 「別サービス」（採用AIO）。資料と同じく、採用AIO が出てくる場所には必ず付ける */
+.rx-svc-badge {
+  display: inline-block;
+  margin-left: .6em;
+  padding: 2px 10px;
+  border: 1px solid rgba(var(--rx-accent-rgb), .45);
+  border-radius: var(--rx-radius-pill);
+  background: #fff;
+  color: var(--rx-accent-hover);
+  font-size: .6875rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: 1.6;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.rx-svc-note {
+  margin-top: 12px;
+  font-size: .75rem;
+  line-height: 1.85;
+  color: var(--rx-text-muted);
+}
+.rx-svc-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.rx-svc-note a:hover,
+.rx-svc-note a:focus-visible { color: var(--rx-accent-hover); }
+/* 資料の各スライド下にある「ひとことのまとめ」を、ピンクの縦線つきの帯で再現 */
+.rx-svc-summary {
+  margin-top: clamp(20px, 2.4vw, 30px);
+  padding: clamp(14px, 1.8vw, 20px) clamp(16px, 2vw, 26px);
+  border-left: 4px solid var(--rx-accent);
+  border-radius: 0 12px 12px 0;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 6px 20px rgba(15, 23, 42, .05);
+  font-weight: 700;
+  font-size: clamp(.875rem, .84rem + .25vw, 1rem);
+  line-height: 1.85;
+  color: var(--sv-navy);
+}
+/* 保証しない旨の注記。読み飛ばされないよう太字＋ピンクの縦線にする */
+.rx-svc-caution {
+  margin-top: 14px;
+  padding-left: 12px;
+  border-left: 3px solid var(--rx-accent);
+  font-weight: 700;
+  font-size: .8125rem;
+  line-height: 1.85;
+  color: var(--sv-ink);
+}
+/* セクション内の小ブロック（罫線で区切る） */
+.rx-svc-block {
+  margin-top: clamp(64px, 7.5vw, 112px);
+  padding-top: clamp(48px, 5.6vw, 80px);
+  border-top: 1px solid var(--sv-line);
+}
+.rx-svc-block--first {
+  margin-top: clamp(36px, 4.4vw, 56px);
+  padding-top: 0;
+  border-top: 0;
+}
+.rx-svc-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px clamp(20px, 3vw, 40px);
+  margin-top: clamp(32px, 4vw, 52px);
+}
 
-/* 取材 → 成果物 の下向き矢印 */
-.rx-svc-produce__arrow {
+/* --- 表（資料の比較表・マトリクスを再現）---
+   スマホでは表の中だけ横にスクロールする（ページ全体は横スクロールさせない・DEVICE-RULES §8。
+   ホームのフェーズ対応表と同じ扱い） */
+.rx-svc-table-wrap {
+  margin-top: clamp(24px, 3vw, 36px);
+  border: 1px solid var(--sv-line);
+  border-radius: var(--rx-radius-lg);
+  background: #fff;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.rx-svc-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .875rem;
+  line-height: 1.6;
+}
+.rx-svc-table-wrap thead th,
+.rx-svc-table-wrap thead td {
+  padding: 14px 10px;
+  background: var(--sv-navy);
+  color: #fff;
+  font-weight: 700;
+  font-size: .8125rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.rx-svc-table-wrap thead small {
   display: block;
-  width: 0; height: 0;
-  margin: clamp(14px, 1.8vw, 22px) auto;
-  border-left: 11px solid transparent;
-  border-right: 11px solid transparent;
-  border-top: 15px solid var(--rx-accent);
+  margin-top: 4px;
+  font-weight: 500;
+  font-size: .6875rem;
+  opacity: .78;
+}
+.rx-svc-table-wrap tbody th,
+.rx-svc-table-wrap tbody td {
+  padding: 14px 12px;
+  border-top: 1px solid var(--sv-line);
+  vertical-align: middle;
+}
+.rx-svc-table-wrap tbody th {
+  font-weight: 700;
+  text-align: left;
+  color: var(--sv-navy);
+}
+.rx-svc-table-wrap tbody td { text-align: center; }
+
+/* スマホでは表の左端の列を固定し、横にスクロールしても何の行か見失わないようにする */
+.rx-svc-table-wrap tbody th,
+.rx-svc-table-wrap thead tr > :first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  box-shadow: 1px 0 0 var(--sv-line);
+}
+.rx-svc-table-wrap tbody th { background: #fff; }
+.rx-svc-table-wrap .rx-svc-matrix__row-ai th,
+.rx-svc-table-wrap .rx-svc-steps-table__pick th { background: var(--sv-pink-soft); }
+.rx-svc-table-wrap .rx-svc-steps-table__pick th { color: var(--rx-accent-hover); }
+
+/* 横スクロールできることを知らせる一言（表がはみ出すスマホ幅だけ出す） */
+.rx-svc-scroll-hint { display: none; }
+@media (max-width: 768px) {
+  .rx-svc-scroll-hint {
+    display: block;
+    margin-top: clamp(20px, 2.6vw, 28px);
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--rx-text-muted);
+  }
+  .rx-svc-scroll-hint::before { content: "← "; color: var(--rx-accent); }
+  .rx-svc-scroll-hint::after  { content: " →"; color: var(--rx-accent); }
+  .rx-svc-scroll-hint + .rx-svc-table-wrap { margin-top: 8px; }
 }
 
-/* 4つの成果物。メディア面は 4:3。<img> を入れるとそのまま写真に差し替わる */
-.rx-svc-produce__outputs {
+/* ◎○− と ●○− の記号 */
+.rx-svc-mark { font-size: 1.125rem; color: var(--sv-muted); }
+.rx-svc-mark--best { font-size: 1.375rem; font-weight: 700; color: var(--rx-accent); }
+.rx-svc-mark--none { color: #c3c6cf; }
+.rx-svc-dot { font-size: 1.125rem; color: #c3c6cf; }
+.rx-svc-dot--main { color: var(--rx-accent); }
+
+/* マトリクス（p3・p13・p22）。AI の列・行と、ビズ採用の列だけ色を変える */
+.rx-svc-matrix { min-width: 680px; }
+.rx-svc-matrix--place { min-width: 820px; }
+.rx-svc-matrix--vs { min-width: 640px; }
+.rx-svc-matrix tbody th { width: 22%; white-space: nowrap; }
+.rx-svc-matrix--vs tbody th { width: 34%; white-space: normal; }
+.rx-svc-matrix--vs tbody td { color: var(--sv-muted); font-size: 1rem; }
+.rx-svc-table-wrap thead .rx-svc-matrix__ai,
+.rx-svc-table-wrap thead .rx-svc-matrix__us { background: var(--rx-accent); }
+.rx-svc-matrix__row-ai th,
+.rx-svc-matrix__row-ai td,
+.rx-svc-table-wrap tbody .rx-svc-matrix__us { background: var(--sv-pink-soft); }
+.rx-svc-matrix__row-ai th .rx-svc-badge { margin-left: .5em; }
+
+/* 比較表（p10）。採用アニメーションの列を推す */
+.rx-svc-compare { min-width: 720px; }
+.rx-svc-compare tbody th { width: 16%; white-space: nowrap; }
+.rx-svc-compare tbody td {
+  width: 28%;
+  text-align: left;
+  vertical-align: top;
+  font-size: .8125rem;
+  line-height: 1.85;
+  color: var(--rx-text-muted);
+}
+.rx-svc-table-wrap thead .rx-svc-compare__pick { background: var(--rx-accent); }
+.rx-svc-compare tbody .rx-svc-compare__pick {
+  background: var(--sv-pink-soft);
+  color: var(--rx-accent-hover);
+  font-weight: 700;
+}
+
+/* =========================================================================
+   01 なぜ今（提案書 最終版 p4〜p6）— 中。数字そのものを見せる（ホームの旧「実績」と同じ考え方）
+   ========================================================================= */
+.rx-svc-stats { margin-top: clamp(36px, 4.4vw, 56px); }
+.rx-svc-stats + .rx-svc-stats { margin-top: clamp(48px, 5.6vw, 76px); }
+.rx-svc-stats__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-weight: 900;
+  font-size: clamp(1.0625rem, .95rem + .55vw, 1.375rem);
+  line-height: 1.5;
+  color: var(--sv-navy);
+}
+.rx-svc-stats__list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(14px, 1.8vw, 24px);
+  gap: clamp(12px, 1.6vw, 20px);
+  margin-top: clamp(16px, 2vw, 24px);
 }
-.rx-svc-produce__outputs li {
+.rx-svc-stat {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2.2vw, 28px) clamp(16px, 1.8vw, 22px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: var(--rx-radius-lg);
+}
+.rx-svc-stat__num {
+  font-family: var(--sv-num);
+  font-weight: 700;
+  font-size: clamp(2.375rem, 1.7rem + 2.4vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  color: var(--rx-accent);
+  white-space: nowrap;
+}
+.rx-svc-stat__num small {
+  margin-left: .08em;
+  font-family: var(--sv-sans);
+  font-weight: 900;
+  font-size: .42em;
+  letter-spacing: 0;
+}
+.rx-svc-stat__label {
+  margin-top: 12px;
+  font-weight: 700;
+  font-size: .875rem;
+  line-height: 1.75;
+  color: var(--sv-navy);
+}
+.rx-svc-stat__src {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed var(--sv-line);
+  font-size: .6875rem;
+  line-height: 1.75;
+  color: var(--rx-text-muted);
+}
+.rx-svc-stat__label + .rx-svc-stat__src { margin-top: auto; }
+.rx-svc-stat__src a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.rx-svc-stat__src a:hover,
+.rx-svc-stat__src a:focus-visible { color: var(--rx-accent-hover); }
+/* 出典の手前に余白を確保（ラベルが短いカードでも罫線の位置がそろう） */
+.rx-svc-stat__label { margin-bottom: 14px; }
+
+@media (max-width: 1024px) { .rx-svc-stats__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px)  { .rx-svc-stats__list { grid-template-columns: 1fr; } }
+
+/* =========================================================================
+   02 4つの対策（提案書 最終版 p2・p3・p10・p13）— 強。成果物4枚の画像を一番大きく見せる
+   ========================================================================= */
+.rx-svc-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px clamp(14px, 1.8vw, 22px);
+  margin-top: clamp(36px, 4.4vw, 60px);
+}
+/* 「人に見せる」は1〜3枚目の上、「AIに伝える」は4枚目の上に帯を出す（資料 p2 と同じ） */
+.rx-svc-cards__group {
+  grid-column: 1 / 4;
+  padding: 8px 16px;
+  border-radius: 10px;
+  background: var(--sv-navy);
+  color: #fff;
+  font-weight: 700;
+  font-size: .8125rem;
+  letter-spacing: .04em;
+}
+.rx-svc-cards__group--ai { grid-column: 4; background: var(--rx-accent); }
+.rx-svc-cards__list {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  gap: inherit;
+}
+.rx-svc-card {
   display: flex;
   flex-direction: column;
   padding: clamp(14px, 1.6vw, 20px);
@@ -445,473 +658,322 @@
   border-radius: var(--rx-radius-lg);
   box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 10px 30px rgba(15, 23, 42, .05);
 }
-.rx-svc-produce__out-media {
-  display: grid;
-  place-items: center;
+.rx-svc-card--ai { border-color: rgba(var(--rx-accent-rgb), .45); background: #fffafc; }
+.rx-svc-card__media {
+  display: block;
   aspect-ratio: 4 / 3;
   border-radius: var(--rx-radius);
   background: var(--sv-pink-soft);
-  color: var(--rx-accent);
   overflow: hidden;
 }
-.rx-svc-produce__out-media svg { width: 42px; height: 42px; stroke-width: 1.3; }
-.rx-svc-produce__out-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rx-svc-produce__out-name {
+.rx-svc-card__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.rx-svc-card__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
   margin-top: clamp(12px, 1.4vw, 16px);
   font-weight: 900;
   font-size: clamp(1rem, .95rem + .35vw, 1.1875rem);
   line-height: 1.4;
+  color: var(--sv-navy);
 }
-.rx-svc-produce__out-desc { margin-top: 7px; font-size: .8125rem; line-height: 1.8; color: var(--rx-text-muted); }
-.rx-svc-produce__summary {
-  margin-top: clamp(24px, 3vw, 36px);
-  padding: clamp(16px, 2vw, 22px) clamp(18px, 2.2vw, 28px);
-  border-radius: var(--rx-radius);
-  background: var(--sv-pink-soft);
-  font-size: clamp(.9375rem, .9rem + .25vw, 1.0625rem);
-  font-weight: 700;
-  line-height: 1.9;
-}
-
-/* 看板コンテンツのテーマ（資料 p14） */
-.rx-svc-themes {
-  margin-top: clamp(64px, 7.5vw, 112px);
-  padding-top: clamp(48px, 5.6vw, 80px);
-  border-top: 1px solid var(--sv-line);
-}
-.rx-svc-themes__list {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(14px, 1.8vw, 24px);
-  margin-top: clamp(28px, 3.4vw, 44px);
-}
-.rx-svc-themes__list li {
-  padding: clamp(20px, 2.2vw, 28px);
-  background: #fff;
-  border: 1px solid var(--sv-line);
-  border-radius: var(--rx-radius-lg);
-}
-.rx-svc-themes__tag {
-  display: inline-block;
-  padding: 4px 13px;
-  border-radius: var(--rx-radius-pill);
-  background: var(--sv-pink-soft);
-  color: var(--rx-accent-hover);
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-}
-.rx-svc-themes__name { margin-top: 13px; font-weight: 900; font-size: 1.0625rem; line-height: 1.5; }
-.rx-svc-themes__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
-
-@media (max-width: 1024px) {
-  .rx-svc-produce__outputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .rx-svc-themes__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 560px) {
-  .rx-svc-produce__source { grid-template-columns: 1fr; text-align: center; justify-items: center; }
-  .rx-svc-themes__list { grid-template-columns: 1fr; }
-}
-
-/* =========================================================================
-   02 届ける（資料 p15・p17・p23）
-   ========================================================================= */
-.rx-svc-points {
-  list-style: none;                                      /* 番号は __no で描く */
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(12px, 1.6vw, 20px);
-  margin-top: clamp(36px, 4.4vw, 60px);
-}
-.rx-svc-points li {
-  display: grid;
-  justify-items: center;
-  padding: clamp(22px, 2.4vw, 32px) clamp(12px, 1.4vw, 20px);
-  background: #fff;
-  border: 1px solid var(--sv-line);
-  border-radius: var(--rx-radius-lg);
-  text-align: center;
-}
-.rx-svc-points__no {
+.rx-svc-card__name .rx-svc-badge { margin-left: 0; }
+.rx-svc-card__no {
+  display: inline-grid;
+  place-items: center;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--rx-accent);
+  color: #fff;
   font-family: var(--sv-num);
   font-weight: 700;
   font-size: .8125rem;
-  letter-spacing: .08em;
-  color: rgba(var(--rx-accent-rgb), .55);
 }
-.rx-svc-points__icon { margin-top: 12px; }
-.rx-svc-points__name { margin-top: 13px; font-weight: 900; font-size: 1rem; line-height: 1.45; }
-.rx-svc-points__desc { margin-top: 9px; font-size: .78125rem; line-height: 1.85; color: var(--rx-text-muted); }
-
-.rx-svc-usage {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(14px, 1.8vw, 24px);
-  margin: clamp(28px, 3.2vw, 40px) 0 0;
-}
-.rx-svc-usage > div {
-  padding: clamp(20px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px);
-  border: 1px solid var(--sv-pink-line);
-  border-radius: var(--rx-radius-lg);
-  background: #fff;
-}
-.rx-svc-usage dt {
-  font-size: .8125rem;
+.rx-svc-card__kind {
+  margin-top: 4px;
   font-weight: 700;
-  letter-spacing: .06em;
+  font-size: .8125rem;
   color: var(--rx-accent-hover);
 }
-.rx-svc-usage dd {
-  margin: 10px 0 0;
-  font-size: clamp(1rem, .94rem + .3vw, 1.1875rem);
-  font-weight: 900;
-  line-height: 1.7;
+.rx-svc-card__cap {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--sv-line);
+  font-size: .6875rem;
+  color: var(--rx-text-muted);
+}
+.rx-svc-card__kind + .rx-svc-card__cap { margin-top: 14px; }
+.rx-svc-card__what {
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: .9375rem;
+  line-height: 1.6;
+  color: var(--sv-navy);
 }
 
-/* 応募直後から面接前まで（資料 p23） */
-.rx-svc-nurture {
-  margin-top: clamp(64px, 7.5vw, 112px);
-  padding-top: clamp(48px, 5.6vw, 80px);
-  border-top: 1px solid var(--sv-line);
+@media (max-width: 1024px) {
+  .rx-svc-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rx-svc-cards__group { display: none; }        /* 2列だと帯と列がずれるので出さない（4枚目は「別サービス」の印で区別できる） */
+  .rx-svc-cards__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-.rx-svc-nurture__list {
-  list-style: none;                                      /* 段階名は __step で描く */
+@media (max-width: 560px) {
+  .rx-svc-cards,
+  .rx-svc-cards__list { grid-template-columns: 1fr; }
+}
+
+/* =========================================================================
+   03 採用AIO（提案書 最終版 p14・p16〜p18）— 弱。別サービスなので、強い写真や大きなカードは使わない
+   ========================================================================= */
+.rx-svc-eyebrow .rx-svc-badge { margin-left: 2px; }
+
+/* 質問の設計例（p16） */
+.rx-svc-qs {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: clamp(14px, 1.8vw, 24px);
+  margin-top: clamp(22px, 2.6vw, 32px);
+}
+.rx-svc-qs__list { display: grid; gap: 12px; }
+.rx-svc-q {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 16px;
+  align-items: start;
+  padding: clamp(14px, 1.6vw, 20px) clamp(16px, 1.8vw, 22px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: 14px;
+}
+.rx-svc-q__icon {
+  grid-row: 1 / 4;
+  display: grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--sv-pink-soft);
+  color: var(--rx-accent);
+}
+.rx-svc-q__icon svg { width: 22px; height: 22px; }
+.rx-svc-q__type { font-weight: 900; font-size: .9375rem; color: var(--sv-navy); }
+.rx-svc-q__ask { margin-top: 4px; font-weight: 700; font-size: .9375rem; line-height: 1.6; color: var(--rx-accent-hover); }
+.rx-svc-q__info { margin-top: 6px; font-size: .75rem; line-height: 1.75; color: var(--rx-text-muted); }
+.rx-svc-qs__diff {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: clamp(16px, 1.8vw, 22px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: 14px;
+}
+.rx-svc-qs__diff-head { font-weight: 900; font-size: .9375rem; color: var(--sv-navy); }
+.rx-svc-qs__case {
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--sv-alt);
+  font-size: .875rem;
+  line-height: 1.75;
+}
+.rx-svc-qs__case--good { background: var(--sv-pink-soft); font-weight: 700; color: var(--sv-navy); }
+.rx-svc-qs__case-cap { font-size: .75rem; font-weight: 700; color: var(--rx-text-muted); margin-bottom: 4px; }
+.rx-svc-qs__case--good .rx-svc-qs__case-cap { color: var(--rx-accent-hover); }
+
+/* 5つのこと（p17） */
+.rx-svc-steps-table { min-width: 640px; }
+.rx-svc-steps-table thead th { text-align: left; padding-left: 16px; }
+.rx-svc-steps-table tbody th { width: 26%; white-space: nowrap; }
+.rx-svc-steps-table tbody th span {
+  margin-right: 10px;
+  font-family: var(--sv-num);
+  color: var(--rx-accent);
+}
+.rx-svc-steps-table tbody td { text-align: left; font-size: .8125rem; line-height: 1.8; color: var(--rx-text-muted); }
+.rx-svc-steps-table__pick th,
+.rx-svc-steps-table__pick td { background: var(--sv-pink-soft); color: var(--rx-accent-hover); font-weight: 700; }
+
+/* 毎月の進め方（p18） */
+.rx-svc-months {
+  list-style: none;
   padding: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 2vw, 28px);
-  margin-top: clamp(28px, 3.4vw, 44px);
+  margin-top: clamp(22px, 2.6vw, 32px);
 }
-.rx-svc-nurture__list li {
+.rx-svc-month {
   position: relative;
-  padding: clamp(22px, 2.4vw, 32px);
+  padding: clamp(18px, 2vw, 24px);
   background: #fff;
   border: 1px solid var(--sv-line);
-  border-radius: var(--rx-radius-lg);
+  border-radius: 14px;
 }
-.rx-svc-nurture__step {
+.rx-svc-month__when {
   display: inline-block;
-  padding: 4px 13px;
+  padding: 3px 14px;
   border-radius: var(--rx-radius-pill);
-  background: var(--sv-ink);
+  background: var(--sv-navy);
   color: #fff;
   font-size: .75rem;
   font-weight: 700;
-  letter-spacing: .04em;
 }
-.rx-svc-nurture__name { margin-top: 14px; font-weight: 900; font-size: 1.125rem; line-height: 1.5; }
-.rx-svc-nurture__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
-/* 応募直後 → 選考中 → 面接前 のつなぎ（PCのみ・装飾） */
-@media (min-width: 1025px) {
-  .rx-svc-nurture__list li + li::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: calc(clamp(16px, 2vw, 28px) / -2 - 5px);
-    width: 10px; height: 10px;
-    border-top: 2px solid rgba(var(--rx-accent-rgb), .5);
-    border-right: 2px solid rgba(var(--rx-accent-rgb), .5);
-    transform: translateY(-50%) rotate(45deg);
-  }
-}
-
-@media (max-width: 1024px) {
-  .rx-svc-points { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .rx-svc-nurture__list { grid-template-columns: 1fr; }
-}
-@media (max-width: 560px) {
-  .rx-svc-points { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .rx-svc-usage { grid-template-columns: 1fr; }
-}
-
-/* 「弱」なので見出しも一段小さくする */
-.rx-svc-routes .rx-svc-title { font-size: clamp(1.375rem, .9rem + 1.7vw, 2.5rem); }   /* 22 → 40px */
-
-/* =========================================================================
-   03 3つの改善ルート（資料 p12・p18〜p22）
-   ホーム §6 は「弱い」一覧なので、こちらは中身を読ませる詳細として厚く組む
-   ========================================================================= */
-/* ページ内で意図的に「弱い」セクション。前後（02 届ける・04 進め方）の間で視線を休ませる。
-   **カード・アイコン・写真・影は使わない**。文字＋細い罫線＋余白だけで見せる（ホーム 06 と同じ扱い） */
-.rx-svc-route {
-  padding: clamp(30px, 3.4vw, 52px) 0;
-  border-top: 1px solid rgba(var(--rx-accent-rgb), .18);
-}
-.rx-svc-route:first-of-type { margin-top: clamp(30px, 3.6vw, 48px); }
-.rx-svc-route:last-of-type { border-bottom: 1px solid rgba(var(--rx-accent-rgb), .18); }
-.rx-svc-route:target .rx-svc-route__name { color: var(--rx-accent); }
-.rx-svc-route__head {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: baseline;
-  gap: clamp(12px, 1.6vw, 20px);
-}
-/* 丸バッジをやめ、記号だけにする（カードをやめたので塗りも不要） */
-.rx-svc-route__mark {
-  font-family: var(--sv-num);
-  font-weight: 700;
-  font-size: clamp(1.125rem, 1rem + .5vw, 1.5rem);
-  letter-spacing: .04em;
-  color: var(--rx-accent);
-}
-.rx-svc-route__name {
-  font-weight: 900;
-  font-size: clamp(1.25rem, 1.05rem + .8vw, 1.75rem);
-  line-height: 1.4;
-}
-.rx-svc-route__tagline {
-  margin-top: 7px;
-  font-weight: 700;
-  font-size: .9375rem;
-  line-height: 1.7;
-  color: #4d5871;
-}
-
-.rx-svc-route__rows {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0 clamp(20px, 2.4vw, 40px);
-  margin-top: clamp(18px, 2vw, 26px);
-}
-.rx-svc-route__row { padding: 0; }
-.rx-svc-route__label {
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  color: var(--rx-accent-hover);
-}
-.rx-svc-route__issue { margin-top: 10px; font-size: .9375rem; line-height: 1.9; }
-.rx-svc-route__list { margin-top: 10px; }
-.rx-svc-route__list li {
+.rx-svc-month__name { margin-top: 12px; font-weight: 900; font-size: 1.0625rem; line-height: 1.5; color: var(--sv-navy); }
+.rx-svc-month ul { margin-top: 10px; }
+.rx-svc-month li,
+.rx-svc-report__list dd {
   position: relative;
-  padding-left: 1.05em;
-  font-size: .875rem;
+  padding-left: 1.1em;
+  font-size: .8125rem;
   line-height: 1.95;
   color: var(--rx-text-muted);
 }
-.rx-svc-route__list li::before {
+.rx-svc-month li::before {
   content: "";
   position: absolute;
-  left: 0; top: .88em;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--rx-accent);
-  opacity: .5;
+  left: 0; top: .95em;
+  width: .6em; height: 1px;
+  background: rgba(var(--rx-accent-rgb), .5);
 }
-
-/* --- ルートの図解 ---
-   「弱い」セクションなので写真は使わず、線画アイコン＋細い罫線の図で仕組みだけ示す。
-   詳細の文章（資料 p19・p21・p22）をこの図に置き換えて、読む量を減らしている */
-.rx-svc-fig {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: stretch;
-  gap: clamp(10px, 1.4vw, 18px);
-  margin-top: clamp(22px, 2.6vw, 34px);
-}
-.rx-svc-fig__step,
-.rx-svc-fig__side {
-  display: grid;
-  justify-items: center;
-  align-content: start;
-  padding: clamp(18px, 2vw, 26px) clamp(12px, 1.4vw, 18px);
-  border: 1px solid rgba(var(--rx-accent-rgb), .22);
-  border-radius: var(--rx-radius);
-  text-align: center;
-}
-/* 着地点だけ淡いピンクで塗って「ここに行き着く」を示す */
-.rx-svc-fig__step--goal,
-.rx-svc-fig__side--after { background: var(--sv-pink-soft); }
-.rx-svc-fig__icon {
-  display: inline-grid;
-  place-items: center;
-  width: 46px; height: 46px;
-  border-radius: 50%;
-  background: #fff;
-  color: var(--rx-accent);
-}
-.rx-svc-fig__icon svg { width: 23px; height: 23px; }
-.rx-svc-fig__name {
-  margin-top: 11px;
-  font-weight: 900;
-  font-size: .9375rem;
-  line-height: 1.5;
-}
-.rx-svc-fig__desc {
-  margin-top: 7px;
-  font-size: .78125rem;
-  line-height: 1.8;
-  color: var(--rx-text-muted);
-}
-.rx-svc-fig__arrow {
-  align-self: center;
-  width: 0; height: 0;
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent;
-  border-left: 10px solid var(--rx-accent);
-}
-
-/* B ルートは3段ではなく2つの対比 */
-.rx-svc-fig--compare { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
-.rx-svc-fig__side--before { border-style: dashed; border-color: var(--sv-line); }
-.rx-svc-fig__side--before .rx-svc-fig__icon { color: var(--sv-muted); background: var(--sv-alt); }
-.rx-svc-fig__cap {
-  font-size: .75rem;
-  font-weight: 700;
-  letter-spacing: .06em;
-  color: var(--rx-accent-hover);
-  margin-bottom: 11px;
-}
-.rx-svc-fig__side--before .rx-svc-fig__cap { color: var(--sv-muted); }
-.rx-svc-fig__vs {
-  align-self: center;
-  width: 1px;
-  height: 100%;
-  background: rgba(var(--rx-accent-rgb), .22);
-}
-
-.rx-svc-route__note {
-  margin-top: clamp(16px, 2vw, 24px);
-  font-size: .8125rem;
-  line-height: 1.85;
-  color: var(--rx-text-muted);
-}
-/* AI・検索対策の注記（資料 p22）。移設・改修時に落とさない */
-.rx-svc-route__note--caution { color: var(--sv-ink); font-weight: 700; }
-
-/* 運用しながら改善（資料 p20・3ルート共通） */
-.rx-svc-improve {
-  margin-top: clamp(64px, 7.5vw, 112px);
-  padding-top: clamp(48px, 5.6vw, 80px);
-  border-top: 1px solid var(--sv-line);
-}
-.rx-svc-improve__list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
-  margin-top: clamp(28px, 3.4vw, 44px);
-}
-.rx-svc-improve__list li {
-  display: grid;
-  justify-items: center;
-  padding: clamp(24px, 2.6vw, 36px) clamp(18px, 2vw, 28px);
-  background: var(--sv-alt);
-  border-radius: var(--rx-radius-lg);
-  text-align: center;
-}
-.rx-svc-sec--alt .rx-svc-improve__list li { background: #fff; }
-.rx-svc-improve__name { margin-top: 14px; font-weight: 900; font-size: 1.0625rem; line-height: 1.5; }
-.rx-svc-improve__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
-
-@media (max-width: 860px) {
-  .rx-svc-fig,
-  .rx-svc-fig--compare { grid-template-columns: 1fr; }
-  .rx-svc-fig__arrow {
-    justify-self: center;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 10px solid var(--rx-accent);
-    border-bottom: 0;
-  }
-  .rx-svc-fig__vs { justify-self: center; width: 40%; height: 1px; }
-}
-@media (max-width: 1024px) {
-  .rx-svc-route__rows { grid-template-columns: 1fr; gap: 0; }
-  .rx-svc-route__row + .rx-svc-route__row { margin-top: 18px; padding-top: 18px; border-top: 1px dashed var(--sv-line); }
-  .rx-svc-improve__list { grid-template-columns: 1fr; }
-}
-@media (max-width: 560px) {
-  .rx-svc-route__head { grid-template-columns: 1fr; }
-}
-
-/* =========================================================================
-   04 進め方（資料 p24・p30）
-   ========================================================================= */
-.rx-svc-cycle {
-  list-style: none;                                      /* 番号は __no で描く */
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
-  margin-top: clamp(36px, 4.4vw, 60px);
-}
-.rx-svc-cycle li {
-  position: relative;
-  display: grid;
-  justify-items: center;
-  padding: clamp(24px, 2.6vw, 36px) clamp(18px, 2vw, 28px);
-  background: #fff;
-  border: 1px solid var(--sv-line);
-  border-radius: var(--rx-radius-lg);
-  text-align: center;
-}
-.rx-svc-cycle__no {
-  font-family: var(--sv-num);
-  font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: .08em;
-  color: var(--rx-accent);
-}
-.rx-svc-cycle__icon { margin-top: 12px; }
-.rx-svc-cycle__name { margin-top: 14px; font-weight: 900; font-size: 1.125rem; line-height: 1.5; }
-.rx-svc-cycle__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
-/* 01 → 02 → 03 → 04 のつなぎ（PCのみ・装飾） */
 @media (min-width: 1025px) {
-  .rx-svc-cycle li + li::before {
+  .rx-svc-month + .rx-svc-month::before {          /* 初月 → 2〜3か月目 → 以降 のつなぎ */
     content: "";
     position: absolute;
     top: 50%;
     left: calc(clamp(16px, 2vw, 28px) / -2 - 5px);
     width: 10px; height: 10px;
-    border-top: 2px solid rgba(var(--rx-accent-rgb), .5);
-    border-right: 2px solid rgba(var(--rx-accent-rgb), .5);
+    border-top: 2px solid rgba(var(--rx-accent-rgb), .55);
+    border-right: 2px solid rgba(var(--rx-accent-rgb), .55);
     transform: translateY(-50%) rotate(45deg);
   }
 }
-.rx-svc-cycle__loop {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: clamp(22px, 2.6vw, 32px);
-  font-size: .875rem;
-  line-height: 1.9;
-  color: var(--rx-text-muted);
-  text-align: center;
+.rx-svc-report {
+  margin-top: clamp(16px, 2vw, 24px);
+  padding: clamp(18px, 2vw, 24px) clamp(18px, 2.2vw, 28px);
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: 14px;
 }
-.rx-svc-cycle__loop svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--rx-accent); }
+.rx-svc-report__head { font-weight: 900; font-size: .9375rem; color: var(--rx-accent-hover); }
+.rx-svc-report__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px clamp(16px, 2vw, 28px);
+  margin: 12px 0 0;
+}
+.rx-svc-report__list dt { font-weight: 700; font-size: .875rem; color: var(--sv-navy); }
+.rx-svc-report__list dt span { margin-right: 6px; font-family: var(--sv-num); color: var(--rx-accent); }
+.rx-svc-report__list dd { margin: 4px 0 0; padding-left: 0; }
 
-.rx-svc-team {
-  margin-top: clamp(64px, 7.5vw, 112px);
-  padding-top: clamp(48px, 5.6vw, 80px);
-  border-top: 1px solid var(--sv-line);
+@media (max-width: 1024px) {
+  .rx-svc-qs { grid-template-columns: 1fr; }
+  .rx-svc-months { grid-template-columns: 1fr; }
+  .rx-svc-report__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-.rx-svc-team__list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(16px, 2vw, 28px);
-  margin-top: clamp(28px, 3.4vw, 44px);
+@media (max-width: 560px) {
+  .rx-svc-report__list { grid-template-columns: 1fr; }
 }
-.rx-svc-team__list li {
+
+/* =========================================================================
+   04 体制と違い（提案書 最終版 p19・p20・p22・p23）— 中
+   ========================================================================= */
+.rx-svc-teams {
   display: grid;
-  justify-items: center;
-  padding: clamp(24px, 2.6vw, 36px) clamp(18px, 2vw, 28px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+  margin-top: clamp(36px, 4.4vw, 56px);
+}
+.rx-svc-teamcard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(20px, 2.2vw, 28px) clamp(14px, 1.6vw, 20px);
   background: #fff;
   border: 1px solid var(--sv-line);
   border-radius: var(--rx-radius-lg);
   text-align: center;
 }
-.rx-svc-team__name { margin-top: 14px; font-weight: 900; font-size: 1.0625rem; line-height: 1.5; }
-.rx-svc-team__desc { margin-top: 9px; font-size: .8125rem; line-height: 1.9; color: var(--rx-text-muted); }
+.rx-svc-teamcard--base { border: 2px solid var(--rx-accent); }
+.rx-svc-teamcard__no { font-size: .75rem; font-weight: 700; color: var(--rx-accent-hover); align-self: flex-start; }
+.rx-svc-teamcard__icon {
+  display: grid;
+  place-items: center;
+  width: 56px; height: 56px;
+  margin-top: 10px;
+  border-radius: 50%;
+  background: var(--sv-pink-soft);
+  color: var(--rx-accent);
+}
+.rx-svc-teamcard__icon svg { width: 27px; height: 27px; }
+.rx-svc-teamcard__name { margin-top: 12px; font-weight: 900; font-size: 1.125rem; line-height: 1.45; color: var(--sv-navy); }
+.rx-svc-teamcard__name small { font-size: .75rem; font-weight: 700; color: var(--rx-text-muted); }
+.rx-svc-teamcard__issue {
+  margin-top: 10px;
+  padding: 4px 12px;
+  border-radius: var(--rx-radius-pill);
+  background: var(--sv-pink-soft);
+  color: var(--rx-accent-hover);
+  font-size: .75rem;
+  font-weight: 700;
+}
+.rx-svc-teamcard__issue--base { background: var(--rx-accent); color: #fff; padding-inline: 22px; }
+.rx-svc-teamcard__desc { margin-top: 12px; font-size: .875rem; line-height: 1.8; color: var(--sv-navy); }
+.rx-svc-teamcard__kpi {
+  margin-top: auto;
+  padding-top: 14px;
+  width: 100%;
+  border-top: 1px solid var(--sv-line);
+  font-size: .75rem;
+  line-height: 1.75;
+  color: var(--rx-text-muted);
+}
+.rx-svc-teamcard__desc + .rx-svc-teamcard__kpi { margin-top: auto; }
+.rx-svc-teamcard__kpi span { display: block; font-weight: 700; color: var(--rx-accent-hover); }
+.rx-svc-teamcard__desc { margin-bottom: 14px; }
 
-@media (max-width: 1024px) {
-  .rx-svc-cycle { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .rx-svc-team__list { grid-template-columns: 1fr; }
+/* 効果が出やすい課題（p23） */
+.rx-svc-checks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px clamp(14px, 1.8vw, 22px);
+  margin-top: clamp(22px, 2.6vw, 32px);
 }
-@media (max-width: 560px) {
-  .rx-svc-cycle { grid-template-columns: 1fr; }
+.rx-svc-checks li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid var(--sv-line);
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: .9375rem;
+  line-height: 1.6;
+  color: var(--sv-navy);
 }
+.rx-svc-checks li > svg {
+  flex: 0 0 auto;
+  width: 18px; height: 18px;
+  stroke-width: 2.6;
+  color: var(--rx-accent);
+}
+.rx-svc-spot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px clamp(20px, 3vw, 48px);
+  margin-top: clamp(18px, 2.2vw, 26px);
+  padding: clamp(18px, 2.2vw, 26px) clamp(20px, 2.6vw, 34px);
+  border-radius: var(--rx-radius);
+  background: var(--sv-navy);
+  color: #fff;
+}
+.rx-svc-spot__cap { font-size: .8125rem; font-weight: 700; opacity: .85; }
+.rx-svc-spot__body { font-size: clamp(1rem, .95rem + .45vw, 1.25rem); font-weight: 700; line-height: 1.6; }
+.rx-svc-spot__price { color: #ff8cc0; }               /* 濃紺の上の小さめのピンクは明るめにして読みやすくする */
+
+@media (max-width: 1024px) { .rx-svc-teams { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 768px)  { .rx-svc-checks { grid-template-columns: 1fr; } }
+@media (max-width: 560px)  { .rx-svc-teams { grid-template-columns: 1fr; } }
 
 /* =========================================================================
    最終CTA
@@ -967,12 +1029,10 @@
 }
 .rx-svc-cta__btn-line:hover,
 .rx-svc-cta__btn-line:focus-visible { background: var(--sv-pink-soft); border-color: var(--rx-accent-hover); }
-.rx-svc-cta__links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: clamp(16px, 2.4vw, 32px);
-  margin-top: clamp(18px, 2.2vw, 26px);
+.rx-svc-cta__note {
+  margin-top: clamp(14px, 1.6vw, 20px);
+  font-size: .8125rem;
+  color: var(--rx-text-muted);
 }
 
 /* フッター上余白はCTA帯と連続させる（home.css と同じ扱い） */
